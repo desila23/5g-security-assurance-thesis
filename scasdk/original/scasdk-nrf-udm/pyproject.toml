@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "5g-scas-tests"
+version = "1.0.0"
+description = "Implementation of 5G SCAS Tests"
+readme = "README.md"
+dependencies = [ 
+    "pycrate~=0.5.5",
+    "cryptography~=39.0.2",
+    "pycryptodome~=3.17",
+    "pyyaml~=6.0.1",
+    "schema~=0.7.5",
+    "robotframework~=7.0",
+    "httpx~=0.26.0",
+    "jsonschema~=4.21.1",
+    "httpx[http2]~=0.26.0",
+    "cryptomobile @ https://github.com/mitshell/CryptoMobile/archive/refs/heads/master.zip"
+]
+
+[tool.setuptools.packages.find]
+# All the following settings are optional:
+where = ["."]  # ["."] by default
+include = ["*"]  # ["*"] by default
+exclude = [] # empty by default
+namespaces = true  # true by default

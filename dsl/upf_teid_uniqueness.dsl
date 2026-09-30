@@ -1,0 +1,1 @@
+REQUIRE UNIQUE pfcp_session_establishment_response.f_teids

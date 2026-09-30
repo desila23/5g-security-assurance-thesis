@@ -1,0 +1,25 @@
+start: rule+
+
+?rule: statis_rule
+     | temporal_rule
+
+?statis_rule: comparison_rule
+            | unique_rule
+            | if_rule
+
+comparison_rule: "REQUIRE" FIELD OP operand
+unique_rule: "REQUIRE" "UNIQUE" FIELD
+if_rule: "IF" FIELD OP operand "{" rule+ "}"
+temporal_rule: "MFOTL" "CASE" VALUE MFOTL_BLOCK
+
+
+?operand: FIELD -> field_operand
+        | VALUE -> literal_operand
+
+FIELD: /[a-zA-Z_][a-zA-Z0-9_.]*(\.[a-zA-Z_][a-zA-Z0-9_]*)+/
+OP: "==" | "!="
+VALUE: /[a-zA-Z0-9_]+/
+MFOTL_BLOCK: /"""[\s\S]*?"""/
+
+%import common.WS
+%ignore WS

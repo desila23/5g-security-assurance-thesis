@@ -1,0 +1,153 @@
+{
+    "nrf_disc_auth_slice": {
+        "extractor": "extractor.nrf_discovery_extractor",
+        "verifier": "verifier.simple_verifier",
+        "reporter": "reporter.nrf_report",
+            
+        "pcap": "captures/nrf_disc_auth_slice_open5gs.pcapng",
+        "evidence": "reports/nrf_disc_auth_slice/evidence.json",
+        "rules": "dsl/nrf_rule.dsl",
+        "output": "reports/nrf_disc_auth_slice/verification.json",
+        "report": "reports/nrf_disc_auth_slice/report.json"
+    },
+
+    "udm_resynchronization": {
+        "extractor": "extractor.udm_resynchronization_extractor",
+        "verifier": "verifier.simple_verifier",
+        "reporter": "reporter.udm_report",
+
+        "pcap": "captures/udm_synch_fail_open5gs.pcapng",
+        "subscriber_file": "scasdk/adapted/scasdk-nrf-udm/data/ue/subscriber.json",
+        "evidence": "reports/udm_resynchronization/evidence.json",
+        "rules": "dsl/udm_resynchronization.dsl",
+        "output": "reports/udm_resynchronization/verification.json",
+        "report": "reports/udm_resynchronization/report.json"
+    },
+
+    "udm_suci_deconcealment": {
+        "extractor": "extractor.udm_suci_deconcealment_extractor",
+        "verifier": "verifier.simple_verifier",
+        "reporter": "reporter.udm_suci_deconcealment_reporter",
+
+        "pcap": "captures/udm_suci_deconcealment_open5gs.pcapng",  
+        "subscriber_file": "scasdk/adapted/scasdk-nrf-udm/data/ue/subscriber.json",  
+        "evidence": "reports/udm_suci_deconcealment/evidence.json",
+        "rules": "dsl/udm_suci_deconcealment.dsl",
+        "output": "reports/udm_suci_deconcealment/verification.json",
+        "report": "reports/udm_suci_deconcealment/report.json"
+    },
+
+    "amf_sync_failure_case_a": {
+        "case": "A",
+        "pcap": "captures/free5gc-amf-TC-SYNC-FAIL-SEAF-AMF-Case_A.pcap",
+
+        "extractor": "extractor.amf_sync_failure_extractor",
+        "verifier": "verifier.simple_verifier",
+        "reporter": "reporter.amf_sync_failure_reporter",
+
+        "evidence": "reports/amf_sync_failure_case_a/evidence.json",
+        "rules": "dsl/amf_sync_failure.dsl",
+        "output": "reports/amf_sync_failure_case_a/verification.json",
+        "report": "reports/amf_sync_failure_case_a/report.json",
+
+        "temporal": {
+            "verifier": "verifier.temporal_verifier",
+
+            "signature": "mfotl/amf_sync_failure.sig",
+            "generated_formula": "mfotl/generated/amf_sync_failure_case_a.mfotl",
+            "log": "mfotl/amf_sync_failure_case_a.log",
+            "output": "reports/amf_sync_failure_case_a/temporal_verification.json",
+
+            "timer": {
+                "name": "T3520",
+                "duration_ms": 15000
+            }
+        }
+    },
+
+    "amf_sync_failure_case_b": {
+        "case": "B",
+        "pcap": "captures/free5gc-amf-TC-SYNC-FAIL-SEAF-AMF-Case B.pcap",
+
+        "extractor": "extractor.amf_sync_failure_extractor",
+        "verifier": "verifier.simple_verifier",
+        "reporter": "reporter.amf_sync_failure_reporter",
+
+        "evidence": "reports/amf_sync_failure_case_b/evidence.json",
+        "rules": "dsl/amf_sync_failure.dsl",
+        "output": "reports/amf_sync_failure_case_b/verification.json",
+        "report": "reports/amf_sync_failure_case_b/report.json",
+
+        "temporal": {
+            "verifier": "verifier.temporal_verifier",
+
+            "signature": "mfotl/amf_sync_failure.sig",
+
+            "generated_formula": "mfotl/generated/amf_sync_failure_case_b.mfotl",
+            "log": "mfotl/amf_sync_failure_case_b.log",
+            "output": "reports/amf_sync_failure_case_b/temporal_verification.json",
+
+            "timer": {
+                "name": "T3520",
+                "duration_ms": 15000
+            }
+        }
+    },
+         
+    "upf_teid_uniqueness": {
+        "extractor": "extractor.upf_teid_uniqueness_extractor",
+        "verifier": "verifier.simple_verifier",
+        "reporter": "reporter.upf_teid_uniqueness_reporter",
+
+        "pcap": "captures/upf_teid_uniqueness_open5gs.pcapng",
+        "evidence": "reports/upf_teid_uniqueness/evidence.json",
+        "rules": "dsl/upf_teid_uniqueness.dsl",
+        "output": "reports/upf_teid_uniqueness/verification.json",
+        "report": "reports/upf_teid_uniqueness/report.json"
+    },
+
+    "resstar_verification_failure": {
+        "extractor": "extractor.resstar_verification_failure_extractor",
+        "verifier": "verifier.simple_verifier",
+        "reporter": "reporter.resstar_verification_failure_reporter",
+        "rules": "dsl/resstar_verification_failure.dsl",
+
+        "cases": {
+            "A": {
+                "identity_path": "direct_suci",
+                "failure_source": "local",
+                "pcap": "captures/free5gc-amf-TC_RESSTAR_VERIFICATION_FAILURE_1.pcap",
+                "evidence": "reports/resstar_verification_failure/case_a/evidence.json",
+                "output": "reports/resstar_verification_failure/case_a/verification.json",
+                "report": "reports/resstar_verification_failure/case_a/report.json"
+            },
+
+            "B": {
+                "identity_path": "guti_then_suci",
+                "failure_source": "local",
+                "pcap": "captures/free5gc-amf-TC_RESSTAR_VERIFICATION_FAILURE_2.pcap",
+                "evidence": "reports/resstar_verification_failure/case_b/evidence.json",
+                "output": "reports/resstar_verification_failure/case_b/verification.json",
+                "report": "reports/resstar_verification_failure/case_b/report.json"
+            },
+
+            "C": {
+                "identity_path": "direct_suci",
+                "failure_source": "ausf",
+                "pcap": "captures/free5gc-amf-TC_RESSTAR_VERIFICATION_FAILURE_3.pcap",
+                "evidence": "reports/resstar_verification_failure/case_c/evidence.json",
+                "output": "reports/resstar_verification_failure/case_c/verification.json",
+                "report": "reports/resstar_verification_failure/case_c/report.json"
+            },
+
+            "D": {
+                "identity_path": "guti_then_suci",
+                "failure_source": "ausf",
+                "pcap": "captures/free5gc-amf-TC_RESSTAR_VERIFICATION_FAILURE_4.pcap",
+                "evidence": "reports/resstar_verification_failure/case_d/evidence.json",
+                "output": "reports/resstar_verification_failure/case_d/verification.json",
+                "report": "reports/resstar_verification_failure/case_d/report.json"
+            }
+        }
+    }
+}

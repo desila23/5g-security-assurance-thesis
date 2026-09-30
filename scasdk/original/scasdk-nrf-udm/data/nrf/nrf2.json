@@ -1,0 +1,10 @@
+{
+    "nfType": "SMF",
+    "nfStatus": "REGISTERED",
+    "sNssais": [
+        {"sd": "BBBBBB", "sst": 128}
+    ],
+    "allowedNssais": [
+        {"sd": "BBBBBB", "sst": 128}
+    ]
+}

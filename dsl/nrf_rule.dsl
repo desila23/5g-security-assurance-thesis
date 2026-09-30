@@ -1,0 +1,1 @@
+REQUIRE nrf_nf_discovery.response.status_code == 403
