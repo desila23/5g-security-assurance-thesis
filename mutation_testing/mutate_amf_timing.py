@@ -2,25 +2,23 @@ from decimal import Decimal
 
 from scapy.all import rdpcap, wrpcap
 
-from utils.evidence_utils import get_events_by_type
-from utils.mutation_utils import load_mutation_context
+from utils.mutation_utils import load_sequence_mutation_context
 
 
 TIMER_SECONDS = Decimal("15")
 MARGIN_SECONDS = Decimal("5")
 
 
-def apply_timing(packets, event):
-    case = event["case"]
-
-    if case == "A":
-        start_frame = event["resynchronization_request"]["frame"]
-        target_frame = event["ausf_authentication_response"]["frame"]
-    elif case == "B":
-        start_frame = event["synchronization_failure"]["frame"]
-        target_frame = event["subsequent_authentication_request"]["frame"]
-    else:
-        raise RuntimeError(f"Caso AMF non supportato: {case}")
+def apply_timing(
+    packets,
+    case,
+    start_frame,
+    target_frame,
+):
+    if case not in {"A", "B"}:
+        raise RuntimeError(
+            f"Caso AMF non supportato: {case}"
+        )
 
     if not (1 <= start_frame < target_frame <= len(packets)):
         raise RuntimeError("Frame temporali non validi nell'evidenza")
@@ -61,23 +59,67 @@ def apply_timing(packets, event):
 
 
 def main():
-    source, evidence, output = load_mutation_context()
-
-    event = get_events_by_type(
-        evidence, "amf_sync_failure", require_single=True
-    )
-    packets = list(rdpcap(str(source)))
-
-    case, start_frame, target_frame, before, after = apply_timing(
-        packets, event
+    source, report, output = (
+        load_sequence_mutation_context()
     )
 
-    output.parent.mkdir(parents=True, exist_ok=True)
-    wrpcap(str(output), packets)
+    case = report.get("configuration", {}).get("case")
+
+    if case not in {"A", "B"}:
+        raise RuntimeError(
+            "Caso AMF non presente o non valido nel report"
+        )
+
+    bindings = report.get("evidence", {}).get("bindings", {})
+
+    if case == "A":
+        start_event = bindings.get("resync")
+        target_event = bindings.get("new_vector")
+
+        if start_event is None or target_event is None:
+            raise RuntimeError(
+                "Bindings resync/new_vector non trovati nel report AMF Case A"
+            )
+
+    else:
+        start_event = bindings.get("sync_failure")
+        target_event = bindings.get("subsequent_auth_request")
+
+        if start_event is None or target_event is None:
+            raise RuntimeError(
+                "Bindings temporali del Case B non trovati nel report"
+            )
+
+    start_frame = start_event["frame"]
+    target_frame = target_event["frame"]
+
+    packets = list(
+        rdpcap(str(source))
+    )
+
+    case, start_frame, target_frame, before, after = (
+        apply_timing(packets, case, start_frame, target_frame)
+    )
+
+    output.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    wrpcap(
+        str(output),
+        packets,
+    )
 
     print(f"PCAP creato: {output}")
-    print(f"Caso {case}: frame {start_frame} → {target_frame}")
-    print(f"Intervallo: {before:.3f} s → {after:.3f} s")
+    print(
+        f"Caso {case}: "
+        f"frame {start_frame} → {target_frame}"
+    )
+    print(
+        f"Intervallo: "
+        f"{before:.3f} s → {after:.3f} s"
+    )
 
 
 if __name__ == "__main__":

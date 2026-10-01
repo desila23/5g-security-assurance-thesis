@@ -9,15 +9,13 @@
             "mutated": "PASS"
         },
         "target_rule": {
-            "field": "nrf_nf_discovery.response.status_code",
+            "field": "response.status",
             "operator": "==",
             "baseline": "FAIL",
             "mutated": "PASS"
         },
         "test_config": {
             "pcap": "captures/nrf_disc_auth_slice_status_mutation.pcap",
-            "evidence": "reports/nrf_disc_auth_slice_status_mutation/evidence.json",
-            "output": "reports/nrf_disc_auth_slice_status_mutation/verification.json",
             "report": "reports/nrf_disc_auth_slice_status_mutation/report.json"
         }
     },
@@ -92,181 +90,269 @@
         "variant": "static",
         "mutated_test": "amf_sync_failure_case_a_rand_mutation",
         "mutator": "mutation_testing.mutate_amf_sync_rand",
+
         "expected_verdicts": {
             "baseline": "PASS",
             "mutated": "FAIL"
         },
+
         "expected_components": {
             "static": "FAIL",
             "temporal": "PASS"
         },
+
         "target_rule": {
-            "field": "amf_sync_failure.resynchronization_request.rand",
+            "field": "resync.rand",
             "operator": "==",
             "baseline": "PASS",
             "mutated": "FAIL"
         },
+
         "test_config": {
             "pcap": "captures/amf_sync_failure_case_a_rand_mutation.pcap",
-            "evidence": "reports/amf_sync_failure_case_a_rand_mutation/evidence.json",
-            "output": "reports/amf_sync_failure_case_a_rand_mutation/verification.json",
             "report": "reports/amf_sync_failure_case_a_rand_mutation/report.json",
+
             "temporal": {
+                "signature": "mfotl/amf_sync_failure.sig",
                 "generated_formula": "mfotl/generated/amf_sync_failure_case_a_rand_mutation.mfotl",
                 "log": "mfotl/amf_sync_failure_case_a_rand_mutation.log",
-                "output": "reports/amf_sync_failure_case_a_rand_mutation/temporal_verification.json"
+
+                "timer": {
+                    "name": "T3520",
+                    "duration_ms": 15000
+                },
+
+                "event_mapping": {
+                    "resync": "ResynchronizationRequest()",
+                    "new_vector": "AusfAuthenticationResponse()"
+                }
             }
         },
+
         "inherit_baseline_config": true
     },
+
     "amf_sync_failure_case_b_rand": {
         "baseline_test": "amf_sync_failure_case_b",
         "variant": "static",
         "mutated_test": "amf_sync_failure_case_b_rand_mutation",
         "mutator": "mutation_testing.mutate_amf_sync_rand",
+
         "expected_verdicts": {
             "baseline": "PASS",
             "mutated": "FAIL"
         },
+
         "expected_components": {
             "static": "FAIL",
             "temporal": "PASS"
         },
+
         "target_rule": {
-            "field": "amf_sync_failure.resynchronization_request.rand",
+            "field": "resync.rand",
             "operator": "==",
             "baseline": "PASS",
             "mutated": "FAIL"
         },
+
         "test_config": {
             "pcap": "captures/amf_sync_failure_case_b_rand_mutation.pcap",
-            "evidence": "reports/amf_sync_failure_case_b_rand_mutation/evidence.json",
-            "output": "reports/amf_sync_failure_case_b_rand_mutation/verification.json",
             "report": "reports/amf_sync_failure_case_b_rand_mutation/report.json",
+
             "temporal": {
+                "signature": "mfotl/amf_sync_failure.sig",
                 "generated_formula": "mfotl/generated/amf_sync_failure_case_b_rand_mutation.mfotl",
                 "log": "mfotl/amf_sync_failure_case_b_rand_mutation.log",
-                "output": "reports/amf_sync_failure_case_b_rand_mutation/temporal_verification.json"
+
+                "timer": {
+                    "name": "T3520",
+                    "duration_ms": 15000
+                },
+
+                "event_mapping": {
+                    "sync_failure": "SyncFailure()",
+                    "subsequent_auth_request": "AuthenticationRequest()"
+                }
             }
         },
+
         "inherit_baseline_config": true
     },
+
     "amf_sync_failure_case_a": {
         "baseline_test": "amf_sync_failure_case_a",
         "variant": "temporal",
         "mutated_test": "amf_sync_failure_case_a_timing_mutation",
         "mutator": "mutation_testing.mutate_amf_timing",
+
         "expected_verdicts": {
             "baseline": "PASS",
             "mutated": "FAIL"
         },
+
         "expected_components": {
             "static": "PASS",
             "temporal": "FAIL"
         },
+
         "test_config": {
             "pcap": "captures/amf_sync_failure_case_a_timing_mutation.pcap",
-            "evidence": "reports/amf_sync_failure_case_a_timing_mutation/evidence.json",
-            "output": "reports/amf_sync_failure_case_a_timing_mutation/verification.json",
             "report": "reports/amf_sync_failure_case_a_timing_mutation/report.json",
+
             "temporal": {
+                "signature": "mfotl/amf_sync_failure.sig",
                 "generated_formula": "mfotl/generated/amf_sync_failure_case_a_timing_mutation.mfotl",
                 "log": "mfotl/amf_sync_failure_case_a_timing_mutation.log",
-                "output": "reports/amf_sync_failure_case_a_timing_mutation/temporal_verification.json"
+
+                "timer": {
+                    "name": "T3520",
+                    "duration_ms": 15000
+                },
+
+                "event_mapping": {
+                    "resync": "ResynchronizationRequest()",
+                    "new_vector": "AusfAuthenticationResponse()"
+                }
             }
         },
+
         "inherit_baseline_config": true
     },
+
     "amf_sync_failure_case_b": {
         "baseline_test": "amf_sync_failure_case_b",
         "variant": "temporal",
         "mutated_test": "amf_sync_failure_case_b_timing_mutation",
         "mutator": "mutation_testing.mutate_amf_timing",
+
         "expected_verdicts": {
             "baseline": "PASS",
             "mutated": "FAIL"
         },
+
         "expected_components": {
             "static": "PASS",
             "temporal": "FAIL"
         },
+
         "test_config": {
             "pcap": "captures/amf_sync_failure_case_b_timing_mutation.pcap",
-            "evidence": "reports/amf_sync_failure_case_b_timing_mutation/evidence.json",
-            "output": "reports/amf_sync_failure_case_b_timing_mutation/verification.json",
             "report": "reports/amf_sync_failure_case_b_timing_mutation/report.json",
+
             "temporal": {
+                "signature": "mfotl/amf_sync_failure.sig",
                 "generated_formula": "mfotl/generated/amf_sync_failure_case_b_timing_mutation.mfotl",
                 "log": "mfotl/amf_sync_failure_case_b_timing_mutation.log",
-                "output": "reports/amf_sync_failure_case_b_timing_mutation/temporal_verification.json"
+
+                "timer": {
+                    "name": "T3520",
+                    "duration_ms": 15000
+                },
+
+                "event_mapping": {
+                    "sync_failure": "SyncFailure()",
+                    "subsequent_auth_request": "AuthenticationRequest()"
+                }
             }
         },
+
         "inherit_baseline_config": true
     },
+
     "amf_sync_failure_case_a_both": {
         "baseline_test": "amf_sync_failure_case_a",
         "variant": "both",
         "mutated_test": "amf_sync_failure_case_a_both_mutation",
         "mutator": "mutation_testing.mutate_amf_both",
+
         "expected_verdicts": {
             "baseline": "PASS",
             "mutated": "FAIL"
         },
+
         "expected_components": {
             "static": "FAIL",
             "temporal": "FAIL"
         },
+
         "target_rule": {
-            "field": "amf_sync_failure.resynchronization_request.rand",
+            "field": "resync.rand",
             "operator": "==",
             "baseline": "PASS",
             "mutated": "FAIL"
         },
+
         "test_config": {
             "pcap": "captures/amf_sync_failure_case_a_both_mutation.pcap",
-            "evidence": "reports/amf_sync_failure_case_a_both_mutation/evidence.json",
-            "output": "reports/amf_sync_failure_case_a_both_mutation/verification.json",
             "report": "reports/amf_sync_failure_case_a_both_mutation/report.json",
+
             "temporal": {
+                "signature": "mfotl/amf_sync_failure.sig",
                 "generated_formula": "mfotl/generated/amf_sync_failure_case_a_both_mutation.mfotl",
                 "log": "mfotl/amf_sync_failure_case_a_both_mutation.log",
-                "output": "reports/amf_sync_failure_case_a_both_mutation/temporal_verification.json"
+
+                "timer": {
+                    "name": "T3520",
+                    "duration_ms": 15000
+                },
+
+                "event_mapping": {
+                    "resync": "ResynchronizationRequest()",
+                    "new_vector": "AusfAuthenticationResponse()"
+                }
             }
         },
+
         "inherit_baseline_config": true
     },
+
     "amf_sync_failure_case_b_both": {
         "baseline_test": "amf_sync_failure_case_b",
         "variant": "both",
         "mutated_test": "amf_sync_failure_case_b_both_mutation",
         "mutator": "mutation_testing.mutate_amf_both",
+
         "expected_verdicts": {
             "baseline": "PASS",
             "mutated": "FAIL"
         },
+
         "expected_components": {
             "static": "FAIL",
             "temporal": "FAIL"
         },
+
         "target_rule": {
-            "field": "amf_sync_failure.resynchronization_request.rand",
+            "field": "resync.rand",
             "operator": "==",
             "baseline": "PASS",
             "mutated": "FAIL"
         },
+
         "test_config": {
             "pcap": "captures/amf_sync_failure_case_b_both_mutation.pcap",
-            "evidence": "reports/amf_sync_failure_case_b_both_mutation/evidence.json",
-            "output": "reports/amf_sync_failure_case_b_both_mutation/verification.json",
             "report": "reports/amf_sync_failure_case_b_both_mutation/report.json",
+
             "temporal": {
+                "signature": "mfotl/amf_sync_failure.sig",
                 "generated_formula": "mfotl/generated/amf_sync_failure_case_b_both_mutation.mfotl",
                 "log": "mfotl/amf_sync_failure_case_b_both_mutation.log",
-                "output": "reports/amf_sync_failure_case_b_both_mutation/temporal_verification.json"
+
+                "timer": {
+                    "name": "T3520",
+                    "duration_ms": 15000
+                },
+
+                "event_mapping": {
+                    "sync_failure": "SyncFailure()",
+                    "subsequent_auth_request": "AuthenticationRequest()"
+                }
             }
         },
+
         "inherit_baseline_config": true
     },
+    
     "resstar_verification_failure": {
         "baseline_test": "resstar_verification_failure",
         "inherit_baseline_config": true,

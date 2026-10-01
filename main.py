@@ -10,6 +10,25 @@ from pathlib import Path
 from utils.verifier_utils import load_test_config
 from utils.json_utils import load_json
 
+from traffic.tshark_reader import load_tshark_ek
+from traffic.http2_normalizer import normalize_http2
+from traffic.nas_normalizer import normalize_nas_events
+from traffic.resolvers.sbi_resolver import resolve_sbi_message_types
+
+from dsl.parse_rule import get_mfotl_formula
+
+from verifier.temporal_verifier import (
+    generate_temporal_log_from_match,
+    write_monpoly_formula,
+    write_monpoly_log,
+    run_monpoly,
+    build_temporal_verification,
+)
+
+from pipeline.sequence_pipeline import run_sequence_verification
+
+from reporter.generic_reporter import save_generic_report
+
 
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -142,9 +161,210 @@ def run_module(module_name, test_id=None, case_id=None, verbose=False):
     run_command(command, module_name, verbose=verbose)
 
 
+# COMPATIBILITÀ LEGACY:
+# Supporto temporaneo per i test non ancora migrati alla nuova pipeline basata su SEQUENCE. 
+# Questo ramo verrà rimosso al termine della migrazione.
 def run_pipeline(test_id, case_id=None, verbose=False):
     test_config = load_test_config(BASE_DIR, test_id, case_id)
 
+    pipeline_type = test_config.get("pipeline", "legacy")
+
+    if pipeline_type == "sequence":
+        return run_sequence_test(test_id, test_config, verbose)
+
+    # COMPATIBILITÀ LEGACY:
+    # Mantiene il flusso originale:
+    #      extractor -> verifier -> temporal verifier -> reporter.
+    # Serve solo per i test non ancora migrati alla nuova architettura e verrà rimosso al termine della migrazione.
+    return run_legacy_pipeline(
+        test_id,
+        test_config,
+        case_id,
+        verbose
+    )
+
+
+def run_sequence_test(test_id, test_config, verbose=False):
+    print(f"\nTest: {test_id}", flush=True)
+
+    pcap_file = BASE_DIR / test_config["pcap"]
+    rule_file = BASE_DIR / test_config["rules"]
+
+    traffic_config = test_config.get(
+        "traffic",
+        {},
+    )
+
+
+    events = []
+
+    traffic_sources = traffic_config.get("sources", [])
+
+    for source in traffic_sources:
+        source_type = source["type"]
+
+        packets = load_tshark_ek(
+            pcap_file,
+            display_filter=source.get("display_filter"),
+            decode_as=source.get("decode_as", []),
+        )
+
+        if source_type == "http2":
+            source_events = normalize_http2(packets)
+
+            source_events = resolve_sbi_message_types(source_events)
+
+        elif source_type == "nas":
+            source_events = normalize_nas_events(packets)
+
+        else:
+            raise ValueError(
+                f"Unsupported traffic source type: {source_type}"
+            )
+
+        events.extend(source_events)
+
+
+    events = [
+        event for event in events
+        if event.message_type is not None
+    ]
+
+    events.sort(
+        key=lambda event: (
+            event.timestamp,
+            event.frame_number,
+        )
+    )
+
+    correlation_mode = traffic_config.get(
+        "correlation_mode",
+        "grouped",
+    )
+
+    result = run_sequence_verification(
+        events,
+        str(rule_file),
+        correlation_mode=correlation_mode
+    )
+
+
+    #---------------------------------------
+    # VERIFICA TEMPORALE    
+    #---------------------------------------
+    
+    temporal_verification = None
+
+    temporal_config = test_config.get("temporal")
+
+    if temporal_config and result.match is not None:
+
+        temporal_rule_file = BASE_DIR / test_config.get(
+            "temporal_rules",
+            test_config["rules"],
+        )
+
+        timer_duration_ms = temporal_config["timer"]["duration_ms"]
+
+        event_mapping = temporal_config["event_mapping"]
+
+        signature_file = (BASE_DIR / temporal_config["signature"])
+
+        generated_formula_file = (BASE_DIR / temporal_config["generated_formula"])
+
+        log_file = (BASE_DIR / temporal_config["log"])
+
+        formula_template = get_mfotl_formula(
+            temporal_rule_file,
+            test_config["case"],
+        )
+
+        write_monpoly_formula(
+            formula_template,
+            generated_formula_file,
+            timer_duration_ms,
+        )
+
+        log_content = generate_temporal_log_from_match(
+            result.match,
+            event_mapping,
+        )
+
+        write_monpoly_log(log_content, log_file)
+
+        monpoly_output = run_monpoly(
+            signature_file,
+            generated_formula_file,
+            log_file,
+        )
+
+        temporal_verification = build_temporal_verification(monpoly_output)
+
+
+    # Combino il risultato statico con quello temporale
+    if temporal_verification is not None:
+
+        result.details["temporal"] = temporal_verification
+
+        if temporal_verification["overall_verdict"] == "FAIL":
+            result.verdict = "FAIL"
+
+
+    report_file = BASE_DIR / test_config["report"]
+
+    report = save_generic_report(
+        test_id,
+        test_config,
+        result,
+        report_file,
+        BASE_DIR
+    )
+
+
+    static_verdict = (
+        result.verification.get("overall_verdict")
+        if result.verification
+        else None
+    )
+
+    temporal_verdict = (
+        temporal_verification.get("overall_verdict")
+        if temporal_verification
+        else None
+    )
+
+    print(f"  Static verdict:   {static_verdict or 'N/A'}")
+    print(f"  Temporal verdict: {temporal_verdict or 'N/A'}")
+    print(f"  Overall verdict:  {result.verdict}")
+    print(f"  Report file:      {test_config['report']}")
+
+    if verbose and result.match:
+        print("  Bindings:")
+
+        for alias, event in result.match.bindings.items():
+            print(
+                f"    {alias}: {event.message_type} (frame {event.frame_number})"
+            )
+
+    if verbose:
+        print(
+            f"  Details: {result.details}"
+        )
+
+        if result.verification:
+            print(
+                f"  Verification: {result.verification}"
+            )
+
+    return result, report
+
+
+def run_legacy_pipeline(
+    test_id, 
+    test_config,
+    case_id=None, 
+    verbose=False
+):
     test_label = test_id
     if case_id is not None:
         test_label += f" - Case {case_id}"
@@ -276,11 +496,45 @@ def print_failed_checks(report):
         )
 
 
-def check_target_rule(test_id, config, target, expected_verdict):
-    verification = load_json(BASE_DIR / config["output"])
+def check_target_rule(
+    test_id,
+    config,
+    target,
+    expected_verdict,
+):
+    if config.get("pipeline") == "sequence":
+        report = load_json(BASE_DIR / config["report"])
+
+        rules = []
+
+        for result in report["verification"]["results"]:
+            details = result.get(
+                "details",
+                result
+            )
+
+            rules.append({
+                "field": details.get("field"),
+                "operator": details.get("operator"),
+                "verdict": result["verdict"]
+            })
+
+    # COMPATIBILITÀ LEGACY:
+    # I test legacy salvano i risultati delle regole in un file di verifica separato. 
+    # La nuova pipeline usa invece il report unificato.
+    # Rimuovere questo ramo quando tutti i test useranno il nuovo formato.
+    else:
+        verification = load_json(BASE_DIR / config["output"])
+
+        rules = list(
+            iter_rule_results(
+                verification["rules"]
+            )
+        )
+
     matches = [
         rule
-        for rule in iter_rule_results(verification["rules"])
+        for rule in rules
         if rule["field"] == target["field"]
         and rule["operator"] == target["operator"]
     ]
@@ -288,35 +542,116 @@ def check_target_rule(test_id, config, target, expected_verdict):
     if len(matches) != 1:
         raise RuntimeError(
             f"{test_id}: attesa una sola regola bersaglio "
-            f"{target['field']} {target['operator']}; trovate {len(matches)}"
+            f"{target['field']} {target['operator']}; "
+            f"trovate {len(matches)}"
         )
 
     observed = matches[0]["verdict"]
+
     if observed != expected_verdict:
         raise RuntimeError(
-            f"{test_id}: regola bersaglio attesa {expected_verdict}, "
-            f"ottenuta {observed}"
+            f"{test_id}: regola bersaglio attesa "
+            f"{expected_verdict}, ottenuta {observed}"
         )
 
 
-def check_expected_components(test_id, config, expected_components):
-    static_result = load_json(BASE_DIR / config["output"])
-    temporal_result = load_json(BASE_DIR / config["temporal"]["output"])
+def check_expected_components(
+    test_id,
+    config,
+    expected_components,
+):
+    if config.get("pipeline") == "sequence":
+        report = load_json(BASE_DIR / config["report"])
 
-    observed = {
-        "static": static_result["overall_verdict"],
-        "temporal": temporal_result["overall_verdict"],
-    }
+        static_results = [
+            result for result in report["verification"]["results"]
+            if result["engine"] == "binding_verifier"
+        ]
+
+        temporal_results = [
+            result for result in report["verification"]["results"]
+            if result["engine"] == "Monpoly"
+        ]
+
+        static_verdict = (
+            "FAIL" if any(
+                result["verdict"] == "FAIL"
+                for result in static_results
+            )
+            else "PASS"
+        )
+
+        if temporal_results:
+            temporal_verdict = (
+                "FAIL" if any(
+                    result["verdict"] == "FAIL"
+                    for result in temporal_results
+                )
+                else "PASS"
+            )
+        else:
+            temporal_verdict = None
+
+        observed = {
+            "static": static_verdict,
+            "temporal": temporal_verdict,
+        }
+
+    # COMPATIBILITÀ LEGACY
+    else:
+        static_result = load_json(
+            BASE_DIR / config["output"]
+        )
+
+        temporal_result = load_json(
+            BASE_DIR
+            / config["temporal"]["output"]
+        )
+
+        observed = {
+            "static": static_result[
+                "overall_verdict"
+            ],
+            "temporal": temporal_result[
+                "overall_verdict"
+            ],
+        }
 
     if set(expected_components) != set(observed):
-        raise RuntimeError(f"{test_id}: componenti attese non valide")
+        raise RuntimeError(
+            f"{test_id}: componenti attese non valide"
+        )
 
-    for component, expected_verdict in expected_components.items():
+    for component, expected_verdict in (
+        expected_components.items()
+    ):
         if observed[component] != expected_verdict:
             raise RuntimeError(
-                f"{test_id}: {component} atteso {expected_verdict}, "
+                f"{test_id}: {component} atteso "
+                f"{expected_verdict}, "
                 f"ottenuto {observed[component]}"
             )
+
+
+# HELPERS PER RUN MUTATION
+def get_source_sha256(config): 
+    if config.get("pipeline") == "sequence": 
+        report = load_json(BASE_DIR / config["report"]) 
+ 
+        return report["source"]["sha256"] 
+
+    # COMPATIBILITÀ LEGACY:
+    # I test legacy salvano l'hash SHA-256 della cattura in evidence.json.
+    # La nuova pipeline lo salva direttamente nel report unificato.
+    # Rimuovere questo ramo quando evidence.json non sarà più utilizzato.
+    evidence = load_json(BASE_DIR / config["evidence"]) 
+ 
+    return evidence["source"]["sha256"] 
+ 
+def get_verdict(config): 
+    report = load_json(BASE_DIR / config["report"]) 
+ 
+    return report["verdict"]  
 
 
 def run_mutation(test_id, variant=None, case_id=None, verbose=False, baseline_already_run=False):
@@ -360,8 +695,9 @@ def run_mutation(test_id, variant=None, case_id=None, verbose=False, baseline_al
     if not baseline_already_run:
         run_pipeline(baseline_id, case_id, verbose)
 
-    baseline_evidence = load_json(BASE_DIR / baseline_config["evidence"])
+
     baseline_report = load_json(BASE_DIR / baseline_config["report"])
+    baseline_sha256 = get_source_sha256(baseline_config)
 
     if baseline_report["verdict"] != expected["baseline"]:
         raise RuntimeError(
@@ -375,19 +711,39 @@ def run_mutation(test_id, variant=None, case_id=None, verbose=False, baseline_al
         )
 
     print(f"\nMutator: {mutation['mutator']}", flush=True)
-    run_command(
-        [
-            sys.executable,
-            "-m",
-            mutation["mutator"],
-            "--source",
-            str(BASE_DIR / baseline_config["pcap"]),
+    mutation_command = [
+        sys.executable,
+        "-m",
+        mutation["mutator"],
+        "--source",
+        str(BASE_DIR / baseline_config["pcap"]),
+    ]
+
+    if baseline_config.get("pipeline") == "sequence":
+        mutation_command.extend([
+            "--report",
+            str(BASE_DIR / baseline_config["report"]),
+        ])
+    
+
+    # COMPATIBILITÀ LEGACY:
+    # I mutator legacy ricevono ancora evidence.json come sorgente dell'evidenza. 
+    # I nuovi mutator usano direttamente il report unificato.
+    # Rimuovere questo ramo dopo la migrazione dei mutator mantenuti.  
+    else:
+        mutation_command.extend([
             "--evidence",
             str(BASE_DIR / baseline_config["evidence"]),
-            "--output",
-            str(BASE_DIR / mutated_config["pcap"]),
-            "--overwrite",
-        ],
+        ])
+
+    mutation_command.extend([
+        "--output",
+        str(BASE_DIR / mutated_config["pcap"]),
+        "--overwrite",
+    ])
+
+    run_command(
+        mutation_command,
         mutation["mutator"],
         verbose=verbose,
     )
@@ -395,8 +751,9 @@ def run_mutation(test_id, variant=None, case_id=None, verbose=False, baseline_al
 
     run_pipeline(mutated_id, case_id, verbose)
 
-    mutated_evidence = load_json(BASE_DIR / mutated_config["evidence"])
+
     mutated_report = load_json(BASE_DIR / mutated_config["report"])
+    mutated_sha256 = get_source_sha256(mutated_config)
 
     if mutated_report["verdict"] != expected["mutated"]:
         raise RuntimeError(
@@ -416,10 +773,7 @@ def run_mutation(test_id, variant=None, case_id=None, verbose=False, baseline_al
             mutation["expected_components"],
         )
 
-    if (
-        baseline_evidence["source"]["sha256"]
-        == mutated_evidence["source"]["sha256"]
-    ):
+    if baseline_sha256 == mutated_sha256:
         raise RuntimeError("Il PCAP mutato coincide con la baseline")
 
     label = f"Mutation test: {test_id}"

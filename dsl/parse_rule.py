@@ -14,6 +14,8 @@ class RuleTransformer(Transformer):
     def FIELD(self, token):
         return str(token)
 
+    def NAME(self, token):
+        return str(token)
 
     def OP(self, token):
         return str(token)
@@ -48,6 +50,21 @@ class RuleTransformer(Transformer):
         }
 
 
+    def sequence_item(self, items):
+        message_type, alias = items
+
+        return {
+            "message_type": str(message_type),
+            "alias": str(alias)
+        }
+
+    def sequence_rule(self, items):
+        return{
+            "operator": "SEQUENCE",
+            "items": items
+        }
+
+
     def comparison_rule(self, items):
         field, operator, expected = items
 
@@ -73,12 +90,12 @@ class RuleTransformer(Transformer):
         rules = items[3:]
 
         return {
-                    "field": str(field),
-                    "operator": "IF",
-                    "condition_operator": str(operator),
-                    "expected": expected,
-                    "rules": rules            
-                }
+            "field": str(field),
+            "operator": "IF",
+            "condition_operator": str(operator),
+            "expected": expected,
+            "rules": rules            
+        }
 
     def MFOTL_BLOCK(self, token):
         return str(token)[3:-3].strip()
@@ -93,6 +110,8 @@ class RuleTransformer(Transformer):
             "case": str(case),
             "formula": formula
         }
+
+
 
         
 
@@ -119,8 +138,23 @@ def parse_rule(rule_file):
     # Il verifier statico e i reporter ricevono solo le regole statiche
     return [
         rule for rule in parse_policy(rule_file)
-        if rule["operator"] != "MFOTL"
+        if rule["operator"] not in {"MFOTL", "SEQUENCE"}
     ]
+
+
+def get_sequence(rule_file):
+    sequences = [
+        rule["items"] for rule in parse_policy(rule_file)
+        if rule["operator"] == "SEQUENCE"
+    ]
+
+    if len(sequences) != 1:
+        raise ValueError(
+            f"Expected one SEQUENCE block; found {len(sequences)}"
+        )
+
+    return sequences[0]
+
 
 def get_mfotl_formula(rule_file, case):
     formulas = [

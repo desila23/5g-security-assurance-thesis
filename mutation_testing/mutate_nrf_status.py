@@ -1,7 +1,6 @@
 from scapy.all import IP, TCP, Raw, rdpcap, raw, wrpcap
 
-from utils.evidence_utils import get_events_by_type
-from utils.mutation_utils import load_mutation_context
+from utils.mutation_utils import load_sequence_mutation_context
 
 
 OLD_STATUS = b"\x88"               # :status 200 nella tabella HPACK
@@ -18,17 +17,34 @@ def endpoints(packet):
 
 
 def main():
-    source, evidence, output = load_mutation_context()
-    event = get_events_by_type(
-        evidence, 
-        "nrf_nf_discovery", 
-        require_single=True
+    source, report, output = (
+        load_sequence_mutation_context()
     )
 
-    if event["response"]["status_code"] != 200:
-        raise RuntimeError("La risposta originale non ha status 200")
+    bindings = report.get(
+        "evidence",
+        {}
+    ).get(
+        "bindings",
+        {}
+    )
 
-    frame = event["response"]["frame"]
+    request = bindings.get("request")
+    response_event = bindings.get("response")
+
+    if request is None or response_event is None:
+        raise RuntimeError(
+            "Bindings request/response NRF non trovati nel report"
+        )
+
+    status = response_event["fields"].get("status")
+
+    if status != 200:
+        raise RuntimeError(
+            "La risposta originale non ha status 200"
+        )
+
+    frame = response_event["frame"]
     packets = list(rdpcap(str(source)))
 
     if not 1 <= frame <= len(packets):
@@ -49,8 +65,15 @@ def main():
         raise RuntimeError("Atteso un frame HTTP/2 HEADERS con END_HEADERS")
     if len(payload) != 9 + header_length:
         raise RuntimeError("Lunghezza del frame HTTP/2 inattesa")
-    if stream_id != int(event["request"]["http2_stream_id"]):
-        raise RuntimeError("Stream HTTP/2 diverso dall'evidenza")
+    
+    expected_stream_id = request[
+        "correlation"
+    ]["http2_stream_id"]
+
+    if stream_id != int(expected_stream_id):
+        raise RuntimeError(
+            "Stream HTTP/2 diverso dall'evidenza"
+        )
 
     # Nella cattura: aggiornamento della tabella HPACK, poi :status 200.
     if payload[9:12] != b"\x3f\xe1\x1f" or payload[12:13] != OLD_STATUS:

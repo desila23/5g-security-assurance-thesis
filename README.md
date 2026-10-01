@@ -2,7 +2,7 @@
 
 Framework sperimentale per verificare criteri di sicurezza 5G SCAS a partire da catture di traffico di rete.
 
-Il progetto prende in ingresso una cattura PCAP, estrae l’evidenza rilevante tramite TShark, applica verifiche statiche e temporali e produce un report strutturato che collega ogni verdetto ai frame e ai valori osservati.
+Il progetto prende in ingresso una cattura PCAP, estrae e normalizza il traffico tramite TShark, riconosce sequenze di messaggi descritte nella DSL, applica verifiche statiche e temporali e produce un report strutturato che collega ogni verdetto ai frame e ai valori osservati.
 
 È inoltre supportato il **mutation testing**: una copia del PCAP originale viene modificata offline e analizzata nuovamente tramite la stessa pipeline, così da verificare che il criterio bersaglio reagisca alla modifica prevista.
 
@@ -10,29 +10,170 @@ Il progetto prende in ingresso una cattura PCAP, estrae l’evidenza rilevante t
 
 ---
 
-## Pipeline attuale
+## Architettura attuale
+
+Per i test già migrati, la pipeline corrente è:
 
 ```text
 PCAP
   ↓
-TShark / extractor specifico del test
+TShark generic structured extraction
   ↓
-evidence.json
+Protocol-specific normalization
   ↓
-verifier statico
+Semantic MessageEvent[]
   ↓
-verification.json
+Correlation / event grouping
   ↓
-verifier temporale (quando richiesto)
+DSL sequence
   ↓
-temporal_verification.json
+AST
   ↓
-reporter
+Thompson NFA
   ↓
-report.json
+Sequence matcher
+  ↓
+Binding verifier
+  ↓
+MFOTL / MonPoly temporal verification
+  ↓
+Generic JSON report
 ```
 
-Questa repository rappresenta la baseline funzionante sviluppata prima del refactoring attualmente in corso verso un’architettura generica e guidata dalla DSL.
+L’obiettivo dell’architettura è separare:
+
+- acquisizione del traffico;
+- normalizzazione protocollare;
+- riconoscimento della sequenza;
+- verifica dei criteri;
+- produzione dell’evidenza.
+
+La logica specifica del singolo test viene progressivamente spostata dalla fase di estrazione verso:
+
+- la DSL;
+- i resolver semantici;
+- la configurazione del test;
+- le regole statiche e temporali.
+
+Alcune famiglie di test non ancora migrate continuano temporaneamente a utilizzare la pipeline legacy basata su extractor specifici.
+
+---
+
+## Rappresentazione del traffico
+
+Gli eventi normalizzati utilizzano il modello `MessageEvent`, che contiene informazioni comuni come:
+
+```text
+frame_number
+timestamp
+protocol
+kind
+src
+dst
+message_type
+related_frames
+correlation
+fields
+```
+
+La normalizzazione attualmente implementata comprende:
+
+- traffico HTTP/2;
+- messaggi NAS 5GS;
+- resolver semantici per messaggi SBI.
+
+Esempi di tipi semantici prodotti:
+
+```text
+nrf.discovery.request
+nrf.discovery.response
+ausf.authentication.response
+ausf.resynchronization.request
+nas.authentication_request
+nas.authentication_failure
+```
+
+---
+
+## DSL e sequence matching
+
+La DSL supporta la descrizione esplicita delle sequenze di messaggi.
+
+Esempio:
+
+```text
+SEQUENCE {
+    nrf.discovery.request AS request
+    nrf.discovery.response AS response
+}
+
+REQUIRE response.status == 403
+```
+
+La `SEQUENCE` viene:
+
+```text
+DSL
+ ↓
+Lark parser
+ ↓
+AST
+ ↓
+Thompson compiler
+ ↓
+NFA
+ ↓
+matcher
+```
+
+Il matcher associa gli eventi ai rispettivi alias e produce un insieme di binding utilizzato successivamente dai verifier.
+
+Le regole statiche possono confrontare:
+
+- campo con valore costante;
+- campo con campo appartenente a un altro binding.
+
+Esempio:
+
+```text
+REQUIRE initial_auth.rand == initial_vector.rand
+REQUIRE sync_failure.cause == 21
+REQUIRE resync.auts == sync_failure.auts
+```
+
+---
+
+## Verifica temporale
+
+Le proprietà temporali vengono espresse in MFOTL ed eseguite tramite MonPoly.
+
+### AMF Synchronization Failure — Case A
+
+La proprietà temporale verifica che una nuova risposta AUSF venga osservata entro `T3520` dopo la richiesta di risincronizzazione.
+
+```text
+ResynchronizationRequest()
+IMPLIES
+EVENTUALLY[0,{TIMER_MS}] AusfAuthenticationResponse()
+```
+
+### AMF Synchronization Failure — Case B
+
+La proprietà temporale verifica che non venga osservata una nuova Authentication Request entro `T3520` dopo il Synchronization Failure.
+
+```text
+SyncFailure()
+IMPLIES
+NOT EVENTUALLY[0,{TIMER_MS}] AuthenticationRequest()
+```
+
+Il valore corrente di `T3520` utilizzato nei test è:
+
+```text
+15000 ms
+```
+
+La generazione del log temporale è generica e guidata tramite `event_mapping` nella configurazione del test.
 
 ---
 
@@ -58,7 +199,7 @@ tshark --version
 monpoly -version
 ```
 
-`MonPoly` è richiesto soltanto per le verifiche temporali dei test AMF Synchronization Failure.
+`MonPoly` è richiesto soltanto per i test che includono proprietà MFOTL.
 
 ---
 
@@ -72,7 +213,7 @@ Elenco dei test disponibili:
 python main.py --list
 ```
 
-Esecuzione di un singolo test originale:
+Esecuzione di un singolo test:
 
 ```bash
 python main.py --test nrf_disc_auth_slice
@@ -90,51 +231,131 @@ Esecuzione dell’intera suite di validazione:
 python main.py --all
 ```
 
+---
 
-### Varianti AMF
+## Test migrati alla nuova pipeline
 
-I test AMF Synchronization Failure supportano le varianti:
+### NRF Discovery Authorization
+
+Esecuzione baseline:
+
+```bash
+python main.py --test nrf_disc_auth_slice
+```
+
+Mutation:
+
+```bash
+python main.py --mutation nrf_disc_auth_slice
+```
+
+La cattura originale produce intenzionalmente:
+
+```text
+FAIL
+```
+
+perché la risposta NRF ha status HTTP `200`, mentre la DSL richiede:
+
+```text
+403
+```
+
+La mutation modifica lo status e produce:
+
+```text
+PASS
+```
+
+---
+
+### AMF Synchronization Failure — Case A
+
+Baseline:
 
 ```bash
 python main.py --test amf_sync_failure_case_a
+```
 
+Mutation static:
+
+```bash
 python main.py --mutation amf_sync_failure_case_a --variant static
+```
+
+Mutation temporal:
+
+```bash
 python main.py --mutation amf_sync_failure_case_a --variant temporal
+```
+
+Mutation combinata:
+
+```bash
 python main.py --mutation amf_sync_failure_case_a --variant both
 ```
 
-`Static` se si vuole testare la mutazione sulle regole statiche.
-`Temporal` se si vuole testare la mutazione sulle regole temporali.
-`Both` per entrambe.
+Risultati attesi:
 
-Gli stessi comandi valgono per `amf_sync_failure_case_b`.
-
-### Casi RES*
-
-Il test RES* Verification Failure richiede l’identificatore del caso:
-
-```bash
-python main.py --test resstar_verification_failure --case A
-python main.py --mutation resstar_verification_failure --case A
+```text
+Baseline       Static PASS   Temporal PASS
+Static mut.    Static FAIL   Temporal PASS
+Temporal mut.  Static PASS   Temporal FAIL
+Both mut.      Static FAIL   Temporal FAIL
 ```
 
-Sostituire `A` con `B`, `C` o `D`.
+---
+
+### AMF Synchronization Failure — Case B
+
+Baseline:
+
+```bash
+python main.py --test amf_sync_failure_case_b
+```
+
+Mutation static:
+
+```bash
+python main.py --mutation amf_sync_failure_case_b --variant static
+```
+
+Mutation temporal:
+
+```bash
+python main.py --mutation amf_sync_failure_case_b --variant temporal
+```
+
+Mutation combinata:
+
+```bash
+python main.py --mutation amf_sync_failure_case_b --variant both
+```
+
+Risultati attesi:
+
+```text
+Baseline       Static PASS   Temporal PASS
+Static mut.    Static FAIL   Temporal PASS
+Temporal mut.  Static PASS   Temporal FAIL
+Both mut.      Static FAIL   Temporal FAIL
+```
 
 ---
 
 ## Famiglie di test implementate
 
-| Famiglia di test | Proprietà principale | Verdetto originale |
+| Famiglia di test | Proprietà principale | Pipeline |
 | --- | --- | --- |
-| NRF Discovery Authorization | Lo status HTTP della risposta deve essere `403` | FAIL |
-| UDM AKA Resynchronization | Coerenza del RAND, differenze tra vettori e verifica MAC | PASS |
-| UDM SUCI De-concealment | Il SUPI restituito deve coincidere con quello atteso | PASS |
-| AMF Synchronization Failure — Caso A | Verifiche statiche + risposta AUSF entro `T3520` | PASS |
-| AMF Synchronization Failure — Caso B | Verifiche statiche + assenza di una nuova Authentication Request entro `T3520` | PASS |
-| UPF TEID Uniqueness | Unicità della coppia F-TEID `{teid, ipv4}` tra risposte PFCP | PASS |
-| RES* Verification Failure — Casi A–D | Verifiche sui vettori di autenticazione e sul percorso di fallimento RES* | PASS |
+| NRF Discovery Authorization | Status HTTP della risposta | Generic sequence pipeline |
+| AMF Synchronization Failure — Case A | Static rules + risposta AUSF entro T3520 | Generic sequence pipeline |
+| AMF Synchronization Failure — Case B | Static rules + assenza Authentication Request entro T3520 | Generic sequence pipeline |
+| UDM AKA Resynchronization | Coerenza RAND, AUTS e MAC | Legacy |
+| UDM SUCI De-concealment | SUPI restituito uguale a quello atteso | Legacy |
+| UPF TEID Uniqueness | Unicità F-TEID `{teid, ipv4}` | Legacy |
+| RES* Verification Failure — Cases A–D | Verifiche sui vettori di autenticazione e failure path | Legacy |
 
-Il baseline NRF produce intenzionalmente `FAIL`: nella cattura la risposta ha status HTTP `200`, mentre la DSL richiede `403`.
+Le famiglie indicate come `Legacy` sono ancora funzionanti ma non sono ancora state migrate alla nuova architettura generica.
 
 ---
 
@@ -146,14 +367,14 @@ Le mutazioni sono definite in:
 config/mutation_tests.json
 ```
 
-Il flusso di mutation testing è:
+Il flusso generale è:
 
 ```text
 PCAP originale
     ↓
-esecuzione della verifica originale
+esecuzione baseline
     ↓
-selezione del target a partire dall’evidenza estratta
+selezione del target
     ↓
 generazione del PCAP mutato
     ↓
@@ -164,40 +385,66 @@ confronto tra verdetto osservato e verdetto atteso
 
 Esempi di mutazione:
 
-- modifica dello status NRF da `200` a `403`;
-- modifica del RAND nella risincronizzazione UDM;
-- modifica del SUPI restituito;
-- mutazioni statiche, temporali o combinate sui casi AMF;
-- duplicazione di un F-TEID nel test UPF;
-- modifica di valori RES* / `authResult` nei casi di autenticazione.
+- modifica dello status HTTP NRF;
+- modifica del RAND nella richiesta di risincronizzazione;
+- modifica dei timestamp per violare una proprietà temporale;
+- combinazione di mutazioni statiche e temporali;
+- duplicazione di F-TEID;
+- modifica di valori RES* e `authResult`.
 
+Uno scenario di mutation testing viene indicato come:
+
+```text
+Result: OK
+```
+
+quando il verdetto osservato coincide con quello atteso.
+
+Questo significa che anche una transizione:
+
+```text
+FAIL -> PASS
+```
+
+può essere corretta, come nel caso NRF.
 
 ---
 
-## Output
+## Output della nuova pipeline
 
-Ogni test genera i propri artefatti sotto `reports/`.
+I test migrati producono direttamente un report JSON generico.
 
-I file principali sono:
+Il report contiene:
 
 ```text
-evidence.json
-verification.json
-temporal_verification.json   # solo AMF
-report.json
+metadata
+test
+source
+configuration
+criteria
+verification
+evidence
+explanation
+verdict
 ```
 
-Il report finale contiene:
+Per ciascun criterio vengono riportati:
 
-- metadati del test;
-- PCAP sorgente e SHA-256;
-- criteri verificati;
-- valori osservati e attesi;
-- frame di evidenza;
-- risultati delle verifiche statiche e temporali;
-- verdetto finale.
+- engine utilizzato;
+- verdict;
+- evidence frames;
+- campo verificato;
+- operatore;
+- valore atteso;
+- valore osservato;
+- eventuale campo di confronto.
 
-I report generati sono esclusi da Git perché possono essere riprodotti eseguendo nuovamente i test.
+Per i criteri temporali vengono inoltre riportati:
+
+- motore MonPoly;
+- modalità di verifica;
+- presenza o assenza di una violazione;
+- output prodotto da MonPoly.
 
 ---
 
@@ -205,47 +452,58 @@ I report generati sono esclusi da Git perché possono essere riprodotti eseguend
 
 ```text
 captures/           Catture PCAP originali e mutate
-config/             Configurazione di test e mutazioni
-dsl/                Regole DSL, grammatica e parser Lark
-extractor/          Extractor TShark specifici dei test nella baseline attuale
-verifier/           Verifiche statiche, MAC e temporali
-mfotl/              Firma MonPoly e artefatti temporali
-reporter/           Costruzione dei report
+config/             Configurazione dei test e delle mutazioni
+dsl/                DSL, grammatica Lark e parser
+traffic/            Lettura TShark e normalizzazione protocollare
+traffic/resolvers/  Resolver semantici
+matcher/            AST, Thompson compiler, NFA e sequence matcher
+pipeline/           Pipeline generica di verifica
+verifier/           Binding verifier, verifier legacy e temporal verifier
+mfotl/              Signature, formule e log MonPoly
+reporter/           Reporter generico e reporter legacy ancora necessari
 mutation_testing/   Mutatori offline delle catture
 utils/              Funzioni condivise
 scasdk/             Componenti ScasDK originali e adattati
-main.py             Runner principale per test e mutazioni
+main.py             Runner principale
 ```
 
 `scasdk/original/` contiene il sottoinsieme di ScasDK utilizzato come riferimento durante lo sviluppo, mentre `scasdk/adapted/` contiene la versione adattata impiegata dal progetto.
 
-I file `subscriber.json` inclusi nella repository contengono **esclusivamente parametri dell’ambiente sperimentale** e vengono mantenuti per garantire la riproducibilità dei casi di test.
-
----
-
-## Riproduzione della validazione attuale
-
-Dopo aver installato le dipendenze e gli strumenti esterni:
-
-```bash
-source ~/.venvs/5g-security-assurance/bin/activate
-python main.py --all
-```
-
-Uno scenario viene indicato come `OK` quando il verdetto osservato coincide con quello configurato come atteso.
-
-Di conseguenza, anche un verdetto SCAS `FAIL` può produrre:
-
-```text
-OK
-```
-
-se il `FAIL` è proprio il risultato atteso per quello scenario sperimentale (è il caso del test `NRF DISCOVERY`).
+I file `subscriber.json` inclusi nella repository contengono esclusivamente parametri dell’ambiente sperimentale e vengono mantenuti per garantire la riproducibilità dei casi di test.
 
 ---
 
 ## Stato dello sviluppo
 
-La repository rappresenta attualmente la baseline stabile del prototipo sviluppato per la tesi.
+La nuova architettura generica è attualmente utilizzata per:
 
-Il passo architetturale successivo consiste nel sostituire gli extractor specifici dei singoli test con una pipeline generica di elaborazione del traffico, nella quale le sequenze di messaggi vengano descritte direttamente nella DSL e riconosciute su eventi normalizzati prima dell’applicazione delle verifiche statiche e temporali.
+```text
+NRF Discovery Authorization
+AMF Synchronization Failure — Case A
+AMF Synchronization Failure — Case B
+```
+
+Questi test utilizzano:
+
+```text
+generic traffic extraction
+→ semantic normalization
+→ DSL sequence
+→ AST
+→ Thompson NFA
+→ sequence matcher
+→ static binding verification
+→ MFOTL / MonPoly
+→ generic report
+```
+
+Le restanti famiglie di test verranno migrate progressivamente eliminando gli extractor e i reporter specifici dove non più necessari.
+
+Tra i principali sviluppi ancora previsti:
+
+- migrazione di UPF, UDM e RES*;
+- miglioramento della correlazione cross-protocol;
+- estensione del matcher oltre le sequenze lineari;
+- supporto a pattern opzionali, alternativi o ripetuti;
+- ulteriore consolidamento della DSL;
+- progressiva eliminazione della compatibilità legacy.
