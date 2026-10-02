@@ -89,6 +89,10 @@ def get_binding_value(context: BindingContext, field_path: str) -> Any:
             for event in binding
         ]
 
+    # Binding esterno / configurativo
+    if isinstance(binding, dict):
+        return get_nested_value(binding, nested_path)
+
     # Binding singolo
     return get_event_field(binding, nested_path)
     

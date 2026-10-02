@@ -3,13 +3,13 @@ from dataclasses import dataclass, field
 from dsl.parse_rule import get_sequence, parse_rule
 
 from matcher.ast import build_sequence_ast
-from matcher.models import Match
+from matcher.models import BindingContext, Match
 from matcher.thompson import ThompsonCompiler
 from matcher.matcher import match_sequence
 
 from traffic.models import MessageEvent
 
-from verifier.binding_verifier import verify_match
+from verifier.binding_verifier import verify_bindings
 
 
 @dataclass
@@ -17,6 +17,7 @@ class SequenceVerificationResult:
     verdict: str
 
     match: Match | None = None
+    context: BindingContext | None = None
 
     verification: dict | None = None
 
@@ -62,9 +63,10 @@ def group_events_by_correlation(events: list[MessageEvent]) -> list[list[Message
 
 
 def run_sequence_verification(
-    events: list[MessageEvent], 
+    events: list[MessageEvent],
     rule_file: str,
-    correlation_mode: str = "grouped"    
+    correlation_mode: str = "grouped",
+    external_bindings: dict | None = None
 ) -> SequenceVerificationResult:
     """
     Esegue una verifica sequence-based su eventi semantici.
@@ -105,7 +107,7 @@ def run_sequence_verification(
         raise ValueError(
             f"Unsupported correlation mode: {correlation_mode}"
         )
-    
+
 
     matches = []
 
@@ -125,25 +127,31 @@ def run_sequence_verification(
         )
 
     #
-    # Per ora il test NRF richiede un singolo match.
+    # Per ora i sequence test richiedono un singolo match.
     # La cardinalità verrà resa esplicita nella DSL più avanti.
     #
     if len(matches) > 1:
         return SequenceVerificationResult(
             verdict="INCONCLUSIVE",
             details={
-                "reason": "Multiple complete sequence matches found", 
+                "reason": "Multiple complete sequence matches found",
                 "matches_found": len(matches),
             },
         )
 
     match = matches[0]
 
-    verification = verify_match(match, rules)
+    context = match.to_binding_context()
+
+    if external_bindings:
+        context.bindings.update(external_bindings)
+
+    verification = verify_bindings(context, rules)
 
     return SequenceVerificationResult(
         verdict=verification["overall_verdict"],
         match=match,
+        context=context,
         verification=verification,
         details={
             "matches_found": 1,

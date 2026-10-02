@@ -1,10 +1,14 @@
 from dataclasses import dataclass, field
-from typing import TypeAlias
+from typing import Any, TypeAlias
 
 from traffic.models import MessageEvent
 
 
-BindingValue: TypeAlias = MessageEvent | list[MessageEvent]
+BindingValue: TypeAlias = (
+    MessageEvent
+    | list[MessageEvent]
+    | dict[str, Any]
+)
 
 
 @dataclass

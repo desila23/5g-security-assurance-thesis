@@ -91,12 +91,15 @@
         "inherit_baseline_config": true,
         "mutated_test": "udm_suci_deconcealment_mutation",
         "mutator": "mutation_testing.mutate_udm_supi",
+        "mutator_options": {
+            "http2_port": true
+        },
         "expected_verdicts": {
             "baseline": "PASS",
             "mutated": "FAIL"
         },
         "target_rule": {
-            "field": "suci_deconcealment.test_input.original_supi",
+            "field": "response.body.supi",
             "operator": "==",
             "baseline": "PASS",
             "mutated": "FAIL"

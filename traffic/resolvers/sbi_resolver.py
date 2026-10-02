@@ -7,7 +7,7 @@ def resolve_sbi_message_types(events: list[MessageEvent]) -> list[MessageEvent]:
 
     Per ora supporta:
         - NRF Discovery
-        - AUSF Authentication / Resynchronization   
+        - AUSF Authentication / Resynchronization
     """
 
     by_correlation = {}
@@ -74,20 +74,40 @@ def resolve_sbi_message_types(events: list[MessageEvent]) -> list[MessageEvent]:
 
 
         # --------------------------------------------------
-        # NRF
+        # SBI request classification
         # --------------------------------------------------
 
         if event.kind == "request":
             path = event.fields.get("path") or ""
 
+            # NRF
             if path.startswith("/nnrf-disc/"):
                 event.message_type = "nrf.discovery.request"
                 by_correlation[key] = "nrf.discovery"
 
+            # UDM
+            elif (
+                path.startswith("/nudm-ueau/")
+                and path.endswith("/security-information/generate-auth-data")
+            ):
+                event.message_type = "udm.generate_auth_data.request"
+                by_correlation[key] = "udm.generate_auth_data"
+
+
+        # --------------------------------------------------
+        # SBI response classification
+        # --------------------------------------------------
+
         elif event.kind == "response":
             base_type = by_correlation.get(key)
 
+            # NRF
             if base_type == "nrf.discovery":
                 event.message_type = "nrf.discovery.response"
+
+            # UDM
+            elif base_type == "udm.generate_auth_data":
+                event.message_type = "udm.generate_auth_data.response"
+
 
     return events

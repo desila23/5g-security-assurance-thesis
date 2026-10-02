@@ -9,6 +9,7 @@ from pathlib import Path
 
 from utils.verifier_utils import load_test_config
 from utils.json_utils import load_json
+from utils.external_binding_utils import load_external_bindings
 
 from traffic.tshark_reader import load_tshark_ek
 from traffic.http2_normalizer import normalize_http2
@@ -340,10 +341,13 @@ def run_sequence_test(test_id, test_config, verbose=False):
         "grouped",
     )
 
+    external_bindings = load_external_bindings(BASE_DIR, test_config.get("external_bindings"))
+
     result = run_sequence_verification(
         events,
         str(rule_file),
-        correlation_mode=correlation_mode
+        correlation_mode=correlation_mode,
+        external_bindings=external_bindings
     )
 
 
@@ -919,6 +923,33 @@ def build_mutated_config(
 
     return mutated_config
 
+def get_http2_decode_port(test_config: dict) -> int | None:
+    traffic = test_config.get("traffic", {})
+
+    for source in traffic.get("sources", []):
+        if source.get("type") != "http2":
+            continue
+
+        for decode_as in source.get("decode_as", []):
+            prefix = "tcp.port=="
+            suffix = ",http2"
+
+            if (
+                decode_as.startswith(prefix)
+                and decode_as.endswith(suffix)
+            ):
+                port_value = decode_as[
+                    len(prefix):-len(suffix)
+                ]
+
+                try:
+                    return int(port_value)
+                except ValueError:
+                    raise RuntimeError(
+                        f"Porta HTTP/2 non valida in decode_as: {decode_as}"
+                    )
+
+    return None
 
 
 def run_mutation(test_id, variant=None, case_id=None, verbose=False, baseline_already_run=False):
@@ -930,6 +961,7 @@ def run_mutation(test_id, variant=None, case_id=None, verbose=False, baseline_al
         #
         # COMPATIBILITÀ CON IL FORMATO FLAT ATTUALE.
         #   Serve finché NRF, AMF e gli altri mutation test non saranno migrati alla struttura "variants".
+        #
         matches = [
             config
             for config in mutations.values()
@@ -945,7 +977,7 @@ def run_mutation(test_id, variant=None, case_id=None, verbose=False, baseline_al
                 raise RuntimeError(
                     f"Mutation test non configurato univocamente per {test_id}"
                 )
-            
+
             raise RuntimeError(
                 f"Variante '{variant}' non disponibile per {test_id}"
             )
@@ -1022,7 +1054,7 @@ def run_mutation(test_id, variant=None, case_id=None, verbose=False, baseline_al
     baseline_config = load_test_config(BASE_DIR, baseline_id, case_id)
 
     mutated_config = build_mutated_config(baseline_config, mutation, case_id)
-    
+
 
     if not baseline_already_run:
         run_pipeline_for_mutation(baseline_id, case_id, verbose)
@@ -1055,7 +1087,25 @@ def run_mutation(test_id, variant=None, case_id=None, verbose=False, baseline_al
             "--report",
             str(BASE_DIR / baseline_config["report"]),
         ])
-    
+
+        mutator_option = mutation.get(
+            "mutator_options",
+            {}
+        )
+
+        if mutator_option.get("http2_port"):
+            http2_port = get_http2_decode_port(baseline_config)
+
+            if http2_port is None:
+                raise RuntimeError(
+                    f"{test_id}: il mutator richiede una porta HTTP/2, ma nessuna porta è configurata"
+                )
+
+            mutation_command.extend([
+                "--port",
+                str(http2_port)
+            ])
+
 
     # COMPATIBILITÀ LEGACY:
     # I mutator legacy ricevono ancora evidence.json come sorgente dell'evidenza. 
@@ -1123,10 +1173,12 @@ def run_mutation(test_id, variant=None, case_id=None, verbose=False, baseline_al
     print()
     print("  Baseline")
     print(f"    Verdict: {baseline_verdict}")
+    print(f"    Report:  {baseline_config['report']}")
 
     print()
     print("  Mutation")
     print(f"    Mutator: {mutation['mutator']}")
+    print(f"    Report:  {mutated_config['report']}")
     print(f"    Verdict: {mutated_verdict}")
 
     if "expected_components" in mutation:
@@ -1173,6 +1225,7 @@ def run_batch_item(label, expected, report_file, action):
         observed = load_json(BASE_DIR / report_file)["verdict"]
         ok = observed == expected
         error = None
+
     except Exception as exc:
         observed = "ERROR"
         ok = False
@@ -1183,10 +1236,12 @@ def run_batch_item(label, expected, report_file, action):
 
     if not ok:
         print(output.getvalue(), end="")
+
         if error is not None:
             print(f"{type(error).__name__}: {error}", file=sys.stderr)
 
     return ok
+
 
 
 def run_all():

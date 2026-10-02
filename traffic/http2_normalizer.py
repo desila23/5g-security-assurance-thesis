@@ -130,10 +130,16 @@ def normalize_http2(packets: list[dict]) -> list[MessageEvent]:
         lambda: {
             "request": None,
             "response": None,
+
             "request_body": bytearray(),
             "response_body": bytearray(),
+
+            "request_data_seen": set(),
+            "response_data_seen": set(),
+
             "orphan_body": bytearray(),
             "orphan_frames": [],
+            "orphan_data_seen": set(),
             "orphan_metadata": None
         }
     )
@@ -259,10 +265,12 @@ def normalize_http2(packets: list[dict]) -> list[MessageEvent]:
                 and src == request.src
                 and dst == request.dst
             ):
-                transaction["request_body"].extend(data)
-
-                if frame_number not in request.related_frames:
-                    request.related_frames.append(frame_number)
+                _append_body_data(
+                    request,
+                    transaction["request_body"],
+                    data,
+                    frame_number,
+                )
 
             # Se la direzione è inversa, appartiene alla response.
             elif (
@@ -270,17 +278,24 @@ def normalize_http2(packets: list[dict]) -> list[MessageEvent]:
                 and src == request.dst
                 and dst == request.src
             ):
-                transaction["response_body"].extend(data)
-
-                if response is not None:
-                    if frame_number not in response.related_frames:
-                        response.related_frames.append(frame_number)
+                _append_body_data(
+                    response,
+                    transaction["response_body"],
+                    data,
+                    frame_number,
+                )
 
 
             # Se ci sono dei frames senza correlazione non li scarto
             else:
-                transaction["orphan_body"].extend(data)
-                transaction["orphan_frames"].append(frame_number)
+                data_key = (frame_number, data)
+
+                if data_key not in transaction["orphan_data_seen"]:
+                    transaction["orphan_data_seen"].add(data_key)
+                    transaction["orphan_body"].extend(data)
+
+                if frame_number not in transaction["orphan_frames"]:
+                    transaction["orphan_frames"].append(frame_number)
 
                 if transaction["orphan_metadata"] is None:
                     transaction["orphan_metadata"] = {
@@ -350,3 +365,37 @@ def normalize_http2(packets: list[dict]) -> list[MessageEvent]:
     )
 
     return events
+
+
+
+def _append_body_data(
+    event: MessageEvent | None,
+    body_buffer: bytearray,
+    data: bytes,
+    frame_number: int,
+) -> None:
+    if event is None:
+        return
+
+    content_length = (
+        event.fields
+        .get("headers", {})
+        .get("content-length")
+    )
+
+    expected_length = (
+        int(content_length)
+        if content_length is not None
+        else None
+    )
+
+    current_length = len(body_buffer)
+
+    if (
+        expected_length is None
+        or current_length + len(data) <= expected_length
+    ):
+        body_buffer.extend(data)
+
+    if frame_number not in event.related_frames:
+        event.related_frames.append(frame_number)

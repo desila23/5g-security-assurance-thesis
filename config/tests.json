@@ -38,15 +38,40 @@
     },
 
     "udm_suci_deconcealment": {
-        "extractor": "extractor.udm_suci_deconcealment_extractor",
-        "verifier": "verifier.simple_verifier",
-        "reporter": "reporter.udm_suci_deconcealment_reporter",
+        "pipeline": "sequence",
 
-        "pcap": "captures/udm_suci_deconcealment_open5gs.pcapng",  
-        "subscriber_file": "scasdk/adapted/scasdk-nrf-udm/data/ue/subscriber.json",  
-        "evidence": "reports/udm_suci_deconcealment/evidence.json",
+        "pcap": "captures/udm_suci_deconcealment_open5gs.pcapng",
+
         "rules": "dsl/udm_suci_deconcealment.dsl",
-        "output": "reports/udm_suci_deconcealment/verification.json",
+
+        "description": "Verification of UDM SUCI de-concealment",
+        "nf": "UDM",
+
+        "traffic": {
+            "correlation_mode": "grouped",
+            "sources": [
+                {
+                    "type": "http2",
+                    "display_filter": "http2",
+                    "decode_as": [
+                        "tcp.port==7777,http2"
+                    ]
+                }
+            ]
+        },
+
+        "external_bindings": {
+            "expected": {
+                "source": "scasdk/adapted/scasdk-nrf-udm/data/ue/subscriber.json",
+                "fields": {
+                    "supi": {
+                        "path": "supi",
+                        "prefix": "imsi-"
+                    }
+                }
+            }
+        },
+
         "report": "reports/udm_suci_deconcealment/report.json"
     },
 

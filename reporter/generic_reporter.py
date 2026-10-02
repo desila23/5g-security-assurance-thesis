@@ -1,4 +1,5 @@
 from pathlib import Path
+import hashlib
 
 from utils.json_utils import save_json
 from utils.report_schema import normalize_report
@@ -20,6 +21,22 @@ def _event_to_evidence(event):
     }
 
 
+def _binding_to_evidence(binding):
+    if isinstance(binding, list):
+        return [
+            _event_to_evidence(event)
+            for event in binding
+        ]
+
+    if isinstance(binding, dict):
+        return {
+            "source_type": "external",
+            "fields": binding
+        }
+
+    return _event_to_evidence(binding)
+
+
 def _get_binding_context(result):
     if getattr(result, "context", None) is not None:
         return result.context
@@ -28,6 +45,30 @@ def _get_binding_context(result):
 
     if match is not None:
         return match.to_binding_context()
+
+
+def _build_external_bindings_configuration(test_config: dict) -> dict:
+    external_bindings = test_config.get("external_bindings", {})
+
+    result = {}
+
+    for alias, binding_config in external_bindings.items():
+        source = binding_config.get("source")
+
+        enriched = dict(binding_config)
+
+        if source:
+            source_path = Path(source)
+
+            if source_path.is_file():
+                enriched["sha256"] = hashlib.sha256(
+                    source_path.read_bytes()
+                ).hexdigest()
+
+        result[alias] = enriched
+
+    return result
+
 
 
 def _build_evidence(result):
@@ -41,13 +82,7 @@ def _build_evidence(result):
     bindings = {}
 
     for alias, binding in context.bindings.items():
-        if isinstance(binding, list):
-            bindings[alias] = [
-                _event_to_evidence(event)
-                for event in binding
-            ]
-        else:
-            bindings[alias] = _event_to_evidence(binding)
+        bindings[alias] = _binding_to_evidence(binding)
 
     return {
         "bindings": bindings
@@ -91,6 +126,9 @@ def _frames_for_field(result, field_path):
                     frames.append(frame)
 
         return frames
+
+    if isinstance(binding, dict):
+        return []
 
     return _frames_for_event(binding)
 
@@ -291,6 +329,7 @@ def build_generic_report(
                 "traffic",
                 {},
             ),
+            "external_bindings": _build_external_bindings_configuration(test_config)
         },
 
         "criteria": criteria,
