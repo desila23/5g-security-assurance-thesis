@@ -119,6 +119,7 @@ Il reporter generico produce la stessa struttura di output indipendentemente dal
 - metadati del test;
 - PCAP sorgente e hash SHA-256;
 - configurazione della pipeline;
+- eventuali sorgenti esterne utilizzate dalla verifica e relativo hash SHA-256;
 - criteri di verifica;
 - risultati delle verifiche;
 - binding dell'evidenza;
@@ -198,27 +199,41 @@ Il verificatore ora opera su `BindingContext` invece che su strutture di evidenz
 
 Un binding può contenere:
 
-```
+```text
 alias -> MessageEvent
 ```
 
 oppure:
 
-```
+```text
 alias -> list[MessageEvent]
 ```
 
-a seconda che l'evidenza sia stata ottenuta tramite `SEQUENCE` o `COLLECT`.
+per l'evidenza estratta dal traffico, oppure:
 
-Il verificatore supporta regole di confronto generiche e operatori aggregati come `UNIQUE`.
-
-Ad esempio:
-
-```
-REQUIRE UNIQUE responses.f_teids
+```text
+alias -> dict
 ```
 
-verifica che lo stesso F-TEID non venga riutilizzato tra eventi raccolti differenti, mantenendo il riferimento ai frame che costituiscono l'evidenza.
+per valori esterni o configurativi richiesti dal criterio di verifica.
+
+Gli input esterni vengono caricati dalla configurazione del test e aggiunti al `BindingContext` senza essere rappresentati artificialmente come eventi di rete.
+
+Ad esempio, nel test UDM SUCI De-concealment:
+
+```text
+request  -> MessageEvent
+response -> MessageEvent
+expected -> {
+    "supi": "imsi-001010000000001"
+}
+```
+
+La DSL può quindi confrontare direttamente evidenza osservata e valore di riferimento:
+
+```text
+REQUIRE response.body.supi == expected.supi
+```
 
 ---
 
@@ -440,6 +455,60 @@ Inconclusive mutation     INCONCLUSIVE
 ```
 
 
+### UDM SUCI De-concealment
+
+Dimostra:
+
+- normalizzazione HTTP/2;
+- risoluzione semantica degli eventi UDM;
+- `SEQUENCE`;
+- utilizzo di input esterni/configurativi;
+- confronto tra evidenza di rete e valore di riferimento;
+- reporting generico;
+- mutation testing basato sul report unificato.
+
+Baseline:
+
+```bash
+python main.py --test udm_suci_deconcealment
+```
+
+Mutation:
+
+```bash
+python main.py --mutation udm_suci_deconcealment
+```
+
+La sequenza DSL individua:
+
+```text
+udm.generate_auth_data.request
+udm.generate_auth_data.response
+```
+
+Il SUPI atteso viene caricato dal file di configurazione del subscriber e inserito nel `BindingContext` come binding esterno:
+
+```text
+expected.supi
+```
+
+La verifica applicata è:
+
+```text
+REQUIRE response.status == 200
+REQUIRE response.body.supi == expected.supi
+```
+
+Risultati attesi:
+
+```text
+Baseline    PASS
+Mutation    FAIL
+```
+
+La mutation modifica offline il SUPI restituito nella response UDM, lasciando invariato il valore di riferimento esterno. Il criterio passa quindi da `PASS` a `FAIL`.
+
+
 
 ---
 
@@ -488,7 +557,7 @@ Il report include anche:
 | AMF Synchronization Failure — Case A | Static rules + risposta AUSF entro T3520 | Generic sequence pipeline |
 | AMF Synchronization Failure — Case B | Static rules + assenza Authentication Request entro T3520 | Generic sequence pipeline |
 | UDM AKA Resynchronization | Coerenza RAND, AUTS e MAC | Legacy |
-| UDM SUCI De-concealment | SUPI restituito uguale a quello atteso | Legacy |
+| UDM SUCI De-concealment | SUPI restituito uguale al valore di riferimento esterno | Generic sequence pipeline |
 | UPF TEID Uniqueness | Unicità F-TEID `{teid, ipv4}` | Generic collect pipeline |
 | RES* Verification Failure — Cases A–D | Verifiche sui vettori di autenticazione e failure path | Legacy |
 
