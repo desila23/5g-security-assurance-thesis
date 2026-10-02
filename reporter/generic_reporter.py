@@ -20,17 +20,37 @@ def _event_to_evidence(event):
     }
 
 
-def _build_evidence(match):
-    if match is None:
+def _get_binding_context(result):
+    if getattr(result, "context", None) is not None:
+        return result.context
+
+    match = getattr(result, "match", None) 
+
+    if match is not None:
+        return match.to_binding_context()
+
+
+def _build_evidence(result):
+    context = _get_binding_context(result)
+
+    if context is None:
         return {
             "bindings": {}
         }
 
+    bindings = {}
+
+    for alias, binding in context.bindings.items():
+        if isinstance(binding, list):
+            bindings[alias] = [
+                _event_to_evidence(event)
+                for event in binding
+            ]
+        else:
+            bindings[alias] = _event_to_evidence(binding)
+
     return {
-        "bindings": {
-            alias: _event_to_evidence(event)
-            for alias, event in match.bindings.items()
-        }
+        "bindings": bindings
     }
 
 
@@ -45,18 +65,34 @@ def _frames_for_event(event):
     return frames
 
 
-def _frames_for_field(match, field_path):
-    if match is None or not field_path:
+def _frames_for_field(result, field_path):
+    if not field_path:
         return []
+
+    context = _get_binding_context(result)
+
+    if context is None:
+        return []
+
 
     alias = field_path.split(".", 1)[0]
 
-    event = match.bindings.get(alias)
+    binding = context.bindings.get(alias)
 
-    if event is None:
+    if binding is None:
         return []
 
-    return _frames_for_event(event)
+    if isinstance(binding, list):
+        frames = []
+
+        for event in binding:
+            for frame in _frames_for_event(event):
+                if frame not in frames:
+                    frames.append(frame)
+
+        return frames
+
+    return _frames_for_event(binding)
 
 
 def _build_verification_results(result, test_config):
@@ -72,7 +108,7 @@ def _build_verification_results(result, test_config):
         evidence_frames = []
 
         for frame in _frames_for_field(
-            result.match,
+            result,
             rule["field"],
         ):
             if frame not in evidence_frames:
@@ -82,7 +118,7 @@ def _build_verification_results(result, test_config):
 
         if expected_field:
             for frame in _frames_for_field(
-                result.match,
+                result,
                 expected_field,
             ):
                 if frame not in evidence_frames:
@@ -103,6 +139,9 @@ def _build_verification_results(result, test_config):
 
         if expected_field:
             verification_result["expected_field"] = expected_field
+
+        if "duplicates" in rule:
+            verification_result["duplicates"] = rule["duplicates"]
 
         verification_results.append(verification_result)
 
@@ -165,15 +204,27 @@ def _build_criteria(result):
         result.verification.get("rules", []),
         start=1,
     ):
+        operator = rule["operator"]
+
+        if operator == "UNIQUE":
+            criterion_type = "uniqueness"
+            description = (
+                f"verify uniqueness of {rule['field']} across collected events"
+            )
+        else:
+            criterion_type = "comparison"
+            description = (
+                f"Verify {rule['field']} "
+                f"{operator} "
+                f"{rule['expected']}"
+            )
+
         criteria.append({
             "id": f"criterion_{index}",
-            "type": "comparison",
-            "description": (
-                f"Verify {rule['field']} "
-                f"{rule['operator']} "
-                f"{rule['expected']}"
-            ),
+            "type": criterion_type,
+            "description": description,
         })
+
 
     temporal = result.details.get("temporal")
 
@@ -209,7 +260,7 @@ def build_generic_report(
         "schema_version": "1.0",
 
         "metadata": {
-            "generator": "generic_sequence_pipeline",
+            "generator": "generic_verification_pipeline",
         },
 
         "test": {
@@ -230,7 +281,10 @@ def build_generic_report(
         },
 
         "configuration": {
-            "pipeline": "sequence",
+            "pipeline": test_config.get(
+                "pipeline",
+                "legacy"
+            ),
             "case": test_config.get("case"),
             "rules": test_config["rules"],
             "traffic": test_config.get(
@@ -246,11 +300,14 @@ def build_generic_report(
             "overall_verdict": result.verdict,
         },
 
-        "evidence": _build_evidence(result.match),
+        "evidence": _build_evidence(result),
 
         "explanation": {
             "reason": result.details.get("reason"),
+            "message_type": result.details.get("message_type"),
+            "alias": result.details.get("alias"),
             "matches_found": result.details.get("matches_found"),
+            "collected_events": result.details.get("collected_events"),
         },
 
         "verdict": result.verdict,
@@ -263,7 +320,7 @@ def build_generic_report(
         )
     else:
         summary = (
-            f"Sequence verification completed with verdict {result.verdict}"
+            f"Verification completed with verdict {result.verdict}"
         )
 
     return normalize_report(report, summary)

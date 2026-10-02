@@ -1,18 +1,21 @@
 start: statement+
 
 ?statement: sequence_rule
+          | collect_rule
           | rule 
 
-?rule: statis_rule
+?rule: static_rule
      | temporal_rule  
 
-?statis_rule: comparison_rule
+?static_rule: comparison_rule
             | unique_rule
             | if_rule
 
 
 sequence_rule: "SEQUENCE" "{" sequence_item+ "}"
 sequence_item: FIELD "AS" NAME
+
+collect_rule: "COLLECT" FIELD "AS" NAME
 
 comparison_rule: "REQUIRE" FIELD OP operand
 unique_rule: "REQUIRE" "UNIQUE" FIELD
@@ -22,6 +25,7 @@ temporal_rule: "MFOTL" "CASE" VALUE MFOTL_BLOCK
 
 ?operand: FIELD -> field_operand
         | VALUE -> literal_operand
+
 
 FIELD: /[a-zA-Z_][a-zA-Z0-9_.]*(\.[a-zA-Z_][a-zA-Z0-9_]*)+/
 NAME: /[a-zA-Z_][a-zA-Z0-9_]*/

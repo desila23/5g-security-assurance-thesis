@@ -150,14 +150,23 @@
     },
          
     "upf_teid_uniqueness": {
-        "extractor": "extractor.upf_teid_uniqueness_extractor",
-        "verifier": "verifier.simple_verifier",
-        "reporter": "reporter.upf_teid_uniqueness_reporter",
+        "pipeline": "collect",
 
         "pcap": "captures/upf_teid_uniqueness_open5gs.pcapng",
-        "evidence": "reports/upf_teid_uniqueness/evidence.json",
         "rules": "dsl/upf_teid_uniqueness.dsl",
-        "output": "reports/upf_teid_uniqueness/verification.json",
+
+        "description": "Verification of F-TEID uniqueness across PFCP Session Establishment Responses",
+        "nf": "UPF",
+
+        "traffic": {
+            "sources": [
+                {
+                    "type": "pfcp",
+                    "display_filter": "pfcp.msg_type == 51"
+                }
+            ]
+        },
+
         "report": "reports/upf_teid_uniqueness/report.json"
     },
 

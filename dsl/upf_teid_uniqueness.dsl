@@ -1,1 +1,3 @@
-REQUIRE UNIQUE pfcp_session_establishment_response.f_teids
+COLLECT pfcp.session_establishment_response AS responses
+
+REQUIRE UNIQUE responses.f_teids

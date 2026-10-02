@@ -14,6 +14,9 @@ from traffic.tshark_reader import load_tshark_ek
 from traffic.http2_normalizer import normalize_http2
 from traffic.nas_normalizer import normalize_nas_events
 from traffic.resolvers.sbi_resolver import resolve_sbi_message_types
+from traffic.pfcp_normalizer import normalize_pfcp_events
+
+from pipeline.collect_pipeline import run_collect_verification
 
 from dsl.parse_rule import get_mfotl_formula
 
@@ -35,6 +38,40 @@ BASE_DIR = Path(__file__).resolve().parent
 
 def load_all_tests(filename):
     return load_json(BASE_DIR / "config" / filename)
+
+
+
+def iter_mutation_scenarios(mutations):
+    """
+    Restituisce tutte le mutation in forma uniforme.
+
+    Supporta:
+        - formato legacy flat;
+        - nuovo formato con variants.
+    """
+
+    for mutation_id, mutation_group in mutations.items():
+
+        variants = mutation_group.get("variants")
+
+        if variants is None:
+            yield mutation_id, mutation_group
+            continue
+
+        common_config = {
+            key: value
+            for key, value in mutation_group.items()
+            if key != "variants"
+        }
+
+        for variant, variant_config in variants.items():
+            mutation = {
+                **common_config,
+                **variant_config,
+                "variant": variant,
+            }
+
+            yield mutation_id, mutation
 
 
 def list_tests():
@@ -61,55 +98,112 @@ def list_tests():
     print("MUTATED TEST\n")
 
     by_baseline = {}
-    for mutation_id, mutation_config in mutations.items():
+
+    for mutation_id, mutation_config in iter_mutation_scenarios(
+        mutations
+    ):
         baseline_id = mutation_config["baseline_test"]
-        by_baseline.setdefault(baseline_id, []).append(
+
+        by_baseline.setdefault(
+            baseline_id,
+            []
+        ).append(
             (mutation_id, mutation_config)
         )
 
+
+    variant_order = {
+        "static": 0,
+        "temporal": 1,
+        "both": 2,
+        "fail": 3,
+        "inconclusive": 4,
+    }
+
+
     index = 1
+
     for baseline_id in tests:
-        entries = by_baseline.pop(baseline_id, [])
+        entries = by_baseline.pop(
+            baseline_id,
+            []
+        )
+
         if not entries:
             continue
 
-        variants = {
-            config["variant"]: config
-            for _, config in entries
-            if "variant" in config
-        }
-        if variants:
+        entries.sort(
+            key=lambda item: variant_order.get(
+                item[1].get("variant"),
+                99,
+            )
+        )
+
+        variant_entries = [
+            (mutation_id, config)
+            for mutation_id, config in entries
+            if config.get("variant") is not None
+        ]
+
+        non_variant_entries = [
+            (mutation_id, config)
+            for mutation_id, config in entries
+            if config.get("variant") is None
+        ]
+
+        if variant_entries:
             print(f"[{index}] {baseline_id}")
-            for variant in ("static", "temporal", "both"):
-                if variant not in variants:
-                    continue
-                mutated_id = variants[variant]["mutated_test"]
-                print(f"    {variant}: {mutated_id}")
+
+            for _, config in variant_entries:
+                variant = config["variant"]
+                mutated_id = config["mutated_test"]
+
                 print(
-                    f"        Run: python main.py --mutation "
-                    f"{baseline_id} --variant {variant}"
+                    f"    {variant}: {mutated_id}"
                 )
+
+                print(
+                    f"        Run: python main.py "
+                    f"--mutation {baseline_id} "
+                    f"--variant {variant}"
+                )
+
             print()
             index += 1
-            continue
 
-        for mutation_id, config in entries:
-            print(f"[{index}] {config['mutated_test']}")
-            cases = config["test_config"].get("cases")
+        for mutation_id, config in non_variant_entries:
+            print(
+                f"[{index}] "
+                f"{config['mutated_test']}"
+            )
+
+            cases = (
+                config["test_config"].get("cases")
+            )
+
             if cases:
                 for case_id in cases:
                     print(
-                        f"    Case {case_id}: python main.py "
-                        f"--mutation {mutation_id} --case {case_id}"
+                        f"    Case {case_id}: "
+                        f"python main.py "
+                        f"--mutation {mutation_id} "
+                        f"--case {case_id}"
                     )
+
             else:
-                print(f"    Run: python main.py --mutation {mutation_id}")
+                print(
+                    f"    Run: python main.py "
+                    f"--mutation {mutation_id}"
+                )
+
             print()
             index += 1
 
+
     if by_baseline:
         raise RuntimeError(
-            "Mutazioni con baseline assente da config/tests.json: "
+            "Mutazioni con baseline assente "
+            "da config/tests.json: "
             + ", ".join(by_baseline)
         )
 
@@ -164,13 +258,17 @@ def run_module(module_name, test_id=None, case_id=None, verbose=False):
 # COMPATIBILITÀ LEGACY:
 # Supporto temporaneo per i test non ancora migrati alla nuova pipeline basata su SEQUENCE. 
 # Questo ramo verrà rimosso al termine della migrazione.
-def run_pipeline(test_id, case_id=None, verbose=False):
-    test_config = load_test_config(BASE_DIR, test_id, case_id)
+def run_pipeline(test_id, case_id=None, verbose=False, test_config=None):
+    if test_config is None:
+        test_config = load_test_config(BASE_DIR, test_id, case_id)
 
     pipeline_type = test_config.get("pipeline", "legacy")
 
     if pipeline_type == "sequence":
         return run_sequence_test(test_id, test_config, verbose)
+
+    if pipeline_type == "collect":
+        return run_collect_test(test_id, test_config, verbose)
 
     # COMPATIBILITÀ LEGACY:
     # Mantiene il flusso originale:
@@ -359,6 +457,115 @@ def run_sequence_test(test_id, test_config, verbose=False):
     return result, report
 
 
+def run_collect_test(
+    test_id,
+    test_config,
+    verbose=False
+):
+    print(f"\nTest: {test_id}", flush=True)
+
+    pcap_file = BASE_DIR / test_config["pcap"]
+    rule_file = BASE_DIR / test_config["rules"]
+
+    traffic_config = test_config.get(
+        "traffic",
+        {},
+    )
+
+    events = []
+
+    traffic_sources = traffic_config.get(
+        "sources",
+        []
+    )
+
+    for source in traffic_sources:
+        source_type = source["type"]
+
+        packets = load_tshark_ek(
+            pcap_file,
+            display_filter=source.get(
+                "display_filter"
+            ),
+            decode_as=source.get(
+                "decode_as",
+                []
+            ),
+        )
+
+        if source_type == "pfcp":
+            source_events = normalize_pfcp_events(
+                packets
+            )
+
+        else:
+            raise ValueError(
+                "Unsupported traffic source type "
+                f"for collect pipeline: "
+                f"{source_type}"
+            )
+
+        events.extend(source_events)
+
+    events = [
+        event for event in events
+        if event.message_type is not None
+    ]
+
+    events.sort(
+        key=lambda event: (
+            event.timestamp,
+            event.frame_number
+        )
+    )
+
+    result = run_collect_verification(
+        events,
+        str(rule_file)
+    )
+
+    report_file = (
+        BASE_DIR / test_config["report"]
+    )
+
+    save_generic_report(
+        test_id,
+        test_config,
+        result,
+        report_file,
+        BASE_DIR
+    )
+
+    static_verdict = (
+        result.verification.get(
+            "overall_verdict"
+        )
+        if result.verification
+        else None
+    )
+
+    print(
+        "  Static verdict:   "
+        f"{static_verdict or 'N/A'}"
+    )
+
+    print(
+        "  Temporal verdict: N/A"
+    )
+
+    print(
+        "  Overall verdict:  "
+        f"{result.verdict}"
+    )
+
+    print(
+        "  Report file:      "
+        f"{test_config['report']}"
+    )
+
+    return result
+
+
 def run_legacy_pipeline(
     test_id, 
     test_config,
@@ -502,7 +709,7 @@ def check_target_rule(
     target,
     expected_verdict,
 ):
-    if config.get("pipeline") == "sequence":
+    if config.get("pipeline") in {"sequence", "collect"}:
         report = load_json(BASE_DIR / config["report"])
 
         rules = []
@@ -560,7 +767,7 @@ def check_expected_components(
     config,
     expected_components,
 ):
-    if config.get("pipeline") == "sequence":
+    if config.get("pipeline") in {"sequence", "collect"}:
         report = load_json(BASE_DIR / config["report"])
 
         static_results = [
@@ -635,7 +842,7 @@ def check_expected_components(
 
 # HELPERS PER RUN MUTATION
 def get_source_sha256(config): 
-    if config.get("pipeline") == "sequence": 
+    if config.get("pipeline") in {"sequence", "collect"}: 
         report = load_json(BASE_DIR / config["report"]) 
  
         return report["source"]["sha256"] 
@@ -653,29 +860,152 @@ def get_verdict(config):
  
     return report["verdict"]  
 
+def run_pipeline_for_mutation(
+        test_id,
+        case_id,
+        verbose,
+        test_config=None
+):
+    if verbose:
+        return run_pipeline(test_id, case_id, verbose, test_config)
+
+    output = StringIO()
+
+    with redirect_stdout(output):
+        return run_pipeline(test_id, case_id, verbose, test_config)
+
+def build_mutated_config(
+    baseline_config,
+    mutation,
+    case_id=None,
+):
+    if not mutation.get("inherit_baseline_config"):
+        return load_test_config(
+            BASE_DIR,
+            mutation["mutated_test"],
+            case_id,
+        )
+
+    mutated_config = dict(baseline_config)
+
+    test_config = mutation.get("test_config", {})
+
+    # Override comuni
+    for key, value in test_config.items():
+        if key == "cases":
+            continue
+
+        mutated_config[key] = value
+
+    # Eventuali override specifici per case
+    cases = test_config.get("cases")
+
+    if cases is not None:
+        if case_id is None:
+            raise RuntimeError(
+                f"{mutation['mutated_test']}: "
+                "case_id richiesto"
+            )
+
+        if case_id not in cases:
+            raise RuntimeError(
+                f"{mutation['mutated_test']}: "
+                f"case '{case_id}' non configurato"
+            )
+
+        mutated_config.update(
+            cases[case_id]
+        )
+
+    return mutated_config
+
+
 
 def run_mutation(test_id, variant=None, case_id=None, verbose=False, baseline_already_run=False):
     mutations = load_all_tests("mutation_tests.json")
 
-    if variant is None:
-        mutation = mutations.get(test_id)
-    else:
+    mutation_group = mutations.get(test_id)
+
+    if mutation_group is None:
+        #
+        # COMPATIBILITÀ CON IL FORMATO FLAT ATTUALE.
+        #   Serve finché NRF, AMF e gli altri mutation test non saranno migrati alla struttura "variants".
         matches = [
             config
             for config in mutations.values()
             if config["baseline_test"] == test_id
-            and config.get("variant") == variant
+            and (
+                variant is None
+                or config.get("variant") == variant
+            )
         ]
 
         if len(matches) != 1:
+            if variant is None:
+                raise RuntimeError(
+                    f"Mutation test non configurato univocamente per {test_id}"
+                )
+            
             raise RuntimeError(
                 f"Variante '{variant}' non disponibile per {test_id}"
             )
 
         mutation = matches[0]
 
-    if mutation is None:
-        raise RuntimeError(f"Mutation test not configurated: {test_id}")
+    else:
+        variants = mutation_group.get("variants")
+
+        # NUOVO FORMATO:
+        # test
+        # └── variants
+        #     ├── fail
+        #     └── inconclusive
+
+        if variants is not None:
+
+            if variant is None:
+                available = ", ".join(sorted(variants))
+
+                raise RuntimeError(
+                    f"{test_id} dispone di più varianti. "
+                    f"Specificane una con --variant. "
+                    f"Disponibili: {available}"
+                )
+
+            if variant not in variants:
+                available = ", ".join(sorted(variants))
+
+                raise RuntimeError(
+                    f"Variante '{variant}' non disponibile per {test_id}. "
+                    f"Disponibili: {available}"
+                )
+
+            common_config = {
+                key: value
+                for key, value in mutation_group.items()
+                if key != "variants"
+            }
+
+            mutation = {
+                **common_config,
+                **variants[variant],
+                "variant": variant,
+            }
+
+        #
+        # FORMATO FLAT ANCORA PRESENTE
+        #
+        else:
+            if (
+                variant is not None
+                and mutation_group.get("variant") != variant
+            ):
+                raise RuntimeError(
+                    f"Variante '{variant}' non disponibile per {test_id}"
+                )
+
+            mutation = mutation_group
+
 
     baseline_id = mutation["baseline_test"]
     mutated_id = mutation["mutated_test"]
@@ -690,10 +1020,12 @@ def run_mutation(test_id, variant=None, case_id=None, verbose=False, baseline_al
         target = mutation["target_rules"][case_id]
 
     baseline_config = load_test_config(BASE_DIR, baseline_id, case_id)
-    mutated_config = load_test_config(BASE_DIR, mutated_id, case_id)
+
+    mutated_config = build_mutated_config(baseline_config, mutation, case_id)
+    
 
     if not baseline_already_run:
-        run_pipeline(baseline_id, case_id, verbose)
+        run_pipeline_for_mutation(baseline_id, case_id, verbose)
 
 
     baseline_report = load_json(BASE_DIR / baseline_config["report"])
@@ -710,7 +1042,6 @@ def run_mutation(test_id, variant=None, case_id=None, verbose=False, baseline_al
             baseline_id, baseline_config, target, target["baseline"]
         )
 
-    print(f"\nMutator: {mutation['mutator']}", flush=True)
     mutation_command = [
         sys.executable,
         "-m",
@@ -719,7 +1050,7 @@ def run_mutation(test_id, variant=None, case_id=None, verbose=False, baseline_al
         str(BASE_DIR / baseline_config["pcap"]),
     ]
 
-    if baseline_config.get("pipeline") == "sequence":
+    if baseline_config.get("pipeline") in {"sequence", "collect"}:
         mutation_command.extend([
             "--report",
             str(BASE_DIR / baseline_config["report"]),
@@ -747,9 +1078,8 @@ def run_mutation(test_id, variant=None, case_id=None, verbose=False, baseline_al
         mutation["mutator"],
         verbose=verbose,
     )
-    print(f"  Output PCAP: {mutated_config['pcap']}")
 
-    run_pipeline(mutated_id, case_id, verbose)
+    run_pipeline_for_mutation(mutated_id, case_id, verbose, mutated_config)
 
 
     mutated_report = load_json(BASE_DIR / mutated_config["report"])
@@ -776,31 +1106,59 @@ def run_mutation(test_id, variant=None, case_id=None, verbose=False, baseline_al
     if baseline_sha256 == mutated_sha256:
         raise RuntimeError("Il PCAP mutato coincide con la baseline")
 
+
     label = f"Mutation test: {test_id}"
+
     if case_id:
         label += f" - Case {case_id}"
+
     print(f"\n{label}")
 
     if variant:
         print(f"  Variant: {variant}")
 
-    print(
-        f"  Verdict: {expected['baseline']} "
-        f"-> {expected['mutated']}"
-    )
+    baseline_verdict = baseline_report["verdict"]
+    mutated_verdict = mutated_report["verdict"]
 
-    if target is not None:
-        print(
-            f"  Target rule: {target['field']} "
-            f"({target['baseline']} -> {target['mutated']})"
-        )
+    print()
+    print("  Baseline")
+    print(f"    Verdict: {baseline_verdict}")
+
+    print()
+    print("  Mutation")
+    print(f"    Mutator: {mutation['mutator']}")
+    print(f"    Verdict: {mutated_verdict}")
 
     if "expected_components" in mutation:
         components = mutation["expected_components"]
+
         print(
-            f"  Static: {components['static']} "
+            f"    Static: {components['static']} "
             f"| Temporal: {components['temporal']}"
         )
+
+    if target is not None:
+        print()
+        print("  Target rule")
+        print(
+            f"    {target['field']} "
+            f"{target['operator']}"
+        )
+        print(
+            f"    {target['baseline']} "
+            f"-> {target['mutated']}"
+        )
+
+    print()
+    print(
+        f"  Expected transition: "
+        f"{expected['baseline']} -> {expected['mutated']}"
+    )
+
+    print(
+        f"  Observed transition: "
+        f"{baseline_verdict} -> {mutated_verdict}"
+    )
 
     print("  Result: OK")
 
@@ -835,13 +1193,29 @@ def run_all():
     tests = load_all_tests("tests.json")
     mutations = load_all_tests("mutation_tests.json")
 
-    baseline_expected = {}
-    for mutation in mutations.values():
-        test_id = mutation["baseline_test"]
-        expected = mutation["expected_verdicts"]["baseline"]
+    mutation_scenarios = list(
+        iter_mutation_scenarios(
+            mutations
+        )
+    )
 
-        if test_id in baseline_expected and baseline_expected[test_id] != expected:
-            raise RuntimeError(f"Conflicting baseline verdicts for {test_id}")
+    baseline_expected = {}
+
+    for _, mutation in mutation_scenarios:
+        test_id = mutation["baseline_test"]
+        expected = (
+            mutation["expected_verdicts"]["baseline"]
+        )
+
+        if (
+            test_id in baseline_expected
+            and baseline_expected[test_id]
+            != expected
+        ):
+            raise RuntimeError(
+                f"Conflicting baseline verdicts "
+                f"for {test_id}"
+            )
 
         baseline_expected[test_id] = expected
 
@@ -881,10 +1255,16 @@ def run_all():
     for test_id in tests:
         entries = [
             (mutation_id, mutation)
-            for mutation_id, mutation in mutations.items()
+            for mutation_id, mutation in mutation_scenarios
             if mutation["baseline_test"] == test_id
         ]
-        order = {"static": 0, "temporal": 1, "both": 2}
+        order = {
+            "static": 0, 
+            "temporal": 1, 
+            "both": 2,
+            "fail": 3,
+            "inconclusive": 4
+        }
         entries.sort(key=lambda item: order.get(item[1].get("variant"), 3))
 
         for mutation_id, mutation in entries:
@@ -901,19 +1281,29 @@ def run_all():
                     print(f"{label}: SKIPPED | baseline did not match its expected verdict")
                     continue
 
-                config = load_test_config(
-                    BASE_DIR, mutation["mutated_test"], case_id
+                baseline_config = load_test_config(
+                    BASE_DIR,
+                    test_id,
+                    case_id,
                 )
-                requested_id = test_id if variant else mutation_id
+
+                mutated_config = build_mutated_config(
+                    baseline_config,
+                    mutation,
+                    case_id,
+                )
+
+                requested_id = (test_id if variant else mutation_id)
 
                 ok = run_batch_item(
                     label,
                     mutation["expected_verdicts"]["mutated"],
-                    config["report"],
-                    lambda t=requested_id, v=variant, c=case_id: run_mutation(
-                        t, v, c, baseline_already_run=True
-                    ),
+                    mutated_config["report"],
+                    lambda t=requested_id,
+                        v=variant,
+                        c=case_id: run_mutation(t, v, c, baseline_already_run=True),
                 )
+
                 passed += ok
 
     print(f"\nCompleted: {passed}/{total} scenarios")
@@ -957,8 +1347,11 @@ def parse_arguments():
     )
     parser.add_argument(
         "--variant",
-        choices=("static", "temporal", "both"),
-        help="Mutation variant to run",
+        help=(
+            "Mutation variant, e.g. static, temporal, both, " \
+            "fail, inconclusive"
+        )
+
     )
     parser.add_argument(
         "--verbose",

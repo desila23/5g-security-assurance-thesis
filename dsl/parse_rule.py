@@ -83,6 +83,15 @@ class RuleTransformer(Transformer):
             "expected": None
         }
 
+    def collect_rule(self, items):
+        message_type, alias = items
+
+        return {
+            "operator": "COLLECT",
+            "message_type": str(message_type),
+            "alias": str(alias)
+        }
+
     def if_rule(self, items):
         field = items[0]
         operator = items[1]
@@ -113,10 +122,6 @@ class RuleTransformer(Transformer):
 
 
 
-        
-
-
-
 def parse_policy(rule_file):
     with open(GRAMMAR_FILE, "r", encoding="utf-8") as f:
         grammar = f.read()
@@ -138,7 +143,11 @@ def parse_rule(rule_file):
     # Il verifier statico e i reporter ricevono solo le regole statiche
     return [
         rule for rule in parse_policy(rule_file)
-        if rule["operator"] not in {"MFOTL", "SEQUENCE"}
+        if rule["operator"] not in {
+            "MFOTL", 
+            "SEQUENCE",
+            "COLLECT"
+        }
     ]
 
 
@@ -154,6 +163,23 @@ def get_sequence(rule_file):
         )
 
     return sequences[0]
+
+
+def get_collect(rule_file):
+    collects = [
+        rule for rule in parse_policy(rule_file)
+        if rule["operator"] == "COLLECT"
+    ]
+
+    if len(collects) != 1:
+        raise ValueError(
+            f"Expected one COLLECT declaration; found {len(collects)}"
+        )
+
+    return {
+        "message_type": collects[0]["message_type"],
+        "alias": collects[0]["alias"]        
+    }        
 
 
 def get_mfotl_formula(rule_file, case):
