@@ -10,98 +10,151 @@ Il progetto prende in ingresso una cattura PCAP, estrae e normalizza il traffico
 
 ---
 
-## Architettura attuale
-
-Per i test già migrati, la pipeline corrente è:
+## Struttura della repository
 
 ```text
-PCAP
-  ↓
-TShark generic structured extraction
-  ↓
-Protocol-specific normalization
-  ↓
-Semantic MessageEvent[]
-  ↓
-Correlation / event grouping
-  ↓
-DSL sequence
-  ↓
-AST
-  ↓
-Thompson NFA
-  ↓
-Sequence matcher
-  ↓
-Binding verifier
-  ↓
-MFOTL / MonPoly temporal verification
-  ↓
-Generic JSON report
+captures/           Catture PCAP originali e mutate
+config/             Configurazione dei test e delle mutazioni
+dsl/                DSL, grammatica Lark e parser
+traffic/            Lettura TShark e normalizzazione protocollare
+traffic/resolvers/  Resolver semantici
+matcher/            Modelli di matching, sequence matcher e collector
+pipeline/           Pipeline generica di verifica
+verifier/           Binding verifier, verifier legacy e temporal verifier
+mfotl/              Signature, formule e log MonPoly
+reporter/           Reporter generico e reporter legacy ancora necessari
+mutation_testing/   Mutatori offline delle catture
+├── fail/            Mutator che producono violazioni verificabili
+├── inconclusive/    Mutator che rimuovono l'evidenza necessaria
+└── ...              Mutator legacy/non ancora riorganizzati
+utils/              Funzioni condivise
+scasdk/             Componenti ScasDK originali e adattati
+main.py             Runner principale
 ```
 
-L’obiettivo dell’architettura è separare:
+`scasdk/original/` contiene il sottoinsieme di ScasDK utilizzato come riferimento durante lo sviluppo, mentre `scasdk/adapted/` contiene la versione adattata impiegata dal progetto.
 
-- acquisizione del traffico;
-- normalizzazione protocollare;
-- riconoscimento della sequenza;
-- verifica dei criteri;
-- produzione dell’evidenza.
+I file `subscriber.json` inclusi nella repository contengono esclusivamente parametri dell’ambiente sperimentale e vengono mantenuti per garantire la riproducibilità dei casi di test.
 
-La logica specifica del singolo test viene progressivamente spostata dalla fase di estrazione verso:
-
-- la DSL;
-- i resolver semantici;
-- la configurazione del test;
-- le regole statiche e temporali.
-
-Alcune famiglie di test non ancora migrate continuano temporaneamente a utilizzare la pipeline legacy basata su extractor specifici.
 
 ---
 
-## Rappresentazione del traffico
 
-Gli eventi normalizzati utilizzano il modello `MessageEvent`, che contiene informazioni comuni come:
+## Stato del refactoring
+Il framework è attualmente in fase di refactoring con l'obiettivo di sostituire progressivamente la logica specifica dei singoli test con componenti generici e riutilizzabili.
 
-```text
-frame_number
-timestamp
-protocol
-kind
-src
-dst
-message_type
-related_frames
-correlation
-fields
-```
+Il principale cambiamento consiste nella separazione tra normalizzazione del traffico, selezione dell'evidenza guidata dalla DSL, verifica e reporting.
 
-La normalizzazione attualmente implementata comprende:
+### Nuovi componenti principali
 
-- traffico HTTP/2;
-- messaggi NAS 5GS;
-- resolver semantici per messaggi SBI.
+#### `traffic/`
 
-Esempi di tipi semantici prodotti:
+Contiene il livello di elaborazione del traffico specifico per protocollo.
 
-```text
-nrf.discovery.request
-nrf.discovery.response
-ausf.authentication.response
-ausf.resynchronization.request
-nas.authentication_request
-nas.authentication_failure
-```
+Il suo scopo è trasformare l'output strutturato di TShark in una rappresentazione semantica comune, riutilizzabile da più test SCAS.
+
+File principali:
+
+- `traffic/models.py`
+    - definisce la rappresentazione comune `MessageEvent`;
+- `traffic/tshark_reader.py`
+    - legge l'output strutturato prodotto da TShark;
+- `traffic/http2_normalizer.py`
+    - normalizza il traffico HTTP/2;
+- `traffic/nas_normalizer.py`
+    - normalizza il traffico NAS;
+- `traffic/pfcp_normalizer.py`
+    - normalizza il traffico PFCP;
+- `traffic/resolvers/sbi_resolver.py`
+    - assegna un significato semantico 5G agli scambi SBI trasportati su HTTP/2.
+
+I normalizzatori sono specifici del protocollo e non del singolo test.
+
+Possono quindi esporre più campi di quelli richiesti da uno specifico SCAS, con l'obiettivo di riutilizzare la stessa rappresentazione normalizzata in più test che utilizzano lo stesso protocollo.
 
 ---
 
-## DSL e sequence matching
+#### `matcher/`
 
-La DSL supporta la descrizione esplicita delle sequenze di messaggi.
+Contiene il livello di selezione dell'evidenza.
+
+File principali:
+
+- `matcher/models.py`
+    - definisce `Match` e `BindingContext`;
+- `matcher/matcher.py`
+    - individua le sequenze di eventi richieste dai pattern `SEQUENCE`;
+- `matcher/collector.py`
+    - raccoglie gli insiemi di eventi richiesti da `COLLECT`.
+
+Per i test basati su sequenze, il matcher individua una traccia compatibile con il pattern dichiarato nella DSL e associa gli eventi trovati agli alias definiti nel pattern.
+
+Per i test basati su collezioni, il collector raccoglie tutti gli eventi semantici corrispondenti senza imporre un vincolo di ordinamento.
+
+Entrambi i meccanismi producono un `BindingContext` comune, che viene poi utilizzato dal verificatore.
+
+---
+
+#### `pipeline/`
+
+Contiene le pipeline generiche di verifica.
+
+File principali:
+
+- `pipeline/sequence_pipeline.py`
+    - esegue la verifica basata su sequenze;
+- `pipeline/collect_pipeline.py`
+    - esegue la verifica basata su collezioni.
+
+Le due pipeline condividono la stessa architettura generale e convergono sul livello comune di binding e verifica.
+
+---
+
+#### `reporter/generic_reporter.py`
+
+La precedente logica di reporting specifica per singolo test viene sostituita da un reporter comune.
+
+Il reporter generico produce la stessa struttura di output indipendentemente dal test e include:
+
+- metadati del test;
+- PCAP sorgente e hash SHA-256;
+- configurazione della pipeline;
+- criteri di verifica;
+- risultati delle verifiche;
+- binding dell'evidenza;
+- spiegazione del verdict;
+- verdict finale.
+
+Il reporter supporta:
+
+- test esclusivamente statici;
+- test con verifica temporale;
+- test basati su sequenze;
+- test basati su collezioni;
+- esiti `PASS`, `FAIL` e `INCONCLUSIVE`.
+
+Le informazioni temporali vengono rappresentate in modo uniforme e risultano `N/A` quando il test non prevede alcun requisito temporale.
+
+---
+
+## Estensioni della DSL
+
+La DSL è stata estesa per descrivere non soltanto le regole di verifica, ma anche il modo in cui l'evidenza richiesta dal test deve essere individuata nel traffico normalizzato.
+
+File rilevanti:
+
+- `dsl/grammar.lark`
+- `dsl/parse_rule.py`
+
+I principali costrutti di selezione dell'evidenza attualmente supportati sono:
+
+### `SEQUENCE`
+
+Utilizzato quando il test richiede un pattern ordinato di eventi semantici.
 
 Esempio:
 
-```text
+```
 SEQUENCE {
     nrf.discovery.request AS request
     nrf.discovery.response AS response
@@ -110,70 +163,80 @@ SEQUENCE {
 REQUIRE response.status == 403
 ```
 
-La `SEQUENCE` viene:
+La sequenza viene elaborata dal matcher, che costruisce binding del tipo:
 
-```text
-DSL
- ↓
-Lark parser
- ↓
-AST
- ↓
-Thompson compiler
- ↓
-NFA
- ↓
-matcher
+```
+request  -> MessageEvent(...)
+response -> MessageEvent(...)
 ```
 
-Il matcher associa gli eventi ai rispettivi alias e produce un insieme di binding utilizzato successivamente dai verifier.
+I binding risultanti costituiscono l'evidenza specifica del test utilizzata dal verificatore.
 
-Le regole statiche possono confrontare:
+### `COLLECT`
 
-- campo con valore costante;
-- campo con campo appartenente a un altro binding.
+Utilizzato quando il test richiede un insieme di eventi piuttosto che una sequenza ordinata.
 
 Esempio:
 
-```text
-REQUIRE initial_auth.rand == initial_vector.rand
-REQUIRE sync_failure.cause == 21
-REQUIRE resync.auts == sync_failure.auts
 ```
+COLLECT pfcp.session_establishment_response AS responses
+
+REQUIRE UNIQUE responses.f_teids
+```
+
+Il collector associa tutti gli eventi corrispondenti all'alias `responses`, dopo di che il verificatore applica la proprietà aggregata richiesta.
+
+---
+
+## Verifica generica sui binding
+
+File rilevante:
+
+- `verifier/binding_verifier.py`
+
+Il verificatore ora opera su `BindingContext` invece che su strutture di evidenza specifiche per singolo test.
+
+Un binding può contenere:
+
+```
+alias -> MessageEvent
+```
+
+oppure:
+
+```
+alias -> list[MessageEvent]
+```
+
+a seconda che l'evidenza sia stata ottenuta tramite `SEQUENCE` o `COLLECT`.
+
+Il verificatore supporta regole di confronto generiche e operatori aggregati come `UNIQUE`.
+
+Ad esempio:
+
+```
+REQUIRE UNIQUE responses.f_teids
+```
+
+verifica che lo stesso F-TEID non venga riutilizzato tra eventi raccolti differenti, mantenendo il riferimento ai frame che costituiscono l'evidenza.
 
 ---
 
 ## Verifica temporale
 
-Le proprietà temporali vengono espresse in MFOTL ed eseguite tramite MonPoly.
+La verifica temporale rimane separata dalla verifica statica dei campi e viene eseguita tramite regole MFOTL valutate con MonPoly.
 
-### AMF Synchronization Failure — Case A
+File rilevante:
 
-La proprietà temporale verifica che una nuova risposta AUSF venga osservata entro `T3520` dopo la richiesta di risincronizzazione.
+- `verifier/temporal_verifier.py`
 
-```text
-ResynchronizationRequest()
-IMPLIES
-EVENTUALLY[0,{TIMER_MS}] AusfAuthenticationResponse()
-```
+Il verificatore temporale ora agisce come componente generico della pipeline e non contiene più logica di esecuzione specifica per il test AMF.
 
-### AMF Synchronization Failure — Case B
+I test di synchronization failure dell'AMF mostrano attualmente l'interazione tra:
 
-La proprietà temporale verifica che non venga osservata una nuova Authentication Request entro `T3520` dopo il Synchronization Failure.
-
-```text
-SyncFailure()
-IMPLIES
-NOT EVENTUALLY[0,{TIMER_MS}] AuthenticationRequest()
-```
-
-Il valore corrente di `T3520` utilizzato nei test è:
-
-```text
-15000 ms
-```
-
-La generazione del log temporale è generica e guidata tramite `event_mapping` nella configurazione del test.
+- matching di sequenze;
+- verifica statica dei binding;
+- verifica temporale.
 
 ---
 
@@ -223,6 +286,8 @@ Esecuzione dello scenario di mutazione associato:
 
 ```bash
 python main.py --mutation nrf_disc_auth_slice
+python main.py --mutation amf_sync_failure_case_a --variant static
+python main.py --mutation upf_teid_uniqueness --variant inconclusive
 ```
 
 Esecuzione dell’intera suite di validazione:
@@ -341,6 +406,78 @@ Temporal mut.  Static PASS   Temporal FAIL
 Both mut.      Static FAIL   Temporal FAIL
 ```
 
+
+### UPF F-TEID Uniqueness
+
+Dimostra:
+
+- normalizzazione PFCP;
+- `COLLECT`;
+- verifica aggregata;
+- operatore `UNIQUE`;
+- gestione esplicita di `INCONCLUSIVE`.
+
+Baseline:
+```
+python main.py --test upf_teid_uniqueness
+```
+
+Mutation FAIL
+```
+python main.py --mutation upf_teid_uniqueness --variant fail
+```
+
+Mutation INCONCLUSIVE
+```
+python main.py --mutation upf_teid_uniqueness --variant inconclusive
+```
+
+Risulati attesi
+```
+Baseline                  PASS
+Fail mutation             FAIL
+Inconclusive mutation     INCONCLUSIVE
+```
+
+
+
+---
+
+## Esiti della verifica
+
+Il framework distingue attualmente tre possibili esiti:
+
+### `PASS`
+
+L'evidenza richiesta è disponibile e tutti i criteri applicabili risultano soddisfatti.
+
+### `FAIL`
+
+L'evidenza richiesta è disponibile, ma almeno un criterio di verifica risulta violato.
+
+### `INCONCLUSIVE`
+
+La cattura disponibile non contiene evidenza sufficiente per valutare il criterio richiesto.
+
+Ad esempio, se:
+
+```
+COLLECT pfcp.session_establishment_response AS responses
+```
+
+non raccoglie alcun evento, il test non viene considerato `FAIL`.
+
+Il risultato è invece `INCONCLUSIVE`, perché manca l'evidenza necessaria per eseguire la verifica.
+
+Il report include anche:
+
+- motivo dell'esito inconclusivo;
+- tipo di messaggio atteso;
+- alias DSL coinvolto;
+- numero di eventi raccolti.
+
+
+
 ---
 
 ## Famiglie di test implementate
@@ -352,63 +489,97 @@ Both mut.      Static FAIL   Temporal FAIL
 | AMF Synchronization Failure — Case B | Static rules + assenza Authentication Request entro T3520 | Generic sequence pipeline |
 | UDM AKA Resynchronization | Coerenza RAND, AUTS e MAC | Legacy |
 | UDM SUCI De-concealment | SUPI restituito uguale a quello atteso | Legacy |
-| UPF TEID Uniqueness | Unicità F-TEID `{teid, ipv4}` | Legacy |
+| UPF TEID Uniqueness | Unicità F-TEID `{teid, ipv4}` | Generic collect pipeline |
 | RES* Verification Failure — Cases A–D | Verifiche sui vettori di autenticazione e failure path | Legacy |
 
-Le famiglie indicate come `Legacy` sono ancora funzionanti ma non sono ancora state migrate alla nuova architettura generica.
+Le famiglie indicate come `Legacy` sono funzionanti ma non sono ancora state migrate alla nuova architettura generica.
 
 ---
 
 ## Mutation testing
 
-Le mutazioni sono definite in:
+Anche il mutation testing è stato riorganizzato.
 
-```text
-config/mutation_tests.json
+Le configurazioni possono ora contenere più varianti sotto lo stesso test baseline.
+
+Esempio:
+
+```
+amf_sync_failure_case_a
+└── variants
+    ├── static
+    ├── temporal
+    └── both
 ```
 
-Il flusso generale è:
+e:
 
-```text
-PCAP originale
-    ↓
-esecuzione baseline
-    ↓
-selezione del target
-    ↓
-generazione del PCAP mutato
-    ↓
-riesecuzione della stessa pipeline
-    ↓
-confronto tra verdetto osservato e verdetto atteso
+```
+upf_teid_uniqueness
+└── variants
+    ├── fail
+    └── inconclusive
 ```
 
-Esempi di mutazione:
+La directory del mutation testing è inoltre in fase di organizzazione in base all'esito atteso:
 
-- modifica dello status HTTP NRF;
-- modifica del RAND nella richiesta di risincronizzazione;
-- modifica dei timestamp per violare una proprietà temporale;
-- combinazione di mutazioni statiche e temporali;
-- duplicazione di F-TEID;
-- modifica di valori RES* e `authResult`.
-
-Uno scenario di mutation testing viene indicato come:
-
-```text
-Result: OK
+```
+mutation_testing/
+├── fail/
+│   └── mutate_pfcp_fteid.py
+│
+└── inconclusive/
+    └── mutate_pfcp_missing_events.py
 ```
 
-quando il verdetto osservato coincide con quello atteso.
+### Tipi di mutation attualmente utilizzati
 
-Questo significa che anche una transizione:
+#### Mutation statica
 
-```text
-FAIL -> PASS
+Modifica i dati del traffico in modo che una regola statica cambi verdict.
+
+Esempio:
+
+```
+PASS -> FAIL
 ```
 
-può essere corretta, come nel caso NRF.
+sulla regola `resync.rand`.
 
----
+#### Mutation temporale
+
+Modifica i timestamp dei pacchetti in modo da mantenere valida l'evidenza statica ma violare la proprietà temporale.
+
+Esempio:
+
+```
+Static:   PASS
+Temporal: FAIL
+```
+
+#### Mutation combinata
+
+Introduce contemporaneamente una violazione statica e una temporale.
+
+Esempio:
+
+```
+Static:   FAIL
+Temporal: FAIL
+```
+
+#### Mutation per evidenza mancante
+
+Rimuove dalla PCAP i frame che costituiscono l'evidenza necessaria per il test.
+
+Permette di verificare una transizione del tipo:
+
+```
+PASS -> INCONCLUSIVE
+```
+
+senza modificare DSL, verificatore o configurazione del test.
+
 
 ## Output della nuova pipeline
 
@@ -446,64 +617,133 @@ Per i criteri temporali vengono inoltre riportati:
 - presenza o assenza di una violazione;
 - output prodotto da MonPoly.
 
----
 
-## Struttura della repository
+### Regression corrente
+L'intera suite può essere eseguita con:
 
-```text
-captures/           Catture PCAP originali e mutate
-config/             Configurazione dei test e delle mutazioni
-dsl/                DSL, grammatica Lark e parser
-traffic/            Lettura TShark e normalizzazione protocollare
-traffic/resolvers/  Resolver semantici
-matcher/            AST, Thompson compiler, NFA e sequence matcher
-pipeline/           Pipeline generica di verifica
-verifier/           Binding verifier, verifier legacy e temporal verifier
-mfotl/              Signature, formule e log MonPoly
-reporter/           Reporter generico e reporter legacy ancora necessari
-mutation_testing/   Mutatori offline delle catture
-utils/              Funzioni condivise
-scasdk/             Componenti ScasDK originali e adattati
-main.py             Runner principale
+```bash
+python main.py --all
 ```
 
-`scasdk/original/` contiene il sottoinsieme di ScasDK utilizzato come riferimento durante lo sviluppo, mentre `scasdk/adapted/` contiene la versione adattata impiegata dal progetto.
+Stato corrente:
+Completed: 25/25 scenarios
 
-I file `subscriber.json` inclusi nella repository contengono esclusivamente parametri dell’ambiente sperimentale e vengono mantenuti per garantire la riproducibilità dei casi di test.
+
 
 ---
 
-## Stato dello sviluppo
 
-La nuova architettura generica è attualmente utilizzata per:
+## File principali modificati durante il refactoring
 
-```text
-NRF Discovery Authorization
-AMF Synchronization Failure — Case A
-AMF Synchronization Failure — Case B
+I file più rilevanti modificati o introdotti sono:
+
+- `main.py`
+    
+    - dispatch delle pipeline generiche;
+    - configurazione dinamica dei test mutati;
+    - supporto alle mutation variants;
+    - gestione di `PASS`, `FAIL` e `INCONCLUSIVE`;
+    - aggiornamento di `--list`;
+    - aggiornamento di `--all`;
+    - output CLI compatto per il mutation testing;
+- `config/tests.json`
+    
+    - configurazione delle nuove pipeline per i test migrati;
+- `config/mutation_tests.json`
+    
+    - supporto alle varianti di mutation e all'ereditarietà della configurazione baseline;
+- `dsl/grammar.lark`
+    
+    - supporto a `SEQUENCE`, `COLLECT` e regole aggregate;
+- `dsl/parse_rule.py`
+    
+    - parsing delle dichiarazioni di sequenza e collezione;
+- `verifier/binding_verifier.py`
+    
+    - verifica generica sui `BindingContext`;
+    - supporto a `UNIQUE`;
+- `verifier/temporal_verifier.py`
+    
+    - utility generiche per la verifica temporale;
+- `utils/mutation_utils.py`
+    
+    - supporto al report unificato nei mutator migrati;
+- `reporter/generic_reporter.py`
+    
+    - generazione del report comune.
+
+
+---
+
+## Compatibilità legacy
+
+Alcune parti del codice sono ancora esplicitamente marcate come:
+
+```
+LEGACY
 ```
 
-Questi test utilizzano:
+oppure:
 
-```text
-generic traffic extraction
-→ semantic normalization
-→ DSL sequence
-→ AST
-→ Thompson NFA
-→ sequence matcher
-→ static binding verification
-→ MFOTL / MonPoly
-→ generic report
+```
+COMPATIBILITÀ LEGACY
 ```
 
-Le restanti famiglie di test verranno migrate progressivamente eliminando gli extractor e i reporter specifici dove non più necessari.
+Questi rami sono temporanei.
 
-Tra i principali sviluppi ancora previsti:
+Sono attualmente necessari perché alcuni test non sono ancora stati migrati alla nuova pipeline e continuano a dipendere dalla precedente architettura basata su:
 
-- migrazione di UPF, UDM e RES*;
-- miglioramento della correlazione cross-protocol;
-- estensione del matcher oltre le sequenze lineari;
-- supporto a pattern opzionali, alternativi o ripetuti;
-- ulteriore consolidamento della DSL;
-- progressiva eliminazione della compatibilità legacy.
+```
+evidence.json
+verification.json
+extractor specifici per test
+```
+
+I rami legacy verranno progressivamente rimossi con la migrazione dei test rimanenti.
+
+I principali test ancora da migrare completamente sono i casi UDM e RES*.
+
+
+---
+
+## Direzione architetturale attuale
+
+La precedente architettura può essere sintetizzata come:
+
+```
+PCAP
+  ↓
+extractor specifico del test
+  ↓
+evidenza specifica del test
+  ↓
+verificatore
+  ↓
+reporter specifico
+```
+
+La nuova architettura è invece:
+
+```
+PCAP
+  ↓
+normalizzazione specifica del protocollo
+  ↓
+traccia di eventi semantici
+  ↓
+selezione dell'evidenza guidata dalla DSL
+  ├── automa/matcher per SEQUENCE
+  └── collector per COLLECT
+  ↓
+BindingContext
+  ↓
+verifica statica / temporale generica
+  ↓
+PASS / FAIL / INCONCLUSIVE
+  ↓
+reporter generico
+```
+
+Il principio progettuale principale è quindi:
+
+> I componenti specifici del protocollo interpretano il traffico di rete, mentre il comportamento specifico del singolo test viene espresso attraverso la DSL e attraverso meccanismi generici di selezione dell'evidenza e verifica.
