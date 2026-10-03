@@ -29,41 +29,81 @@ def _get_transition(nfa: NFA, state: int) -> Transition | None:
 
 def match_sequence(nfa: NFA, events: list[MessageEvent]) -> Match | None:
     """
-    Cerca il primo match completo dell'NFA nella lista di eventi.
-    Gli eventi che non corrispondono alla transizione corrente vengono ignorati.
+    Restituisce il primo match completo trovato.
+
+    La logica di matching è centralizzata in match_sequences().
     """
 
-    current_state = nfa.start_state
+    matches = match_sequences(nfa, events)
 
-    bindings = {}
+    return matches[0] if matches else None
 
-    start_index = None
-    end_index = None
 
-    for index, event in enumerate(events):
-        transition = _get_transition(nfa, current_state)
 
-        if transition is None:
-            break
+def match_sequences(nfa: NFA, events: list[MessageEvent]) -> list[Match]:
+    """
+    Cerca tutti i match completi dell'NFA nella lista di eventi.
 
-        expected = transition.atom.message_type
+    Ogni evento compatibile con la prima transizione può avviare un nuovo candidato indipendente.
+    
+    Dopo l'avvio del canditato, gli eventi non compatibili con la transizione corrente vengono ignorati.
+    """
 
-        if event.message_type != expected:
+    matches = []
+
+    first_transition = _get_transition(nfa, nfa.start_state)
+
+    if first_transition is None:
+        return matches
+    
+
+    for start_index in range(len(events)):
+        start_event = events[start_index]
+
+        # Un canditato può iniziare solo da un evento compatibile con la prima transizione
+        if start_event.message_type != first_transition.atom.message_type:
             continue
 
-        if start_index is None:
-            start_index = index
 
-        bindings[transition.atom.alias] = event
+        current_state = nfa.start_state
+        bindings = {}
 
-        current_state = transition.target
-        end_index = index
+        for index in range(start_index, len(events)):
+            event = events[index]
 
-        if current_state == nfa.accept_state:
-            return Match(
-                start_index=start_index,
-                end_index=end_index,
-                bindings=bindings
-            )
+            transition = _get_transition(nfa, current_state)
 
-    return None
+            if transition is None:
+                break
+
+            expected = transition.atom.message_type
+
+            if event.message_type != expected:
+                # Se compare un nuovo possibile inizio della sequenza, il candidato corrente viene invalidato.
+                if (
+                    index > start_index 
+                    and event.message_type == first_transition.atom.message_type
+                ):
+                    break
+                
+                continue
+
+
+            bindings[transition.atom.alias] = event
+            current_state = transition.target
+
+
+            if current_state == nfa.accept_state:
+                matches.append(
+                    Match(
+                        start_index=start_index,
+                        end_index=index,
+                        bindings=dict(bindings)
+                    )
+                )
+
+                break
+
+    return matches
+
+

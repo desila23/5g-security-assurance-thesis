@@ -21,7 +21,7 @@ def _event_to_evidence(event):
     }
 
 
-def _binding_to_evidence(binding):
+def _binding_to_evidence(binding, source_type=None):
     if isinstance(binding, list):
         return [
             _event_to_evidence(event)
@@ -30,7 +30,7 @@ def _binding_to_evidence(binding):
 
     if isinstance(binding, dict):
         return {
-            "source_type": "external",
+            "source_type": source_type or "external",
             "fields": binding
         }
 
@@ -71,7 +71,7 @@ def _build_external_bindings_configuration(test_config: dict) -> dict:
 
 
 
-def _build_evidence(result):
+def _build_evidence(result, test_config):
     context = _get_binding_context(result)
 
     if context is None:
@@ -81,8 +81,24 @@ def _build_evidence(result):
 
     bindings = {}
 
+    external_aliases = set(
+        test_config.get("external_bindings", {}).keys()
+    )
+
+    derived_aliases = set(
+        test_config.get("derived_bindings", {}).keys()
+    )
+
     for alias, binding in context.bindings.items():
-        bindings[alias] = _binding_to_evidence(binding)
+        source_type = None
+
+        if alias in external_aliases:
+            source_type = "external"
+
+        elif alias in derived_aliases:
+            source_type = "derived"
+
+        bindings[alias] = _binding_to_evidence(binding, source_type=source_type)
 
     return {
         "bindings": bindings
@@ -339,7 +355,7 @@ def build_generic_report(
             "overall_verdict": result.verdict,
         },
 
-        "evidence": _build_evidence(result),
+        "evidence": _build_evidence(result, test_config),
 
         "explanation": {
             "reason": result.details.get("reason"),

@@ -63,25 +63,31 @@
             }
         }
     },
+
     "udm_resynchronization": {
         "baseline_test": "udm_resynchronization",
         "inherit_baseline_config": true,
         "mutated_test": "udm_resynchronization_rand_mutation",
         "mutator": "mutation_testing.mutate_udm_resync_rand",
+
+        "mutator_options": {
+            "http2_port": true
+        },
+
         "expected_verdicts": {
             "baseline": "PASS",
             "mutated": "FAIL"
         },
+
         "target_rule": {
-            "field": "initial_auth.response.body.authenticationVector.rand",
+            "field": "initial_response.body.authenticationVector.rand",
             "operator": "==",
             "baseline": "PASS",
             "mutated": "FAIL"
         },
+
         "test_config": {
             "pcap": "captures/udm_resynchronization_rand_mutation.pcap",
-            "evidence": "reports/udm_resynchronization_rand_mutation/evidence.json",
-            "output": "reports/udm_resynchronization_rand_mutation/verification.json",
             "report": "reports/udm_resynchronization_rand_mutation/report.json"
         }
     },

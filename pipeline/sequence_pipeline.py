@@ -5,11 +5,14 @@ from dsl.parse_rule import get_sequence, parse_rule
 from matcher.ast import build_sequence_ast
 from matcher.models import BindingContext, Match
 from matcher.thompson import ThompsonCompiler
-from matcher.matcher import match_sequence
+from matcher.matcher import match_sequences
 
 from traffic.models import MessageEvent
 
 from verifier.binding_verifier import verify_bindings
+
+from utils.derived_binding_utils import build_derived_bindings
+
 
 
 @dataclass
@@ -66,7 +69,8 @@ def run_sequence_verification(
     events: list[MessageEvent],
     rule_file: str,
     correlation_mode: str = "grouped",
-    external_bindings: dict | None = None
+    external_bindings: dict | None = None,
+    derived_bindings: dict | None = None
 ) -> SequenceVerificationResult:
     """
     Esegue una verifica sequence-based su eventi semantici.
@@ -112,10 +116,9 @@ def run_sequence_verification(
     matches = []
 
     for group in groups:
-        match = match_sequence(nfa, group)
+        group_matches = match_sequences(nfa, group)
 
-        if match is not None:
-            matches.append(match)
+        matches.extend(group_matches)
 
     if not matches:
         return SequenceVerificationResult(
@@ -146,6 +149,14 @@ def run_sequence_verification(
     if external_bindings:
         context.bindings.update(external_bindings)
 
+    if derived_bindings:
+        computed_bindings = build_derived_bindings(
+            context,
+            derived_bindings
+        )
+
+        context.bindings.update(computed_bindings)
+        
     verification = verify_bindings(context, rules)
 
     return SequenceVerificationResult(

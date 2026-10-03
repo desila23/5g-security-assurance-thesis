@@ -2,7 +2,6 @@ import argparse
 
 from pathlib import Path
 
-from utils.evidence_utils import get_events_by_type
 from utils.http2_mutation_utils import replace_http2_body_value
 from utils.json_utils import load_json
 from utils.tshark_utils import calculate_sha256
@@ -11,63 +10,104 @@ from utils.tshark_utils import calculate_sha256
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--source", type=Path, required=True)
-    parser.add_argument("--evidence", type=Path, required=True)
+    parser.add_argument("--report", type=Path, required=True)
+    parser.add_argument("--port", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--overwrite", action="store_true")
     args = parser.parse_args()
 
     source = args.source.resolve()
-    evidence_path = args.evidence.resolve()
+    report_path = args.report.resolve()
     output = args.output.resolve()
 
     if not source.is_file():
         parser.error(f"Cattura non trovata: {source}")
-    if not evidence_path.is_file():
-        parser.error(f"Evidenza non trovata: {evidence_path}")
+    if not report_path.is_file():
+        parser.error(f"Report non trovata: {report_path}")
     if source == output:
         parser.error("Sorgente e output devono essere diversi")
     if output.exists() and not args.overwrite:
         parser.error(f"Il file di output esiste già: {output}")
 
-    evidence = load_json(evidence_path)
+    report = load_json(report_path)
 
-    if evidence["source"]["sha256"] != calculate_sha256(source):
-        parser.error("L'evidenza non corrisponde alla cattura sorgente")
+    # --------------------------------------------------
+    # Verifica coerenza report / PCAP
+    # --------------------------------------------------
 
-    initial_auth = get_events_by_type(
-        evidence, 
-        "initial_auth", 
-        require_single=True
+    if report["source"]["sha256"] != calculate_sha256(source):
+        parser.error("Il report non corrisponde alla cattura sorgente")
+
+    # --------------------------------------------------
+    # Binding generici
+    # --------------------------------------------------
+
+    bindings = report["evidence"]["bindings"]
+
+    initial_response = bindings["initial_response"]
+    resync_request = bindings["resync_request"]
+
+
+    initial_rand = (
+        initial_response["fields"]
+        ["body"]
+        ["authenticationVector"]
+        ["rand"]
     )
 
-    resynchronization = get_events_by_type(
-        evidence, 
-        "resynchronization", 
-        require_single=True
+    old = (
+        resync_request["fields"]
+        ["body"]
+        ["resynchronizationInfo"]
+        ["rand"]
     )
 
 
-    initial_rand = initial_auth["response"]["body"]["authenticationVector"]["rand"]
-    old = resynchronization["request"]["body"]["resynchronizationInfo"]["rand"]
+    # --------------------------------------------------
+    # Controllo baseline
+    # --------------------------------------------------
 
     if old != initial_rand:
-        raise RuntimeError("Il RAND della cattura originale non coincide")
+        raise RuntimeError(
+            "Il RAND della request di resynchronization "
+            "non coincide con il RAND iniziale"
+        )
 
     if len(old) != 32 or any(
-        character not in "0123456789abcdefABCDEF" for character in old
+        character not in "0123456789abcdefABCDEF"
+        for character in old
     ):
-        raise RuntimeError("Il RAND non è un valore esadecimale a 128 bit")
+        raise RuntimeError(
+            "Il RAND non è un valore esadecimale a 128 bit"
+        )
 
-    new = old[:-1] + format(int(old[-1], 16) ^ 1, "x")
+
+    # --------------------------------------------------
+    # Mutazione deterministica
+    # --------------------------------------------------
+
+    new = (
+        old[:-1]
+        + format(
+            int(old[-1], 16) ^ 1,
+            "x"
+        )
+    )
+
+
+    # --------------------------------------------------
+    # Mutazione PCAP
+    # --------------------------------------------------
 
     frame, offset = replace_http2_body_value(
         source,
         output,
-        resynchronization["request"]["body_frames"],
+        resync_request["related_frames"],
         old.encode("ascii"),
         new.encode("ascii"),
-        port=7777
+        port=args.port
     )
+
 
     print(f"PCAP creato: {output}")
     print(f"Frame: {frame}, posizione: {offset}")

@@ -25,15 +25,47 @@
     },
 
     "udm_resynchronization": {
-        "extractor": "extractor.udm_resynchronization_extractor",
-        "verifier": "verifier.simple_verifier",
-        "reporter": "reporter.udm_report",
+        "pipeline": "sequence",
 
         "pcap": "captures/udm_synch_fail_open5gs.pcapng",
-        "subscriber_file": "scasdk/adapted/scasdk-nrf-udm/data/ue/subscriber.json",
-        "evidence": "reports/udm_resynchronization/evidence.json",
+
         "rules": "dsl/udm_resynchronization.dsl",
-        "output": "reports/udm_resynchronization/verification.json",
+
+        "description": "Verification of UDM AKA resynchronization",
+        "nf": "UDM",
+
+        "traffic": {
+            "correlation_mode": "global",
+            "sources": [
+                {
+                    "type": "http2",
+                    "display_filter": "http2",
+                    "decode_as": [
+                        "tcp.port==7777,http2"
+                    ]
+                }
+            ]
+        },
+
+        "external_bindings": {
+            "subscriber": {
+                "source": "scasdk/adapted/scasdk-nrf-udm/data/ue/subscriber.json",
+                "fields": {
+                    "key": "key",
+                    "opc": "opc"
+                }
+            }
+        },
+
+        "derived_bindings": {
+            "initial_mac": {
+                "type": "udm_auth_vector_mac",
+                "auth_vector": "initial_response.body.authenticationVector",
+                "key": "subscriber.key",
+                "opc": "subscriber.opc"
+            }
+        },
+
         "report": "reports/udm_resynchronization/report.json"
     },
 

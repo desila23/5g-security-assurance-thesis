@@ -343,11 +343,14 @@ def run_sequence_test(test_id, test_config, verbose=False):
 
     external_bindings = load_external_bindings(BASE_DIR, test_config.get("external_bindings"))
 
+    derived_bindings = test_config.get("derived_bindings")
+
     result = run_sequence_verification(
         events,
         str(rule_file),
         correlation_mode=correlation_mode,
-        external_bindings=external_bindings
+        external_bindings=external_bindings,
+        derived_bindings=derived_bindings
     )
 
 
