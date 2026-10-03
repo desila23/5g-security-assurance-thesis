@@ -140,7 +140,7 @@ def process_event(
     """
     Processa un evento della trace.
 
-    Per ogni configuraizone:
+    Per ogni configurazione attiva, considerando anche gliv altri stati raggiungibili tramite epsilon transition:
         - se l'evento può essere consumato, avanza;
         - altrimenti mantiene la configurazione invariata, trattando l'evento come irrilevante.
     """
@@ -160,25 +160,25 @@ def process_event(
                 if transition.atom.message_type == event.message_type
             ]
 
-        # Caso 1: evento rilevante per la configurazione
-        if matching_transitions:
-            for transition in matching_transitions:
-                bindings = dict(current.bindings)
+            # Caso 1: evento consumabile per la configurazione
+            if matching_transitions:
+                for transition in matching_transitions:
+                    bindings = dict(current.bindings)
 
-                bindings[transition.atom.alias] = event
+                    bindings[transition.atom.alias] = event
 
-                advanced = ActiveConfiguration(
-                    state=transition.target,
-                    bindings=bindings
-                )
+                    advanced = ActiveConfiguration(
+                        state=transition.target,
+                        bindings=bindings
+                    )
 
-                next_configurations.extend(
-                    expand_configuration(nfa, advanced)
-                )
+                    next_configurations.extend(
+                        expand_configuration(nfa, advanced)
+                    )
 
-        # Caso 2: evento irrilevante per la configurazione
-        else:
-            next_configurations.append(current)
+            # Caso 2: evento irrilevante per la configurazione: la configurazione rimane attiva
+            else:
+                next_configurations.append(current)
 
     return _deduplicate_configurations(next_configurations)
 

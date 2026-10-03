@@ -112,8 +112,6 @@
         },
         "test_config": {
             "pcap": "captures/udm_suci_deconcealment_mutation.pcap",
-            "evidence": "reports/udm_suci_deconcealment_mutation/evidence.json",
-            "output": "reports/udm_suci_deconcealment_mutation/verification.json",
             "report": "reports/udm_suci_deconcealment_mutation/report.json"
         }
     },

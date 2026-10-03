@@ -237,33 +237,11 @@ def run_command(command, label, verbose=False):
         raise subprocess.CalledProcessError(result.returncode, command)
 
 
-def run_module(module_name, test_id=None, case_id=None, verbose=False):
-    command = [
-        sys.executable,
-        "-m",
-        module_name,
-    ]
-
-    if test_id is not None:
-        command.extend(["--test", test_id])
-
-    if case_id is not None:
-        command.extend(["--case", case_id])
-
-    if verbose:
-        print(f"\n> Running {module_name}")
-
-    run_command(command, module_name, verbose=verbose)
-
-
-# COMPATIBILITÀ LEGACY:
-# Supporto temporaneo per i test non ancora migrati alla nuova pipeline basata su SEQUENCE. 
-# Questo ramo verrà rimosso al termine della migrazione.
 def run_pipeline(test_id, case_id=None, verbose=False, test_config=None):
     if test_config is None:
         test_config = load_test_config(BASE_DIR, test_id, case_id)
 
-    pipeline_type = test_config.get("pipeline", "legacy")
+    pipeline_type = test_config["pipeline"]
 
     if pipeline_type == "sequence":
         return run_sequence_test(test_id, test_config, verbose)
@@ -271,16 +249,10 @@ def run_pipeline(test_id, case_id=None, verbose=False, test_config=None):
     if pipeline_type == "collect":
         return run_collect_test(test_id, test_config, verbose)
 
-    # COMPATIBILITÀ LEGACY:
-    # Mantiene il flusso originale:
-    #      extractor -> verifier -> temporal verifier -> reporter.
-    # Serve solo per i test non ancora migrati alla nuova architettura e verrà rimosso al termine della migrazione.
-    return run_legacy_pipeline(
-        test_id,
-        test_config,
-        case_id,
-        verbose
+    raise ValueError(
+        f"Unsupported pipeline type: {pipeline_type}"
     )
+
 
 
 def run_sequence_test(test_id, test_config, verbose=False):
@@ -589,64 +561,6 @@ def run_collect_test(
     return result
 
 
-def run_legacy_pipeline(
-    test_id, 
-    test_config,
-    case_id=None, 
-    verbose=False
-):
-    test_label = test_id
-    if case_id is not None:
-        test_label += f" - Case {case_id}"
-
-    print(f"\nTest: {test_label}", flush=True)
-
-    extractor = test_config.get("extractor")
-    if extractor:
-        run_module(extractor, test_id, case_id, verbose)
-
-    pre_verifiers = test_config.get("pre_verifiers", [])
-    for verifier in pre_verifiers:
-        run_module(verifier, test_id, case_id, verbose)
-
-    verifier = test_config.get("verifier")
-    if verifier:
-        run_module(verifier, test_id, case_id, verbose)
-
-    temporal_config = test_config.get("temporal")
-    if temporal_config:
-        temporal_verifier = temporal_config.get("verifier")
-        if temporal_verifier:
-            run_module(temporal_verifier, test_id, case_id, verbose)
-
-    reporter = test_config.get("reporter")
-    if reporter:
-        run_module(reporter, test_id, case_id, verbose)
-
-    verification = load_json(BASE_DIR / test_config["output"])
-    report = load_json(BASE_DIR / test_config["report"])
-
-    leaf_rules = [
-        rule
-        for rule in iter_rule_results(verification["rules"])
-        if rule["operator"] != "IF"
-    ]
-    passed = sum(rule["verdict"] == "PASS" for rule in leaf_rules)
-    failed = sum(rule["verdict"] == "FAIL" for rule in leaf_rules)
-
-
-    print(f"  DSL: {verification['overall_verdict']} ({passed} PASS, {failed} FAIL)")
-    if temporal_config:
-        temporal = load_json(BASE_DIR / temporal_config["output"])
-        print(f"  Temporal: {temporal['overall_verdict']}")
-    print(f"  Overall verdict: {report['verdict']}")
-
-    if report["verdict"] == "FAIL":
-        print_failed_checks(report)
-
-    print(f"  Report file: {test_config['report']}")
-
-
 
 def iter_rule_results(rules):
     for rule in rules:
@@ -744,39 +658,22 @@ def check_target_rule(
     target,
     expected_verdict,
 ):
-    if config.get("pipeline") in {"sequence", "collect"}:
-        report = load_json(BASE_DIR / config["report"])
 
-        rules = []
+    report = load_json(BASE_DIR / config["report"])
 
-        for result in report["verification"]["results"]:
-            details = result.get(
-                "details",
-                result
-            )
+    rules = []
 
-            rules.append({
-                "field": details.get("field"),
-                "operator": details.get("operator"),
-                "verdict": result["verdict"]
-            })
+    for result in report["verification"]["results"]:
+        details = result.get("details", result)
 
-    # COMPATIBILITÀ LEGACY:
-    # I test legacy salvano i risultati delle regole in un file di verifica separato. 
-    # La nuova pipeline usa invece il report unificato.
-    # Rimuovere questo ramo quando tutti i test useranno il nuovo formato.
-    else:
-        verification = load_json(BASE_DIR / config["output"])
-
-        rules = list(
-            iter_rule_results(
-                verification["rules"]
-            )
-        )
+        rules.append({
+            "field": details.get("field"),
+            "operator": details.get("operator"),
+            "verdict": result["verdict"]
+        })
 
     matches = [
-        rule
-        for rule in rules
+        rule for rule in rules
         if rule["field"] == target["field"]
         and rule["operator"] == target["operator"]
     ]
@@ -792,8 +689,7 @@ def check_target_rule(
 
     if observed != expected_verdict:
         raise RuntimeError(
-            f"{test_id}: regola bersaglio attesa "
-            f"{expected_verdict}, ottenuta {observed}"
+            f"{test_id}: regola bersaglio attesa {expected_verdict}, ottenuta {observed}"
         )
 
 
@@ -802,71 +698,50 @@ def check_expected_components(
     config,
     expected_components,
 ):
-    if config.get("pipeline") in {"sequence", "collect"}:
-        report = load_json(BASE_DIR / config["report"])
 
-        static_results = [
-            result for result in report["verification"]["results"]
-            if result["engine"] == "binding_verifier"
-        ]
+    report = load_json(BASE_DIR / config["report"])
 
-        temporal_results = [
-            result for result in report["verification"]["results"]
-            if result["engine"] == "Monpoly"
-        ]
+    static_results = [
+        result for result in report["verification"]["results"]
+        if result["engine"] == "binding_verifier"
+    ]
 
-        static_verdict = (
+    temporal_results = [
+        result for result in report["verification"]["results"]
+        if result["engine"] == "Monpoly"
+    ]
+
+    static_verdict = (
+        "FAIL" if any(
+            result["verdict"] == "FAIL"
+            for result in static_results
+        )
+        else "PASS"
+    )
+
+    if temporal_results:
+        temporal_verdict = (
             "FAIL" if any(
                 result["verdict"] == "FAIL"
-                for result in static_results
+                for result in temporal_results
             )
             else "PASS"
         )
-
-        if temporal_results:
-            temporal_verdict = (
-                "FAIL" if any(
-                    result["verdict"] == "FAIL"
-                    for result in temporal_results
-                )
-                else "PASS"
-            )
-        else:
-            temporal_verdict = None
-
-        observed = {
-            "static": static_verdict,
-            "temporal": temporal_verdict,
-        }
-
-    # COMPATIBILITÀ LEGACY
     else:
-        static_result = load_json(
-            BASE_DIR / config["output"]
-        )
+        temporal_verdict = None
 
-        temporal_result = load_json(
-            BASE_DIR
-            / config["temporal"]["output"]
-        )
+    observed = {
+        "static": static_verdict,
+        "temporal": temporal_verdict,
+    }
 
-        observed = {
-            "static": static_result[
-                "overall_verdict"
-            ],
-            "temporal": temporal_result[
-                "overall_verdict"
-            ],
-        }
 
     if set(expected_components) != set(observed):
         raise RuntimeError(
             f"{test_id}: componenti attese non valide"
         )
 
-    for component, expected_verdict in (
-        expected_components.items()
-    ):
+    for component, expected_verdict in (expected_components.items()):
         if observed[component] != expected_verdict:
             raise RuntimeError(
                 f"{test_id}: {component} atteso "
@@ -877,19 +752,11 @@ def check_expected_components(
 
 # HELPERS PER RUN MUTATION
 def get_source_sha256(config): 
-    if config.get("pipeline") in {"sequence", "collect"}: 
-        report = load_json(BASE_DIR / config["report"]) 
- 
-        return report["source"]["sha256"] 
+    report = load_json(BASE_DIR / config["report"])
 
-    # COMPATIBILITÀ LEGACY:
-    # I test legacy salvano l'hash SHA-256 della cattura in evidence.json.
-    # La nuova pipeline lo salva direttamente nel report unificato.
-    # Rimuovere questo ramo quando evidence.json non sarà più utilizzato.
-    evidence = load_json(BASE_DIR / config["evidence"]) 
- 
-    return evidence["source"]["sha256"] 
- 
+    return report["source"]["sha256"]
+
+
 def get_verdict(config): 
     report = load_json(BASE_DIR / config["report"]) 
  
@@ -1118,41 +985,31 @@ def run_mutation(test_id, variant=None, case_id=None, verbose=False, baseline_al
         str(BASE_DIR / baseline_config["pcap"]),
     ]
 
-    if baseline_config.get("pipeline") in {"sequence", "collect"}:
-        mutation_command.extend([
-            "--report",
-            str(BASE_DIR / baseline_config["report"]),
-        ])
+    mutation_command.extend([
+        "--report",
+        str(BASE_DIR / baseline_config["report"]),
+    ])
 
-        mutator_option = mutation.get(
-            "mutator_options",
-            {}
-        )
+    mutator_option = mutation.get(
+        "mutator_options",
+        {}
+    )
 
-        if mutator_option.get("http2_port"):
-            http2_ports = get_http2_decode_ports(baseline_config)
+    if mutator_option.get("http2_port"):
+        http2_ports = get_http2_decode_ports(baseline_config)
 
-            if not http2_ports:
-                raise RuntimeError(
-                    f"{test_id}: il mutator richiede una porta HTTP/2, ma nessuna porta è configurata"
-                )
+        if not http2_ports:
+            raise RuntimeError(
+                f"{test_id}: il mutator richiede una porta HTTP/2, ma nessuna porta è configurata"
+            )
 
-            for http2_port in http2_ports:
-                mutation_command.extend([
-                    "--port",
-                    str(http2_port)
-                ])
+        for http2_port in http2_ports:
+            mutation_command.extend([
+                "--port",
+                str(http2_port)
+            ])
 
 
-    # COMPATIBILITÀ LEGACY:
-    # I mutator legacy ricevono ancora evidence.json come sorgente dell'evidenza. 
-    # I nuovi mutator usano direttamente il report unificato.
-    # Rimuovere questo ramo dopo la migrazione dei mutator mantenuti.  
-    else:
-        mutation_command.extend([
-            "--evidence",
-            str(BASE_DIR / baseline_config["evidence"]),
-        ])
 
     mutation_command.extend([
         "--output",

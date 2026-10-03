@@ -172,141 +172,141 @@ def normalize_http2(packets: list[dict]) -> list[MessageEvent]:
         for http2 in http2_blocks:
             http2_stream_id = _first(http2.get("http2_http2_streamid"))
 
-        if http2_stream_id is None:
-            continue
-
-        http2_stream_id = int(http2_stream_id)
-
-
-        key = (tcp_stream, http2_stream_id)
-
-        transaction = transactions[key]
-
-        method = _first(http2.get("http2_http2_headers_method"))
-
-        status = _first(http2.get("http2_http2_headers_status"))
-
-        data_hex = _first(http2.get("http2_http2_data_data"))
-
-
-        # -------------------------
-        # HTTP/2 REQUEST
-        # -------------------------
-
-        if method is not None:
-            raw_path = _first(http2.get("http2_http2_headers_path"))
-
-            path, query = _parse_path(raw_path)
-
-            event = MessageEvent(
-                frame_number=frame_number,
-                timestamp=timestamp,
-                protocol="http2",
-                kind="request",
-                src=src,
-                dst=dst,
-                related_frames=[frame_number],
-                correlation={
-                    "tcp_stream": tcp_stream,
-                    "http2_stream_id": http2_stream_id,
-                },
-                fields={
-                    "method": method,
-                    "path": path,
-                    "raw_path": raw_path,
-                    "query": query,
-                    "headers": _extract_headers(http2),
-                },
-            )
-
-            transaction["request"] = event
-
-        # -------------------------
-        # HTTP/2 RESPONSE
-        # -------------------------
-
-        if status is not None:
-            event = MessageEvent(
-                frame_number=frame_number,
-                timestamp=timestamp,
-                protocol="http2",
-                kind="response",
-                src=src,
-                dst=dst,
-                related_frames=[frame_number],
-                correlation={
-                    "tcp_stream": tcp_stream,
-                    "http2_stream_id": http2_stream_id,
-                },
-                fields={
-                    "status": int(status),
-                    "headers": _extract_headers(http2),
-                },
-            )
-
-            transaction["response"] = event
-
-        # -------------------------
-        # HTTP/2 DATA
-        # -------------------------
-
-        if data_hex:
-            try:
-                data = bytes.fromhex(data_hex.replace(":", ""))
-            except ValueError:
+            if http2_stream_id is None:
                 continue
 
-            request = transaction["request"]
-            response = transaction["response"]
-
-            # Se la direzione è la stessa della request, il DATA appartiene al body della request.
-            if (
-                request is not None
-                and src == request.src
-                and dst == request.dst
-            ):
-                _append_body_data(
-                    request,
-                    transaction["request_body"],
-                    data,
-                    frame_number,
-                )
-
-            # Se la direzione è inversa, appartiene alla response.
-            elif (
-                request is not None
-                and src == request.dst
-                and dst == request.src
-            ):
-                _append_body_data(
-                    response,
-                    transaction["response_body"],
-                    data,
-                    frame_number,
-                )
+            http2_stream_id = int(http2_stream_id)
 
 
-            # Se ci sono dei frames senza correlazione non li scarto
-            else:
-                data_key = (frame_number, data)
+            key = (tcp_stream, http2_stream_id)
 
-                if data_key not in transaction["orphan_data_seen"]:
-                    transaction["orphan_data_seen"].add(data_key)
-                    transaction["orphan_body"].extend(data)
+            transaction = transactions[key]
 
-                if frame_number not in transaction["orphan_frames"]:
-                    transaction["orphan_frames"].append(frame_number)
+            method = _first(http2.get("http2_http2_headers_method"))
 
-                if transaction["orphan_metadata"] is None:
-                    transaction["orphan_metadata"] = {
-                        "frame_number": frame_number,
-                        "timestamp": timestamp,
-                        "src": src,
-                        "dst": dst,
+            status = _first(http2.get("http2_http2_headers_status"))
+
+            data_hex = _first(http2.get("http2_http2_data_data"))
+
+
+            # -------------------------
+            # HTTP/2 REQUEST
+            # -------------------------
+
+            if method is not None:
+                raw_path = _first(http2.get("http2_http2_headers_path"))
+
+                path, query = _parse_path(raw_path)
+
+                event = MessageEvent(
+                    frame_number=frame_number,
+                    timestamp=timestamp,
+                    protocol="http2",
+                    kind="request",
+                    src=src,
+                    dst=dst,
+                    related_frames=[frame_number],
+                    correlation={
                         "tcp_stream": tcp_stream,
                         "http2_stream_id": http2_stream_id,
+                    },
+                    fields={
+                        "method": method,
+                        "path": path,
+                        "raw_path": raw_path,
+                        "query": query,
                         "headers": _extract_headers(http2),
-                    }
+                    },
+                )
+
+                transaction["request"] = event
+
+            # -------------------------
+            # HTTP/2 RESPONSE
+            # -------------------------
+
+            if status is not None:
+                event = MessageEvent(
+                    frame_number=frame_number,
+                    timestamp=timestamp,
+                    protocol="http2",
+                    kind="response",
+                    src=src,
+                    dst=dst,
+                    related_frames=[frame_number],
+                    correlation={
+                        "tcp_stream": tcp_stream,
+                        "http2_stream_id": http2_stream_id,
+                    },
+                    fields={
+                        "status": int(status),
+                        "headers": _extract_headers(http2),
+                    },
+                )
+
+                transaction["response"] = event
+
+            # -------------------------
+            # HTTP/2 DATA
+            # -------------------------
+
+            if data_hex:
+                try:
+                    data = bytes.fromhex(data_hex.replace(":", ""))
+                except ValueError:
+                    continue
+
+                request = transaction["request"]
+                response = transaction["response"]
+
+                # Se la direzione è la stessa della request, il DATA appartiene al body della request.
+                if (
+                    request is not None
+                    and src == request.src
+                    and dst == request.dst
+                ):
+                    _append_body_data(
+                        request,
+                        transaction["request_body"],
+                        data,
+                        frame_number,
+                    )
+
+                # Se la direzione è inversa, appartiene alla response.
+                elif (
+                    request is not None
+                    and src == request.dst
+                    and dst == request.src
+                ):
+                    _append_body_data(
+                        response,
+                        transaction["response_body"],
+                        data,
+                        frame_number,
+                    )
+
+
+                # Se ci sono dei frames senza correlazione non li scarto
+                else:
+                    data_key = (frame_number, data)
+
+                    if data_key not in transaction["orphan_data_seen"]:
+                        transaction["orphan_data_seen"].add(data_key)
+                        transaction["orphan_body"].extend(data)
+
+                    if frame_number not in transaction["orphan_frames"]:
+                        transaction["orphan_frames"].append(frame_number)
+
+                    if transaction["orphan_metadata"] is None:
+                        transaction["orphan_metadata"] = {
+                            "frame_number": frame_number,
+                            "timestamp": timestamp,
+                            "src": src,
+                            "dst": dst,
+                            "tcp_stream": tcp_stream,
+                            "http2_stream_id": http2_stream_id,
+                            "headers": _extract_headers(http2),
+                        }
 
     events = []
 
