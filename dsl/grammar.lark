@@ -12,8 +12,13 @@ start: statement+
             | if_rule
 
 
-sequence_rule: "SEQUENCE" "{" sequence_item+ "}"
+sequence_rule: "SEQUENCE" "{" sequence_element+ "}"
+
+?sequence_element: sequence_item
+                 | optional_block
+
 sequence_item: FIELD "AS" NAME
+optional_block: "OPTIONAL" "{" sequence_element+ "}"
 
 collect_rule: "COLLECT" FIELD "AS" NAME
 

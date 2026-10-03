@@ -58,6 +58,12 @@ class RuleTransformer(Transformer):
             "alias": str(alias)
         }
 
+    def optional_block(self, items):
+        return {
+            "operator": "OPTIONAL",
+            "items": items
+        }
+
     def sequence_rule(self, items):
         return{
             "operator": "SEQUENCE",

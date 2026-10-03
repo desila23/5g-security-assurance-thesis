@@ -381,60 +381,65 @@
         "inherit_baseline_config": true,
         "mutated_test": "resstar_verification_failure_mutation",
         "mutator": "mutation_testing.mutate_resstar",
+
+        "mutator_options": {
+            "http2_port": true
+        },
+
         "expected_verdicts": {
             "baseline": "PASS",
             "mutated": "FAIL"
         },
+
         "target_rules": {
             "A": {
-                "field": "resstar_verification_failure.res_star_verification.hres_star",
+                "field": "hres_star.value",
                 "operator": "!=",
                 "baseline": "PASS",
                 "mutated": "FAIL"
             },
+
             "B": {
-                "field": "resstar_verification_failure.res_star_verification.hres_star",
+                "field": "hres_star.value",
                 "operator": "!=",
                 "baseline": "PASS",
                 "mutated": "FAIL"
             },
+
             "C": {
-                "field": "resstar_verification_failure.ausf_confirmation_response.auth_result",
+                "field": "ausf_confirmation_response.auth_result",
                 "operator": "==",
                 "baseline": "PASS",
                 "mutated": "FAIL"
             },
+
             "D": {
-                "field": "resstar_verification_failure.ausf_confirmation_response.auth_result",
+                "field": "ausf_confirmation_response.auth_result",
                 "operator": "==",
                 "baseline": "PASS",
                 "mutated": "FAIL"
             }
         },
+
         "test_config": {
             "cases": {
                 "A": {
                     "pcap": "captures/resstar_case_a_mutation.pcap",
-                    "evidence": "reports/resstar_verification_failure_mutation/case_a/evidence.json",
-                    "output": "reports/resstar_verification_failure_mutation/case_a/verification.json",
                     "report": "reports/resstar_verification_failure_mutation/case_a/report.json"
                 },
+
                 "B": {
                     "pcap": "captures/resstar_case_b_mutation.pcap",
-                    "evidence": "reports/resstar_verification_failure_mutation/case_b/evidence.json",
-                    "output": "reports/resstar_verification_failure_mutation/case_b/verification.json",
                     "report": "reports/resstar_verification_failure_mutation/case_b/report.json"
                 },
+
                 "C": {
                     "pcap": "captures/resstar_case_c_mutation.pcap",
-                    "evidence": "reports/resstar_verification_failure_mutation/case_c/evidence.json",
-                    "output": "reports/resstar_verification_failure_mutation/case_c/verification.json",
                     "report": "reports/resstar_verification_failure_mutation/case_c/report.json"
                 },
+
                 "D": {
                     "pcap": "captures/resstar_case_d_mutation.pcap",
-                    "evidence": "reports/resstar_verification_failure_mutation/case_d/evidence.json",
-                    "output": "reports/resstar_verification_failure_mutation/case_d/verification.json",
                     "report": "reports/resstar_verification_failure_mutation/case_d/report.json"
                 }
             }

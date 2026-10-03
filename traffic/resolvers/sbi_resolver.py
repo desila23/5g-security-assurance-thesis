@@ -121,6 +121,8 @@ def resolve_sbi_message_types(events: list[MessageEvent]) -> list[MessageEvent]:
                 event.message_type = "ausf.authentication.response"
 
                 event.fields["rand"] = auth_data.get("rand")
+                event.fields["autn"] = auth_data.get("autn")
+                event.fields["hxres_star"] = auth_data.get("hxresStar")
 
                 continue
 

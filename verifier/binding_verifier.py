@@ -228,6 +228,78 @@ def verify_unique_rule(context: BindingContext, rule:dict) -> tuple[bool, dict]:
     }
 
 
+
+def verify_if_rule(context: BindingContext, rule: dict) -> tuple[bool, dict]:
+    actual_value = get_binding_value(context, rule["field"])
+    expected_value = resolve_operand(context, rule["expected"])
+
+    condition_operator = rule["condition_operator"]
+
+    condition_met = evaluate_rule(
+        actual_value,
+        condition_operator,
+        expected_value
+    )
+
+
+    # Se la condizione NON riguarda il caso attuale, viene "skippata"
+    if not condition_met:
+        return True, {
+            "field": rule["field"],
+            "operator": "IF",
+            "condition_operator": condition_operator,
+            "expected": expected_value,
+            "observed": actual_value,
+            "verdict": "SKIPPED",
+            "rules": []            
+        }
+
+
+    nested_results = []
+    nested_verdict = True
+
+    for nested_rule in rule["rules"]:
+        verdict, result = verify_rule(context, nested_rule)
+
+        nested_results.append(result)
+
+        if not verdict:
+            nested_verdict = False
+
+    return nested_verdict, {
+        "field": rule["field"],
+        "operator": "IF",
+        "condition_operator": condition_operator,
+        "expected": expected_value,
+        "observed": actual_value,
+        "verdict": (
+            "PASS" if nested_verdict
+            else "FAIL"
+        ),
+        "rules": nested_results
+    }
+
+
+
+def verify_rule(context: BindingContext, rule: dict) -> tuple[bool, dict]:
+    operator = rule["operator"]
+
+    if operator == "IF":
+        return verify_if_rule(context, rule)
+
+    if operator in {"==", "!="}:
+        return verify_comparison_rule(context, rule)
+
+    if operator == "UNIQUE":
+        return verify_unique_rule(context, rule)
+
+    raise ValueError(
+        f"Unsupported operator in binding verifier: '{operator}'"
+    )
+            
+
+
+
 def verify_bindings(context: BindingContext, rules: list[dict]) -> dict:
     """
     Verifica regole DSL su un BindingContext.
@@ -239,20 +311,7 @@ def verify_bindings(context: BindingContext, rules: list[dict]) -> dict:
     overall_verdict = True
 
     for rule in rules:
-        operator = rule["operator"]
-
-        if operator in {"==", "!="}:
-            verdict, result = verify_comparison_rule(context, rule)
-
-
-        elif operator == "UNIQUE":
-            verdict, result = verify_unique_rule(context, rule)
-
-        else:
-            raise ValueError(
-                "Unsupported operator in binding "
-                f"verifier: '{operator}'"
-            )
+        verdict, result = verify_rule(context, rule)
 
         results.append(result)
 

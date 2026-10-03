@@ -1,3 +1,5 @@
+import hashlib
+
 from traffic.models import MessageEvent
 
 from verifier.binding_verifier import get_nested_value
@@ -39,6 +41,15 @@ def get_binding_value(context, field_path: str):
     )
 
 
+
+def calculare_hres_star(rand: str, res_star: str) -> str:
+    data = bytes.fromhex(rand + res_star)
+    digest = hashlib.sha256(data).digest()
+
+    return digest[16:].hex()
+
+
+
 def build_derived_bindings(context, config: dict | None) -> dict:
     if not config:
         return {}
@@ -49,20 +60,11 @@ def build_derived_bindings(context, config: dict | None) -> dict:
         binding_type = binding_config["type"]
 
         if binding_type == "udm_auth_vector_mac":
-            auth_vector = get_binding_value(
-                context,
-                binding_config["auth_vector"]
-            )
+            auth_vector = get_binding_value(context, binding_config["auth_vector"])
 
-            key = get_binding_value(
-                context,
-                binding_config["key"]
-            )
+            key = get_binding_value(context, binding_config["key"])
 
-            opc = get_binding_value(
-                context,
-                binding_config["opc"]
-            )
+            opc = get_binding_value(context, binding_config["opc"])
 
             bindings[alias] = verify_auth_vector_mac(
                 auth_vector,
@@ -70,9 +72,22 @@ def build_derived_bindings(context, config: dict | None) -> dict:
                 bytes.fromhex(opc)
             )
 
+
+        elif binding_type == "hres_star":
+            rand = get_binding_value(context, binding_config["rand"])
+
+            res_star = get_binding_value(context, binding_config["res_star"])
+
+            bindings[alias] = {
+                "value": calculare_hres_star(rand, res_star)
+            }
+
+
         else:
             raise RuntimeError(
                 f"Unsupported derived binding type: {binding_type}"
             )
 
     return bindings
+
+

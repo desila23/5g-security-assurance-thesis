@@ -345,11 +345,27 @@ def run_sequence_test(test_id, test_config, verbose=False):
 
     derived_bindings = test_config.get("derived_bindings")
 
+
+    config_bindings = {}
+
+    if "case" in test_config:
+        config_bindings["case"] = {
+            "id": test_config["case"]
+        }
+
+        if "identity_path" in test_config:
+            config_bindings["case"]["identity_path"] = test_config["identity_path"]
+
+        if "failure_source" in test_config:
+            config_bindings["case"]["failure_source"] = test_config["failure_source"]
+
+
     result = run_sequence_verification(
         events,
         str(rule_file),
         correlation_mode=correlation_mode,
         external_bindings=external_bindings,
+        config_bindings=config_bindings,
         derived_bindings=derived_bindings
     )
 
@@ -710,6 +726,18 @@ def print_failed_checks(report):
         )
 
 
+
+def iter_generic_report_results(results):
+    for result in results:
+        yield result
+
+        details = result.get("details", result)
+
+        children = details.get("rules", [])
+
+        yield from iter_generic_report_results(children)
+
+
 def check_target_rule(
     test_id,
     config,
@@ -926,8 +954,10 @@ def build_mutated_config(
 
     return mutated_config
 
-def get_http2_decode_port(test_config: dict) -> int | None:
+def get_http2_decode_ports(test_config: dict) -> list[int]:
     traffic = test_config.get("traffic", {})
+
+    ports = []
 
     for source in traffic.get("sources", []):
         if source.get("type") != "http2":
@@ -946,13 +976,16 @@ def get_http2_decode_port(test_config: dict) -> int | None:
                 ]
 
                 try:
-                    return int(port_value)
+                    port = int(port_value)
                 except ValueError:
                     raise RuntimeError(
                         f"Porta HTTP/2 non valida in decode_as: {decode_as}"
                     )
 
-    return None
+                if port not in ports:
+                    ports.append(port)
+
+    return ports
 
 
 def run_mutation(test_id, variant=None, case_id=None, verbose=False, baseline_already_run=False):
@@ -1097,17 +1130,18 @@ def run_mutation(test_id, variant=None, case_id=None, verbose=False, baseline_al
         )
 
         if mutator_option.get("http2_port"):
-            http2_port = get_http2_decode_port(baseline_config)
+            http2_ports = get_http2_decode_ports(baseline_config)
 
-            if http2_port is None:
+            if not http2_ports:
                 raise RuntimeError(
                     f"{test_id}: il mutator richiede una porta HTTP/2, ma nessuna porta è configurata"
                 )
 
-            mutation_command.extend([
-                "--port",
-                str(http2_port)
-            ])
+            for http2_port in http2_ports:
+                mutation_command.extend([
+                    "--port",
+                    str(http2_port)
+                ])
 
 
     # COMPATIBILITÀ LEGACY:

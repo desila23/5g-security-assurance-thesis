@@ -98,6 +98,9 @@ def _build_evidence(result, test_config):
         elif alias in derived_aliases:
             source_type = "derived"
 
+        elif alias == "case":
+            source_type = "configuration"
+
         bindings[alias] = _binding_to_evidence(binding, source_type=source_type)
 
     return {
@@ -149,6 +152,16 @@ def _frames_for_field(result, field_path):
     return _frames_for_event(binding)
 
 
+
+def _iter_verification_rules(rules):
+    for rule in rules:
+        yield rule
+
+        yield from _iter_verification_rules(
+            rule.get("rules", [])
+        )
+
+
 def _build_verification_results(result, test_config):
     if not result.verification:
         return []
@@ -156,7 +169,9 @@ def _build_verification_results(result, test_config):
     verification_results = []
 
     for index, rule in enumerate(
-        result.verification.get("rules", []),
+        _iter_verification_rules(
+            result.verification.get("rules", [])
+        ),
         start=1,
     ):
         evidence_frames = []
@@ -255,7 +270,9 @@ def _build_criteria(result):
     criteria = []
 
     for index, rule in enumerate(
-        result.verification.get("rules", []),
+        _iter_verification_rules(
+            result.verification.get("rules", [])
+        ),
         start=1,
     ):
         operator = rule["operator"]

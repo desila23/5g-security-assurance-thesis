@@ -70,6 +70,7 @@ def run_sequence_verification(
     rule_file: str,
     correlation_mode: str = "grouped",
     external_bindings: dict | None = None,
+    config_bindings: dict | None = None,
     derived_bindings: dict | None = None
 ) -> SequenceVerificationResult:
     """
@@ -149,11 +150,11 @@ def run_sequence_verification(
     if external_bindings:
         context.bindings.update(external_bindings)
 
+    if config_bindings:
+        context.bindings.update(config_bindings)
+
     if derived_bindings:
-        computed_bindings = build_derived_bindings(
-            context,
-            derived_bindings
-        )
+        computed_bindings = build_derived_bindings(context, derived_bindings)
 
         context.bindings.update(computed_bindings)
         

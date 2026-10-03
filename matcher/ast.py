@@ -7,6 +7,7 @@ class PatternNode:
 
     pass
 
+
 @dataclass
 class Atom(PatternNode):
     """
@@ -24,21 +25,34 @@ class Sequence(PatternNode):
 
     items: list[PatternNode]
 
+@dataclass
+class Optional(PatternNode):
+    """
+    Rappresenta un pattern opzionale che può essere consumato oppure saltato tramite epsilon transition.
+    """
+
+    items: list[PatternNode]
+
+
+def build_pattern_node(item: dict) -> PatternNode:
+    if item.get("operator") == "OPTIONAL":
+        return Optional(
+            items=[
+                build_pattern_node(child)
+                for child in item["items"]
+            ]
+        )
+
+    return Atom(
+        message_type=item["message_type"],
+        alias=item["alias"]
+    )
 
 
 def build_sequence_ast(sequence_items: list[dict]) -> Sequence:
-    """
-    Converte la rappresentazione JSON prodotta dal parser DSL nell'AST utilizzato da matcher
-    """
-
-    atoms = []
-
-    for item in sequence_items:
-       atom = Atom(
-           message_type=item["message_type"],
-           alias=item["alias"]
-       )
-
-       atoms.append(atom)
-
-    return Sequence(items=atoms)
+    return Sequence(
+        items=[
+            build_pattern_node(item)
+            for item in sequence_items
+        ]
+    )
