@@ -7,201 +7,297 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main id="deck" aria-live="polite">
-    <section class="slide active cover" data-title="Titolo e obiettivo">
-      <div class="eyebrow">Bachelor Thesis · Computer Science · Università di Roma Tor Vergata</div>
-      <div class="cover-grid">
-        <div>
-          <h1>A Domain-Specific Language for Verifying the Outcome of 5G SCAS Security Tests from Network Traffic Captures</h1>
-          <p class="lead">Verificare automaticamente l’esito di test di sicurezza 5G a partire dalle catture di rete.</p>
-          <div class="author">Samuele De Santis</div>
-        </div>
-        <div class="hero-visual" aria-hidden="true">
-          <div class="hero-node">PCAP</div><div class="hero-arrow">→</div>
-          <div class="hero-node accent">DSL</div><div class="hero-arrow">→</div>
-          <div class="hero-node verdict">VERDICT</div>
-        </div>
-      </div>
-    </section>
+<main id="deck" aria-live="polite">
 
-    <section class="slide" data-title="Il problema">
-      <div class="slide-kicker">01 · Contesto</div>
-      <h2>Dalla specifica SCAS al verdetto</h2>
-      <p class="big-statement">Le SCAS descrivono il comportamento atteso, ma la logica che decide PASS/FAIL viene spesso implementata caso per caso nel codice.</p>
-      <div class="before-after">
-        <div class="panel muted">
-          <div class="panel-label">Approccio ad hoc</div>
-          <div class="stack mini">
-            <div>Test A → verifier A</div><div>Test B → verifier B</div><div>Test C → verifier C</div>
-          </div>
-          <p>Logica dispersa, poco riusabile, difficile da ispezionare fuori dal codice.</p>
-        </div>
-        <div class="transition-arrow">→</div>
-        <div class="panel strong">
-          <div class="panel-label">Obiettivo della tesi</div>
-          <div class="flow-inline"><span>SCAS</span><b>→</b><span>DSL</span><b>→</b><span>Engine</span><b>→</b><span>Verdict</span></div>
-          <p>Separare la logica del test dall’implementazione che la esegue.</p>
-        </div>
+<section class="slide active cover" data-title="Titolo e obiettivo">
+  <div class="eyebrow">Bachelor Thesis · Computer Science · Università di Roma Tor Vergata</div>
+  <div class="cover-grid">
+    <div class="cover-copy">
+      <h1>A Domain-Specific Language for Verifying the Outcome of 5G SCAS Security Tests from Network Traffic Captures</h1>
+      <p class="lead">Verificare automaticamente l’esito di test di sicurezza 5G a partire dalle catture di rete.</p>
+      <div class="author">Samuele De Santis</div>
+    </div>
+    <div class="cover-flow" aria-hidden="true">
+      <div class="cover-inputs">
+        <div class="cover-node input">PCAP<small>evidenza osservata</small></div>
+        <div class="cover-node input accent">DSL<small>regola dichiarativa</small></div>
       </div>
-    </section>
+      <div class="down-connector split"></div>
+      <div class="cover-node verdict">VERDICT<small>PASS · FAIL · INCONCLUSIVE</small></div>
+      <div class="down-arrow">↓</div>
+      <div class="cover-node report">REPORT<small>evidenza + metadati</small></div>
+    </div>
+  </div>
+</section>
 
-    <section class="slide" data-title="Architettura generale">
-      <div class="slide-kicker">02 · Visione d’insieme</div>
-      <h2>Architettura generale</h2>
-      <p class="subtitle">Una pipeline riutilizzabile trasforma traffico grezzo in evidenza verificabile.</p>
-      <div class="pipeline-wide">
-        <div class="pipe-card"><small>INPUT</small><strong>PCAP</strong></div><span>→</span>
-        <div class="pipe-card"><small>TRAFFIC</small><strong>TShark Reader</strong></div><span>→</span>
-        <div class="pipe-card"><small>NORMALIZE</small><strong>MessageEvent[]</strong></div><span>→</span>
-        <div class="pipe-card"><small>RESOLVE</small><strong>Correlation</strong></div><span>→</span>
-        <div class="pipe-card accent-card"><small>DSL</small><strong>Evidence Selection</strong></div><span>→</span>
-        <div class="pipe-card"><small>VERIFY</small><strong>Static + Temporal</strong></div><span>→</span>
-        <div class="pipe-card verdict-card"><small>OUTPUT</small><strong>Report + Verdict</strong></div>
-      </div>
+<section class="slide" data-title="Il problema">
+  <div class="slide-kicker">01 · Contesto</div>
+  <h2>Dalla specifica SCAS al verdetto</h2>
+  <p class="big-statement">Le SCAS descrivono il comportamento atteso, ma la logica che decide PASS/FAIL viene spesso implementata caso per caso nel codice.</p>
+  <div class="problem-lanes">
+    <div class="problem-lane old">
+      <div class="lane-head"><span>PRIMA</span><b>Logica ad hoc per test</b></div>
+      <div class="mini-path"><span>Test A</span><i>→</i><span>codice A</span></div>
+      <div class="mini-path"><span>Test B</span><i>→</i><span>codice B</span></div>
+      <div class="mini-path"><span>Test C</span><i>→</i><span>codice C</span></div>
+      <p>La logica di verifica resta dispersa nel codice e diventa difficile da riusare, confrontare e ispezionare.</p>
+    </div>
+    <div class="problem-shift">→</div>
+    <div class="problem-lane new">
+      <div class="lane-head"><span>TESI</span><b>Logica dichiarativa</b></div>
+      <div class="one-path"><span>SCAS</span><i>→</i><span class="accent-chip">DSL</span><i>→</i><span>engine generico</span><i>→</i><span>verdict</span></div>
+      <p>La regola del test viene separata dall’engine che la esegue: cambiano i criteri, non l’architettura.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Architettura generale">
+  <div class="slide-kicker">02 · Visione d’insieme</div>
+  <h2>Architettura generale</h2>
+  <div class="architecture-layout">
+    <div class="architecture-copy">
+      <p class="architecture-lead">La pipeline trasforma una cattura di rete in evidenza semantica, seleziona solo ciò che serve al test e applica criteri dichiarati nella DSL.</p>
+      <div class="arch-note"><b>Due ingressi:</b> il traffico osservato e la regola del test.</div>
+      <div class="arch-note"><b>Un’uscita:</b> un verdetto motivato da evidenze riproducibili.</div>
       <div class="principle">Principio di progetto: <b>il normalizzatore comprende il protocollo, ma non il test.</b></div>
-    </section>
+    </div>
+    <div class="architecture-vertical">
+      <div class="arch-input-row"><span>PCAP</span><span class="dsl-in">DSL</span></div>
+      <div class="arch-merge">↘ &nbsp;&nbsp; ↙</div>
+      <div class="arch-step"><small>1</small>TShark Reader</div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-step"><small>2</small>Protocol Normalization</div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-step"><small>3</small>Semantic Resolution</div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-step accent-step"><small>4</small>Evidence Selection</div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-step"><small>5</small>Static + Temporal Verification</div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-step report-step"><small>6</small>Verdict + Generic Report</div>
+    </div>
+  </div>
+</section>
 
-    <section class="slide component" data-title="TShark Reader">
-      <div class="slide-kicker">03 · Componente</div>
-      <h2>Traffic extraction — TShark Reader</h2>
-      <p class="big-statement">Legge la cattura di rete e usa TShark per ottenere una rappresentazione strutturata dei pacchetti da analizzare.</p>
-      <div class="io-layout">
-        <div class="io-box"><small>INPUT</small><strong>PCAP / PCAPNG</strong><div class="icon-file">▱</div></div>
-        <div class="component-core"><span class="core-label">COMPONENTE</span><div class="core-title">TShark Reader</div><div class="core-note">estrazione di campi strutturati</div></div>
-        <div class="io-box"><small>OUTPUT</small><strong>packet fields</strong><div class="code-lines"><i></i><i></i><i></i></div></div>
+<section class="slide component" data-title="TShark Reader">
+  <div class="slide-kicker">03 · Componente</div>
+  <h2>Traffic extraction — TShark Reader</h2>
+  <div class="component-side-layout">
+    <div class="side-diagram tshark-diagram">
+      <div class="diagram-node">PCAP / PCAPNG</div><div class="diagram-arrow">↓</div>
+      <div class="diagram-node core">TShark Reader</div><div class="diagram-arrow">↓</div>
+      <div class="diagram-node output">packet fields</div>
+    </div>
+    <div class="component-explain">
+      <p class="component-sentence">Legge la cattura di rete e usa TShark per estrarre solo i campi strutturati necessari alle fasi successive.</p>
+      <div class="detail-card"><b>Cosa riceve</b><span>Una cattura <code>.pcap</code> o <code>.pcapng</code>.</span></div>
+      <div class="detail-card"><b>Cosa produce</b><span>Campi decodificati e metadati dei frame, ancora legati al protocollo.</span></div>
+      <div class="detail-card emphasis"><b>Separazione delle responsabilità</b><span>Non contiene logica specifica del test SCAS.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide component" data-title="Protocol Normalization">
+  <div class="slide-kicker">04 · Componente</div>
+  <h2>Protocol normalization</h2>
+  <div class="component-side-layout">
+    <div class="side-diagram normalize-diagram">
+      <div class="protocol-mini-row"><span>NAS</span><span>HTTP/2</span><span>PFCP</span></div>
+      <div class="diagram-arrow">↓</div>
+      <div class="diagram-node core">Normalizers</div>
+      <div class="diagram-arrow">↓</div>
+      <div class="diagram-node output">MessageEvent[]</div>
+    </div>
+    <div class="component-explain">
+      <p class="component-sentence">Trasforma protocolli diversi in una rappresentazione comune, così il resto della pipeline può ragionare sugli eventi senza dipendere dal formato originale dei pacchetti.</p>
+      <div class="detail-card"><b>Cosa riceve</b><span>Campi TShark specifici di NAS 5GS, HTTP/2 o PFCP.</span></div>
+      <div class="detail-card"><b>Cosa produce</b><span>Oggetti <code>MessageEvent</code> con struttura uniforme.</span></div>
+      <div class="detail-card emphasis"><b>Perché serve</b><span>Disaccoppia la logica dei protocolli dalla logica del singolo test.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide component" data-title="Semantic Resolution">
+  <div class="slide-kicker">05 · Componente</div>
+  <h2>Semantic resolution & correlation</h2>
+  <div class="component-side-layout">
+    <div class="side-diagram correlation-diagram">
+      <div class="event-pair"><span>HTTP/2 request<small>frame 128</small></span><span>HTTP/2 response<small>frame 131</small></span></div>
+      <div class="merge-lines">↘ &nbsp;&nbsp;&nbsp; ↙</div>
+      <div class="diagram-node core">SBI Resolver</div>
+      <div class="diagram-arrow">↓</div>
+      <div class="diagram-node output">correlated event</div>
+    </div>
+    <div class="component-explain">
+      <p class="component-sentence">Collega eventi appartenenti alla stessa interazione e ricostruisce informazioni semantiche che non sono disponibili osservando un singolo frame.</p>
+      <div class="detail-card"><b>Cosa riceve</b><span>Eventi normalizzati e relativi metadati di correlazione.</span></div>
+      <div class="detail-card"><b>Cosa produce</b><span>Eventi arricchiti con relazioni request/response e contesto utile alla verifica.</span></div>
+      <div class="detail-card emphasis"><b>Esempio</b><span>Una richiesta SBI e la sua risposta vengono viste come una singola transazione logica.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide component" data-title="DSL">
+  <div class="slide-kicker">06 · Linguaggio</div>
+  <h2>DSL — selezionare l’evidenza e definire il criterio</h2>
+  <p class="big-statement">La DSL descrive sia quali eventi estrarre dal traffico sia quali proprietà verificare su quegli eventi.</p>
+  <div class="dsl-examples">
+    <div class="dsl-example sequence-example">
+      <div class="code-title">SEQUENCE · flusso ordinato</div>
+      <pre><code>SEQUENCE {
+    nas.authentication_request AS auth_request
+    nas.authentication_response AS auth_response
+}
+
+REQUIRE auth_request.rand != auth_response.res_star</code></pre>
+    </div>
+    <div class="dsl-example collect-example">
+      <div class="code-title">COLLECT · proprietà globale</div>
+      <pre><code>COLLECT pfcp.session_establishment_response AS responses
+
+REQUIRE UNIQUE responses.f_teids</code></pre>
+    </div>
+  </div>
+  <div class="dsl-summary"><span><b>Selection</b> → quali eventi cercare</span><span><b>Verification</b> → cosa deve essere vero</span></div>
+</section>
+
+<section class="slide component" data-title="Grammar & Parsing">
+  <div class="slide-kicker">07 · Linguaggio</div>
+  <h2>Grammar & parsing</h2>
+  <div class="grammar-full-layout">
+    <pre class="grammar-code full"><code>start: statement+
+
+?statement: sequence_rule | collect_rule | rule
+?rule: static_rule | temporal_rule
+?static_rule: comparison_rule | unique_rule | if_rule
+
+sequence_rule: "SEQUENCE" "{" sequence_element+ "}"
+?sequence_element: sequence_item | optional_block
+sequence_item: FIELD "AS" NAME
+optional_block: "OPTIONAL" "{" sequence_element+ "}"
+
+collect_rule: "COLLECT" FIELD "AS" NAME
+comparison_rule: "REQUIRE" FIELD OP operand
+unique_rule: "REQUIRE" "UNIQUE" FIELD
+if_rule: "IF" FIELD OP operand "{" rule+ "}"
+temporal_rule: "MFOTL" "CASE" VALUE MFOTL_BLOCK
+
+?operand: FIELD -> field_operand | VALUE -> literal_operand
+FIELD: /[a-zA-Z_][a-zA-Z0-9_.]*(\.[a-zA-Z_][a-zA-Z0-9_]*)+/
+NAME: /[a-zA-Z_][a-zA-Z0-9_]*/
+OP: "==" | "!="</code></pre>
+    <div class="grammar-side">
+      <p class="component-sentence compact">La grammatica definisce formalmente i costrutti del linguaggio; il parser Lark li trasforma in strutture usate da matcher e verifier.</p>
+      <div class="parse-vertical">
+        <span>DSL text</span><i>↓</i><span>grammar.lark</span><i>↓</i><span>Lark parser</span><i>↓</i><span>Structured rules / AST</span><i>↓</i><span>Matcher + Verifier</span>
       </div>
-      <div class="footnote">Questo livello non contiene la logica specifica del test SCAS.</div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <section class="slide component" data-title="Protocol Normalization">
-      <div class="slide-kicker">04 · Componente</div>
-      <h2>Protocol normalization</h2>
-      <p class="big-statement">I normalizzatori traducono protocolli diversi in una rappresentazione uniforme che il resto della pipeline può elaborare nello stesso modo.</p>
-      <div class="normalizer-visual">
-        <div class="protocols"><span>NAS 5GS</span><span>HTTP/2</span><span>PFCP</span></div>
-        <div class="funnel">NORMALIZERS</div>
-        <div class="message-event">MessageEvent[]</div>
+<section class="slide component" data-title="Evidence Selection">
+  <div class="slide-kicker">08 · Componente</div>
+  <h2>Evidence selection — SEQUENCE & COLLECT</h2>
+  <p class="big-statement">Il matcher applica la parte di selezione della DSL al flusso di eventi e costruisce il contesto di evidenze usato dai verifier.</p>
+  <div class="selection-diagram">
+    <div class="selection-inputs"><span>DSL rule</span><span>MessageEvent[]</span></div>
+    <div class="selection-merge">↘ &nbsp;&nbsp;&nbsp;&nbsp; ↙</div>
+    <div class="selection-engine">
+      <div><b>SEQUENCE</b><small>AST → Thompson NFA → matcher</small></div>
+      <div><b>COLLECT</b><small>raccolta di insiemi di eventi</small></div>
+    </div>
+    <div class="diagram-arrow">↓</div>
+    <div class="binding-output"><small>OUTPUT</small><strong>BindingContext</strong><span>alias → eventi / valori selezionati</span></div>
+  </div>
+</section>
+
+<section class="slide component" data-title="Verification Engine">
+  <div class="slide-kicker">09 · Componente</div>
+  <h2>Verification engine</h2>
+  <p class="big-statement">Una volta individuata l’evidenza, il verifier applica criteri statici e, quando necessario, proprietà temporali.</p>
+  <div class="verify-diagram">
+    <div class="binding-top">BindingContext</div>
+    <div class="fork-arrows"><span>↙</span><span>↘</span></div>
+    <div class="verify-branches">
+      <div class="verify-card"><b>Static verification</b><span>confronti tra campi e valori</span><span>unicità</span><span>condizioni IF</span></div>
+      <div class="verify-card"><b>Temporal verification</b><span>vincoli temporali</span><span>MFOTL</span><span>MonPoly</span></div>
+    </div>
+    <div class="merge-arrows"><span>↘</span><span>↙</span></div>
+    <div class="verify-output">verification results</div>
+  </div>
+  <div class="io-strip"><b>INPUT</b> BindingContext + criteri <span>→</span> <b>OUTPUT</b> risultati delle condizioni</div>
+</section>
+
+<section class="slide component" data-title="Verdict & Reporting">
+  <div class="slide-kicker">10 · Componente</div>
+  <h2>Verdict & generic reporting</h2>
+  <div class="report-layout-real">
+    <div class="report-copy">
+      <p class="component-sentence">Il reporter aggrega risultati, evidenze e metadati in uno schema comune, così ogni verdetto può essere ricondotto ai frame e alla cattura che lo hanno prodotto.</p>
+      <div class="verdicts horizontal"><div class="v pass">PASS</div><div class="v fail">FAIL</div><div class="v inc">INCONCLUSIVE</div></div>
+      <div class="detail-card"><b>Riproducibilità</b><span>PCAP, SHA-256, versione TShark, regola DSL e motore di verifica.</span></div>
+    </div>
+    <div class="real-report-wrap">
+      <div class="real-report-label">Estratto reale · reports/upf_teid_uniqueness/report.json</div>
+      <pre class="real-report"><code>{
+  "schema_version": "2.0",
+  "metadata": {
+    "generator": "generic_verification_pipeline",
+    "tshark_version": "TShark (Wireshark) 3.6.2"
+  },
+  "test": {
+    "id": "upf_teid_uniqueness",
+    "nf": "UPF"
+  },
+  "source": {
+    "pcap": "captures/upf_teid_uniqueness_open5gs.pcapng",
+    "sha256": "e0256486...8f20a"
+  },
+  "verification": {
+    "evidence_frames": [37, 38, 46, 47, 48],
+    "operator": "UNIQUE",
+    "overall_verdict": "PASS"
+  }
+}</code></pre>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Caso concreto UPF">
+  <div class="slide-kicker">11 · Esempio</div>
+  <h2>Un caso concreto — UPF F-TEID uniqueness</h2>
+  <p class="subtitle">La stessa pipeline verifica che gli identificatori F-TEID non vengano riutilizzati.</p>
+  <div class="example-rule"><code>COLLECT pfcp.session_establishment_response AS responses</code><code>REQUIRE UNIQUE responses.f_teids</code></div>
+  <div class="comparison-cards">
+    <div class="result-card pass-card"><small>BASELINE</small><b>5 responses · 10 F-TEIDs</b><span>Nessun riuso osservato</span><strong>PASS</strong></div>
+    <div class="result-card fail-card"><small>MUTATED</small><b>F-TEID duplicato</b><span>Stesso identificatore riutilizzato</span><strong>FAIL</strong></div>
+  </div>
+</section>
+
+<section class="slide final-slide" data-title="Mutation Testing">
+  <div class="slide-kicker">12 · Validazione</div>
+  <h2>Mutation testing — due esecuzioni, stessa pipeline</h2>
+  <p class="big-statement">Prima viene verificata interamente la baseline. Poi una copia della cattura viene mutata e passa di nuovo attraverso la stessa pipeline, senza cambiare l’engine.</p>
+  <div class="mutation-two-flow">
+    <div class="mutation-source">Baseline PCAP</div>
+    <div class="mutation-columns">
+      <div class="mutation-lane baseline-lane">
+        <div class="lane-title">FLUSSO 1 · BASELINE</div>
+        <div class="flow-box">Original PCAP</div><i>↓</i><div class="flow-box pipeline-box">Normal pipeline</div><i>↓</i><div class="flow-box verdict-ok">Expected baseline verdict ✓</div>
       </div>
-      <div class="io-strip"><b>INPUT</b> campi TShark specifici del protocollo <span>→</span> <b>OUTPUT</b> eventi semantici uniformi</div>
-    </section>
-
-    <section class="slide component" data-title="Semantic Resolution">
-      <div class="slide-kicker">05 · Componente</div>
-      <h2>Semantic resolution & correlation</h2>
-      <p class="big-statement">Il resolver collega eventi appartenenti alla stessa interazione e ricava informazioni che non emergono osservando un singolo pacchetto.</p>
-      <div class="correlation">
-        <div class="event-card">HTTP/2 request<small>frame 128</small></div>
-        <div class="event-card">HTTP/2 response<small>frame 131</small></div>
-        <div class="join-lines">⌄</div>
-        <div class="transaction-card">SBI transaction<small>request ↔ response correlati</small></div>
+      <div class="mutation-lane mutated-lane">
+        <div class="lane-title">FLUSSO 2 · MUTATION</div>
+        <div class="flow-box mutation-box">Apply mutation</div><i>↓</i><div class="flow-box">Mutated PCAP</div><i>↓</i><div class="flow-box pipeline-box">Same normal pipeline</div><i>↓</i><div class="flow-box verdict-ok">Expected changed verdict ✓</div>
       </div>
-      <div class="io-strip"><b>INPUT</b> MessageEvent[] <span>→</span> <b>OUTPUT</b> eventi correlati / arricchiti</div>
-    </section>
+    </div>
+  </div>
+  <div class="mutation-result-row"><div class="score small-score">25<span>/25</span></div><div><b>scenari con esito atteso</b><span>HTTP status · RAND/timing · F-TEID · HXRES*/HRES* · authResult</span></div></div>
+  <div class="closing">From network traffic to reproducible security evidence.</div>
+</section>
 
-    <section class="slide component" data-title="DSL">
-      <div class="slide-kicker">06 · Linguaggio</div>
-      <h2>DSL — selezionare l’evidenza e definire il criterio</h2>
-      <p class="big-statement">La DSL descrive sia quali eventi estrarre dal traffico sia quali proprietà verificare su quegli eventi.</p>
-      <div class="dsl-grid">
-        <div class="code-panel">
-          <div class="code-title">1 · Evidence selection</div>
-          <pre><code>COLLECT pfcp.session_establishment_response AS responses</code></pre>
-        </div>
-        <div class="code-panel accent-border">
-          <div class="code-title">2 · Verification</div>
-          <pre><code>REQUIRE UNIQUE responses.f_teids</code></pre>
-        </div>
-        <div class="dsl-meaning">
-          <div><b>Selection</b><span>quali eventi prendere</span></div>
-          <div><b>Verification</b><span>quale proprietà controllare</span></div>
-        </div>
-      </div>
-      <div class="io-strip"><b>INPUT</b> criterio derivato dal test SCAS <span>→</span> <b>OUTPUT</b> regola machine-readable</div>
-    </section>
-
-    <section class="slide component" data-title="Grammar & Parsing">
-      <div class="slide-kicker">07 · Linguaggio</div>
-      <h2>Grammar & parsing</h2>
-      <p class="big-statement">La grammatica definisce formalmente i costrutti ammessi dalla DSL e il parser li trasforma in una rappresentazione strutturata.</p>
-      <div class="grammar-layout">
-        <pre class="grammar-code"><code>sequence_rule: "SEQUENCE" "{" sequence_element+ "}"
-collect_rule:  "COLLECT" FIELD "AS" NAME
-unique_rule:   "REQUIRE" "UNIQUE" FIELD
-temporal_rule: "MFOTL" "CASE" VALUE MFOTL_BLOCK</code></pre>
-        <div class="parse-flow">
-          <span>DSL text</span><b>→</b><span>grammar.lark</span><b>→</b><span>Lark parser</span><b>→</b><span>Structured rule / AST</span>
-        </div>
-      </div>
-      <div class="io-strip"><b>INPUT</b> file .dsl <span>→</span> <b>OUTPUT</b> rappresentazione strutturata della regola</div>
-    </section>
-
-    <section class="slide component" data-title="Evidence Selection">
-      <div class="slide-kicker">08 · Componente</div>
-      <h2>Evidence selection — SEQUENCE & COLLECT</h2>
-      <p class="big-statement">Il matcher applica la parte di selezione della DSL al flusso di eventi e associa agli alias soltanto le evidenze utili alla verifica.</p>
-      <div class="selection-grid">
-        <div class="selection-card"><b>SEQUENCE</b><span>riconosce eventi ordinati</span><small>AST → Thompson NFA → matcher</small></div>
-        <div class="selection-card"><b>COLLECT</b><span>raccoglie insiemi di eventi</span><small>utile per proprietà globali</small></div>
-        <div class="binding-card"><small>OUTPUT</small><strong>BindingContext</strong><span>alias → evidenze selezionate</span></div>
-      </div>
-      <div class="io-strip"><b>INPUT</b> DSL + MessageEvent[] <span>→</span> <b>OUTPUT</b> BindingContext</div>
-    </section>
-
-    <section class="slide component" data-title="Verification Engine">
-      <div class="slide-kicker">09 · Componente</div>
-      <h2>Verification engine</h2>
-      <p class="big-statement">Una volta individuata l’evidenza, il verifier controlla criteri statici e, quando necessario, proprietà temporali.</p>
-      <div class="verify-tree">
-        <div class="binding-top">BindingContext</div>
-        <div class="branches">
-          <div class="verify-card"><b>Static verification</b><span>== · != · UNIQUE · IF</span></div>
-          <div class="verify-card"><b>Temporal verification</b><span>MFOTL + MonPoly</span></div>
-        </div>
-        <div class="verify-output">verification results</div>
-      </div>
-      <div class="io-strip"><b>INPUT</b> BindingContext + criteri <span>→</span> <b>OUTPUT</b> risultati delle condizioni</div>
-    </section>
-
-    <section class="slide component" data-title="Verdict & Reporting">
-      <div class="slide-kicker">10 · Componente</div>
-      <h2>Verdict & generic reporting</h2>
-      <p class="big-statement">Il reporter raccoglie criterio, evidenza e metadati in un formato comune e produce un verdetto spiegabile e riproducibile.</p>
-      <div class="report-grid">
-        <div class="verdicts"><div class="v pass">PASS</div><div class="v fail">FAIL</div><div class="v inc">INCONCLUSIVE</div></div>
-        <div class="report-card"><div><small>source</small><b>PCAP + SHA-256</b></div><div><small>tooling</small><b>TShark version</b></div><div><small>evidence</small><b>frames + observed values</b></div><div><small>result</small><b>criteria + verdict</b></div></div>
-      </div>
-      <div class="io-strip"><b>INPUT</b> verification results + metadata <span>→</span> <b>OUTPUT</b> JSON report + verdict</div>
-    </section>
-
-    <section class="slide" data-title="Caso concreto UPF">
-      <div class="slide-kicker">11 · Esempio</div>
-      <h2>Un caso concreto — UPF F-TEID uniqueness</h2>
-      <p class="subtitle">La stessa pipeline verifica che gli identificatori F-TEID non vengano riutilizzati.</p>
-      <div class="example-rule"><code>COLLECT pfcp.session_establishment_response AS responses</code><code>REQUIRE UNIQUE responses.f_teids</code></div>
-      <div class="comparison-cards">
-        <div class="result-card pass-card"><small>BASELINE</small><b>5 responses · 10 F-TEIDs</b><span>Nessun riuso osservato</span><strong>PASS</strong></div>
-        <div class="result-card fail-card"><small>MUTATED</small><b>F-TEID duplicato</b><span>Stesso identificatore riutilizzato</span><strong>FAIL</strong></div>
-      </div>
-    </section>
-
-    <section class="slide final-slide" data-title="Mutation Testing">
-      <div class="slide-kicker">12 · Validazione</div>
-      <h2>Mutation testing</h2>
-      <p class="big-statement">Le catture vengono mutate intenzionalmente per verificare che il sistema reagisca correttamente alle alterazioni dell’evidenza.</p>
-      <div class="mutation-flow"><span>Baseline PCAP</span><b>→</b><span>Mutation</span><b>→</b><span>Pipeline</span><b>→</b><span>Expected verdict ✓</span></div>
-      <div class="score">25<span>/25</span></div>
-      <div class="score-label">scenari completati con l’esito atteso</div>
-      <div class="mutation-tags"><span>HTTP status</span><span>RAND / timing</span><span>F-TEID</span><span>HXRES* / HRES*</span><span>authResult</span></div>
-      <div class="closing">From network traffic to reproducible security evidence.</div>
-    </section>
-  </main>
-
-  <nav class="controls" aria-label="Navigazione presentazione">
-    <button id="prev" aria-label="Slide precedente">←</button>
-    <div class="progress"><span id="current">1</span><span>/</span><span id="total">13</span></div>
-    <button id="next" aria-label="Slide successiva">→</button>
-  </nav>
-  <div id="dots" class="dots" aria-hidden="true"></div>
-  <script src="script.js"></script>
+</main>
+<nav class="controls" aria-label="Navigazione presentazione"><button id="prev" aria-label="Slide precedente">←</button><div class="progress"><span id="current">1</span><span>/</span><span id="total">13</span></div><button id="next" aria-label="Slide successiva">→</button></nav>
+<div id="dots" class="dots" aria-hidden="true"></div>
+<script src="script.js"></script>
 </body>
 </html>
