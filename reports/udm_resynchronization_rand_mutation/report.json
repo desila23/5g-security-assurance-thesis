@@ -2,7 +2,7 @@
     "schema_version": "2.0",
     "metadata": {
         "generator": "generic_verification_pipeline",
-        "tshark_version": "TShark (Wireshark) 3.6.2 (Git v3.6.2 packaged as 3.6.2-2)"
+        "tshark_version": "TShark (Wireshark) 4.6.8 (v4.6.8-0-ge677bf052328)."
     },
     "test": {
         "id": "udm_resynchronization_rand_mutation",
@@ -36,7 +36,7 @@
                     "key": "key",
                     "opc": "opc"
                 },
-                "sha256": "f0cfe309b2b46b353d17c8d8208c1f8b2c842bc3e75a018898e485fb36ba07c8"
+                "sha256": "723e2f1a7c50cb5b491ae80f394355d1c1301521f5a75c318c9883b7f6963955"
             }
         }
     },

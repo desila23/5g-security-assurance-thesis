@@ -2,7 +2,7 @@
     "schema_version": "2.0",
     "metadata": {
         "generator": "generic_verification_pipeline",
-        "tshark_version": "TShark (Wireshark) 3.6.2 (Git v3.6.2 packaged as 3.6.2-2)"
+        "tshark_version": "TShark (Wireshark) 4.6.8 (v4.6.8-0-ge677bf052328)."
     },
     "test": {
         "id": "amf_sync_failure_case_b",
@@ -36,297 +36,23 @@
         },
         "external_bindings": {}
     },
-    "criteria": [
-        {
-            "id": "criterion_1",
-            "type": "comparison",
-            "description": "Verify initial_auth.rand == 8f872627e2b3d3b37594149ff32dd3bb"
-        },
-        {
-            "id": "criterion_2",
-            "type": "comparison",
-            "description": "Verify sync_failure.cause == 21"
-        },
-        {
-            "id": "criterion_3",
-            "type": "comparison",
-            "description": "Verify resync.auts == 94030fb233222a37b4220286604d"
-        },
-        {
-            "id": "criterion_4",
-            "type": "comparison",
-            "description": "Verify resync.rand == 8f872627e2b3d3b37594149ff32dd3bb"
-        },
-        {
-            "id": "temporal_1",
-            "type": "temporal",
-            "description": "Verify temporal MFOTL criterion with MonPoly"
-        }
-    ],
+    "criteria": [],
     "verification": {
-        "results": [
-            {
-                "criterion_id": "criterion_1",
-                "engine": "binding_verifier",
-                "verdict": "PASS",
-                "evidence_frames": [
-                    352,
-                    357
-                ],
-                "details": {
-                    "field": "initial_auth.rand",
-                    "operator": "==",
-                    "expected": "8f872627e2b3d3b37594149ff32dd3bb",
-                    "observed": "8f872627e2b3d3b37594149ff32dd3bb",
-                    "expected_field": "initial_vector.rand"
-                }
-            },
-            {
-                "criterion_id": "criterion_2",
-                "engine": "binding_verifier",
-                "verdict": "PASS",
-                "evidence_frames": [
-                    358
-                ],
-                "details": {
-                    "field": "sync_failure.cause",
-                    "operator": "==",
-                    "expected": 21,
-                    "observed": 21
-                }
-            },
-            {
-                "criterion_id": "criterion_3",
-                "engine": "binding_verifier",
-                "verdict": "PASS",
-                "evidence_frames": [
-                    358,
-                    359,
-                    360
-                ],
-                "details": {
-                    "field": "resync.auts",
-                    "operator": "==",
-                    "expected": "94030fb233222a37b4220286604d",
-                    "observed": "94030fb233222a37b4220286604d",
-                    "expected_field": "sync_failure.auts"
-                }
-            },
-            {
-                "criterion_id": "criterion_4",
-                "engine": "binding_verifier",
-                "verdict": "PASS",
-                "evidence_frames": [
-                    357,
-                    359,
-                    360
-                ],
-                "details": {
-                    "field": "resync.rand",
-                    "operator": "==",
-                    "expected": "8f872627e2b3d3b37594149ff32dd3bb",
-                    "observed": "8f872627e2b3d3b37594149ff32dd3bb",
-                    "expected_field": "initial_auth.rand"
-                }
-            },
-            {
-                "criterion_id": "temporal_1",
-                "engine": "Monpoly",
-                "verdict": "PASS",
-                "evidence_frames": [
-                    358,
-                    606
-                ],
-                "details": {
-                    "verification_mode": "negated_policy",
-                    "violation_found": false,
-                    "monpoly_output": ""
-                }
-            }
-        ],
-        "overall_verdict": "PASS"
+        "results": [],
+        "overall_verdict": "INCONCLUSIVE"
     },
     "evidence": {
-        "bindings": {
-            "initial_vector": {
-                "message_type": "ausf.authentication.response",
-                "frame": 352,
-                "related_frames": [
-                    352
-                ],
-                "timestamp": 1789490528.068062,
-                "protocol": "http2",
-                "kind": "data",
-                "src": "10.233.29.25",
-                "dst": "10.233.75.8",
-                "correlation": {
-                    "tcp_stream": 6,
-                    "http2_stream_id": 113
-                },
-                "fields": {
-                    "headers": {
-                        "location": "http://free5gc-free5gc-ausf-service.default:80/nausf-auth/v1/ue-authentications/suci-0-208-93-0000-0-0-0000000003",
-                        "date": "Tue, 15 Sep 2026 16:42:08 GMT",
-                        "content-length": "388"
-                    },
-                    "body": {
-                        "authType": "5G_AKA",
-                        "5gAuthData": {
-                            "rand": "8f872627e2b3d3b37594149ff32dd3bb",
-                            "hxresStar": "2c62618af4b02a5bc8968d76c7dbb1e1",
-                            "autn": "20c1853d5fb68000da6abab6c5bf9ca1"
-                        },
-                        "_links": {
-                            "5g-aka": {
-                                "href": "http://free5gc-free5gc-ausf-service.default:80/nausf-auth/v1/ue-authentications/suci-0-208-93-0000-0-0-0000000003/5g-aka-confirmation"
-                            }
-                        },
-                        "servingNetworkName": "5G:mnc093.mcc208.3gppnetwork.org"
-                    },
-                    "rand": "8f872627e2b3d3b37594149ff32dd3bb",
-                    "autn": "20c1853d5fb68000da6abab6c5bf9ca1",
-                    "hxres_star": "2c62618af4b02a5bc8968d76c7dbb1e1"
-                }
-            },
-            "initial_auth": {
-                "message_type": "nas.authentication_request",
-                "frame": 357,
-                "related_frames": [],
-                "timestamp": 1789490528.068533,
-                "protocol": "nas_5gs",
-                "kind": "message",
-                "src": "10.100.50.249",
-                "dst": "10.100.50.251",
-                "correlation": {},
-                "fields": {
-                    "rand": "8f872627e2b3d3b37594149ff32dd3bb",
-                    "autn": "20c1853d5fb68000da6abab6c5bf9ca1"
-                }
-            },
-            "sync_failure": {
-                "message_type": "nas.authentication_failure",
-                "frame": 358,
-                "related_frames": [],
-                "timestamp": 1789490528.073905,
-                "protocol": "nas_5gs",
-                "kind": "message",
-                "src": "10.100.50.251",
-                "dst": "10.100.50.249",
-                "correlation": {},
-                "fields": {
-                    "cause": 21,
-                    "auts": "94030fb233222a37b4220286604d"
-                }
-            },
-            "resync": {
-                "message_type": "ausf.resynchronization.request",
-                "frame": 359,
-                "related_frames": [
-                    359,
-                    360
-                ],
-                "timestamp": 1789490528.074478,
-                "protocol": "http2",
-                "kind": "request",
-                "src": "10.233.75.8",
-                "dst": "127.0.0.1",
-                "correlation": {
-                    "tcp_stream": 4,
-                    "http2_stream_id": 115
-                },
-                "fields": {
-                    "method": "POST",
-                    "path": null,
-                    "raw_path": null,
-                    "query": {},
-                    "headers": {
-                        ":method": "POST",
-                        ":scheme": "http"
-                    },
-                    "body": {
-                        "supiOrSuci": "suci-0-208-93-0000-0-0-0000000003",
-                        "servingNetworkName": "5G:mnc093.mcc208.3gppnetwork.org",
-                        "resynchronizationInfo": {
-                            "rand": "8f872627e2b3d3b37594149ff32dd3bb",
-                            "auts": "94030fb233222a37b4220286604d"
-                        }
-                    },
-                    "rand": "8f872627e2b3d3b37594149ff32dd3bb",
-                    "auts": "94030fb233222a37b4220286604d"
-                }
-            },
-            "new_vector": {
-                "message_type": "ausf.authentication.response",
-                "frame": 604,
-                "related_frames": [
-                    604
-                ],
-                "timestamp": 1789490553.091231,
-                "protocol": "http2",
-                "kind": "data",
-                "src": "10.233.29.25",
-                "dst": "10.233.75.8",
-                "correlation": {
-                    "tcp_stream": 6,
-                    "http2_stream_id": 117
-                },
-                "fields": {
-                    "headers": {
-                        "location": "http://free5gc-free5gc-ausf-service.default:80/nausf-auth/v1/ue-authentications/suci-0-208-93-0000-0-0-0000000003",
-                        "date": "Tue, 15 Sep 2026 16:42:33 GMT",
-                        "content-length": "388"
-                    },
-                    "body": {
-                        "authType": "5G_AKA",
-                        "5gAuthData": {
-                            "rand": "01f25b5fefd9e88f495ac9754b511898",
-                            "hxresStar": "b16b8ae7a99c1ef9d8ac6380d7dc4122",
-                            "autn": "618afa6b028e8000b74570f7d9fa86a1"
-                        },
-                        "_links": {
-                            "5g-aka": {
-                                "href": "http://free5gc-free5gc-ausf-service.default:80/nausf-auth/v1/ue-authentications/suci-0-208-93-0000-0-0-0000000003/5g-aka-confirmation"
-                            }
-                        },
-                        "servingNetworkName": "5G:mnc093.mcc208.3gppnetwork.org"
-                    },
-                    "rand": "01f25b5fefd9e88f495ac9754b511898",
-                    "autn": "618afa6b028e8000b74570f7d9fa86a1",
-                    "hxres_star": "b16b8ae7a99c1ef9d8ac6380d7dc4122"
-                }
-            },
-            "subsequent_auth_request": {
-                "message_type": "nas.authentication_request",
-                "frame": 606,
-                "related_frames": [],
-                "timestamp": 1789490553.091702,
-                "protocol": "nas_5gs",
-                "kind": "message",
-                "src": "10.100.50.249",
-                "dst": "10.100.50.251",
-                "correlation": {},
-                "fields": {
-                    "rand": "01f25b5fefd9e88f495ac9754b511898",
-                    "autn": "618afa6b028e8000b74570f7d9fa86a1"
-                }
-            },
-            "case": {
-                "source_type": "configuration",
-                "fields": {
-                    "id": "B"
-                }
-            }
-        }
+        "bindings": {}
     },
     "explanation": {
-        "summary": "Verification completed with verdict PASS",
+        "summary": "No complete sequence match found",
         "observations": {
-            "reason": null,
+            "reason": "No complete sequence match found",
             "message_type": null,
             "alias": null,
-            "matches_found": 1,
+            "matches_found": null,
             "collected_events": null
         }
     },
-    "verdict": "PASS"
+    "verdict": "INCONCLUSIVE"
 }

@@ -2,6 +2,8 @@ from typing import Any
 
 from traffic.models import MessageEvent
 
+from utils.tshark_utils import parse_tshark_timestamp
+
 
 REGISTRATION_REQUEST = "0x41"
 AUTHENTICATION_REQUEST = "0x56"
@@ -97,7 +99,12 @@ def normalize_nas_events(rows: list[dict]) -> list[MessageEvent]:
             continue
 
         frame_number = frame.get("frame_frame_number")
-        timestamp = frame.get("frame_frame_time_epoch")
+        timestamp = parse_tshark_timestamp(
+            frame.get("frame_frame_time_epoch")
+        )
+
+        if frame_number is None or timestamp is None:
+            continue
 
         if frame_number is None or timestamp is None:
             continue
@@ -211,7 +218,7 @@ def normalize_nas_events(rows: list[dict]) -> list[MessageEvent]:
         events.append(
             MessageEvent(
                 frame_number=int(frame_number),
-                timestamp=float(timestamp),
+                timestamp=timestamp,
                 protocol="nas_5gs",
                 kind="message",
                 src=ip.get("ip_ip_src"),

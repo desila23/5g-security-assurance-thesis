@@ -2,7 +2,7 @@
     "schema_version": "2.0",
     "metadata": {
         "generator": "generic_verification_pipeline",
-        "tshark_version": "TShark (Wireshark) 3.6.2 (Git v3.6.2 packaged as 3.6.2-2)"
+        "tshark_version": "TShark (Wireshark) 4.6.8 (v4.6.8-0-ge677bf052328)."
     },
     "test": {
         "id": "upf_teid_uniqueness",
@@ -56,11 +56,11 @@
                             "frame": 37,
                             "value": [
                                 {
-                                    "teid": "0x00006a75",
+                                    "teid": "27253",
                                     "ipv4": "127.0.0.7"
                                 },
                                 {
-                                    "teid": "0x0000ecf4",
+                                    "teid": "60660",
                                     "ipv4": "127.0.0.7"
                                 }
                             ]
@@ -69,11 +69,11 @@
                             "frame": 38,
                             "value": [
                                 {
-                                    "teid": "0x0000a5de",
+                                    "teid": "42462",
                                     "ipv4": "127.0.0.7"
                                 },
                                 {
-                                    "teid": "0x00000f66",
+                                    "teid": "3942",
                                     "ipv4": "127.0.0.7"
                                 }
                             ]
@@ -82,11 +82,11 @@
                             "frame": 46,
                             "value": [
                                 {
-                                    "teid": "0x0000b101",
+                                    "teid": "45313",
                                     "ipv4": "127.0.0.7"
                                 },
                                 {
-                                    "teid": "0x0000a697",
+                                    "teid": "42647",
                                     "ipv4": "127.0.0.7"
                                 }
                             ]
@@ -95,11 +95,11 @@
                             "frame": 47,
                             "value": [
                                 {
-                                    "teid": "0x0000a7dc",
+                                    "teid": "42972",
                                     "ipv4": "127.0.0.7"
                                 },
                                 {
-                                    "teid": "0x0000113a",
+                                    "teid": "4410",
                                     "ipv4": "127.0.0.7"
                                 }
                             ]
@@ -108,11 +108,11 @@
                             "frame": 48,
                             "value": [
                                 {
-                                    "teid": "0x00001ee9",
+                                    "teid": "7913",
                                     "ipv4": "127.0.0.7"
                                 },
                                 {
-                                    "teid": "0x0000e1cf",
+                                    "teid": "57807",
                                     "ipv4": "127.0.0.7"
                                 }
                             ]
@@ -131,29 +131,29 @@
                     "message_type": "pfcp.session_establishment_response",
                     "frame": 37,
                     "related_frames": [],
-                    "timestamp": 1789981711.6497002,
+                    "timestamp": 1789981711.6497,
                     "protocol": "pfcp",
                     "kind": "message",
                     "src": "127.0.0.7",
                     "dst": "127.0.0.4",
                     "correlation": {
-                        "seid": "0x0000000000000ded",
+                        "seid": "2937",
                         "seqno": 165
                     },
                     "fields": {
                         "message_type": 51,
                         "f_teids": [
                             {
-                                "teid": "0x00006a75",
+                                "teid": "27253",
                                 "ipv4": "127.0.0.7"
                             },
                             {
-                                "teid": "0x0000ecf4",
+                                "teid": "60660",
                                 "ipv4": "127.0.0.7"
                             }
                         ],
                         "cause": 1,
-                        "seid": "0x0000000000000ded",
+                        "seid": "2937",
                         "seqno": 165
                     }
                 },
@@ -161,29 +161,29 @@
                     "message_type": "pfcp.session_establishment_response",
                     "frame": 38,
                     "related_frames": [],
-                    "timestamp": 1789981711.6497557,
+                    "timestamp": 1789981711.649755,
                     "protocol": "pfcp",
                     "kind": "message",
                     "src": "127.0.0.7",
                     "dst": "127.0.0.4",
                     "correlation": {
-                        "seid": "0x0000000000000403",
+                        "seid": "3770",
                         "seqno": 166
                     },
                     "fields": {
                         "message_type": 51,
                         "f_teids": [
                             {
-                                "teid": "0x0000a5de",
+                                "teid": "42462",
                                 "ipv4": "127.0.0.7"
                             },
                             {
-                                "teid": "0x00000f66",
+                                "teid": "3942",
                                 "ipv4": "127.0.0.7"
                             }
                         ],
                         "cause": 1,
-                        "seid": "0x0000000000000403",
+                        "seid": "3770",
                         "seqno": 166
                     }
                 },
@@ -191,29 +191,29 @@
                     "message_type": "pfcp.session_establishment_response",
                     "frame": 46,
                     "related_frames": [],
-                    "timestamp": 1789981711.7017198,
+                    "timestamp": 1789981711.701719,
                     "protocol": "pfcp",
                     "kind": "message",
                     "src": "127.0.0.7",
                     "dst": "127.0.0.4",
                     "correlation": {
-                        "seid": "0x00000000000008be",
+                        "seid": "34",
                         "seqno": 169
                     },
                     "fields": {
                         "message_type": 51,
                         "f_teids": [
                             {
-                                "teid": "0x0000b101",
+                                "teid": "45313",
                                 "ipv4": "127.0.0.7"
                             },
                             {
-                                "teid": "0x0000a697",
+                                "teid": "42647",
                                 "ipv4": "127.0.0.7"
                             }
                         ],
                         "cause": 1,
-                        "seid": "0x00000000000008be",
+                        "seid": "34",
                         "seqno": 169
                     }
                 },
@@ -221,29 +221,29 @@
                     "message_type": "pfcp.session_establishment_response",
                     "frame": 47,
                     "related_frames": [],
-                    "timestamp": 1789981711.7017765,
+                    "timestamp": 1789981711.701776,
                     "protocol": "pfcp",
                     "kind": "message",
                     "src": "127.0.0.7",
                     "dst": "127.0.0.4",
                     "correlation": {
-                        "seid": "0x0000000000000124",
+                        "seid": "369",
                         "seqno": 170
                     },
                     "fields": {
                         "message_type": 51,
                         "f_teids": [
                             {
-                                "teid": "0x0000a7dc",
+                                "teid": "42972",
                                 "ipv4": "127.0.0.7"
                             },
                             {
-                                "teid": "0x0000113a",
+                                "teid": "4410",
                                 "ipv4": "127.0.0.7"
                             }
                         ],
                         "cause": 1,
-                        "seid": "0x0000000000000124",
+                        "seid": "369",
                         "seqno": 170
                     }
                 },
@@ -251,29 +251,29 @@
                     "message_type": "pfcp.session_establishment_response",
                     "frame": 48,
                     "related_frames": [],
-                    "timestamp": 1789981711.7018228,
+                    "timestamp": 1789981711.701822,
                     "protocol": "pfcp",
                     "kind": "message",
                     "src": "127.0.0.7",
                     "dst": "127.0.0.4",
                     "correlation": {
-                        "seid": "0x0000000000000564",
+                        "seid": "314",
                         "seqno": 171
                     },
                     "fields": {
                         "message_type": 51,
                         "f_teids": [
                             {
-                                "teid": "0x00001ee9",
+                                "teid": "7913",
                                 "ipv4": "127.0.0.7"
                             },
                             {
-                                "teid": "0x0000e1cf",
+                                "teid": "57807",
                                 "ipv4": "127.0.0.7"
                             }
                         ],
                         "cause": 1,
-                        "seid": "0x0000000000000564",
+                        "seid": "314",
                         "seqno": 171
                     }
                 }

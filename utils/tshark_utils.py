@@ -1,5 +1,6 @@
 import hashlib
 import subprocess
+from datetime import datetime
 
 from utils.json_utils import extract_json_objects
 
@@ -23,6 +24,29 @@ def get_tshark_version():
     )
 
     return result.stdout.splitlines()[0].strip()
+
+
+# PERMETTE DI RUNNARE TSHARK IN OGNI VERSIONE
+def parse_tshark_timestamp(value):
+    if value is None:
+        return None
+
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        pass
+
+    text = str(value).strip()
+
+    if text.endswith("Z"):
+        text = text[:-1] + "+00:00"
+
+    try:
+        return datetime.fromisoformat(text).timestamp()
+    except ValueError as exc:
+        raise ValueError(
+            f"Unsupported TShark timestamp format: {value!r}"
+        ) from exc
 
 
 

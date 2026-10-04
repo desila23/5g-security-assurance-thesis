@@ -2,6 +2,8 @@ from typing import Any
 
 from traffic.models import MessageEvent
 
+from utils.tshark_utils import parse_tshark_timestamp
+
 
 PFCP_SESSION_ESTABLISHMENT_REQUEST = 50
 PFCP_SESSION_ESTABLISHMENT_RESPONSE = 51
@@ -118,7 +120,7 @@ def normalize_pfcp_events(packets: list[dict]) -> list[MessageEvent]:
 
         event = MessageEvent(
             frame_number=int(frame["frame_frame_number"]),
-            timestamp=float(frame["frame_frame_time_epoch"]),
+            timestamp=parse_tshark_timestamp(frame["frame_frame_time_epoch"]),
             protocol="pfcp",
             kind="message",
             src=_first(ip.get("ip_ip_src")),

@@ -4,6 +4,7 @@ from typing import Any
 from urllib.parse import parse_qs, urlsplit
 
 from traffic.models import MessageEvent
+from utils.tshark_utils import parse_tshark_timestamp
 
 
 def _first(value: Any) -> Any:
@@ -156,7 +157,7 @@ def normalize_http2(packets: list[dict]) -> list[MessageEvent]:
             continue
 
         frame_number = int(frame["frame_frame_number"])
-        timestamp = float(frame["frame_frame_time_epoch"])
+        timestamp = parse_tshark_timestamp(frame["frame_frame_time_epoch"])
 
         src = ip.get("ip_ip_src")
         dst = ip.get("ip_ip_dst")
