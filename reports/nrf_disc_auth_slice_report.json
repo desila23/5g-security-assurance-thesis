@@ -2,7 +2,7 @@
     "schema_version": "2.0",
     "metadata": {
         "generator": "generic_verification_pipeline",
-        "tshark_version": "TShark (Wireshark) 4.6.8 (v4.6.8-0-ge677bf052328)."
+        "tshark_version": "TShark (Wireshark) 3.6.2 (Git v3.6.2 packaged as 3.6.2-2)"
     },
     "test": {
         "id": "nrf_disc_auth_slice",
@@ -66,7 +66,7 @@
                 "related_frames": [
                     2326
                 ],
-                "timestamp": 1788954996.084325,
+                "timestamp": 1788954996.0843253,
                 "protocol": "http2",
                 "kind": "request",
                 "src": "127.0.0.1",
@@ -104,7 +104,7 @@
                     2328,
                     2329
                 ],
-                "timestamp": 1788954996.084598,
+                "timestamp": 1788954996.0845988,
                 "protocol": "http2",
                 "kind": "response",
                 "src": "127.0.0.10",
