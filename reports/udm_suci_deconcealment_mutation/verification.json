@@ -1,0 +1,19 @@
+{
+    "rules": [
+        {
+            "field": "suci_deconcealment.response.status_code",
+            "operator": "==",
+            "expected": 200,
+            "observed": 200,
+            "verdict": "PASS"
+        },
+        {
+            "field": "suci_deconcealment.test_input.original_supi",
+            "operator": "==",
+            "expected": "imsi-001010000000002",
+            "observed": "imsi-001010000000001",
+            "verdict": "FAIL"
+        }
+    ],
+    "overall_verdict": "FAIL"
+}

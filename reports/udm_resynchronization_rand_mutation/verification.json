@@ -1,0 +1,68 @@
+{
+    "rules": [
+        {
+            "field": "initial_auth.response.status_code",
+            "operator": "==",
+            "expected": 200,
+            "observed": 200,
+            "verdict": "PASS"
+        },
+        {
+            "field": "resynchronization.response.status_code",
+            "operator": "==",
+            "expected": 200,
+            "observed": 200,
+            "verdict": "PASS"
+        },
+        {
+            "field": "initial_auth.response.body.authenticationVector.rand",
+            "operator": "==",
+            "expected": "fba7f627e9adb853ed66fa37fe6d8581",
+            "observed": "fba7f627e9adb853ed66fa37fe6d8580",
+            "verdict": "FAIL"
+        },
+        {
+            "field": "initial_auth.response.body.authenticationVector.rand",
+            "operator": "!=",
+            "expected": "8f0f117a3f964fbedf4bdbab22232c97",
+            "observed": "fba7f627e9adb853ed66fa37fe6d8580",
+            "verdict": "PASS"
+        },
+        {
+            "field": "initial_auth.response.body.authenticationVector.autn",
+            "operator": "!=",
+            "expected": "190b68de3bac8000d119bef3e511e0da",
+            "observed": "f6094da4944b800010dc9b72e25aa4c3",
+            "verdict": "PASS"
+        },
+        {
+            "field": "initial_auth.response.body.authenticationVector.xresStar",
+            "operator": "!=",
+            "expected": "a24396d2150fec6465f422e4e4cfef2c",
+            "observed": "dbd1ed01bfc9593dfc5b8fc763e7809b",
+            "verdict": "PASS"
+        },
+        {
+            "field": "initial_auth.response.body.authenticationVector.kausf",
+            "operator": "!=",
+            "expected": "f3c5a2bbe2f778d4d63f024a015eef5b0687ceef0e95b96b2ba26eab8b738efb",
+            "observed": "1f9e62e98fbae7095aad06199ff092948f04cb4d26b15bcc66994c52bab07983",
+            "verdict": "PASS"
+        },
+        {
+            "field": "initial_auth.response.mac_verification.match",
+            "operator": "==",
+            "expected": true,
+            "observed": true,
+            "verdict": "PASS"
+        },
+        {
+            "field": "resynchronization.response.mac_verification.match",
+            "operator": "==",
+            "expected": true,
+            "observed": true,
+            "verdict": "PASS"
+        }
+    ],
+    "overall_verdict": "FAIL"
+}

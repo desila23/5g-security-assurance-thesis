@@ -1,0 +1,7 @@
+{
+    "engine": "Monpoly",
+    "verification_mode": "negated_policy",
+    "violation_found": false,
+    "monpoly_output": "",
+    "overall_verdict": "PASS"
+}

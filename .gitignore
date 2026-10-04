@@ -30,9 +30,6 @@ Thumbs.db
 # Backup files
 *.bak
 
-# Generated reports
-reports/
-
 # Generated MFOTL artifacts
 mfotl/generated/
 mfotl/*.log

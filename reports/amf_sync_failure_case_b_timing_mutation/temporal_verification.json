@@ -1,0 +1,7 @@
+{
+    "engine": "Monpoly",
+    "verification_mode": "negated_policy",
+    "violation_found": true,
+    "monpoly_output": "@32939 (time point 0): true",
+    "overall_verdict": "FAIL"
+}

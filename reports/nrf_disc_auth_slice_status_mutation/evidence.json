@@ -1,0 +1,84 @@
+{
+    "schema_version": "1.0",
+    "metadata": {
+        "generated_at": "2026-09-30T20:37:25.134442+00:00",
+        "tshark_version": "TShark (Wireshark) 3.6.2 (Git v3.6.2 packaged as 3.6.2-2)"
+    },
+    "source": {
+        "pcap_file": "captures/nrf_disc_auth_slice_status_mutation.pcap",
+        "sha256": "45cc2dfba51f33de2e8e6cf2b199c75866a8b9a7ec548249b11f069c44fbab0a"
+    },
+    "events": [
+        {
+            "type": "nrf_nf_discovery",
+            "request": {
+                "frame": 2326,
+                "timestamp": 106.15389,
+                "timestamp_epoch": 1788954996.084325,
+                "tcp_stream": 282,
+                "http2_stream_id": 1,
+                "method": "GET",
+                "path": "/nnrf-disc/v1/nf-instances",
+                "requester_nf_type": "AMF",
+                "requester_nf_instance_id": "18085249-5a9c-44c0-bdd5-bd0fa5e80ebe",
+                "target_nf_type": "SMF",
+                "target_nf_instance_id": "fa28c816-5d3d-4e4b-b065-15d03f789d87",
+                "requester_snssais": [
+                    {
+                        "sd": "AAAAAA",
+                        "sst": 128
+                    }
+                ]
+            },
+            "response": {
+                "frame": 2328,
+                "timestamp": 106.154164,
+                "timestamp_epoch": 1788954996.084599,
+                "status_code": 403
+            },
+            "body": {
+                "frame": 2329,
+                "frames": [
+                    2329
+                ],
+                "timestamp": 106.15419,
+                "timestamp_epoch": 1788954996.084625,
+                "json": {
+                    "validityPeriod": 30,
+                    "nfInstances": [
+                        {
+                            "nfInstanceId": "fa28c816-5d3d-4e4b-b065-15d03f789d87",
+                            "nfType": "SMF",
+                            "nfStatus": "REGISTERED",
+                            "heartBeatTimer": 10,
+                            "plmnList": [
+                                {
+                                    "mcc": "001",
+                                    "mnc": "01"
+                                }
+                            ],
+                            "sNssais": [
+                                {
+                                    "sst": 128,
+                                    "sd": "bbbbbb"
+                                }
+                            ],
+                            "ipv4Addresses": [
+                                "127.0.1.1"
+                            ],
+                            "allowedNssais": [
+                                {
+                                    "sst": 128,
+                                    "sd": "bbbbbb"
+                                }
+                            ],
+                            "priority": 0,
+                            "capacity": 100,
+                            "load": 0
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

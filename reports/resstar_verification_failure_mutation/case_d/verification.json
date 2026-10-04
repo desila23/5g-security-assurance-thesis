@@ -1,0 +1,106 @@
+{
+    "rules": [
+        {
+            "field": "resstar_verification_failure.authentication_vector.rand",
+            "operator": "==",
+            "expected": "9b4969b5ab84bb12034752e88e61607b",
+            "observed": "9b4969b5ab84bb12034752e88e61607b",
+            "verdict": "PASS"
+        },
+        {
+            "field": "resstar_verification_failure.authentication_vector.autn",
+            "operator": "==",
+            "expected": "713bcfe046e08000d31310f0eafc4f82",
+            "observed": "713bcfe046e08000d31310f0eafc4f82",
+            "verdict": "PASS"
+        },
+        {
+            "field": "resstar_verification_failure.authentication_reject.present",
+            "operator": "==",
+            "expected": true,
+            "observed": true,
+            "verdict": "PASS"
+        },
+        {
+            "field": "resstar_verification_failure.identity_path",
+            "operator": "IF",
+            "condition_operator": "==",
+            "expected": "direct_suci",
+            "observed": "guti_then_suci",
+            "verdict": "SKIPPED",
+            "rules": []
+        },
+        {
+            "field": "resstar_verification_failure.identity_path",
+            "operator": "IF",
+            "condition_operator": "==",
+            "expected": "guti_then_suci",
+            "observed": "guti_then_suci",
+            "verdict": "PASS",
+            "rules": [
+                {
+                    "field": "resstar_verification_failure.registration_request.identity_type",
+                    "operator": "==",
+                    "expected": "5G_GUTI",
+                    "observed": "5G_GUTI",
+                    "verdict": "PASS"
+                },
+                {
+                    "field": "resstar_verification_failure.identity_request.requested_identity",
+                    "operator": "==",
+                    "expected": "SUCI",
+                    "observed": "SUCI",
+                    "verdict": "PASS"
+                },
+                {
+                    "field": "resstar_verification_failure.identity_response.identity_type",
+                    "operator": "==",
+                    "expected": "SUCI",
+                    "observed": "SUCI",
+                    "verdict": "PASS"
+                }
+            ]
+        },
+        {
+            "field": "resstar_verification_failure.failure_source",
+            "operator": "IF",
+            "condition_operator": "==",
+            "expected": "local",
+            "observed": "ausf",
+            "verdict": "SKIPPED",
+            "rules": []
+        },
+        {
+            "field": "resstar_verification_failure.failure_source",
+            "operator": "IF",
+            "condition_operator": "==",
+            "expected": "ausf",
+            "observed": "ausf",
+            "verdict": "FAIL",
+            "rules": [
+                {
+                    "field": "resstar_verification_failure.res_star_verification.hres_star",
+                    "operator": "==",
+                    "expected": "e98033b10634160a361833c3953239d0",
+                    "observed": "e98033b10634160a361833c3953239d0",
+                    "verdict": "PASS"
+                },
+                {
+                    "field": "resstar_verification_failure.authentication_response.res_star",
+                    "operator": "==",
+                    "expected": "a6f13c285514bfa4373d914255021c68",
+                    "observed": "a6f13c285514bfa4373d914255021c68",
+                    "verdict": "PASS"
+                },
+                {
+                    "field": "resstar_verification_failure.ausf_confirmation_response.auth_result",
+                    "operator": "==",
+                    "expected": "AUTHENTICATION_FAILURE",
+                    "observed": "AUTHENTICATION_SUCCESS",
+                    "verdict": "FAIL"
+                }
+            ]
+        }
+    ],
+    "overall_verdict": "FAIL"
+}

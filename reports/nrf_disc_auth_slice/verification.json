@@ -1,0 +1,12 @@
+{
+    "rules": [
+        {
+            "field": "nrf_nf_discovery.response.status_code",
+            "operator": "==",
+            "expected": 403,
+            "observed": 200,
+            "verdict": "FAIL"
+        }
+    ],
+    "overall_verdict": "FAIL"
+}

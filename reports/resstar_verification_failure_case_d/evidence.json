@@ -1,0 +1,105 @@
+{
+    "schema_version": "1.0",
+    "metadata": {
+        "generated_at": "2026-09-23T13:14:35.983394+00:00",
+        "tshark_version": "TShark (Wireshark) 3.6.2 (Git v3.6.2 packaged as 3.6.2-2)"
+    },
+    "source": {
+        "pcap_file": "captures/free5gc-amf-TC_RESSTAR_VERIFICATION_FAILURE_4.pcap",
+        "sha256": "d031cb20d12501a4d23224238870ce5071682353bf8f2aa7ff73157878a90668"
+    },
+    "events": [
+        {
+            "type": "resstar_verification_failure",
+            "case": "D",
+            "identity_path": "guti_then_suci",
+            "failure_source": "ausf",
+            "registration_request": {
+                "frame": 767,
+                "timestamp_relative": 37.953414,
+                "timestamp_epoch": 1790062043.544406,
+                "ip_src": "10.100.50.251",
+                "ip_dst": "10.100.50.249",
+                "identity_type": "5G_GUTI"
+            },
+            "authentication_request": {
+                "frame": 804,
+                "timestamp_relative": 37.992461,
+                "timestamp_epoch": 1790062043.583453,
+                "ip_src": "10.100.50.249",
+                "ip_dst": "10.100.50.251",
+                "rand": "9b4969b5ab84bb12034752e88e61607b",
+                "autn": "713bcfe046e08000d31310f0eafc4f82"
+            },
+            "authentication_response": {
+                "frame": 805,
+                "timestamp_relative": 37.997074,
+                "timestamp_epoch": 1790062043.588066,
+                "ip_src": "10.100.50.251",
+                "ip_dst": "10.100.50.249",
+                "res_star": "a6f13c285514bfa4373d914255021c68"
+            },
+            "authentication_vector": {
+                "present": true,
+                "frame": 802,
+                "timestamp_relative": 37.991988,
+                "timestamp_epoch": 1790062043.58298,
+                "ip_src": "10.233.49.217",
+                "ip_dst": "10.233.75.24",
+                "tcp_stream": 7,
+                "rand": "9b4969b5ab84bb12034752e88e61607b",
+                "hxres_star": "e98033b10634160a361833c3953239d0",
+                "autn": "713bcfe046e08000d31310f0eafc4f82"
+            },
+            "res_star_verification": {
+                "hres_star": "e98033b10634160a361833c3953239d0",
+                "hxres_star": "e98033b10634160a361833c3953239d0",
+                "match": true
+            },
+            "authentication_reject": {
+                "frame": 823,
+                "timestamp_relative": 38.026874,
+                "timestamp_epoch": 1790062043.617866,
+                "ip_src": "10.100.50.249",
+                "ip_dst": "10.100.50.251",
+                "present": true
+            },
+            "identity_request": {
+                "frame": 768,
+                "timestamp_relative": 37.955298,
+                "timestamp_epoch": 1790062043.54629,
+                "ip_src": "10.100.50.249",
+                "ip_dst": "10.100.50.251",
+                "requested_identity": "SUCI"
+            },
+            "identity_response": {
+                "frame": 769,
+                "timestamp_relative": 37.959179,
+                "timestamp_epoch": 1790062043.550171,
+                "ip_src": "10.100.50.251",
+                "ip_dst": "10.100.50.249",
+                "identity_type": "SUCI"
+            },
+            "ausf_confirmation_request": {
+                "present": true,
+                "frame": 807,
+                "timestamp_relative": 37.997638,
+                "timestamp_epoch": 1790062043.58863,
+                "ip_src": "10.233.75.24",
+                "ip_dst": "127.0.0.1",
+                "tcp_stream": 5,
+                "res_star": "a6f13c285514bfa4373d914255021c68"
+            },
+            "ausf_confirmation_response": {
+                "present": true,
+                "frame": 822,
+                "timestamp_relative": 38.026428,
+                "timestamp_epoch": 1790062043.61742,
+                "ip_src": "10.233.49.217",
+                "ip_dst": "10.233.75.24",
+                "tcp_stream": 7,
+                "auth_result": "AUTHENTICATION_FAILURE"
+            }
+        }
+    ]
+}

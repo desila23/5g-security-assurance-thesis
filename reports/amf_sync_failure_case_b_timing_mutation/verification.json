@@ -1,0 +1,40 @@
+{
+    "rules": [
+        {
+            "field": "amf_sync_failure.synchronization_failure.cause",
+            "operator": "==",
+            "expected": 21,
+            "observed": 21,
+            "verdict": "PASS"
+        },
+        {
+            "field": "amf_sync_failure.synchronization_failure.auts_present",
+            "operator": "==",
+            "expected": true,
+            "observed": true,
+            "verdict": "PASS"
+        },
+        {
+            "field": "amf_sync_failure.resynchronization_request.present",
+            "operator": "==",
+            "expected": true,
+            "observed": true,
+            "verdict": "PASS"
+        },
+        {
+            "field": "amf_sync_failure.resynchronization_request.auts",
+            "operator": "==",
+            "expected": "94030fb233222a37b4220286604d",
+            "observed": "94030fb233222a37b4220286604d",
+            "verdict": "PASS"
+        },
+        {
+            "field": "amf_sync_failure.resynchronization_request.rand",
+            "operator": "==",
+            "expected": "8f872627e2b3d3b37594149ff32dd3bb",
+            "observed": "8f872627e2b3d3b37594149ff32dd3bb",
+            "verdict": "PASS"
+        }
+    ],
+    "overall_verdict": "PASS"
+}

@@ -1,0 +1,90 @@
+{
+    "rules": [
+        {
+            "field": "pfcp_session_establishment_response.f_teids",
+            "operator": "UNIQUE",
+            "expected": null,
+            "observed": [
+                {
+                    "frame": 37,
+                    "values": [
+                        {
+                            "teid": "0x00006a75",
+                            "ipv4": "127.0.0.7"
+                        },
+                        {
+                            "teid": "0x0000ecf4",
+                            "ipv4": "127.0.0.7"
+                        }
+                    ]
+                },
+                {
+                    "frame": 38,
+                    "values": [
+                        {
+                            "teid": "0x0000a5de",
+                            "ipv4": "127.0.0.7"
+                        },
+                        {
+                            "teid": "0x00006a75",
+                            "ipv4": "127.0.0.7"
+                        }
+                    ]
+                },
+                {
+                    "frame": 46,
+                    "values": [
+                        {
+                            "teid": "0x0000b101",
+                            "ipv4": "127.0.0.7"
+                        },
+                        {
+                            "teid": "0x0000a697",
+                            "ipv4": "127.0.0.7"
+                        }
+                    ]
+                },
+                {
+                    "frame": 47,
+                    "values": [
+                        {
+                            "teid": "0x0000a7dc",
+                            "ipv4": "127.0.0.7"
+                        },
+                        {
+                            "teid": "0x0000113a",
+                            "ipv4": "127.0.0.7"
+                        }
+                    ]
+                },
+                {
+                    "frame": 48,
+                    "values": [
+                        {
+                            "teid": "0x00001ee9",
+                            "ipv4": "127.0.0.7"
+                        },
+                        {
+                            "teid": "0x0000e1cf",
+                            "ipv4": "127.0.0.7"
+                        }
+                    ]
+                }
+            ],
+            "duplicates": [
+                {
+                    "value": {
+                        "teid": "0x00006a75",
+                        "ipv4": "127.0.0.7"
+                    },
+                    "frames": [
+                        37,
+                        38
+                    ]
+                }
+            ],
+            "verdict": "FAIL"
+        }
+    ],
+    "overall_verdict": "FAIL"
+}
