@@ -1,7 +1,8 @@
 {
     "schema_version": "2.0",
     "metadata": {
-        "generator": "generic_verification_pipeline"
+        "generator": "generic_verification_pipeline",
+        "tshark_version": "TShark (Wireshark) 3.6.2 (Git v3.6.2 packaged as 3.6.2-2)"
     },
     "test": {
         "id": "amf_sync_failure_case_b",

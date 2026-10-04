@@ -3,7 +3,7 @@ import hashlib
 
 from utils.json_utils import save_json
 from utils.report_schema import normalize_report
-from utils.tshark_utils import calculate_sha256
+from utils.tshark_utils import calculate_sha256, get_tshark_version
 
 
 def _event_to_evidence(event):
@@ -332,6 +332,7 @@ def build_generic_report(
 
         "metadata": {
             "generator": "generic_verification_pipeline",
+            "tshark_version": get_tshark_version()
         },
 
         "test": {
