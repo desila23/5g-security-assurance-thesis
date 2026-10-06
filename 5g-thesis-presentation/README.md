@@ -1,6 +1,6 @@
 # Presentazione tesi 5G
 
-Apri questo link: https://desila23.github.io/5g-security-assurance-thesis/5g-thesis-presentation/#slide-1.
+Apri questo link: https://desila23.github.io/5g-security-assurance-thesis/5g-thesis-presentation/.
 La presentazione funziona offline e contiene 14 slide.
 
 Il formato 16:9 si adatta proporzionalmente alla finestra. Per la presentazione su desktop usa il pulsante “Schermo intero”, il tasto F o F11. Tutti i caratteri sono inclusi, senza dipendenze esterne.
