@@ -1,7 +1,7 @@
 /*
- * SLIDE 10 E 11 — spiegazione controllata dal relatore.
+ * SLIDE 4, 9, 10 E 11 — spiegazione controllata dal relatore.
  * 01: testi e ordine dei passaggi. 02: stato. 03: SVG. 04: pulsanti e tastiera.
- * Nessun timer: ogni cambiamento richiede un comando esplicito.
+ * Nessuna riproduzione automatica: ogni cambiamento richiede un comando esplicito.
  */
 (function (root, factory) {
   'use strict';
@@ -22,11 +22,11 @@
     previous: 'Indietro',
     next: 'Avanti',
     reset: 'Ricomincia',
-    fullStatus: 'Vista completa · attiva i passaggi per spiegare la slide.'
+    fullStatus: 'Vista completa · Avanti apre la slide successiva.'
   };
 
-  // TESTI PASSI SLIDE 10: modifica solo label per cambiare la spiegazione.
-  // visible e current controllano il disegno; GUIDA_TESTI.md elenca tutte le righe.
+  // TESTI PASSI SLIDE 9: modifica solo label per cambiare la spiegazione.
+  // visible e current controllano il disegno; GUIDA_TESTI.md elenca gli ID e i testi.
   const constructionSteps = [
     { label: 'La regola descrive A, B facoltativo e C.', visible: [] },
     { label: 'event.a AS a → Atom(event.a).', visible: ['atom-a'], current: 'a' },
@@ -37,7 +37,7 @@
     { label: 'Aggiungo ε che salta B: è il gruppo OPTIONAL.', visible: ['atom-a', 'atom-b', 'atom-c', 'nfa', 'eps-links', 'eps-skip'] },
     { label: 'L’automa accetta A → B → C oppure A → C.', visible: ['atom-a', 'atom-b', 'atom-c', 'nfa', 'eps-links', 'eps-skip', 'paths'] }
   ];
-  // TESTI PASSI SLIDE 11: anche qui la spiegazione è nel campo label.
+  // TESTI PASSI SLIDE 10: anche qui la spiegazione è nel campo label.
   const matcherSteps = [
     { label: 'La regola attende un evento A.', bindings: [], atoms: [], cursor: -1, current: 'a' },
     { label: 'Riconosco A(1): creo a(1) e accendo Atom A.', bindings: [0], atoms: ['a'], cursor: 0, current: 'a' },
@@ -48,12 +48,21 @@
     { label: 'Ignoro X(5); il candidato continua da A(3), B(4).', bindings: [2, 3], atoms: ['a', 'b'], cursor: 4, restarted: true },
     { label: 'Riconosco C(6): creo c(6). Match A(3), B(4), C(6).', bindings: [2, 3, 5], atoms: ['a', 'b', 'c'], cursor: 5, restarted: true, current: 'c' }
   ];
-  const steps = { construction: constructionSteps, matcher: matcherSteps };
+  const rationaleSteps = [
+    {label:'PRIMA · un verificatore dedicato per ogni test.',visible:['legacy']},
+    {label:'DOPO · regole diverse, un unico motore.',visible:['pipeline']}
+  ];
+  const bindingSteps = [
+    {label:'Il Match conserva i binding a(3), b(4), c(6).',visible:['overview']},
+    {label:'Close-up: ogni alias riferisce il MessageEvent riconosciuto.',visible:['closeup']}
+  ];
+  const steps = { construction: constructionSteps, matcher: matcherSteps, rationale:rationaleSteps, binding:bindingSteps };
+  let mountedControllers=[];
 
   // 02. STATO — conserva il passo durante la navigazione tra slide.
   function initialState(kind) {
     if (!steps[kind]) throw new Error('Tipo di slide sconosciuto: ' + kind);
-    return { kind, manual: false, index: 0 };
+    return { kind, manual: kind === 'matcher' || kind === 'rationale' || kind === 'binding', index: 0 };
   }
   function transition(state, action) {
     const last = steps[state.kind].length - 1;
@@ -104,6 +113,46 @@
       if (path.hasAttribute('marker-end')) path.setAttribute('marker-end', 'url(#arrow-' + slideNumber + '-' + (active ? 'green' : 'gray') + ')');
     });
   }
+  // A single intermediate diagram makes the three dedicated verifiers converge.
+  // The complete BEFORE and AFTER drawings remain mutually exclusive, including in print.
+  function paintRationale(section,current){
+    const before=section.querySelector('#dsl-legacy');
+    const after=section.querySelector('#dsl-pipeline');
+    const morph=section.querySelector('#rationale-morph');
+    const previous=section._rationaleView;
+    if(section._morphFrame){cancelAnimationFrame(section._morphFrame);section._morphFrame=null;}
+    section._rationaleView=current.index;
+    const settle=()=>{show(morph,false);show(before,current.index===0);show(after,current.index===1);delete section.dataset.morphing;};
+    const animate=previous!==undefined && previous!==current.index && !current.full && section.classList.contains('active') && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(!animate){settle();return;}
+    show(before,false);show(after,false);show(morph,true);section.dataset.morphing='true';
+    const rules=[...morph.querySelectorAll('[data-morph-rule]')];
+    const engines=[...morph.querySelectorAll('[data-morph-engine]')];
+    const labels=[...morph.querySelectorAll('[data-morph-label]')];
+    const engineLabels=[...morph.querySelectorAll('[data-morph-engine-label]')];
+    const finalDetails=morph.querySelector('[data-morph-final]');
+    let start;
+    function frame(time){
+      if(start===undefined)start=time;
+      const raw=Math.min(1,(time-start)/560);
+      const eased=raw<.5?4*raw*raw*raw:1-Math.pow(-2*raw+2,3)/2;
+      const t=current.index===1?eased:1-eased;
+      const mix=(a,b)=>a+(b-a)*t;
+      rules.forEach((el,i)=>{el.setAttribute('y',mix(411+i*125,419+i*106));el.setAttribute('height',mix(90,74));});
+      engines.forEach((el,i)=>{el.setAttribute('x',mix(784,650));el.setAttribute('y',mix(411+i*125,492));el.setAttribute('width',mix(470,350));el.setAttribute('height',mix(90,140));el.setAttribute('fill','rgb('+[mix(255,238),mix(255,248),mix(255,243)].map(Math.round).join(',')+')');el.setAttribute('stroke','rgb('+[mix(217,196),mix(227,223),mix(239,211)].map(Math.round).join(',')+')');});
+      finalDetails.setAttribute('opacity',String(Math.max(0,(t-.45)/.55)));
+      labels.forEach((el,i)=>{el.setAttribute('y',mix(467+i*125,466+i*106));el.setAttribute('font-size',mix(30,29));el.textContent=(t<.5?'TEST ':'REGOLA ')+String.fromCharCode(65+i);});
+      engineLabels.forEach((el,i)=>{
+        el.setAttribute('x',mix(1019,825));el.setAttribute('y',mix(467+i*125,548));el.setAttribute('font-size',mix(30,34));el.setAttribute('fill','rgb('+[mix(24,39),mix(37,135),mix(54,102)].map(Math.round).join(',')+')');
+        el.style.opacity=t<.45?String(Math.max(0,1-t/.45)):(i===1?String(Math.max(0,(t-.65)/.35)):'0');
+        el.textContent=t<.5?'VERIFICATORE '+String.fromCharCode(65+i):'Unico motore';
+      });
+      if(raw<1)section._morphFrame=requestAnimationFrame(frame);
+      else{section._morphFrame=null;settle();}
+    }
+    section._morphFrame=requestAnimationFrame(frame);
+  }
+
   function paintSVG(section, current) {
     const get = id => section.querySelector('#' + id);
     const kind = section.dataset.stepKind;
@@ -115,7 +164,7 @@
       ['a', 'b', 'c'].forEach(letter => {
         show(get('construction-link-' + letter), current.visible.includes('atom-' + letter));
       });
-    } else {
+    } else if(kind === 'matcher') {
       current.events.forEach((status, i) => {
         const event = get('matcher-event-' + i);
         event.dataset.state = status;
@@ -132,7 +181,28 @@
       colourAtom(get('matcher-eps-ab'), current.atoms.includes('b'), slideNumber);
       colourAtom(get('matcher-eps-bc'), current.atoms.includes('c'), slideNumber);
     }
-    ['a', 'b', 'c'].forEach(letter => {
+    if(kind === 'rationale'){
+      paintRationale(section,current);
+    }
+    if(kind === 'binding'){
+      const previous=section._bindingView;
+      const overview=get('binding-overview'),closeup=get('binding-closeup');
+      if(section._bindingAnimation){section._bindingAnimation.cancel();section._bindingAnimation=null;}
+      delete section.dataset.zooming;
+      ['overview','closeup'].forEach(id=>show(get('binding-'+id),current.visible.includes(id)));
+      const animate=previous!==undefined && previous!==current.index && !current.full && section.classList.contains('active') && closeup.animate && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(animate && current.index===1){
+        section.dataset.zooming='true';
+        const animation=closeup.animate([
+          {transform:'matrix(0.403343,0,0,0.48,887.8256,225.8)',opacity:1},
+          {transform:'matrix(1,0,0,1,0,0)',opacity:1}
+        ],{duration:580,easing:'cubic-bezier(.2,.7,.2,1)'});
+        section._bindingAnimation=animation;
+        animation.onfinish=()=>{delete section.dataset.zooming;section._bindingAnimation=null;};
+      }
+      section._bindingView=current.index;
+    }
+    if(kind === 'construction' || kind === 'matcher') ['a', 'b', 'c'].forEach(letter => {
       const line = get(kind + '-code-' + letter);
       line.dataset.current = String(!current.full && current.current === letter);
     });
@@ -151,36 +221,48 @@
         paintSVG(section, current);
         button('toggle').textContent = state.manual ? uiText.full : uiText.start;
         ['previous', 'next', 'reset'].forEach(action => { button(action).textContent = uiText[action]; });
+        button('next').textContent=uiText.next;
+        button('previous').textContent=uiText.previous;
         button('toggle').setAttribute('aria-pressed', String(state.manual));
         ['previous', 'next', 'reset'].forEach(action => { button(action).hidden = !state.manual; });
-        button('previous').disabled = state.index === 0;
-        button('next').disabled = state.index === current.total - 1;
+        button('previous').disabled = state.index === 0 && section.id==='slide-1';
+        button('next').disabled = false;
         status.textContent = state.manual ? (state.index + 1) + '/' + current.total + ' · ' + current.label : uiText.fullStatus;
       }
       function dispatch(action) { state = transition(state, action); paint(); }
-      section.querySelectorAll('[data-step-action]').forEach(control => {
-        control.addEventListener('click', () => dispatch(control.dataset.stepAction));
+      const controller={section,dispatch,isManual:()=>state.manual,
+        getState:()=>({...state}),
+        advance(direction){
+          if(!state.manual)return false;
+          if(direction>0 && state.index<steps[state.kind].length-1){dispatch('next');return true;}
+          if(direction<0 && state.index>0){dispatch('previous');return true;}
+          return false;
+        },
+        setPrinting(value){printing=value;paint();}
+      };
+      section.querySelectorAll('[data-step-action]').forEach(control=>{
+        control.addEventListener('click',()=>{
+          const action=control.dataset.stepAction;
+          if(action==='next'){
+            if(!controller.advance(1) && win.ThesisDeck)win.ThesisDeck.next();
+          }else if(action==='previous'){
+            if(!controller.advance(-1) && win.ThesisDeck)win.ThesisDeck.previous();
+          }else dispatch(action);
+        });
       });
-      controllers.push({ section, dispatch, isManual: () => state.manual,
-        setPrinting(value) { printing = value; paint(); } });
+      controllers.push(controller);
       paint();
     });
-    // Intercetta soltanto i tasti dei passi; Page Up/Down continuano a cambiare slide.
-    doc.addEventListener('keydown', event => {
-      if (event.altKey || event.ctrlKey || event.metaKey) return;
-      if (event.target.closest('input,textarea,select,[contenteditable="true"]')) return;
-      if (event.key === ' ' && event.target.closest('button')) return;
-      if (Array.from(doc.querySelectorAll('dialog')).some(dialog => dialog.open)) return;
-      const active = controllers.find(controller => !controller.section.hidden && controller.isManual());
-      if (!active || !['ArrowRight', 'ArrowLeft', ' '].includes(event.key)) return;
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      if (event.repeat) return;
-      active.dispatch(event.key === 'ArrowLeft' ? 'previous' : 'next');
-    }, true);
+    mountedControllers=controllers;
+    // La tastiera è gestita una sola volta da script.js tramite navigate().
     win.addEventListener('beforeprint', () => controllers.forEach(controller => controller.setPrinting(true)));
     win.addEventListener('afterprint', () => controllers.forEach(controller => controller.setPrinting(false)));
     return controllers;
   }
-  return { initialState, transition, view, mount, paintSVG };
+  function navigate(direction,section){
+    const controller=mountedControllers.find(c=>c.section===section);
+    return controller?controller.advance(direction):false;
+  }
+  return { initialState, transition, view, mount, paintSVG, navigate,
+    inspect:()=>mountedControllers.map(c=>({slide:c.section.id,...c.getState()})) };
 });
