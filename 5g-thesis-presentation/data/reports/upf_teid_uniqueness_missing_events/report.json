@@ -1,0 +1,51 @@
+{
+    "schema_version": "2.0",
+    "metadata": {
+        "generator": "generic_verification_pipeline",
+        "tshark_version": "TShark (Wireshark) 3.6.2 (Git v3.6.2 packaged as 3.6.2-2)"
+    },
+    "test": {
+        "id": "upf_teid_uniqueness_missing_events",
+        "description": "Verification of F-TEID uniqueness across PFCP Session Establishment Responses",
+        "nf": "UPF"
+    },
+    "source": {
+        "pcap": "captures/upf_teid_uniqueness_missing_events.pcap",
+        "sha256": "f3b8b2aa17cd3a8687cefab0b5c59dd4c892ed7584a87c6f89b25d95c9df2f98"
+    },
+    "configuration": {
+        "pipeline": "collect",
+        "case": null,
+        "rules": "dsl/upf_teid_uniqueness.dsl",
+        "traffic": {
+            "sources": [
+                {
+                    "type": "pfcp",
+                    "display_filter": "pfcp.msg_type == 51"
+                }
+            ]
+        },
+        "external_bindings": {}
+    },
+    "criteria": [],
+    "verification": {
+        "results": [],
+        "overall_verdict": "INCONCLUSIVE"
+    },
+    "evidence": {
+        "bindings": {
+            "responses": []
+        }
+    },
+    "explanation": {
+        "summary": "No events collected for pfcp.session_establishment_response",
+        "observations": {
+            "reason": "No events collected for pfcp.session_establishment_response",
+            "message_type": "pfcp.session_establishment_response",
+            "alias": "responses",
+            "matches_found": null,
+            "collected_events": 0
+        }
+    },
+    "verdict": "INCONCLUSIVE"
+}

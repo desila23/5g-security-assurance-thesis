@@ -1,0 +1,692 @@
+/* 01. TEMA — modifica qui colori e font comuni alle slide. */
+:root {
+  --slide-ink: #1c2a40;
+  --slide-muted: #65758b;
+  --slide-blue: #4264d0;
+  --slide-line: #d5dff0;
+  --slide-gray: #99a7bb;
+  --slide-green: #278766;
+  --slide-mint: #eef8f3;
+  --slide-pale: #f0f4ff;
+  --slide-sand: #fff7e9;
+  --slide-amber: #9d7139;
+  --slide-red: #b64b56;
+  --slide-rose: #fff0f1;
+  --slide-purple: #4264d0;
+  --slide-white: #ffffff;
+  --slide-violet-soft: #f3eef9;
+  --slide-nas-strong: #9cb4ed;
+  --slide-http-strong: #e9c68e;
+  --font-sans: "Nimbus Sans", Arial, sans-serif;
+  --font-mono: "DejaVu Sans Mono", monospace;
+}
+
+/* 02. ELEMENTI SVG — posizioni e dimensioni restano nel singolo elemento HTML. */
+.svg-text  {
+  font-family: var(--font-sans);
+}
+
+.svg-mono  {
+  font-family: var(--font-mono);
+}
+
+.fill-ink  {
+  fill: var(--slide-ink);
+}
+
+.stroke-ink  {
+  stroke: var(--slide-ink);
+}
+
+.fill-muted  {
+  fill: var(--slide-muted);
+}
+
+.stroke-muted  {
+  stroke: var(--slide-muted);
+}
+
+.fill-blue  {
+  fill: var(--slide-blue);
+}
+
+.stroke-blue  {
+  stroke: var(--slide-blue);
+}
+
+.fill-line  {
+  fill: var(--slide-line);
+}
+
+.stroke-line  {
+  stroke: var(--slide-line);
+}
+
+.fill-gray  {
+  fill: var(--slide-gray);
+}
+
+.stroke-gray  {
+  stroke: var(--slide-gray);
+}
+
+.fill-green  {
+  fill: var(--slide-green);
+}
+
+.stroke-green  {
+  stroke: var(--slide-green);
+}
+
+.fill-mint  {
+  fill: var(--slide-mint);
+}
+
+.stroke-mint  {
+  stroke: var(--slide-mint);
+}
+
+.fill-pale  {
+  fill: var(--slide-pale);
+}
+
+.stroke-pale  {
+  stroke: var(--slide-pale);
+}
+
+.fill-sand  {
+  fill: var(--slide-sand);
+}
+
+.stroke-sand  {
+  stroke: var(--slide-sand);
+}
+
+.fill-amber  {
+  fill: var(--slide-amber);
+}
+
+.stroke-amber  {
+  stroke: var(--slide-amber);
+}
+
+.fill-red  {
+  fill: var(--slide-red);
+}
+
+.stroke-red  {
+  stroke: var(--slide-red);
+}
+
+.fill-rose  {
+  fill: var(--slide-rose);
+}
+
+.stroke-rose  {
+  stroke: var(--slide-rose);
+}
+
+.fill-purple  {
+  fill: var(--slide-purple);
+}
+
+.stroke-purple  {
+  stroke: var(--slide-purple);
+}
+
+.fill-white  {
+  fill: var(--slide-white);
+}
+
+.stroke-white  {
+  stroke: var(--slide-white);
+}
+
+.fill-violet-soft  {
+  fill: var(--slide-violet-soft);
+}
+
+.stroke-violet-soft  {
+  stroke: var(--slide-violet-soft);
+}
+
+.fill-nas-strong  {
+  fill: var(--slide-nas-strong);
+}
+
+.stroke-nas-strong  {
+  stroke: var(--slide-nas-strong);
+}
+
+.fill-http-strong  {
+  fill: var(--slide-http-strong);
+}
+
+.stroke-http-strong  {
+  stroke: var(--slide-http-strong);
+}
+
+/* 03. IMPOSTAZIONI GENERALI */
+:root {
+  --bg:#f7f9fc;
+  --surface:var(--slide-white);
+  --text:var(--slide-ink);
+  --muted:var(--slide-muted);
+  --line:var(--slide-line);
+  --accent:var(--slide-blue);
+  --accent-soft:#edf1ff;
+  --ok:var(--slide-green);
+  --ok-soft:#e9f7f1;
+  --bad:var(--slide-red);
+  --dark:#10203c;
+  --shadow:0 18px 55px rgba(20,32,51,.12);
+  --slide-scale:.75
+}
+
+* {
+  box-sizing:border-box
+}
+
+html,body {
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden
+}
+
+body {
+  font-family:"Nimbus Sans",sans-serif;
+  color:var(--text);
+  background:#edf1f7
+}
+
+/* 04. PALCO E SCALATURA DELLE SLIDE */
+#viewport {
+  position:relative;
+  width:100%;
+  height:calc(100% - 70px);
+  overflow:hidden
+}
+
+#deck {
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:1600px;
+  height:900px;
+  transform:translate(-50%,-50%) scale(var(--slide-scale));
+  transform-origin:50% 50%;
+  background:var(--bg);
+  box-shadow:0 4px 26px rgba(20,32,51,.1)
+}
+
+.slide {
+  position:absolute;
+  inset:0;
+  width:1600px;
+  height:900px;
+  overflow:hidden
+}
+
+.slide[hidden] {
+  display:none!important
+}
+
+.slide>svg {
+  display:block;
+  width:1600px;
+  height:900px
+}
+
+.slide.active {
+  animation:appear .15s ease-out
+}
+
+@keyframes appear {
+  from {
+    opacity:.4
+  }
+
+  to {
+    opacity:1
+  }
+
+}
+
+/* 05. NAVIGAZIONE */
+#navigation {
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  padding:10px 20px
+}
+
+.nav-button {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:38px;
+  min-height:38px;
+  padding:8px 12px;
+  border:1px solid #c8d2e0;
+  border-radius:12px;
+  color:var(--text);
+  background:transparent;
+  font:inherit;
+  font-size:17px;
+  cursor:pointer
+}
+
+.nav-button:hover {
+  background:#fff;
+  border-color:#a5b4ce
+}
+
+.nav-button:focus-visible {
+  outline:3px solid var(--accent);
+  outline-offset:3px
+}
+
+.nav-button:disabled {
+  opacity:.25;
+  cursor:default
+}
+
+.nav-button svg {
+  width:16px;
+  height:16px
+}
+
+#counter {
+  font-size:14px;
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+  color:#42526a
+}
+
+#slide-label {
+  width:280px;
+  font-size:13px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:var(--muted)
+}
+
+.nav-separator {
+  width:1px;
+  height:22px;
+  background:#c8d2e0
+}
+
+.utility {
+  font-size:13px;
+  gap:6px;
+  min-width:38px
+}
+
+.utility .small-label {
+  font-size:12px
+}
+
+/* 06. INDICE */
+#outline {
+  border:1px solid var(--line);
+  padding:26px;
+  width:min(540px,calc(100vw - 32px));
+  border-radius:14px;
+  background:#fff;
+  color:var(--text);
+  box-shadow:0 24px 70px rgba(20,32,51,.2)
+}
+
+#outline::backdrop {
+  background:rgba(20,32,51,.32)
+}
+
+#outline h2 {
+  font-size:23px;
+  margin:0 0 18px
+}
+
+#outline ol {
+  margin:0;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:4px
+}
+
+#outline li button {
+  width:100%;
+  text-align:left;
+  border:0;
+  padding:10px 12px;
+  border-radius:7px;
+  background:#fff;
+  color:var(--text);
+  font:inherit;
+  font-size:15px;
+  cursor:pointer
+}
+
+#outline li button:hover,#outline li button[aria-current="step"] {
+  background:var(--accent-soft);
+  color:var(--accent)
+}
+
+#outline li span {
+  display:inline-block;
+  width:36px;
+  font-size:13px;
+  color:var(--muted)
+}
+
+#close-outline {
+  margin-top:16px;
+  float:right
+}
+
+.sr-only {
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip-path:inset(50%);
+  white-space:nowrap;
+  border:0
+}
+
+noscript {
+  position:fixed;
+  top:0;
+  padding:8px;
+  background:#fff;
+  color:#1c2a40;
+  font-size:13px
+}
+
+/* 07. RESPONSIVE E STAMPA */
+@media(max-width:650px) {
+  #slide-label {
+    display:none
+  }
+
+  #navigation {
+    gap:9px;
+    padding:8px 12px
+  }
+
+  .small-label {
+    display:none
+  }
+
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .slide.active {
+    animation:none
+  }
+
+}
+
+@media print {
+  @page {
+    size:1600px 900px;
+    margin:0
+  }
+
+  html,body {
+    width:1600px;
+    height:auto;
+    overflow:visible;
+    background:var(--bg);
+    print-color-adjust:exact;
+    -webkit-print-color-adjust:exact
+  }
+
+  #viewport {
+    height:auto;
+    overflow:visible
+  }
+
+  #deck {
+    position:static;
+    transform:none;
+    box-shadow:none;
+    width:1600px;
+    height:auto
+  }
+
+  .slide,.slide[hidden] {
+    position:relative;
+    display:block!important;
+    page-break-after:always;
+    break-after:page;
+    animation:none;
+    overflow:hidden
+  }
+
+  .slide:last-child {
+    page-break-after:auto;
+    break-after:auto
+  }
+
+  #navigation,#outline,.sr-only,noscript {
+    display:none!important
+  }
+
+}
+
+#deck {
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 10px 36px rgba(32,54,83,.07)
+}
+
+@media print {
+  #deck {
+    border-radius:0;
+    overflow:visible
+  }
+
+}
+
+#outline {
+  max-height:calc(100vh - 36px);
+  overflow:auto
+}
+
+/* 08. NOTE DEL RELATORE */
+#speaker-notes {
+  width:min(880px,calc(100vw - 36px));
+  max-height:calc(100vh - 48px);
+  overflow:auto;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:28px;
+  background:#fff;
+  color:var(--text);
+  box-shadow:var(--shadow)
+}
+
+#speaker-notes::backdrop {
+  background:rgba(20,32,51,.32)
+}
+
+.notes-heading {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px
+}
+
+.notes-heading h2 {
+  font-size:24px;
+  margin:0
+}
+
+#notes-duration {
+  color:var(--accent);
+  font-size:15px
+}
+
+#notes-body {
+  font-size:18px;
+  line-height:1.65;
+  white-space:pre-wrap
+}
+
+/* 09. MATCHER INTERATTIVO */
+.slide-action {
+  position:absolute;
+  right:112px;
+  bottom:32px
+}
+
+.slide-action button {
+  background:#fff;
+  font-size:17px;
+  border-color:#c0dfd0;
+  color:#278766
+}
+
+.matcher-selection {
+  opacity:1;
+  transition:opacity .22s ease
+}
+
+.slide.observed-only .matcher-selection {
+  opacity:0
+}
+
+.matcher-event {
+  transition:fill .22s ease,stroke .22s ease
+}
+
+.matcher-event-text {
+  transition:fill .22s ease
+}
+
+@media print {
+  #speaker-notes,.slide-action {
+    display:none!important
+  }
+
+  .slide.observed-only .matcher-selection {
+    opacity:1!important
+  }
+
+}
+
+@media(max-width:760px) {
+  #slide-label {
+    display:none
+  }
+
+  #navigation {
+    gap:8px;
+    padding:8px
+  }
+
+  #notes-button {
+    padding:8px
+  }
+
+}
+
+/* 10. PASSAGGI MANUALI — barra sotto il sottotitolo, in coordinate 1600 × 900. */
+.step-controls {
+  position: absolute;
+  top: 254px;
+  left: 112px;
+  right: 112px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 46px;
+}
+.step-controls button {
+  border: 1px solid var(--slide-line);
+  border-radius: 12px;
+  padding: 9px 15px;
+  background: white;
+  color: var(--slide-blue);
+  font: 18px var(--font-sans);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.step-controls button[aria-pressed="true"] {
+  background: var(--slide-pale);
+}
+.step-controls button:disabled {
+  opacity: .4;
+  cursor: default;
+}
+.step-controls button:focus-visible {
+  outline: 3px solid var(--slide-blue);
+  outline-offset: 3px;
+}
+.step-controls [hidden] {
+  display: none;
+}
+.step-status {
+  margin: 0 0 0 8px;
+  color: var(--slide-muted);
+  font: 19px var(--font-sans);
+  line-height: 1.2;
+}
+[data-current="true"] {
+  text-decoration: underline;
+  text-decoration-color: var(--slide-blue);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+@media print {
+  .step-controls {
+    display: none !important;
+  }
+}
+
+/* 11. REVISIONE DEFINITIVA — superfici SVG definite anche nei singoli defs. */
+:root { --slide-muted:#52627b; --slide-line:#d9e3ef; }
+.step-status { font-size:18px; flex:1; min-width:0; }
+.step-controls button { font-size:17px; padding:9px 13px; }
+.step-controls { gap:8px; }
+/* Resa deterministica per anteprime, senza sostituire il navigatore. */
+html.render-view,html.render-view body { width:var(--render-width); height:var(--render-height); overflow:hidden; }
+.render-view #viewport { width:var(--render-width); height:var(--render-height); }
+.render-view #deck { top:0;left:0;transform:scale(var(--render-scale));transform-origin:0 0;border-radius:0;box-shadow:none; }
+.render-view #navigation { display:none; }
+.render-view .slide.active { animation:none; }
+@media print {
+  html.render-view,html.render-view body { width:1600px;height:auto;overflow:visible; }
+  .render-view #deck { transform:none; }
+  .render-view #viewport { width:1600px;height:auto; }
+  .slide:last-of-type { break-after:auto;page-break-after:auto; }
+}
+
+/* Revisione: fondo bianco anche nel palco e nella stampa. Gli SVG sono bianchi nei sorgenti. */
+:root { --bg:#ffffff; --slide-violet-soft:#f5f7fb; }
+html, body, #viewport, .slide { background:#ffffff; }
+#slide-4 .step-controls, #slide-11 .step-controls { top:254px; }
+
+/* Ripristino richiesto della sola rete: control plane verde e user plane violetto. */
+#slide-2 .network-purple { fill:#7861ad; }
+#slide-2 .network-stroke-purple { stroke:#7861ad; }
+.rule-action { position:absolute;left:112px;top:829px; }
+.rule-action button { padding:10px 18px;border:1px solid #d9e3ef;border-radius:12px;background:#f0f4ff;color:#4264d0;font:22px var(--font-sans);cursor:pointer; }
+#resstar-rule-dialog { width:min(1100px,calc(100vw - 48px));max-height:90vh;border:1px solid #d9e3ef;border-radius:18px;padding:26px;color:#182536; }
+#resstar-rule-dialog pre { overflow:auto;font:19px/1.5 var(--font-mono);white-space:pre; }
+#resstar-rule-dialog::backdrop { background:rgba(24,37,54,.3); }
+@media print { .rule-action,#resstar-rule-dialog { display:none!important; } }
+
+.rule-action button {font-size:18px;padding:7px 12px;border-radius:9px;}
+.complete-rule-dialog {width:min(1100px,calc(100vw - 48px));max-height:90vh;border:1px solid #d9e3ef;border-radius:18px;padding:26px;color:#182536;}
+.complete-rule-dialog pre {overflow:auto;font:19px/1.5 var(--font-mono);white-space:pre;}
+.complete-rule-dialog::backdrop {background:rgba(24,37,54,.3);}
+@media print {.complete-rule-dialog {display:none!important;}}

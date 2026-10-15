@@ -1,0 +1,182 @@
+{
+  "repository": "desila23/5g-security-assurance-thesis",
+  "branch": "refactor/generic-pipeline",
+  "checked_date": "2026-10-15",
+  "files": [
+    {
+      "path": "config/tests.json",
+      "sha": "5cfd45dee92cf1c915531c3cbddd7a9fbf5a648e",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/config/tests.json"
+    },
+    {
+      "path": "config/mutation_tests.json",
+      "sha": "cb4c7b5d01265b132910c7f79727b24178b75560",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/config/mutation_tests.json"
+    },
+    {
+      "path": "main.py",
+      "sha": "08ba11fe3f2c0184f53a79557474e12d090bf78e",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/main.py"
+    },
+    {
+      "path": "utils/mutation_utils.py",
+      "sha": "223203bddbeac160ba5a46a25f223bdc659de474",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/utils/mutation_utils.py"
+    },
+    {
+      "path": "verifier/binding_verifier.py",
+      "sha": "aaf49043a0506fa3db2405ba4756b32c0326d746",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/verifier/binding_verifier.py"
+    },
+    {
+      "path": "matcher/models.py",
+      "sha": "6025fbdd0639dcec62b8c86fc26560097cf7335a",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/matcher/models.py"
+    },
+    {
+      "path": "dsl/resstar_verification_failure.dsl",
+      "sha": "34dc294415b34d3f674081e7cad71901f3e61068",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/dsl/resstar_verification_failure.dsl"
+    },
+    {
+      "path": "dsl/amf_sync_failure_case_b_sequence.dsl",
+      "sha": "8b6528e9b4bf2f9b312696b2f2f11af39075a8d1",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/dsl/amf_sync_failure_case_b_sequence.dsl"
+    },
+    {
+      "path": "dsl/amf_sync_failure.dsl",
+      "sha": "2405baeb64b43c46908a58469a66fbb49959a2bc",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/dsl/amf_sync_failure.dsl"
+    },
+    {
+      "path": "reports/nrf_disc_auth_slice_report.json",
+      "sha": "1b1324b0f5fe364a674199b3ef8c95172909ee12",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/nrf_disc_auth_slice_report.json"
+    },
+    {
+      "path": "reports/udm_resynchronization/report.json",
+      "sha": "37b2800a58d62e049bc515d3c4b0ffaf4b7218ac",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/udm_resynchronization/report.json"
+    },
+    {
+      "path": "reports/udm_suci_deconcealment/report.json",
+      "sha": "7d789becca7c457282f985bbb23002bb0d28d4d0",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/udm_suci_deconcealment/report.json"
+    },
+    {
+      "path": "reports/amf_sync_failure_case_a/report.json",
+      "sha": "bc81161dab0442c2f0f360594af002408f653649",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/amf_sync_failure_case_a/report.json"
+    },
+    {
+      "path": "reports/amf_sync_failure_case_b/report.json",
+      "sha": "d095087c5b558b39ac0731b7815f186dbf92eb9e",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/amf_sync_failure_case_b/report.json"
+    },
+    {
+      "path": "reports/upf_teid_uniqueness/report.json",
+      "sha": "1324f69941bbd4efcace4513b4df17ae357f036c",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/upf_teid_uniqueness/report.json"
+    },
+    {
+      "path": "reports/resstar_verification_failure/case_a/report.json",
+      "sha": "834edaf570207e66e31521ee1b94f3bbd15ffe7c",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/resstar_verification_failure/case_a/report.json"
+    },
+    {
+      "path": "reports/resstar_verification_failure/case_b/report.json",
+      "sha": "889f1c2e604c61cea405a472550dbed662940027",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/resstar_verification_failure/case_b/report.json"
+    },
+    {
+      "path": "reports/resstar_verification_failure/case_c/report.json",
+      "sha": "4aa8e743c5c9cd6df484b332a739f7567dcedf12",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/resstar_verification_failure/case_c/report.json"
+    },
+    {
+      "path": "reports/resstar_verification_failure/case_d/report.json",
+      "sha": "d4637de5217c18d90b2222674d02f54c21e1f6ef",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/resstar_verification_failure/case_d/report.json"
+    },
+    {
+      "path": "reports/nrf_disc_auth_slice_status_mutation/report.json",
+      "sha": "f76ab32660725cd505413f8b2f456d44c3bf10b7",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/nrf_disc_auth_slice_status_mutation/report.json"
+    },
+    {
+      "path": "reports/upf_teid_uniqueness_offline_mutation/report.json",
+      "sha": "1254d17e0213c166ae1283e3201c64cc00d4f8e5",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/upf_teid_uniqueness_offline_mutation/report.json"
+    },
+    {
+      "path": "reports/upf_teid_uniqueness_missing_events/report.json",
+      "sha": "ce2a12620dff02898c2755ccb979952114faa020",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/upf_teid_uniqueness_missing_events/report.json"
+    },
+    {
+      "path": "reports/udm_resynchronization_rand_mutation/report.json",
+      "sha": "069f8b1146b362c7f85985b402e64dc424092469",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/udm_resynchronization_rand_mutation/report.json"
+    },
+    {
+      "path": "reports/udm_suci_deconcealment_mutation/report.json",
+      "sha": "d373d4a77567da54717142445babe6a292b9765e",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/udm_suci_deconcealment_mutation/report.json"
+    },
+    {
+      "path": "reports/amf_sync_failure_case_a_rand_mutation/report.json",
+      "sha": "b627b2b7d0bd01d912697ce0c6b0e017ba962e38",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/amf_sync_failure_case_a_rand_mutation/report.json"
+    },
+    {
+      "path": "reports/amf_sync_failure_case_a_timing_mutation/report.json",
+      "sha": "8703222077f3c0c5c0af25df2fe86b0cc9804858",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/amf_sync_failure_case_a_timing_mutation/report.json"
+    },
+    {
+      "path": "reports/amf_sync_failure_case_a_both_mutation/report.json",
+      "sha": "9c80991235550efc9841fb90456f259237005795",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/amf_sync_failure_case_a_both_mutation/report.json"
+    },
+    {
+      "path": "reports/amf_sync_failure_case_b_rand_mutation/report.json",
+      "sha": "088f3aef2d4ed579440528bf2c45f434f4ca8dd1",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/amf_sync_failure_case_b_rand_mutation/report.json"
+    },
+    {
+      "path": "reports/amf_sync_failure_case_b_timing_mutation/report.json",
+      "sha": "825da50d99a1e6761f8c8fd504d5a0feb71bf2ee",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/amf_sync_failure_case_b_timing_mutation/report.json"
+    },
+    {
+      "path": "reports/amf_sync_failure_case_b_both_mutation/report.json",
+      "sha": "a0379edd350d9e08bafd8d7c977eaccadcd81557",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/amf_sync_failure_case_b_both_mutation/report.json"
+    },
+    {
+      "path": "reports/resstar_verification_failure_mutation/case_a/report.json",
+      "sha": "7599e15be76f843c10514a1e21b327ca7d35192a",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/resstar_verification_failure_mutation/case_a/report.json"
+    },
+    {
+      "path": "reports/resstar_verification_failure_mutation/case_b/report.json",
+      "sha": "83a874e5d5dfffe57514a14d8a3b9ba0741c2197",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/resstar_verification_failure_mutation/case_b/report.json"
+    },
+    {
+      "path": "reports/resstar_verification_failure_mutation/case_c/report.json",
+      "sha": "3af50cf6d3909ceac6bf4da51e80f95e7a0c04ec",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/resstar_verification_failure_mutation/case_c/report.json"
+    },
+    {
+      "path": "reports/resstar_verification_failure_mutation/case_d/report.json",
+      "sha": "41331622c8b386325296a9e6604defbda346bfc0",
+      "url": "https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/reports/resstar_verification_failure_mutation/case_d/report.json"
+    }
+  ],
+  "normative_source": {
+    "title": "ETSI TS 133 518 V18.0.0 (2024-05)",
+    "section": "4.2.2.2.1",
+    "url": "https://www.etsi.org/deliver/etsi_ts/133500_133599/133518/18.00.00_60/ts_133518v180000p.pdf"
+  }
+}

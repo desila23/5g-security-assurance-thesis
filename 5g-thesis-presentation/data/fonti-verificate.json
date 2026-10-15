@@ -1,0 +1,248 @@
+{
+  "repository": "https://github.com/desila23/5g-security-assurance-thesis",
+  "branch": "refactor/generic-pipeline",
+  "verified_on": "2026-10-15",
+  "method": "Confronto dei report salvati nel repository; nessuna nuova esecuzione delle PCAP.",
+  "reports": [
+    {
+      "id": "nrf_disc_auth_slice",
+      "path": "reports/nrf_disc_auth_slice_report.json",
+      "type": "baseline",
+      "sha": "1b1324b0f5fe364a674199b3ef8c95172909ee12",
+      "observed": "FAIL"
+    },
+    {
+      "id": "udm_resynchronization",
+      "path": "reports/udm_resynchronization/report.json",
+      "type": "baseline",
+      "sha": "37b2800a58d62e049bc515d3c4b0ffaf4b7218ac",
+      "observed": "PASS"
+    },
+    {
+      "id": "udm_suci_deconcealment",
+      "path": "reports/udm_suci_deconcealment/report.json",
+      "type": "baseline",
+      "sha": "7d789becca7c457282f985bbb23002bb0d28d4d0",
+      "observed": "PASS"
+    },
+    {
+      "id": "amf_sync_failure_case_a",
+      "path": "reports/amf_sync_failure_case_a/report.json",
+      "type": "baseline",
+      "sha": "bc81161dab0442c2f0f360594af002408f653649",
+      "observed": "PASS"
+    },
+    {
+      "id": "amf_sync_failure_case_b",
+      "path": "reports/amf_sync_failure_case_b/report.json",
+      "type": "baseline",
+      "sha": "d095087c5b558b39ac0731b7815f186dbf92eb9e",
+      "observed": "PASS"
+    },
+    {
+      "id": "upf_teid_uniqueness",
+      "path": "reports/upf_teid_uniqueness/report.json",
+      "type": "baseline",
+      "sha": "1324f69941bbd4efcace4513b4df17ae357f036c",
+      "observed": "PASS"
+    },
+    {
+      "id": "resstar_verification_failure_A",
+      "path": "reports/resstar_verification_failure/case_a/report.json",
+      "type": "baseline",
+      "sha": "834edaf570207e66e31521ee1b94f3bbd15ffe7c",
+      "observed": "PASS"
+    },
+    {
+      "id": "resstar_verification_failure_B",
+      "path": "reports/resstar_verification_failure/case_b/report.json",
+      "type": "baseline",
+      "sha": "889f1c2e604c61cea405a472550dbed662940027",
+      "observed": "PASS"
+    },
+    {
+      "id": "resstar_verification_failure_C",
+      "path": "reports/resstar_verification_failure/case_c/report.json",
+      "type": "baseline",
+      "sha": "4aa8e743c5c9cd6df484b332a739f7567dcedf12",
+      "observed": "PASS"
+    },
+    {
+      "id": "resstar_verification_failure_D",
+      "path": "reports/resstar_verification_failure/case_d/report.json",
+      "type": "baseline",
+      "sha": "d4637de5217c18d90b2222674d02f54c21e1f6ef",
+      "observed": "PASS"
+    },
+    {
+      "id": "nrf_disc_auth_slice",
+      "path": "reports/nrf_disc_auth_slice_status_mutation/report.json",
+      "type": "mutation",
+      "expected": {
+        "baseline": "FAIL",
+        "mutated": "PASS"
+      },
+      "sha": "f76ab32660725cd505413f8b2f456d44c3bf10b7",
+      "observed": "PASS"
+    },
+    {
+      "id": "upf_teid_uniqueness_fail",
+      "path": "reports/upf_teid_uniqueness_offline_mutation/report.json",
+      "type": "mutation",
+      "expected": {
+        "baseline": "PASS",
+        "mutated": "FAIL"
+      },
+      "sha": "1254d17e0213c166ae1283e3201c64cc00d4f8e5",
+      "observed": "FAIL"
+    },
+    {
+      "id": "upf_teid_uniqueness_inconclusive",
+      "path": "reports/upf_teid_uniqueness_missing_events/report.json",
+      "type": "mutation",
+      "expected": {
+        "baseline": "PASS",
+        "mutated": "INCONCLUSIVE"
+      },
+      "sha": "ce2a12620dff02898c2755ccb979952114faa020",
+      "observed": "INCONCLUSIVE"
+    },
+    {
+      "id": "udm_resynchronization",
+      "path": "reports/udm_resynchronization_rand_mutation/report.json",
+      "type": "mutation",
+      "expected": {
+        "baseline": "PASS",
+        "mutated": "FAIL"
+      },
+      "sha": "069f8b1146b362c7f85985b402e64dc424092469",
+      "observed": "FAIL"
+    },
+    {
+      "id": "udm_suci_deconcealment",
+      "path": "reports/udm_suci_deconcealment_mutation/report.json",
+      "type": "mutation",
+      "expected": {
+        "baseline": "PASS",
+        "mutated": "FAIL"
+      },
+      "sha": "d373d4a77567da54717142445babe6a292b9765e",
+      "observed": "FAIL"
+    },
+    {
+      "id": "amf_sync_failure_case_a_static",
+      "path": "reports/amf_sync_failure_case_a_rand_mutation/report.json",
+      "type": "mutation",
+      "expected": {
+        "baseline": "PASS",
+        "mutated": "FAIL"
+      },
+      "sha": "b627b2b7d0bd01d912697ce0c6b0e017ba962e38",
+      "observed": "FAIL"
+    },
+    {
+      "id": "amf_sync_failure_case_a_temporal",
+      "path": "reports/amf_sync_failure_case_a_timing_mutation/report.json",
+      "type": "mutation",
+      "expected": {
+        "baseline": "PASS",
+        "mutated": "FAIL"
+      },
+      "sha": "8703222077f3c0c5c0af25df2fe86b0cc9804858",
+      "observed": "FAIL"
+    },
+    {
+      "id": "amf_sync_failure_case_a_both",
+      "path": "reports/amf_sync_failure_case_a_both_mutation/report.json",
+      "type": "mutation",
+      "expected": {
+        "baseline": "PASS",
+        "mutated": "FAIL"
+      },
+      "sha": "9c80991235550efc9841fb90456f259237005795",
+      "observed": "FAIL"
+    },
+    {
+      "id": "amf_sync_failure_case_b_static",
+      "path": "reports/amf_sync_failure_case_b_rand_mutation/report.json",
+      "type": "mutation",
+      "expected": {
+        "baseline": "PASS",
+        "mutated": "FAIL"
+      },
+      "sha": "088f3aef2d4ed579440528bf2c45f434f4ca8dd1",
+      "observed": "FAIL"
+    },
+    {
+      "id": "amf_sync_failure_case_b_temporal",
+      "path": "reports/amf_sync_failure_case_b_timing_mutation/report.json",
+      "type": "mutation",
+      "expected": {
+        "baseline": "PASS",
+        "mutated": "FAIL"
+      },
+      "sha": "825da50d99a1e6761f8c8fd504d5a0feb71bf2ee",
+      "observed": "FAIL"
+    },
+    {
+      "id": "amf_sync_failure_case_b_both",
+      "path": "reports/amf_sync_failure_case_b_both_mutation/report.json",
+      "type": "mutation",
+      "expected": {
+        "baseline": "PASS",
+        "mutated": "FAIL"
+      },
+      "sha": "a0379edd350d9e08bafd8d7c977eaccadcd81557",
+      "observed": "FAIL"
+    },
+    {
+      "id": "resstar_verification_failure_A",
+      "path": "reports/resstar_verification_failure_mutation/case_a/report.json",
+      "type": "mutation",
+      "expected": {
+        "baseline": "PASS",
+        "mutated": "FAIL"
+      },
+      "sha": "7599e15be76f843c10514a1e21b327ca7d35192a",
+      "observed": "FAIL"
+    },
+    {
+      "id": "resstar_verification_failure_B",
+      "path": "reports/resstar_verification_failure_mutation/case_b/report.json",
+      "type": "mutation",
+      "expected": {
+        "baseline": "PASS",
+        "mutated": "FAIL"
+      },
+      "sha": "83a874e5d5dfffe57514a14d8a3b9ba0741c2197",
+      "observed": "FAIL"
+    },
+    {
+      "id": "resstar_verification_failure_C",
+      "path": "reports/resstar_verification_failure_mutation/case_c/report.json",
+      "type": "mutation",
+      "expected": {
+        "baseline": "PASS",
+        "mutated": "FAIL"
+      },
+      "sha": "3af50cf6d3909ceac6bf4da51e80f95e7a0c04ec",
+      "observed": "FAIL"
+    },
+    {
+      "id": "resstar_verification_failure_D",
+      "path": "reports/resstar_verification_failure_mutation/case_d/report.json",
+      "type": "mutation",
+      "expected": {
+        "baseline": "PASS",
+        "mutated": "FAIL"
+      },
+      "sha": "41331622c8b386325296a9e6604defbda346bfc0",
+      "observed": "FAIL"
+    }
+  ],
+  "standard_nrf": {
+    "url": "https://www.etsi.org/deliver/etsi_ts/133500_133599/133518/18.00.00_60/ts_133518v180000p.pdf",
+    "version": "18.0.0",
+    "clause": "4.2.2.2.1"
+  }
+}

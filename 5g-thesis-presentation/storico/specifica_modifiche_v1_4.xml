@@ -1,0 +1,835 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<revisione_presentazione_tesi versione="1.4" data="2026-10-15" lingua="it">
+  <progetto>
+    <titolo>5G SCAS — Presentazione della tesi (20 minuti)</titolo>
+    <base_di_lavoro>5g-thesis-presentation.zip, versione di 20 slide allegata alla conversazione</base_di_lavoro>
+    <scopo>Documento cumulativo da condividere con la chat incaricata di modificare le slide. Le modifiche successive dovranno essere aggiunte o aggiornate qui, conservando la numerazione di origine.</scopo>
+    <criterio_generale>Le slide accompagnano il discorso orale e non lo sostituiscono. La DSL è il contributo centrale; la pipeline è il sistema software che interpreta e applica le regole.</criterio_generale>
+    <stato_generale>Proposte progettuali concordate a livello concettuale. Non rappresentano modifiche già applicate allo ZIP.</stato_generale>
+  </progetto>
+  <istruzioni_per_la_chat_di_implementazione priorita="obbligatoria">
+    <lettura_preliminare>QUESTO XML È CUMULATIVO. Leggere TUTTE le sezioni (versioni 1.0–1.3), non soltanto le ultime slide. Le nuove istruzioni 1.3 integrano senza annullare le precedenti, salvo ove esplicitamente indicato.</lettura_preliminare>
+    <materiale_di_partenza>Utilizzare lo ZIP 5g-thesis-presentation.zip della versione COMPLETA da 20 slide; lavorare sul relativo HTML/CSS/JavaScript, non su una versione GitHub Pages eventualmente non aggiornata.</materiale_di_partenza>
+    <obiettivo_vers_1_3>Riorganizzare la sezione sperimentale delle slide ORIGINALI 14–19, mantenendo il numero finale a 19 slide dopo l'accorpamento 4+5.</obiettivo_vers_1_3>
+    <principio>Il progetto di tesi è una DSL dichiarativa per selezione e verifica delle evidenze SCAS più una pipeline software riutilizzabile; il report motivato è un output. I casi mostrano capacità diverse e i risultati sperimentali: non far diventare questa sezione una lista di codice o una brochure.</principio>
+    <stato>Queste sono istruzioni PER MODIFICARE successivamente la presentazione; non affermare che lo ZIP sia già aggiornato. La versione 1.3 conserva la specifica di navigazione interattiva della v1.2.</stato>
+    <ordine_del_lavoro>
+      <passaggio numero="01">Leggere l'XML completo, controllare il codice e le slide originali 14–19 e individuare i componenti HTML/CSS/JS esistenti prima di modificare.</passaggio>
+      <passaggio numero="02">Applicare le modifiche già approvate alle slide originali 3–13 e alla navigazione; poi effettuare le modifiche sperimentali descritte qui.</passaggio>
+      <passaggio numero="03">Conservare le slide originali 15 e 17, salvo correzioni puntuali previste; cambiare in profondità solo le originali 14, 16 e 18; migliorare la 19.</passaggio>
+      <passaggio numero="04">Non creare slide divisorie «Testing / Mutation testing» e non inserire nuove slide: le 20 originali diventano 19 per l'unione 4+5.</passaggio>
+      <passaggio numero="05">Al termine rendere l'HTML in 16:9 e controllare testi, output numerici, frecce, progressione, navigazione e leggibilità reale a schermo.</passaggio>
+      <passaggio numero="06">Consegnare il pacchetto HTML completo, pronto per GitHub Pages, con elenco concreto delle modifiche e dei test effettuati.</passaggio>
+    </ordine_del_lavoro>
+    <priorita_relative>
+      <priorita numero="01">P0 accuratezza tecnica, coerenza con gli esperimenti, invarianti e navigazione (nessun dato inventato).</priorita>
+      <priorita numero="02">P1 slide originale 16 / nuova 15: nuova matrice 2×2 leggibile e interpretabile in un minuto.</priorita>
+      <priorita numero="03">P1 slide originale 18 / nuova 17: ciclo baseline → report con evidenze → mutazione offline → stessa pipeline → controllo esiti.</priorita>
+      <priorita numero="04">P2 slide originale 14 / nuova 13: risultato PASS e timeline T3520 prominenti.</priorita>
+      <priorita numero="05">P2 slide originale 19 / nuova 18: 15/15 risultati attesi e due esempi illustrativi, senza falsare il significato di FAIL/INCONCLUSIVE.</priorita>
+      <priorita numero="06">P3 slide originali 15/17: mantenere sostanzialmente intatte.</priorita>
+    </priorita_relative>
+    <lettura_preliminare_v1_4>La V1.4 AGGIUNGE intervento SL-20, sistema visivo globale, revisione sottotitoli e nuovi controlli. È cumulativa rispetto a tutte le versioni precedenti. Non sostituire le slide con un template esterno; intervenire sullo ZIP HTML/SVG/CSS/JS esistente e conservarne interazioni, font e contenuti. In caso di conflitto applicare la specifica più recente alla sola materia che modifica.</lettura_preliminare_v1_4>
+    <metodo_implementazione_v1_4>Eseguire nell’ordine: (1) implementare le modifiche strutturali e la rinumerazione; (2) verificare gli esempi e le animazioni; (3) applicare il sistema visivo globale a tutte le 19 slide; (4) sostituire i sottotitoli come indicato; (5) realizzare la slide conclusiva; (6) renderizzare e collaudare ogni slide in stato iniziale, completo e finale; (7) consegnare ZIP completo e changelog.</metodo_implementazione_v1_4>
+  </istruzioni_per_la_chat_di_implementazione>
+  <decisioni_di_struttura>
+    <decisione id="STR-01" stato="concordata">
+      <descrizione>Accorpare le attuali slide 4 (Perché una DSL?) e 5 (Una DSL per criteri SCAS) in una sola slide animata.</descrizione>
+      <motivazione>Problema e soluzione fanno parte dello stesso ragionamento orale; il continuo cambio slide ne spezzerebbe la fluidità.</motivazione>
+      <risultato>20 slide originarie diventano 19, salvo decisioni successive.</risultato>
+    </decisione>
+    <decisione id="STR-02" stato="proposta_condivisa">
+      <descrizione>Rivedere la slide 3 per collegare esplicitamente criteri SCAS, evidenze PCAP e verdetto.</descrizione>
+      <motivazione>Preparare la domanda tecnica della slide unificata senza presentare il report come contributo principale.</motivazione>
+    </decisione>
+    <decisione id="STR-03" stato="proposta_condivisa">
+      <descrizione>Rendere visibile nella slide di architettura il perimetro della pipeline, separandolo dagli input esterni e dall'output.</descrizione>
+      <motivazione>Collegare visivamente il blocco «pipeline comune» della slide precedente alla sua effettiva composizione.</motivazione>
+    </decisione>
+    <decisione id="STR-04" stato="concordata">
+      <descrizione>Nella slide 6 originale (nuova 5), mostrare solamente PCAP e specifica DSL come input concettuali esterni.</descrizione>
+      <motivazione>tests.json è un dettaglio implementativo. Non va visualizzato né spiegato nel discorso principale; rimane tra le possibili domande della commissione.</motivazione>
+    </decisione>
+    <decisione id="STR-05" stato="concordata">
+      <descrizione>Rivedere la slide 7 originale (nuova 6) per illustrare chiaramente due livelli: elaborazione per protocollo e selezione effettiva guidata dalla DSL.</descrizione>
+      <motivazione>Mettere in evidenza la separazione tra componenti riutilizzabili per protocollo e criteri specifici del test.</motivazione>
+    </decisione>
+    <decisione id="STR-06" stato="orientamento_condiviso">
+      <descrizione>Conservare quasi invariata la slide 8 originale (nuova 7): evidenze selezionate → verifica → verdetto e report.</descrizione>
+      <motivazione>La slide è già sequenziale e prepara il successivo approfondimento della DSL. Intervenire solo se necessario per leggibilità e collegamento narrativo.</motivazione>
+    </decisione>
+    <decisione id="STR-07" stato="concordata">
+      <descrizione>Mantenere immutata la grafica delle slide originali 10 e 11 (nuove 9 e 10); intervenire solo sullo stato di ingresso e sulla navigazione delle animazioni.</descrizione>
+      <motivazione>Conservare il valore didattico della costruzione dell’automa e dell’esempio matcher.</motivazione>
+    </decisione>
+    <decisione id="STR-08" stato="concordata">
+      <descrizione>Riprogettare la slide originale 12 (nuova 11) con gli stessi eventi, alias e posizioni dell’esempio delle due slide precedenti: A(3), B(4), C(6).</descrizione>
+      <motivazione>Mostrare la trasformazione Match → BindingContext come continuazione visiva e non come nuovo scenario.</motivazione>
+    </decisione>
+    <decisione id="STR-09" stato="concordata">
+      <descrizione>Consentire di passare alla slide successiva quando si è già all’ultimo passo, senza dover attivare Vista completa; quando la Vista completa è attiva, Avanti passa direttamente alla slide successiva.</descrizione>
+      <motivazione>Eliminare il blocco attuale nell’ultimo step e rendere la presentazione naturale durante l’esposizione.</motivazione>
+    </decisione>
+    <decisione id="STR-10" stato="proposta_condivisa">
+      <descrizione>Alleggerire il parlato del motore di verifica (slide originale 13/nuova 12), senza cambiare sostanzialmente la slide.</descrizione>
+      <motivazione>Lasciare ai test applicativi la dimostrazione concreta di confronti e verifiche temporali.</motivazione>
+    </decisione>
+    <decisione id="STR-11" stato="concordata">
+      <descrizione>Non inserire una slide separatrice per Testing/Mutation testing: le originali 14–19 rimangono sei slide contigue; il cambio di sezione può essere segnalato nel titolo o in un piccolo kicker editoriale.</descrizione>
+      <motivazione>Una slide aggiuntiva consuma tempo senza aiutare la lettura.</motivazione>
+    </decisione>
+    <decisione id="STR-12" stato="concordata">
+      <descrizione>La sezione sperimentale deve mostrare prima tre test rappresentativi (AMF Sync B, UPF TEID, AMF RES* A–D), poi baseline 10/10, quindi metodo e risultati del mutation testing.</descrizione>
+      <motivazione>Distinguere capacità espressive della DSL da valutazione sperimentale.</motivazione>
+    </decisione>
+    <decisione id="STR-13" stato="concordata">
+      <descrizione>Riprogettare la slide originale 16 con matrice 2×2 e stesso estratto DSL ridotto; rafforzare 14 e 18, ritoccare 19; preservare 15 e 17.</descrizione>
+      <motivazione>Risultati e differenze tra casi devono essere comprensibili a colpo d'occhio.</motivazione>
+    </decisione>
+    <decisione id="STR-14" stato="concordata">
+      <descrizione>Riservare alla slide originale 18 il ciclo completo di mutation testing con un solo blocco pipeline e un ramo esterno di mutazione alimentato da PCAP originale e report baseline.</descrizione>
+      <motivazione>Coerenza con main.py run_mutation(): il mutatore legge la PCAP originale e il report già prodotto, e la nuova cattura rientra nella stessa pipeline di verifica.</motivazione>
+    </decisione>
+    <decisione id="STR-15" stato="concordata">
+      <descrizione>In originale 19 aggiungere «15/15 esperimenti di mutazione con esito coerente con l'atteso»; conservare tabella AMF e distinguere UPF FAIL da INCONCLUSIVE.</descrizione>
+      <motivazione>Il numero 15/15 riguarda la corrispondenza atteso/osservato, NON il numero di verdetti PASS.</motivazione>
+    </decisione>
+    <decisione id="STR-16" stato="superata_da_spec_editoriale_v1_4">
+      <descrizione>Fare dopo le modifiche strutturali una revisione editoriale globale di titoli, sottotitoli, legende e testi-simili-a-placeholder, su tutte le 19 slide.</descrizione>
+      <motivazione>Evitare interventi prematuri e incoerenti sui sottotitoli; testo di proiezione breve, utile e non ridondante.</motivazione>
+      <nota_di_aggiornamento>Il lavoro editoriale è ora richiesto esplicitamente dalla versione 1.4, nelle sezioni revisione_sottotitoli_globale e sistema_visivo_globale.</nota_di_aggiornamento>
+    </decisione>
+    <decisione id="STR-17" stato="proposta_editoriale_concordabile">
+      <descrizione>Ridisegnare l’originale slide 20 (nuova 19) come conclusione memorabile che risponde alla domanda di slide 3, invece del solo «Grazie / Domande?».</descrizione>
+      <motivazione>Il contributo è rendere ricostruibile il nesso criteri–evidenze–verdetto, senza nuovo elenco né slogan promozionale.</motivazione>
+    </decisione>
+    <decisione id="STR-18" stato="richiesta_utente">
+      <descrizione>Rivedere il sistema di sfondi delle 19 slide con variazioni per sezione in tinte chiare e delicate, mantenendo layout, figure, risultati e animazioni già approvati.</descrizione>
+      <motivazione>Evitare monotonia da sfondo quasi bianco senza introdurre uno stile cupo, urlato o incoerente.</motivazione>
+    </decisione>
+    <decisione id="STR-19" stato="richiesta_utente">
+      <descrizione>Sostituire i sottotitoli descrittivi e lunghi con una sola frase editoriale breve per slide; nessun sottotitolo ridondante sulla conclusione.</descrizione>
+      <motivazione>I sottotitoli attuali assomigliano a placeholder e duplicano il parlato o il titolo.</motivazione>
+    </decisione>
+  </decisioni_di_struttura>
+  <interventi>
+    <intervento id="SL-03" slide_originale="3" slide_futura="3" priorita="alta" stato="progettazione">
+      <titolo_attuale>Dal risultato alla motivazione</titolo_attuale>
+      <obiettivo>Rendere immediata la necessità di ricostruire il rapporto tra criterio previsto, comportamento osservato e verdetto.</obiettivo>
+      <contenuti_da_preservare>
+        <elemento>Un test SCAS definisce condizioni e comportamento atteso.</elemento>
+        <elemento>Le catture PCAP contengono molti messaggi, non tutti pertinenti al criterio valutato.</elemento>
+        <elemento>Il risultato della verifica deve essere motivato con criteri ed evidenze osservate.</elemento>
+        <elemento>Se utile, mantenere l'esempio concreto di NRF Discovery Authorization, senza appesantire la slide.</elemento>
+      </contenuti_da_preservare>
+      <proposta_visiva>
+        <elemento>Criteri SCAS: che cosa va verificato.</elemento>
+        <elemento>Cattura PCAP: quali messaggi e valori sono osservati.</elemento>
+        <elemento>Verdetto: risultato che deve essere ricondotto ai criteri e alle evidenze.</elemento>
+        <domanda_centrale>Come colleghiamo i criteri SCAS ai messaggi osservati per motivare il verdetto?</domanda_centrale>
+      </proposta_visiva>
+      <vincoli>
+        <vincolo>Non affermare che tutti i test SCAS producano necessariamente una PCAP.</vincolo>
+        <vincolo>Non sostenere che gli strumenti esistenti producano solo PASS/FAIL senza evidenze.</vincolo>
+        <vincolo>Non trasformare questa slide in una descrizione completa del report: il report sarà mostrato nell'attuale slide 8.</vincolo>
+        <vincolo>Controllare il riferimento alla sezione della TS 33.518: nella slide attuale è §4.2.2.2.1, mentre la bibliografia della tesi cita §4.2.2.2.2. Non correggere alla cieca.</vincolo>
+      </vincoli>
+      <animazioni>Eventuale comparsa progressiva di criteri, PCAP e verdetto; animazioni essenziali e non obbligatorie.</animazioni>
+    </intervento>
+    <intervento id="SL-04-05" slide_originale="4,5" slide_futura="4" priorita="massima" stato="da_implementare">
+      <titolo_proposto>Dal codice specifico alla DSL</titolo_proposto>
+      <obiettivo>Mostrare, in un'unica slide e con passaggi progressivi, perché si separano i criteri SCAS dalla logica comune di verifica, che cosa rappresenta la DSL e quale ruolo svolge la pipeline.</obiettivo>
+      <sequenza_narrativa>
+        <passo numero="1">
+          <tema>Alternativa poco riutilizzabile</tema>
+          <visualizzazione>Piccolo schema attenuato: Test 1 → Codice specifico 1; Test 2 → Codice specifico 2; Test 3 → Codice specifico 3.</visualizzazione>
+          <parlato_correlato>Una possibile soluzione sarebbe sviluppare un programma specifico per ciascun test, ma il risultato sarebbe accoppiato al singolo caso e poco riutilizzabile.</parlato_correlato>
+        </passo>
+        <passo numero="2">
+          <tema>Separare criteri e software</tema>
+          <visualizzazione>Enfatizzare il passaggio da logiche dedicate a regole dichiarative distinte per test.</visualizzazione>
+          <parlato_correlato>Serve separare i criteri, variabili tra test, dalla logica software che li valuta.</parlato_correlato>
+        </passo>
+        <passo numero="3">
+          <tema>Introduzione della DSL</tema>
+          <visualizzazione>Mostrare più regole DSL che convergono su un'unica pipeline comune. Nel riquadro DSL indicare due responsabilità: «Selezione delle evidenze» e «Definizione dei criteri».</visualizzazione>
+          <parlato_correlato>La DSL formalizza sia quali evidenze individuare sia quali proprietà verificare.</parlato_correlato>
+        </passo>
+        <passo numero="4">
+          <tema>Il secondo contributo</tema>
+          <visualizzazione>Evidenziare il blocco «Pipeline comune», che applica le regole alle catture, fino al «Verdetto + report motivato».</visualizzazione>
+          <parlato_correlato>Il lavoro comprende il linguaggio DSL e la pipeline software che lo interpreta, analizza il traffico e produce un risultato motivato.</parlato_correlato>
+        </passo>
+      </sequenza_narrativa>
+      <layout_preferito>
+        <elemento>La vecchia alternativa «codice specifico per test» rimane piccola e/o sbiadita, per dare priorità alla soluzione proposta.</elemento>
+        <elemento>La DSL e i suoi due ruoli devono essere leggibili, non schiacciati fra troppe frecce.</elemento>
+        <elemento>La pipeline si presenta come un SOLO blocco concettuale; non mostrarne qui estrazione, normalizzazione, matching, verifica e reporting separatamente.</elemento>
+        <elemento>Usare poche animazioni significative che modificano l'enfasi della stessa slide, non tre schermate completamente scollegate.</elemento>
+        <elemento>Valutare un richiamo leggero alle specifiche SCAS come origine delle regole; chiarire che la formalizzazione nella DSL è effettuata da una persona.</elemento>
+      </layout_preferito>
+      <vincoli>
+        <vincolo>Non far sembrare che DSL e pipeline siano lo stesso componente.</vincolo>
+        <vincolo>Non suggerire che il software traduca automaticamente le specifiche SCAS dal linguaggio naturale.</vincolo>
+        <vincolo>Il riuso riguarda i protocolli supportati e le proprietà effettivamente esprimibili nella DSL.</vincolo>
+        <vincolo>Non duplicare l'architettura dettagliata della slide successiva.</vincolo>
+        <vincolo>Le animazioni devono funzionare con il sistema di avanzamento esistente, senza cambiare la struttura di navigazione per errore.</vincolo>
+      </vincoli>
+      <durata_orale_indicativa>Circa 1 minuto e 45 secondi / 2 minuti per il ragionamento completo; verificare nella prova orale.</durata_orale_indicativa>
+    </intervento>
+    <intervento id="SL-06" slide_originale="6" slide_futura="5" priorita="alta" stato="specifica_aggiornata">
+      <titolo_attuale>Architettura generale</titolo_attuale>
+      <obiettivo>Riprendere il blocco «Pipeline comune» della slide precedente e mostrarne le componenti interne; distinguere PCAP e DSL come due input concettuali esterni e il report come output.</obiettivo>
+      <collegamento_con_slide_precedente>Riprendere il nome e, se possibile, un colore del blocco «Pipeline comune», ma passare da uno schema concettuale a un diagramma tecnico verticale.</collegamento_con_slide_precedente>
+      <input_esterni>
+        <input>Cattura PCAP: ingresso esterno che alimenta la fase di estrazione.</input>
+        <input>Specifica DSL: ingresso esterno che guida selezione delle evidenze e verifica dei criteri.</input>
+        <nota_implementativa_non_da_mostrare>Nel codice, config/tests.json indica i percorsi delle catture e delle regole, le sorgenti protocollari, i filtri TShark e altri parametri. È un dettaglio da preparare per le domande, non un terzo input da disegnare sulla slide.</nota_implementativa_non_da_mostrare>
+      </input_esterni>
+      <perimetro_pipeline>
+        <stile>Contenitore visivo con bordo tenue e titolo «Pipeline di verifica», abbastanza ampio da circondare i blocchi interni senza sovrapporsi a testi e frecce.</stile>
+        <fase ordine="1">Estrazione strutturata del traffico</fase>
+        <fase ordine="2">Normalizzazione per protocollo</fase>
+        <fase ordine="3">Risoluzione semantica e correlazione</fase>
+        <fase ordine="4">Selezione dell'evidenza guidata dalla DSL</fase>
+        <fase ordine="5">Verifica statica e/o temporale</fase>
+        <fase ordine="6">Produzione del report, solo se serve a distinguere componente e risultato senza affollare il disegno</fase>
+      </perimetro_pipeline>
+      <output_esterno>Report strutturato con verdetto, criteri ed evidenze; visualmente fuori dal perimetro della pipeline. Se si mostra «Reporting» come ultima fase interna, distinguerlo dall'artefatto esterno «Report».</output_esterno>
+      <nota_di_coerenza>Nella slide architetturale il «report» può essere raffigurato come output esterno; l'elaborazione che lo produce (reporter/reporting) appartiene alla pipeline. Non aggiungere un terzo input tests.json solo perché è presente nel codice.</nota_di_coerenza>
+      <differenza_visiva_rispetto_alla_slide_4>
+        <slide_4>Schema concettuale prevalentemente orizzontale: più test, regole DSL e un solo motore; confronto tra approcci.</slide_4>
+        <slide_5>Schema generale della pipeline: moduli tecnici organizzati entro un unico perimetro, con PCAP e DSL all'esterno e report finale come output.</slide_5>
+        <accorgimento>Usare continuità nei colori e nel nome della pipeline, ma cambiare scala e disposizione. Se utile, far comparire prima il contorno e poi le fasi, senza ricreare un'intera animazione simile alla slide 4.</accorgimento>
+      </differenza_visiva_rispetto_alla_slide_4>
+      <vincoli>
+        <vincolo>Non includere PCAP e specifica DSL dentro il perimetro della pipeline. Non visualizzare tests.json su questa slide.</vincolo>
+        <vincolo>Non eliminare le distinzioni tra normalizzazione, risoluzione semantica, selezione e verifica.</vincolo>
+        <vincolo>Non ripetere nella slide 5 il confronto «un verificatore per test vs un motore comune».</vincolo>
+        <vincolo>Mantenere leggibili connessioni, etichette e passaggi anche in proiezione.</vincolo>
+        <vincolo>Non rappresentare la DSL come responsabile della scelta dei protocolli: questa deriva dalla configurazione del test.</vincolo>
+        <vincolo>Evitare ridondanze: qui mostrare l'architettura completa; nella slide successiva approfondire soltanto il percorso dei dati verso le evidenze.</vincolo>
+      </vincoli>
+    </intervento>
+    <intervento id="SL-07" slide_originale="7" slide_futura="6" priorita="massima" stato="specifica_concettuale">
+      <titolo_attuale>Dagli eventi estratti agli eventi normalizzati</titolo_attuale>
+      <titolo_proposto>Dalla PCAP alle evidenze del test</titolo_proposto>
+      <obiettivo>Mostrare che il trattamento iniziale delle evidenze avviene in due livelli distinti: (1) estrazione/normalizzazione per protocollo, riutilizzabile in più test; (2) selezione specifica del test guidata dalla DSL.</obiettivo>
+      <sequenza_visiva>
+        <passaggio numero="1">
+          <titolo>PCAP originale</titolo>
+          <contenuto>Molti pacchetti e messaggi di rete. Visualizzare un insieme eterogeneo e numeroso, non un valore quantitativo preciso.</contenuto>
+        </passaggio>
+        <passaggio numero="2">
+          <titolo>TShark: decodifica ed estrazione</titolo>
+          <contenuto>TShark legge la cattura, applica il filtro -Y della sorgente configurata ed emette record JSON EK tramite -T ek. Basta un'etichetta sintetica; non mostrare necessariamente i comandi.</contenuto>
+        </passaggio>
+        <passaggio numero="3">
+          <titolo>Normalizzatori per protocollo</titolo>
+          <contenuto>I dati protocollari decodificati vengono interpretati per NAS, HTTP/2, PFCP. Esempio illustrativo di test che usa NAS e HTTP/2: entrambi evidenziati, PFCP visibile ma sbiadito come non selezionato.</contenuto>
+        </passaggio>
+        <passaggio numero="4">
+          <titolo>MessageEvent e risoluzione semantica</titolo>
+          <contenuto>Mostrare eventi organizzati in una struttura comune. Il resolver semantico completa l'interpretazione quando necessario, soprattutto per eventi HTTP/2/SBI. Non inserire troppe informazioni dentro ogni MessageEvent.</contenuto>
+        </passaggio>
+        <passaggio numero="5">
+          <titolo>Selezione guidata dalla DSL</titolo>
+          <contenuto>Da molti eventi normalizzati, la DSL individua e mette in relazione gli eventi necessari al test. Questo è il vero livello di selezione dichiarativa.</contenuto>
+        </passaggio>
+        <passaggio numero="6">
+          <titolo>Evidenze selezionate</titolo>
+          <contenuto>Mostrare un sottoinsieme di eventi evidenziati e pronti per la verifica, mantenendo un chiaro legame con i MessageEvent di partenza.</contenuto>
+        </passaggio>
+      </sequenza_visiva>
+      <distinzione_dei_livelli>
+        <livello numero="1" responsabilita="rappresentazione_riutilizzabile_per_protocollo">Estrazione TShark + normalizzazione per protocollo + eventuale risoluzione semantica.</livello>
+        <livello numero="2" responsabilita="selezione_specifica_del_test">Selezione dichiarativa dell'evidenza tramite DSL.</livello>
+      </distinzione_dei_livelli>
+      <proposta_grafica>
+        <indicazione>Conservare la metafora visiva: molti dati osservati all'inizio, eventi strutturati nel mezzo, poche evidenze rilevanti alla fine.</indicazione>
+        <indicazione>Valutare una progressione verticale, ma NON riprodurre la slide dell'architettura come una semplice seconda colonna di rettangoli e frecce.</indicazione>
+        <indicazione>Le due aree devono avere titoli visibili («Elaborazione per protocollo» e «Selezione DSL»), evitando che sembrino due selezioni equivalenti.</indicazione>
+        <indicazione>In modalità esemplificativa NAS e HTTP/2 sono attivi. PFCP deve restare visibile, idealmente con tonalità viola molto tenue, per chiarire che è supportato ma non usato in quel test.</indicazione>
+        <indicazione>La figura del MessageEvent deve essere piccola, leggibile e uniforme; evitare schede enormi di campi JSON.</indicazione>
+        <indicazione>Se si aggiungono animazioni, mostrare la trasformazione per passi: cattura → dati TShark → eventi normalizzati → DSL → evidenze selezionate. Ogni avanzamento corrisponde a una spiegazione orale.</indicazione>
+      </proposta_grafica>
+      <accuratezza_tecnica>
+        <vincolo>Non affermare che -T ek converta senza filtri tutto il PCAP: il codice usa normalmente -Y per filtrare i pacchetti e può usare -d per la decodifica.</vincolo>
+        <vincolo>Il JSON EK è un insieme di record relativi ai pacchetti, non una lista di MessageEvent già normalizzati.</vincolo>
+        <vincolo>I normalizzatori selezionano e interpretano i campi supportati, e per HTTP/2 ricostruiscono anche richieste e risposte distribuite su frame diversi.</vincolo>
+        <vincolo>La selezione di NAS/HTTP2/PFCP per il test dipende dalla configurazione, non dalle istruzioni della DSL.</vincolo>
+        <vincolo>Non garantire che il numero di record diminuisca sempre a ogni fase. I disegni con meno quadratini devono indicare maggiore pertinenza/strutturazione, non una misura tecnica universale.</vincolo>
+        <vincolo>La DSL non deve comparire come strumento che normalizza gli eventi: agisce sul flusso di eventi già strutturati.</vincolo>
+      </accuratezza_tecnica>
+      <parlato_correlato>Prima prepariamo eventi strutturati con componenti riutilizzabili per i protocolli; poi la DSL seleziona solo le evidenze richieste dallo specifico test. Spiegare rapidamente TShark, senza approfondire la sintassi del comando.</parlato_correlato>
+      <durata_indicativa>Parte centrale della sezione Architettura: circa 70–80 secondi, da verificare a voce.</durata_indicativa>
+    </intervento>
+    <intervento id="SL-08" slide_originale="8" slide_futura="7" priorita="bassa" stato="conservare_in_attesa">
+      <titolo_attuale>Dalle evidenze al verdetto e al report</titolo_attuale>
+      <decisione>Non ridisegnare adesso. Preservare l'andamento sequenziale: evidenze selezionate, verifica statica/temporale, PASS/FAIL/INCONCLUSIVE, estratto del report.</decisione>
+      <ritocchi_eventuali>Accorciare solo etichette ridondanti, se necessario; verificare che il collegamento con la parte successiva sulla DSL sia naturale.</ritocchi_eventuali>
+      <vincolo>Non anticipare spiegazioni approfondite di SEQUENCE, COLLECT, REQUIRE o MonPoly: seguiranno nella sezione DSL.</vincolo>
+    </intervento>
+    <intervento id="SL-09" slide_originale="9" slide_futura="8" priorita="bassa" stato="ritocchi_minimi">
+      <titolo_attuale>La DSL: selezione e verifica</titolo_attuale>
+      <decisione>Mantenere identici contenuti e disposizione in due blocchi: selezione SEQUENCE, OPTIONAL, COLLECT e verifica statica/temporale con MFOTL.</decisione>
+      <ritocco_cromatico>Differenziare i colori delle parole chiave SEQUENCE, OPTIONAL, COLLECT dal colore usato nel titolo del macroblocco «Selezione». Mantenere armonia con la palette esistente.</ritocco_cromatico>
+      <ritocco_legenda>Ridimensionare moderatamente la legenda inferiore, senza compromettere la leggibilità alla proiezione.</ritocco_legenda>
+      <vincolo>Non aggiungere nuove informazioni o pannelli che richiedano tempo aggiuntivo al relatore.</vincolo>
+    </intervento>
+    <intervento id="SL-10" slide_originale="10" slide_futura="9" priorita="media" stato="grafica_da_conservare_nav_da_aggiornare">
+      <titolo_attuale>Dalla regola all’automa</titolo_attuale>
+      <decisione>Conservare layout, esempio A / OPTIONAL B / C, atom A, B e C, grafo NFA, transizioni epsilon e animazioni già progettate.</decisione>
+      <stato_ingresso>Di default mostrare la visione generale COMPLETA come avviene attualmente; «Spiega per passi» avvia l’animazione dal primo passo e «Vista completa» permette di tornare subito al disegno completo.</stato_ingresso>
+      <parlato_correlato>Spiegazione generale del procedimento, guidata dai frammenti visivi: ogni evento dichiarato diventa un atom con stato iniziale, stato finale e transizione; Thompson collega i frammenti mediante epsilon, includendo il bypass per OPTIONAL; l’NFA risultante riconosce ABC oppure AC.</parlato_correlato>
+      <navigazione>In Vista completa, Avanti deve cambiare slide senza blocchi. In Spiega per passi, Avanti esegue un passo; dopo l’ultimo passo, un ulteriore Avanti cambia slide automaticamente.</navigazione>
+      <vincolo>Non togliere e non ridisegnare le animazioni esistenti. Non confondere una transizione epsilon con un evento consumato.</vincolo>
+    </intervento>
+    <intervento id="SL-11" slide_originale="11" slide_futura="10" priorita="alta" stato="grafica_da_conservare_stato_iniziale_da_cambiare">
+      <titolo_attuale>Riconoscimento della sequenza</titolo_attuale>
+      <decisione>Mantenere il layout, la regola A / OPTIONAL B / C, la serie osservata A X A B X C, la politica di riavvio e il risultato a(3), b(4), c(6).</decisione>
+      <stato_ingresso>Diversamente dalla slide sulla costruzione dell’NFA, aprire la slide nello STATO INIZIALE DELL’ANIMAZIONE: titolo, regola ed eventi osservati già visibili ma senza evidenziazioni di match completato, senza binding verdi finali e senza percorso finale acceso. Non aprirla in vista completa.</stato_ingresso>
+      <modalita_alternativa>Permettere di premere «Vista completa» in qualsiasi momento, rendendo immediatamente visibile l’intero match. Da Vista completa «Spiega per passi» può riavviare il percorso dall’inizio.</modalita_alternativa>
+      <parlato_correlato>Spiegare puntualmente l’esempio visibile: A(1) iniziale; X(2) irrilevante; nuova A(3); B(4); X(5) irrilevante; C(6), con riconoscimento completo a(3), b(4), c(6). Menzionare in generale la politica di riavvio.</parlato_correlato>
+      <accuratezza_riavvio>Nel caso illustrato, se il candidato aperto su A(1) non può consumare la nuova A(3), viene interrotto e si avvia un candidato nuovo. Non dire che ogni candidato precedente rimane sempre attivo: dipende dalle possibilità di consumare il nuovo evento di inizio.</accuratezza_riavvio>
+      <accuratezza_indici>3, 4 e 6 sono posizioni nella sequenza didattica di eventi osservati, NON numeri di frame di una cattura reale.</accuratezza_indici>
+      <navigazione>Dall’ultimo passaggio manuale un ulteriore Avanti cambia slide. Dalla Vista completa un Avanti cambia slide subito. Il comando del presentatore non deve essere obbligato a premere Vista completa prima di uscire.</navigazione>
+      <vincolo>Non creare duplicati o cambiare il caso di esempio: deve restare identico alla regola della slide precedente e anticipare il BindingContext della successiva.</vincolo>
+    </intervento>
+    <intervento id="SL-12" slide_originale="12" slide_futura="11" priorita="massima" stato="ridisegno_concordato">
+      <titolo_attuale>Il binding context</titolo_attuale>
+      <obiettivo>Proseguire senza interruzioni dalla slide precedente: gli eventi riconosciuti a(3), b(4), c(6) sono il risultato di Match e vengono resi accessibili attraverso il BindingContext.</obiettivo>
+      <contenuto_visivo>
+        <indicazione>Parte superiore: richiamo compatto degli eventi A(3), B(4), C(6) nel medesimo stile e negli stessi colori dei binding selezionati della slide del matcher.</indicazione>
+        <indicazione>Passaggio centrale: Matcher → Match (con associazioni a→A(3), b→B(4), c→C(6)) → BindingContext. Il Match è il risultato del riconoscimento; il BindingContext ne rende disponibili i binding.</indicazione>
+        <indicazione>Parte inferiore: BindingContext con mappatura di alias a, b, c ai MessageEvent. Mostrare uno o due campi simbolici solo come esempio di accesso ai dati, non simulare campi reali di A/B/C.</indicazione>
+        <indicazione>Eliminare dalla slide 12 originale l’esempio specifico sync_failure / initial_auth / resync e i relativi frame: appartiene ai test successivi e interrompe la continuità.</indicazione>
+        <indicazione>Mantenere lo stesso linguaggio grafico delle slide originali 10/11 e una densità contenuta.</indicazione>
+      </contenuto_visivo>
+      <animazioni>
+        <richiesta>Predisporre «Spiega per passi» e «Vista completa», coerenti con le slide precedenti; le animazioni devono essere FACOLTATIVE durante l’esposizione.</richiesta>
+        <passo numero="1">Richiamare gli eventi A(3), B(4), C(6) già riconosciuti.</passo>
+        <passo numero="2">Mostrare il Match e la corrispondenza tra alias e singoli eventi.</passo>
+        <passo numero="3">Mostrare il BindingContext che espone tali corrispondenze al verificatore.</passo>
+        <passo numero="4">Evidenziare un alias e la possibilità di leggere il campo di un MessageEvent senza introdurre nuovi casi SCAS.</passo>
+        <comportamento>La slide può aprirsi in vista completa come le slide ordinarie; «Spiega per passi» deve avviare il percorso, «Vista completa» deve mostrarne l’esito senza attese. Se la sequenza manuale è conclusa, Avanti passa alla slide successiva.</comportamento>
+      </animazioni>
+      <accuratezza_tecnica>Nel codice Match contiene gli alias associati a MessageEvent, e to_binding_context() li copia in BindingContext; nel percorso COLLECT un binding può essere una lista di MessageEvent. In questa slide basta spiegare gli alias singoli.</accuratezza_tecnica>
+      <parlato_correlato>Il matcher produce un Match che collega a→A(3), b→B(4), c→C(6). Il BindingContext conserva i riferimenti agli eventi e mette i campi a disposizione dei verificatori. Non ripetere il processo di matching.</parlato_correlato>
+    </intervento>
+    <intervento id="SL-13" slide_originale="13" slide_futura="12" priorita="bassa" stato="da_conservare">
+      <titolo_attuale>Motore di verifica</titolo_attuale>
+      <decisione>Mantenere quasi invariato l’assetto grafico: BindingContext, verifica statica, verifica temporale (MFOTL e MonPoly), risultati.</decisione>
+      <parlato_correlato>Spiegare brevemente che i verificatori lavorano sulle evidenze già selezionate: la verifica statica controlla i valori attraverso le regole DSL; la verifica temporale usa eventi temporizzati e formule MFOTL valutate con MonPoly. Evitare una seconda panoramica troppo dettagliata su REQUIRE/REQUIRE UNIQUE/IF e sui confronti già presentati.</parlato_correlato>
+      <vincolo>La valutazione della formula viene affidata al motore temporale MonPoly esterno; la DSL definisce i criteri, non è di per sé il verificatore.</vincolo>
+    </intervento>
+    <intervento id="SL-14" slide_originale="14" slide_futura="13" priorita="alta" stato="ridistribuzione_grafica_concordata">
+      <titolo_attuale>AMF Synchronization Failure, Case B</titolo_attuale>
+      <messaggio_principale>Il test combina una SEQUENCE, quattro controlli statici e una proprietà temporale T3520; il verdetto PASS è motivato da evidenze concrete e dai timestamp della PCAP.</messaggio_principale>
+      <problema_attuale>L'estratto DSL occupa troppo spazio e compete con due pannelli PASS più un ulteriore PASS centrale e il grafico temporale. Il pubblico impiega tempo per capire quale sia il dato sperimentale importante.</problema_attuale>
+      <layout_desiderato>Due zone equilibrate ma NON equivalenti: estratto DSL più compatto a sinistra (circa un terzo dell'area contenuti); risultato e timeline T3520 più ampi a destra (circa due terzi). Titolo e sottotitolo brevi in alto. Il rapporto è indicativo: privilegiare leggibilità e geometria esistente.</layout_desiderato>
+      <contenuti_obbligatori>
+        <punto numero="01">Conservare il titolo tecnico AMF Synchronization Failure, Case B.</punto>
+        <punto numero="02">Far emergere UN solo verdetto finale grande «PASS»; indicare «4 controlli statici: PASS» e «1 controllo temporale: PASS» come due informazioni secondarie, non tre grandi risultati equivalenti.</punto>
+        <punto numero="03">Conservare il requisito temporale: nessuna nuova Authentication Request nei primi 15 secondi dopo Sync Failure; timer T3520 = 15 s.</punto>
+        <punto numero="04">Timeline completa con evento iniziale frame 358 a 0 s; limite dei 15 s; nuova Authentication Request al frame 606, dopo 25,018 s (etichetta ≈25 s ammissibile).</punto>
+        <punto numero="05">Il PASS temporale è dovuto all'assenza di una nuova richiesta nel periodo proibito [0,15 s]. L'evento a 25,018 s è successivo alla soglia, non una violazione.</punto>
+        <punto numero="06">Mantenere nel box DSL un estratto leggibile che segnali SEQUENCE, REQUIRE e MFOTL; tagliare linee minori, ma NON inventare sintassi, condizioni o risultati.</punto>
+        <punto numero="07">Mostrare che statico e temporale si combinano nel risultato complessivo; se usate frecce devono essere dirette e non sovrapporsi alla timeline.</punto>
+      </contenuti_obbligatori>
+      <cosa_ridurre_rimuovere>
+        <punto numero="01">Ridurre il box DSL lungo: non è necessario leggere tutte e sei le righe SEQUENCE, i quattro REQUIRE e l'intera formula durante l'esposizione.</punto>
+        <punto numero="02">Evitare duplicazioni visive di PASS: attualmente due esiti PASS nei pannelli e un PASS in un terzo grande riquadro.</punto>
+        <punto numero="03">Ridurre eventuale sottotitolo descrittivo lungo; NON eliminare il riferimento a T3520 dalla timeline.</punto>
+        <punto numero="04">Non riempire lo spazio liberato con ulteriori commenti sul protocollo AMF.</punto>
+      </cosa_ridurre_rimuovere>
+      <accuratezza_tecnica>
+        <punto numero="01">Baseline AMF Sync Failure Case B: quattro verifiche statiche soddisfatte e controllo temporale PASS.</punto>
+        <punto numero="02">Non scrivere che la richiesta successiva è vietata per sempre: solo nell'intervallo T3520 rilevante.</punto>
+        <punto numero="03">Non rappresentare la misura temporale con una durata esatta di 25 s se si riporta la precisione: il dato mostrato dalla vecchia slide è 25,018 s.</punto>
+        <punto numero="04">Non confondere posizioni degli eventi A(3)/B(4)/C(6) della parte NFA con numeri di frame reali 358 e 606.</punto>
+        <punto numero="05">Non trasformare questo slide in una spiegazione tecnica dell'NFA: l'NFA è stato già spiegato.</punto>
+      </accuratezza_tecnica>
+      <test_di_accettazione>A colpo d'occhio si vedono PASS e la soglia 15 s; in 10 secondi un osservatore sa che la richiesta è successiva all'intervallo proibito. I dati 358, 606 e 25,018 s sono corretti e leggibili. Il codice non monopolizza la slide.</test_di_accettazione>
+      <tempo_orale_indicativo>Circa 55 secondi; non costringere il relatore a leggere tutta la DSL.</tempo_orale_indicativo>
+    </intervento>
+    <intervento id="SL-15" slide_originale="15" slide_futura="14" priorita="bassa" stato="conservare">
+      <titolo_attuale>UPF TEID Uniqueness</titolo_attuale>
+      <decisione>CONSERVARE il design attuale perché è il migliore esempio di lettura criterio → dati osservati → verdetto. Consentire solo microcorrezioni editoriali o di scala se veramente necessarie.</decisione>
+      <contenuti_invarianti>
+        <punto numero="01">DSL: COLLECT pfcp.session_establishment_response AS responses; REQUIRE UNIQUE responses.f_teids.</punto>
+        <punto numero="02">Evidenze: 5 PFCP Session Establishment Response, frame 37, 38, 46, 47, 48.</punto>
+        <punto numero="03">10 coppie F-TEID {teid,ipv4} distinte, nessun duplicato, verdetto PASS.</punto>
+        <punto numero="04">La tabella e i suoi numeri NON vanno sostituiti con numeri inventati o con righe generiche.</punto>
+        <punto numero="05">Non ridurre il contenuto a solo un badge PASS: la tabella rende il risultato concreto.</punto>
+      </contenuti_invarianti>
+      <test_di_accettazione>Schema attuale immediatamente riconoscibile, tabella leggibile, nessun contenuto eliminato.</test_di_accettazione>
+      <tempo_orale_indicativo>Circa 35 secondi.</tempo_orale_indicativo>
+    </intervento>
+    <intervento id="SL-16" slide_originale="16" slide_futura="15" priorita="massima" stato="ridisegno_concordato">
+      <titolo_attuale>AMF RES*: una famiglia di quattro casi</titolo_attuale>
+      <messaggio_principale>Una sola regola DSL copre quattro varianti A–D, grazie a OPTIONAL e IF, e ogni variante ha un match e un verdetto complessivo PASS. La slide deve far comprendere PERCHE' sono quattro, prima dei contatori.</messaggio_principale>
+      <problema_attuale>Box DSL lungo e quattro schede dense generano molti punti di attenzione; l'esposizione orale non segue intuitivamente la disposizione. Il vero incrocio fra i due fattori è poco esplicito.</problema_attuale>
+      <layout_desiderato>Matrice 2×2 grande come fulcro, con percorso di identificazione sulle righe e origine della verifica/fallimento sulle colonne; a lato un piccolo estratto DSL in cui OPTIONAL e IF siano facilmente distinguibili. NON mantenere quattro grandi card indipendenti.</layout_desiderato>
+      <matrice_esatta ordine_righe="SUCI diretto; GUTI → SUCI" ordine_colonne="Locale AMF; AUSF">
+        <riga id="r1" etichetta="SUCI diretto">
+          <cella colonna="1" origine="Fallimento locale AMF">
+            <caso>Case A</caso>
+            <gruppi_opzionali>Nessun gruppo opzionale</gruppi_opzionali>
+            <criteri_soddisfatti>7 PASS</criteri_soddisfatti>
+            <criteri_non_applicabili>2 SKIPPED</criteri_non_applicabili>
+            <match>1 match completo</match>
+            <verdetto>PASS</verdetto>
+          </cella>
+          <cella colonna="2" origine="Fallimento AUSF">
+            <caso>Case C</caso>
+            <gruppi_opzionali>Confirmation presente</gruppi_opzionali>
+            <criteri_soddisfatti>9 PASS</criteri_soddisfatti>
+            <criteri_non_applicabili>2 SKIPPED</criteri_non_applicabili>
+            <match>1 match completo</match>
+            <verdetto>PASS</verdetto>
+          </cella>
+        </riga>
+        <riga id="r2" etichetta="GUTI → SUCI">
+          <cella colonna="1" origine="Fallimento locale AMF">
+            <caso>Case B</caso>
+            <gruppi_opzionali>Identity presente</gruppi_opzionali>
+            <criteri_soddisfatti>9 PASS</criteri_soddisfatti>
+            <criteri_non_applicabili>2 SKIPPED</criteri_non_applicabili>
+            <match>1 match completo</match>
+            <verdetto>PASS</verdetto>
+          </cella>
+          <cella colonna="2" origine="Fallimento AUSF">
+            <caso>Case D</caso>
+            <gruppi_opzionali>Identity + Confirmation</gruppi_opzionali>
+            <criteri_soddisfatti>11 PASS</criteri_soddisfatti>
+            <criteri_non_applicabili>2 SKIPPED</criteri_non_applicabili>
+            <match>1 match completo</match>
+            <verdetto>PASS</verdetto>
+          </cella>
+        </riga>
+      </matrice_esatta>
+      <dettagli_grafici>
+        <punto numero="01">Lettura della matrice immediata: titoli righe SUCI diretto / GUTI → SUCI; intestazioni colonne Fallimento locale AMF / Fallimento AUSF. Non invertire A/B/C/D.</punto>
+        <punto numero="02">Mettere «PASS» come risultato principale di ogni cella, visivamente più evidente di 7/9/9/11 e di SKIPPED.</punto>
+        <punto numero="03">Preferibilmente includere una frase guida molto corta, come «Una regola DSL · quattro varianti · quattro PASS». Non sommare testo esplicativo lungo al sottotitolo.</punto>
+        <punto numero="04">Rendere OPTIONAL e IF visibili nel piccolo estratto DSL, con una distinzione cromatica leggibile; indicare che si tratta di un ESTRATTO con parti omesse.</punto>
+        <punto numero="05">Usare colori morbidi per le due colonne e un accento neutro/verde per PASS; SKIPPED deve essere secondario ma leggibile.</punto>
+        <punto numero="06">Non usare quattro screenshot, pannelli o liste testuali sovrapposte alla matrice.</punto>
+        <punto numero="07">La matrice è lo strumento per il parlato: una regola comune, due dimensioni, quattro combinazioni, tutti i casi verificati con i controlli pertinenti.</punto>
+      </dettagli_grafici>
+      <accuratezza_tecnica>
+        <punto numero="01">Il percorso SUCI diretto / GUTI→SUCI distingue l'identificazione; il fallimento AMF locale / AUSF distingue l'origine della verifica fallita. I casi esatti sono A (diretto, locale), B (GUTI→SUCI, locale), C (diretto, AUSF), D (GUTI→SUCI, AUSF).</punto>
+        <punto numero="02">OPTIONAL descrive gruppi della sequenza che possono esserci o meno. Identity compare B/D, Confirmation compare C/D; A nessuno, D entrambi.</punto>
+        <punto numero="03">Le regole IF nel test usano parametri del caso (per esempio case.failure_source o case.identity_path) disponibili come binding configurativi; NON attribuire il risultato di IF automaticamente alla sola presenza dell'evento opzionale.</punto>
+        <punto numero="04">Il numero 7/9/9/11 è il conteggio dei controlli con PASS, NON numero di casi né numero di match; per ciascuna variante 2 verifiche SKIPPED e un solo match completo.</punto>
+        <punto numero="05">Tutti e quattro i verdetti complessivi sono PASS; «SKIPPED» indica regole non pertinenti, NON una violazione.</punto>
+        <punto numero="06">L'estratto DSL non deve fingere una sintassi completa se si usano puntini di omissione; label «Estratto DSL — selezioni/criteri omessi».</punto>
+      </accuratezza_tecnica>
+      <test_di_accettazione>Il pubblico può dedurre rapidamente i quattro casi incrociando righe e colonne; A e C nella riga SUCI, B e D nella riga GUTI→SUCI; A/B nella colonna locale e C/D nella colonna AUSF. Ogni caso mostra PASS, match unico e 2 SKIPPED; l'estratto DSL è leggibile.</test_di_accettazione>
+      <tempo_orale_indicativo>Circa 60 secondi. Evitare di obbligare alla lettura delle singole condizioni IF.</tempo_orale_indicativo>
+    </intervento>
+    <intervento id="SL-17" slide_originale="17" slide_futura="16" priorita="bassa" stato="conservare">
+      <titolo_attuale>Risultati dei test baseline</titolo_attuale>
+      <decisione>CONSERVARE tabella comparativa Atteso/Osservato e il riepilogo 10/10: la slide è già diretta e serve come transizione al mutation testing. Non rinunciare alla tabella.</decisione>
+      <contenuti_invarianti>
+        <punto numero="01">10 test baseline, 10 esiti osservati coerenti con gli attesi.</punto>
+        <punto numero="02">9 verdetti PASS e 1 FAIL ATTESO relativo a NRF Discovery Authorization.</punto>
+        <punto numero="03">La cattura NRF attuale non soddisfa il criterio configurato (HTTP 200 anziché il 403 richiesto): FAIL NON significa un errore di funzionamento della pipeline.</punto>
+        <punto numero="04">Titoli colonne Atteso / Osservato devono rimanere espliciti, così 10/10 non viene interpretato erroneamente come 10 PASS.</punto>
+      </contenuti_invarianti>
+      <test_di_accettazione>Numero grande 10/10 e una nota esplicita 9 PASS + 1 FAIL atteso. Tutte le dieci righe ancora disponibili e leggibili.</test_di_accettazione>
+      <tempo_orale_indicativo>Circa 35 secondi.</tempo_orale_indicativo>
+    </intervento>
+    <intervento id="SL-18" slide_originale="18" slide_futura="17" priorita="massima" stato="ridisegno_concordato">
+      <titolo_attuale>Mutation testing: il processo</titolo_attuale>
+      <messaggio_principale>La mutazione avviene OFFLINE su una copia della cattura, usando le evidenze del report baseline; la PCAP modificata torna alla STESSA pipeline con la STESSA DSL; si confronta il verdetto mutato osservato con quello atteso (e con la baseline).</messaggio_principale>
+      <problema_attuale>Il diagramma ripete inutilmente Estrazione/Normalizzazione, Selezione e Verifica già note dall'architettura. Il blocco Report e verdetto è unico e non distingue baseline da esecuzione mutata. La freccia dai «frame rilevanti» direttamente dalla selezione al motore di mutazione può suggerire una chiamata interna non presente nel codice.</problema_attuale>
+      <layout_desiderato>Diagramma a ciclo con UN SOLO blocco «Pipeline di verifica» usato in entrambi i passaggi; input PCAP originale e DSL esterni come nella slide dell'architettura. Primo output «Report baseline + verdetto» distinto dal secondo «Report mutato + verdetto». Motore di mutazione laterale e FUORI dalla pipeline; PCAP mutata torna come input al medesimo blocco.</layout_desiderato>
+      <flusso_di_riferimento uso="Per realizzare frecce e nodi, non per aggiungere tutti i testi verbatim alla slide">
+        <nodo id="F1">
+          <nome>PCAP originale</nome>
+          <spiegazione>Cattura di riferimento; alimenta sia la pipeline baseline sia il mutatore offline.</spiegazione>
+        </nodo>
+        <nodo id="F2">
+          <nome>Specifica DSL</nome>
+          <spiegazione>Regole già definite; entrano nella pipeline e restano invariate nell'esecuzione mutata.</spiegazione>
+        </nodo>
+        <nodo id="F3">
+          <nome>Pipeline di verifica (un solo blocco visivo)</nome>
+          <spiegazione>Estrazione/normalizzazione + selezione DSL + verifica + reporter; il medesimo sistema è eseguito due volte.</spiegazione>
+        </nodo>
+        <nodo id="F4">
+          <nome>Report baseline e verdetto</nome>
+          <spiegazione>Contiene, fra le altre informazioni, i riferimenti ai frame/eventi rilevanti e l'hash della cattura.</spiegazione>
+        </nodo>
+        <nodo id="F5">
+          <nome>Motore di mutazione (offline)</nome>
+          <spiegazione>Riceve la PCAP originale e il report baseline; manipola uno scenario definito senza cambiare DSL o verificatore.</spiegazione>
+        </nodo>
+        <nodo id="F6">
+          <nome>Nuova PCAP mutata</nome>
+          <spiegazione>È un file distinto dalla cattura originale e rientra nella pipeline.</spiegazione>
+        </nodo>
+        <nodo id="F7">
+          <nome>Report mutato e verdetto osservato</nome>
+          <spiegazione>Esito della nuova esecuzione con la stessa DSL e la stessa pipeline.</spiegazione>
+        </nodo>
+        <nodo id="F8">
+          <nome>Confronto</nome>
+          <spiegazione>Confrontare baseline, verdetto atteso dopo la mutazione e verdetto mutato effettivamente osservato.</spiegazione>
+        </nodo>
+      </flusso_di_riferimento>
+      <collegamenti_espliciti>
+        <freccia da="F1" a="F3" etichetta="PCAP baseline"/>
+        <freccia da="F2" a="F3" etichetta="regole invariate"/>
+        <freccia da="F3" a="F4" etichetta="primo run"/>
+        <freccia da="F4" a="F5" etichetta="frame/evidenze rilevanti dal report"/>
+        <freccia da="F1" a="F5" etichetta="cattura sorgente"/>
+        <freccia da="F5" a="F6" etichetta="mutazione offline"/>
+        <freccia da="F6" a="F3" etichetta="secondo run: loop sulla STESSA pipeline"/>
+        <freccia da="F3" a="F7" etichetta="secondo report"/>
+        <freccia da="F4" a="F8" etichetta="verdetto baseline"/>
+        <freccia da="F7" a="F8" etichetta="osservato mutato"/>
+      </collegamenti_espliciti>
+      <istruzioni_di_layout>
+        <punto numero="01">Un solo rettangolo pipeline coerente per colore/nome con la slide originale 6 (nuova 5); NON disegnare due pipeline diverse o due flussi di estrazione completi.</punto>
+        <punto numero="02">Distinguere percorso baseline e ritorno della cattura mutata con frecce e colori discreti, senza incroci confusi.</punto>
+        <punto numero="03">La DSL deve entrare nel medesimo blocco per entrambe le esecuzioni, o essere marcata esplicitamente come invariata; non disegnarne una seconda versione mutata.</punto>
+        <punto numero="04">Dal report baseline deve uscire il collegamento «frame/evidenze rilevanti» verso il mutatore; il mutatore riceve anche la PCAP originale. NON collegare direttamente un modulo interno di selezione al mutatore.</punto>
+        <punto numero="05">Usare poche etichette sintetiche: «PCAP originale», «DSL invariata», «Pipeline di verifica», «Report baseline», «Motore di mutazione», «PCAP mutata», «Report mutato», «Confronto con atteso». Evitare paragrafi dentro i nodi.</punto>
+        <punto numero="06">Se lo spazio è ristretto, ridurre le etichette del confronto e delegare le tre categorie (baseline/atteso/osservato) al parlato, ma mantenere espliciti baseline e nuovo risultato.</punto>
+        <punto numero="07">Il confronto non deve essere raffigurato come confronto solo PASS→FAIL: NRF può fare FAIL→PASS, UPF PASS→INCONCLUSIVE.</punto>
+        <punto numero="08">Eventuali animazioni sono opzionali e leggere. Se aggiunte, conservare la Vista completa e la modalità passo-passo con navigazione conforme a NAV-01.</punto>
+      </istruzioni_di_layout>
+      <accuratezza_tecnica>
+        <punto numero="01">Codice base: main.py run_mutation(): esegue la baseline, legge report e SHA256, invoca un mutatore con --source PCAP originale e --report report baseline, genera --output PCAP mutata, riesegue la pipeline e controlla gli esiti attesi; vedere anche utils/mutation_utils.py.</punto>
+        <punto numero="02">Il report fornisce riferimenti ad evidenze/frame; l'hash SHA256 serve anche a controllare la corrispondenza fra report e cattura sorgente.</punto>
+        <punto numero="03">I mutatori sono procedure offline specifiche degli scenari/protocolli, NON generazione automatica delle mutazioni a partire dalle regole DSL.</punto>
+        <punto numero="04">La nuova configurazione usa il percorso della PCAP mutata e del report mutato, ma il criterio DSL e il verificatore rimangono gli stessi.</punto>
+        <punto numero="05">Evitare la promessa «il verdetto deve essere diverso sempre»: l'obiettivo dei casi considerati è che l'esito osservato sia coerente con quello atteso per la specifica mutazione; il programma confronta esplicitamente atteso e osservato.</punto>
+        <punto numero="06">Non inserire algoritmi di mutazione o dettagli delle singole procedure negli spazi visuali di questa slide.</punto>
+      </accuratezza_tecnica>
+      <test_di_accettazione>Devono essere visibili: (1) report baseline distinto da report mutato, (2) report + PCAP originale come ingressi al mutatore, (3) freccia di ritorno della PCAP mutata al medesimo blocco pipeline, (4) DSL invariata, (5) confronto atteso/osservato. Il ciclo deve essere ricostruibile anche senza parlato.</test_di_accettazione>
+      <tempo_orale_indicativo>Circa 75 secondi: è la slide-chiave della validazione sperimentale.</tempo_orale_indicativo>
+    </intervento>
+    <intervento id="SL-19" slide_originale="19" slide_futura="18" priorita="alta" stato="ridistribuzione_grafica_concordata">
+      <titolo_attuale>Mutation testing: risposta del verificatore</titolo_attuale>
+      <messaggio_principale>15 esperimenti di mutazione su 15 hanno prodotto risultati coerenti con gli esiti attesi. Esempi: AMF distingue controlli statici/temporali; UPF distingue violazione da evidenze insufficienti.</messaggio_principale>
+      <problema_attuale>La slide mostra solo esempi AMF/UPF ma non il totale 15/15; il titolo attuale della sezione UPF anticipa INCONCLUSIVE benché nel primo scenario il risultato sia FAIL.</problema_attuale>
+      <nuova_gerarchia_visiva>In alto un indicatore sobrio ma ben visibile «15/15 esperimenti coerenti con gli esiti attesi». In basso due sezioni: AMF tabella a sinistra/sopra e UPF confronto doppio a destra/sotto. Adattare alla superficie 16:9 mantenendo il contenuto leggibile e non creando tre titoli che competono.</nuova_gerarchia_visiva>
+      <proposta_titolo_amf>AMF — Mutazioni statiche, temporali e combinate</proposta_titolo_amf>
+      <proposta_titolo_upf>UPF — Violazione rilevata oppure evidenze insufficienti</proposta_titolo_upf>
+      <proposta_sintesi>15/15 mutazioni: esito osservato coerente con l'atteso</proposta_sintesi>
+      <tabella_amf_esatta>
+        <riga tipo="Statica">
+          <verifica_statica>FAIL</verifica_statica>
+          <verifica_temporale>PASS</verifica_temporale>
+          <complessivo>FAIL</complessivo>
+        </riga>
+        <riga tipo="Temporale">
+          <verifica_statica>PASS</verifica_statica>
+          <verifica_temporale>FAIL</verifica_temporale>
+          <complessivo>FAIL</complessivo>
+        </riga>
+        <riga tipo="Combinata">
+          <verifica_statica>FAIL</verifica_statica>
+          <verifica_temporale>FAIL</verifica_temporale>
+          <complessivo>FAIL</complessivo>
+        </riga>
+      </tabella_amf_esatta>
+      <confronto_upf_esatto>
+        <scenario id="UPF-M1">
+          <modifica>Coppia F-TEID duplicata</modifica>
+          <baseline>PASS</baseline>
+          <verdetto_mutato>FAIL</verdetto_mutato>
+        </scenario>
+        <scenario id="UPF-M2">
+          <modifica>Risposte PFCP necessarie rimosse</modifica>
+          <baseline>PASS</baseline>
+          <verdetto_mutato>INCONCLUSIVE</verdetto_mutato>
+        </scenario>
+      </confronto_upf_esatto>
+      <regole_di_contenuto>
+        <punto numero="01">Il conteggio 15/15 è il numero di esperimenti in cui il risultato osservato corrisponde a quello atteso, NON significa 15 PASS; non confonderlo con 10/10 baseline.</punto>
+        <punto numero="02">Preservare tre righe AMF (statica, temporale, combinata) e tre colonne degli esiti statico, temporale, complessivo. Non leggere/mostrare solo il verdetto complessivo senza componenti.</punto>
+        <punto numero="03">Nella prova UPF mutazione di un F-TEID duplicato → FAIL; rimozione degli eventi PFCP necessari → INCONCLUSIVE. Entrambe partono da baseline PASS.</punto>
+        <punto numero="04">Esplicitare due significati diversi: FAIL = violazione rilevata; INCONCLUSIVE = evidenze insufficienti per valutare la proprietà.</punto>
+        <punto numero="05">Non scrivere «tutte le mutazioni hanno causato FAIL»; c'è anche NRF FAIL→PASS e ci sono mutazioni che producono INCONCLUSIVE.</punto>
+        <punto numero="06">Non appesantire con l'elenco dei 15 esperimenti; i due esempi sono rappresentativi, il totale fa da riepilogo.</punto>
+        <punto numero="07">I colori di PASS/FAIL/INCONCLUSIVE devono essere coerenti con il resto delle slide e accompagnati da parole, non solo colori.</punto>
+      </regole_di_contenuto>
+      <test_di_accettazione>15/15 evidenziato e non interpretabile come 15 PASS; tabella AMF invariata nei valori; UPF mostra chiaramente una coppia PASS→FAIL e una PASS→INCONCLUSIVE; nessun testo di titolo fuorviante.</test_di_accettazione>
+      <tempo_orale_indicativo>Circa 60 secondi.</tempo_orale_indicativo>
+    </intervento>
+    <intervento id="SL-20" slide_originale="20" slide_futura="19" priorita="massima" stato="proposta_dettagliata_da_realizzare">
+      <titolo_attuale>Grazie per l’attenzione</titolo_attuale>
+      <problema_attuale>La chiusura attuale è troppo generica: grande «Grazie per l’attenzione», «Domande?» e un sottotitolo tecnico lungo. La presentazione si chiude senza lasciare un’idea forte, mentre avrebbe un collegamento naturale con la domanda iniziale della slide originale 3.</problema_attuale>
+      <idea_guida>Rispondere idealmente alla slide originale 3 («Quali evidenze giustificano il verdetto?»): il valore del contributo è rendere esplicito e ricostruibile il rapporto tra criteri, eventi osservati ed esito.</idea_guida>
+      <testi_da_visualizzare modalita="testo_esatto_preferito">
+        <titolo_prima_riga>Non basta un verdetto.</titolo_prima_riga>
+        <titolo_seconda_riga>Serve poterlo giustificare con le evidenze.</titolo_seconda_riga>
+        <footer_sinistro>Grazie per l’attenzione</footer_sinistro>
+        <footer_destro>Domande?</footer_destro>
+        <sottotitolo>ASSENTE: non mostrare un’ulteriore frase descrittiva sotto la conclusione; le due righe centrali bastano.</sottotitolo>
+        <nome_candidato>Facoltativo in footer piccolo: Samuele De Santis; non usare come terzo elemento centrale.</nome_candidato>
+        <opzione_se_testo_troppo_lungo>Spezzare graficamente la seconda riga in due segmenti mantenendone tutte le parole e il significato. Non ridurre il corpo sotto un livello visivamente dominante.</opzione_se_testo_troppo_lungo>
+      </testi_da_visualizzare>
+      <layout_suggerito formato="SVG 1600x900">
+        <fondo>Gradienti molto chiari blu-pervinca/lavanda/salvia; aree di luce diffuse e quasi trasparenti negli angoli, nessuna fotografia o sfondo nero.</fondo>
+        <posizione_testo>Due righe grandi nell’area centrale con respiro generoso; linea 1 in inchiostro blu scuro, linea 2 nel blu-violetto di accento. Allineamento centrale oppure appena a sinistra del centro, non layout a tabella.</posizione_testo>
+        <gerarchia>La frase deve attirare immediatamente lo sguardo. Footer con «Grazie» e «Domande?» molto discreto; evitare altri elementi in competizione.</gerarchia>
+        <spazi>Almeno 8–10% di margine orizzontale e ampio spazio sopra/sotto. Non mettere una card bianca grossa che chiuda tutto il titolo.</spazi>
+        <ornamento>Se utile, un sottile richiamo grafico ai tre concetti «Criteri», «Evidenze», «Verdetto» tramite tre puntini/tracce astratte; NON ricreare la pipeline, NON inserire icone illustrative generiche.</ornamento>
+        <animazioni>Preferibilmente statica; al massimo un fade dolce una tantum della frase. Deve apparire completa all’ingresso, rimanere visibile durante le domande e non bloccare la navigazione.</animazioni>
+        <elementi_da_rimuovere>Rimuovere l’attuale sottotitolo «Casi studiati e mutazioni considerate...» e l’impostazione da semplice thank-you. Il ringraziamento diventa elemento secondario, non titolo.</elementi_da_rimuovere>
+        <voce_e_slide>Il parlato si conclude con «non soltanto produrre un esito, ma poter spiegare, attraverso le evidenze, perché è stato ottenuto»; la slide ne riporta una versione sintetica, NON tutto il discorso.</voce_e_slide>
+      </layout_suggerito>
+      <vincoli_di_contenuto>
+        <vincolo>Non aggiungere sulla conclusione i numeri 10/10, 15/15, 9 PASS, 1 FAIL; sono già stati mostrati.</vincolo>
+        <vincolo>Non introdurre nuove affermazioni come «verifica universale», «sicurezza garantita», «dimostrata la correttezza», «automazione totale».</vincolo>
+        <vincolo>Non ridurre il lavoro al solo reporter: la DSL seleziona evidenze e definisce le proprietà, la pipeline le interpreta e valuta.</vincolo>
+        <vincolo>Non aggiungere uno schema di architettura, una tabella, una roadmap dettagliata o un elenco di sviluppi futuri.</vincolo>
+        <vincolo>Non usare frasi da marketing («rivoluziona», «garantisce», «100% affidabile»).</vincolo>
+        <vincolo>Mantenere la slide visibile durante Q&amp;A; ogni pressione Avanti/Indietro deve continuare a funzionare secondo il sistema di navigazione.</vincolo>
+      </vincoli_di_contenuto>
+      <tempo_disponibile>40 secondi indicativi di esposizione; nessuna animazione che consumi tempo obbligatorio.</tempo_disponibile>
+      <testo_orale_di_riferimento_non_da_proiettare>Un verdetto può essere corretto, ma se non riusciamo a ricostruire su quali messaggi e criteri si basa, perdiamo una parte importante della verifica. Il lavoro che ho presentato prova a rendere esplicito proprio questo collegamento. I risultati ottenuti sulle catture originali e modificate ne mostrano il funzionamento nei casi considerati, pur con i limiti dei protocolli e delle proprietà attualmente supportati. Ed è questa l’idea che vorrei lasciare: non soltanto produrre un esito, ma poter spiegare, attraverso le evidenze, perché è stato ottenuto. Grazie per l’attenzione.</testo_orale_di_riferimento_non_da_proiettare>
+    </intervento>
+  </interventi>
+  <numerazione_dopo_accorpamento>
+    <regola>Le vecchie slide 1–3 conservano il numero. Le vecchie slide 4 e 5 diventano la nuova slide 4. Dalla vecchia slide 6 in poi il numero diminuisce di 1.</regola>
+    <mappatura vecchie="1-3" nuove="1-3"/>
+    <mappatura vecchie="4,5" nuove="4"/>
+    <mappatura vecchie="6-20" nuove="5-19"/>
+    <controllo>Aggiornare i numeri mostrati, i riferimenti interni, l'indice della presentazione, i link alle slide, gli attributi accessibili, le note del relatore e il documento tempi-slide.md, senza rompere il funzionamento di GitHub Pages.</controllo>
+  </numerazione_dopo_accorpamento>
+  <vincoli_trasversali>
+    <vincolo>Non modificare le altre slide in questa fase, salvo rinumerazione e riferimenti.</vincolo>
+    <vincolo>Conservare lo stile grafico esistente: sfondo chiaro, tinte morbide, riquadri arrotondati, nessuno sfondo nero.</vincolo>
+    <vincolo>Mantenere le frasi delle slide brevi, in modo che il discorso possa svolgersi senza leggere lunghi testi.</vincolo>
+    <vincolo>Non far passare un report motivato come unico contributo: DSL prima, pipeline come implementazione, report come output.</vincolo>
+    <vincolo>Preservare compatibilità con le animazioni e i comandi di navigazione già esistenti.</vincolo>
+    <vincolo>La configurazione tests.json resta presente nel codice, ma non deve essere aggiunta alle slide 5 e 6 né presentata come contenuto della DSL.</vincolo>
+    <vincolo>Dove sono previste animazioni, controllare navigazione in modalità completa e in modalità per passi, inclusa la transizione finale alla slide successiva. Evitare doppio avanzamento degli eventi di tastiera.</vincolo>
+    <vincolo>La revisione globale dei fondi deve essere di tipo soft scientific/academic: atmosfera chiara, variazioni per sezione, nessun effetto pubblicitario, testi e diagrammi al centro.</vincolo>
+    <vincolo>La conclusione ricollega idealmente la domanda della slide 3 («quali evidenze giustificano il verdetto?») alla possibilità di motivare il risultato; non riassumere tutte le fasi della pipeline.</vincolo>
+  </vincoli_trasversali>
+  <registro_aggiornamenti>
+    <aggiornamento versione="1.0" data="2026-10-15">Prima specifica: revisione slide 3, unione slide 4 e 5, perimetro esplicito nella slide 6 originale, criteri per evitare somiglianze visive e rinumerazione.</aggiornamento>
+    <aggiornamento versione="1.1" data="2026-10-15">V1.1: input concettuali PCAP e DSL senza tests.json nella slide architettura; specifica per la nuova slide 6 con TShark JSON EK, normalizzazione per protocollo, MessageEvent e selezione DSL; slide report conservata.</aggiornamento>
+    <aggiornamento versione="1.2" data="2026-10-15">V1.2: Parte DSL slide originali 9–13. Conservate grafica e animazioni NFA e matcher; matcher apre dal primo passo; BindingContext riprogettato con A(3), B(4), C(6); nuove regole di navigazione per uscire automaticamente dalla fine dei passi.</aggiornamento>
+    <aggiornamento versione="1.3" data="2026-10-15">V1.3: revisione completa della sezione test e mutation testing (slide ORIGINALI 14–19), proposte grafiche dettagliate per 14/16/18/19, vincoli espliciti per conservare 15/17, dati numerici verificabili, flusso mutazione fedele al codice, condizioni di accettazione e piani temporali.</aggiornamento>
+    <aggiornamento versione="1.4" data="2026-10-15">V1.4: ridisegno della conclusione originale 20/nuova 19 con frase centrale incisiva e discorso suggerito; specifiche globali su fondi sfumati chiari per sezione, palette e integrità degli SVG; piano esatto dei sottotitoli per tutte le 19 slide; checklist A13–A22.</aggiornamento>
+  </registro_aggiornamenti>
+  <specifica_navigazione_interattiva id="NAV-01" priorita="massima" stato="richiesta_concordata">
+    <ambito>Per tutte le slide con animazioni a passi, comprese quelle nuove o aggiornate. Non modificare l’aspetto delle slide non interattive.</ambito>
+    <problema_attuale>In interactive-slides.js la transizione next è saturata con Math.min(last, index + 1), il tasto Avanti dei passi si disabilita sul passo finale e l’handler keyboard intercetta il comando senza lasciare proseguire il navigatore generale in script.js. Il presentatore rimane bloccato all’ultimo passo finché non passa manualmente a Vista completa.</problema_attuale>
+    <regola_1>Vista completa: freccia destra, Space, PageDown e pulsante globale Avanti passano immediatamente alla slide successiva. Non richiedere «Spiega per passi» né doppio clic.</regola_1>
+    <regola_2>Spiega per passi: freccia destra / Space / pulsante Avanti avanzano di uno step per pressione. Quando il passo finale è già visualizzato, la pressione successiva cambia slide automaticamente; non saltare l’ultimo step.</regola_2>
+    <regola_3>Anche al passo finale il pulsante locale Avanti deve restare azionabile (o trasformarsi chiaramente in «Slide successiva»), non disabilitato. Tutti i percorsi devono portare alla stessa navigazione.</regola_3>
+    <regola_4>Nella slide originale 11/nuova 10, lo stato iniziale al primo ingresso deve essere il primo step (non il risultato finale); nella originale 10/nuova 9 la visione iniziale resta completa. La nuova slide BindingContext/nuova 11 consente la scelta opzionale fra le due modalità.</regola_4>
+    <regola_5>Evitare la doppia gestione della stessa pressione del tasto: l’intercettazione dei passaggi e la navigazione delle slide devono essere coordinate. Dopo lo switch verso la slide successiva, un singolo input deve produrre un solo avanzamento.</regola_5>
+    <regola_6>Comportamento analogo con clic sul comando generale Avanti e con tastiera, e coerente per le frecce di ritorno; non far restare bloccata una slide dopo aver mostrato tutti gli step.</regola_6>
+    <regola_7>Aggiornare, se necessario, i riferimenti alla slide attiva e lo stato della modalità quando si torna indietro e quando si rientra su una slide. Non resettare ogni volta il lavoro manuale senza scelta esplicita, salvo una scelta deliberata documentata.</regola_7>
+    <file_coinvolti>Nel pacchetto corrente: interactive-slides.js e script.js, ed eventualmente attributi data-step-kind, pulsanti di avanzamento e aria-label nell’HTML/CSS.</file_coinvolti>
+    <test_di_accettazione>A: slide originale 10 in vista completa → un Avanti apre originale 11. B: originale 10 in passi → ultimo step visibile → un Avanti apre originale 11. C: originale 11 entra in primo step, pulsante Vista completa mostra il match; un Avanti apre originale 12. D: originale 11 con passi conclusi → un Avanti apre originale 12. E: comandi di navigazione e scorciatoie non duplicano l’avanzamento; il pulsante finale non resta disabilitato. F: esportazione/stampa mostra sempre la vista completa.</test_di_accettazione>
+    <note_implementative>La specifica descrive comportamento desiderato: non aggiungere tasti fittizi e non sostituire la navigazione esistente con un secondo sistema parallelo.</note_implementative>
+  </specifica_navigazione_interattiva>
+  <vincoli_specifici_testing_mutation priorita="alta">
+    <messaggio_di_sezione>Tre casi illustrano meccanismi diversi della DSL; i risultati baseline e mutation testing illustrano il comportamento sperimentale della pipeline. Non presentare i tre esempi come l'intera campagna e non rivendicare correttezza universale.</messaggio_di_sezione>
+    <vincoli_trasversali>
+      <punto numero="01">Conservare la terminologia già presente nelle slide: PCAP, DSL, SEQUENCE, COLLECT, REQUIRE UNIQUE, OPTIONAL, IF, BindingContext, MFOTL, MonPoly, PASS, FAIL, INCONCLUSIVE.</punto>
+      <punto numero="02">Non inventare metriche di performance, percentuali di coverage, nuovi casi SCAS, nuove formule MFOTL, nuove statistiche o numeri di frame.</punto>
+      <punto numero="03">Non confondere la correttezza degli esiti con il verdetto stesso. «10/10» baseline e «15/15» mutation indicano corrispondenza atteso/osservato; fra i verdict ci sono FAIL e INCONCLUSIVE.</punto>
+      <punto numero="04">Non attribuire IF solamente a eventi opzionali osservati: nel caso RES* le condizioni dipendono anche da binding configurativi.</punto>
+      <punto numero="05">Non affermare che il mutatore cambia direttamente il BindingContext o la DSL; modifica una copia della PCAP e rielabora attraverso la stessa pipeline.</punto>
+      <punto numero="06">Tenere il report come prova e output, non come sostituto delle regole DSL.</punto>
+      <punto numero="07">Non aggiungere slide titolate soltanto «Testing» o «Mutation testing». Il flusso deve restare diretto.</punto>
+      <punto numero="08">Non scambiare «frame» reali riportati dalla PCAP con indici didattici dell'esempio NFA della sezione precedente.</punto>
+      <punto numero="09">Non modificare risultati/esempi reali perché sembrano esteticamente più belli; nel dubbio verificare le catture/report o chiedere prima di cambiare il contenuto.</punto>
+      <punto numero="10">I sottotitoli lunghi devono essere riscritti in revisione editoriale globale successiva; per questa sezione eliminare solo evidenti ridondanze necessarie a far funzionare i nuovi layout.</punto>
+      <punto numero="11">Preferire grafici chiari a grandi blocchi di testo o animazioni obbligatorie; 5:20 circa per le sei slide, e la presentazione completa non deve superare 20 minuti.</punto>
+    </vincoli_trasversali>
+  </vincoli_specifici_testing_mutation>
+  <piano_temporale_sezione_sperimentale stato="indicativo_non_cronometro">
+    <slide originale="14" nuova="13" secondi="55" titolo="AMF Sync Failure"/>
+    <slide originale="15" nuova="14" secondi="35" titolo="UPF TEID Uniqueness"/>
+    <slide originale="16" nuova="15" secondi="60" titolo="AMF RES* quattro casi"/>
+    <slide originale="17" nuova="16" secondi="35" titolo="Baseline 10/10"/>
+    <slide originale="18" nuova="17" secondi="75" titolo="Processo Mutation testing"/>
+    <slide originale="19" nuova="18" secondi="60" titolo="Risultati mutazioni"/>
+    <totale>320 secondi (5 minuti e 20 secondi); circa 15 secondi di margine sul budget precedente di 5:35. I tempi sono indicativi e vanno verificati a voce.</totale>
+    <conclusione>La vecchia slide 20 diventa la nuova 19; conservare almeno circa 40 secondi per chiudere la tesi e non sprecare il tempo su una slide divisoria.</conclusione>
+  </piano_temporale_sezione_sperimentale>
+  <checklist_accettazione_per_implementatore priorita="obbligatoria">
+    <controllo id="A01" ambito="Struttura">19 slide dopo l'unione 4+5. Vecchie 14→nuova13, 15→14, 16→15, 17→16, 18→17, 19→18, 20→19. Nessuna nuova slide divisoria.</controllo>
+    <controllo id="A02" ambito="Slide 14 originale">PASS unico prominente, quattro controlli statici e uno temporale, T3520 15 s, frame 358 e 606 e intervallo osservato 25,018 s.</controllo>
+    <controllo id="A03" ambito="Slide 15 originale">COLLECT e UNIQUE invariati, 5 risposte PFCP, 10 coppie distinte, frame 37/38/46/47/48, verdetto PASS.</controllo>
+    <controllo id="A04" ambito="Slide 16 originale">Matrice 2×2 corretta A/B/C/D con righe di identificazione e colonne origine della verifica; 7/9/9/11 PASS e 2 SKIPPED per caso; non descrivere IF come test della sola OPTIONAL.</controllo>
+    <controllo id="A05" ambito="Slide 17 originale">10/10 atteso/osservato, 9 PASS e 1 FAIL atteso NRF; nessuna perdita di righe nella tabella.</controllo>
+    <controllo id="A06" ambito="Slide 18 originale">PCAP baseline e DSL ingressi concettuali, unica pipeline, report baseline → motore mutazione, PCAP originale → mutatore, PCAP mutata ritorna alla stessa pipeline, report mutato e confronto finale; mutatore fuori dal perimetro.</controllo>
+    <controllo id="A07" ambito="Slide 19 originale">15/15 correttamente etichettati come esiti attesi; AMF tre mutazioni con esiti componenti corretti; UPF PASS→FAIL e PASS→INCONCLUSIVE.</controllo>
+    <controllo id="A08" ambito="Navigazione">Rispettare interamente NAV-01 della versione 1.2; testare Vista completa e Spiega per passi, avanzamento dopo ultimo step, tasti e pulsante Avanti.</controllo>
+    <controllo id="A09" ambito="UI">Rendere screenshot reali a 1600×900 e almeno 1280×720, senza sovrapposizioni/clipping/testo illeggibile, senza cambiare lo stile morbido già adottato.</controllo>
+    <controllo id="A10" ambito="Sottotitoli">Non introdurre slogan generici o lunghe frasi placeholder; registrare i sottotitoli da sottoporre a revisione globale successiva.</controllo>
+    <controllo id="A11" ambito="Integrità">Nessun numero mutato, nessun nome di protocollo o costrutto improprio; riusare report e dati reali, non inventare fonti.</controllo>
+    <controllo id="A12" ambito="Consegna">Fornire ZIP completo HTML/CSS/JS e breve changelog riferito ai numeri ORIGINALI e FINALI, verificando funzionamento sia su desktop sia GitHub Pages con URL relativo.</controllo>
+    <controllo id="A13" ambito="Slide conclusiva">Nuova slide 19 presenta in grande «Non basta un verdetto. Serve poterlo giustificare con le evidenze.»; ringraziamento e Domande? marginali; nessuna lista riepilogativa, nessun nuovo dato sperimentale.</controllo>
+    <controllo id="A14" ambito="Sfondi">Ogni sezione finale 1–4, 5–7, 8–12, 13–16, 17–18, 19 usa variazioni sottili e coordinate; nessuno sfondo nero o eccessivamente saturo.</controllo>
+    <controllo id="A15" ambito="Compatibilità SVG">Controllare gradienti/rect/defs inline in index.html e variabili di style.css: fondo migliorato su OGNI SLIDE e non solo in CSS; nessun cambio accidentale nei colori dei dati e delle animazioni.</controllo>
+    <controllo id="A16" ambito="Sottotitoli">Applicare il piano editoriale v1.4 a tutte le 19 slide; nessuna frase placeholder o sottotitolo originale della 20 ricompare; massimo una idea sintetica per slide.</controllo>
+    <controllo id="A17" ambito="Contrasto">Titoli, frammenti di DSL, tabelle, annotazioni temporali, etichette degli NFA e badge PASS/FAIL/INCONCLUSIVE leggibili anche quando il contenitore riceve sfondo colorato.</controllo>
+    <controllo id="A18" ambito="Preservazione">Nessun rifacimento non richiesto delle figure o delle animazioni Thompson/matcher delle slide originali 10–11; nessuna modifica ai risultati o alle formule.</controllo>
+    <controllo id="A19" ambito="Versioni interattive">Collaudare le slide nuove anche dopo il redesign cromatico, in ingresso, dopo ogni step e in vista completa; tasti avanti/indietro e nessun blocco sull’ultimo passo.</controllo>
+    <controllo id="A20" ambito="Proiezione">Esportare almeno una contact sheet delle 19 slide e renderizzare ognuna a 1600x900, controllando anche riduzione a 1280x720; nessun testo troncato, crop, card sovrapposta o annotazione illeggibile.</controllo>
+    <controllo id="A21" ambito="Rispetto durata">Conclusione con messaggio centrale statica o animazione facoltativa brevissima; non introdurre slide divisorie o nuove animazioni obbligatorie che allarghino i 20 minuti.</controllo>
+    <controllo id="A22" ambito="Consegna grafica">Changelog che distingue interventi strutturali, sottotitoli, sfondi e conclusione; consegnare ZIP completo più screenshot anteprima prima/dopo di almeno slide 3, 4, 6, 15, 17, 19 finali.</controllo>
+  </checklist_accettazione_per_implementatore>
+  <riferimenti_tecnici_da_controllare scopo="supporto verifiche prima della modifica delle slide, non link da inserire necessariamente nelle slide">
+    <riferimento id="CODE-MUTATION" url="https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/main.py">run_mutation: baseline report, PCAP origine, mutatore offline, nuova esecuzione, confronto expected/observed</riferimento>
+    <riferimento id="CODE-MUTATOR" url="https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/utils/mutation_utils.py">Confronto hash SHA256 report/cattura e recupero evidenze</riferimento>
+    <riferimento id="DATA-MUT" url="https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/config/mutation_tests.json">Elenco varianti mutazione, expected_verdicts e componenti static/temporal</riferimento>
+    <riferimento id="DATA-BASE" url="https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/config/tests.json">Configurazione test baseline e casi RES*; non mostrarlo come input nelle slide principali</riferimento>
+    <riferimento id="CODE-VER" url="https://github.com/desila23/5g-security-assurance-thesis/blob/refactor/generic-pipeline/verifier/binding_verifier.py">Implementazione REQUIRE/REQUIRE UNIQUE/IF, SKIPPED quando IF non si applica</riferimento>
+  </riferimenti_tecnici_da_controllare>
+  <sistema_visivo_globale versione="1.4" priorita="alta" tipo="raffinamento_non_rebranding">
+    <obiettivo>Rendere meno monotona la presentazione attuale quasi bianca, SENZA perdere sobrietà accademica, leggibilità, figure SVG/animazioni e lo stile morbido a bordi arrotondati. L’effetto deve essere di maggiore profondità e identità, non di maggiore decorazione.</obiettivo>
+    <realta_tecnica_della_base>Il file style.css contiene già variabili cromatiche, ma i 20 SVG nell’index.html impiegano anche molte definizioni di gradienti e colori INLINE/hardcoded. Cambiare soltanto le variabili CSS NON basta: controllare i gradienti &lt;defs&gt;, i &lt;rect&gt; background e i colori inline nelle singole slide senza alterare grafici, frecce o valori di stato.</realta_tecnica_della_base>
+    <principi_non_negoziabili>
+      <indicazione>Conservare formato 16:9 1600x900, impaginazione e componenti che già funzionano; design morbido con riquadri arrotondati, non nero e non neon.</indicazione>
+      <indicazione>Le variazioni di sfondo devono essere VISIBILI ma molto leggere: gradienti a basso contrasto, leggeri aloni/sfumature agli angoli e piccole aree cromatiche diffuse. Evitare pattern fitti, grandi illustrazioni stock e fotografie.</indicazione>
+      <indicazione>Il contenuto rimane protagonista. Non modificare numeri, etichette di test, risultati, formule MFOTL, esempi dell’NFA, collegamenti o annotazioni importanti.</indicazione>
+      <indicazione>Non usare una palette differente per ogni slide: differenziare SOFTAMENTE le SEZIONI e mantenere lo stesso disegno di superficie.</indicazione>
+      <indicazione>Differenziare il colore semantico da quello decorativo: PASS verde; FAIL rosso; INCONCLUSIVE ambra/grigio; testo codice/DSL viola-blu con buona leggibilità.</indicazione>
+      <indicazione>Nessuna grande area nera, sfondi scuri a piena pagina, contrasti abbaglianti, ombre profonde o effetti 3D vistosi.</indicazione>
+      <indicazione>Non fare animare gradienti o decorazioni durante l’esposizione: la presentazione deve essere stabile e leggibile.</indicazione>
+      <indicazione>Il redesign delle superfici non deve peggiorare leggibilità di grafici, testo SVG, codici DSL, frame e valori nelle tabelle.</indicazione>
+    </principi_non_negoziabili>
+    <sfondi_per_sezione nota="Usare i valori come guida cromatica calibrabile, non come gradienti obbligatori identici su ogni pagina.">
+      <sezione nome="INTRODUZIONE" slide_originali="1-3; 4-5 accorpate" slide_finali="1-4">
+        <fondo_principale>#F7F9FD</fondo_principale>
+        <fondo_secondario>#EAF1FA</fondo_secondario>
+        <alone_opzionale>#DCE7F7</alone_opzionale>
+        <intenzione>azzurro nebbia; apertura chiara e professionale</intenzione>
+      </sezione>
+      <sezione nome="ARCHITETTURA" slide_originali="6-8" slide_finali="5-7">
+        <fondo_principale>#F5F9FC</fondo_principale>
+        <fondo_secondario>#E8F2F8</fondo_secondario>
+        <alone_opzionale>#DDECF5</alone_opzionale>
+        <intenzione>blu ghiaccio/teal molto leggero; richiama flusso e organizzazione</intenzione>
+      </sezione>
+      <sezione nome="DSL / NFA / VERIFICA" slide_originali="9-13" slide_finali="8-12">
+        <fondo_principale>#F8F7FD</fondo_principale>
+        <fondo_secondario>#EEEAF9</fondo_secondario>
+        <alone_opzionale>#E9E1F8</alone_opzionale>
+        <intenzione>lavanda/pervinca tenue; coerente con i costrutti DSL</intenzione>
+      </sezione>
+      <sezione nome="TEST E BASELINE" slide_originali="14-17" slide_finali="13-16">
+        <fondo_principale>#F7FAF8</fondo_principale>
+        <fondo_secondario>#EAF4EF</fondo_secondario>
+        <alone_opzionale>#DFEFE5</alone_opzionale>
+        <intenzione>salvia/grigio freddo; nessun falso suggerimento di PASS per gli esiti FAIL</intenzione>
+      </sezione>
+      <sezione nome="MUTATION TESTING" slide_originali="18-19" slide_finali="17-18">
+        <fondo_principale>#FBFAF6</fondo_principale>
+        <fondo_secondario>#F2F1ED</fondo_secondario>
+        <alone_opzionale>#F1E7D8</alone_opzionale>
+        <intenzione>neutro caldo molto tenue, distinto dai test; gli accenti dei verdetti rimangono semantici</intenzione>
+      </sezione>
+      <sezione nome="CONCLUSIONE" slide_originali="20" slide_finali="19">
+        <fondo_principale>#F4F5FD</fondo_principale>
+        <fondo_secondario>#E6EBF8</fondo_secondario>
+        <alone_opzionale>#DDE4F6</alone_opzionale>
+        <intenzione>pervinca morbida leggermente più presente; grande testo e ampio respiro</intenzione>
+      </sezione>
+    </sfondi_per_sezione>
+    <palette_coerente_suggerita>
+      <colore nome="testo_primario" hex="#1C2A40">titoli e contenuti</colore>
+      <colore nome="testo_secondario" hex="#52627B">sottotitoli e didascalie</colore>
+      <colore nome="accento_blu" hex="#4264D0">componenti centrali e parole chiave</colore>
+      <colore nome="accento_viola" hex="#7861AD">DSL e sottolineature</colore>
+      <colore nome="pass_verde" hex="#278766">solo successi, PASS e riconoscimenti positivi</colore>
+      <colore nome="fail_rosso" hex="#B64B56">solo violazioni e FAIL</colore>
+      <colore nome="inconclusive_ambra" hex="#9D7139">solo evidenza insufficiente e INCONCLUSIVE</colore>
+      <colore nome="bordo_morbido" hex="#D9E3EF">delimitazioni a basso contrasto</colore>
+      <colore nome="carta_su_fondo" hex="#FFFFFF">schede interne ai diagrammi; non come colore uniforme di tutto lo sfondo</colore>
+    </palette_coerente_suggerita>
+    <componenti_e_tipografia>
+      <indicazione>Mantenere font attuali Nimbus Sans/DejaVu Sans Mono; evitare cambi font che possano spostare testi SVG o rovinare le animazioni.</indicazione>
+      <indicazione>Titoli principali leggibili da proiezione; massimo due livelli di enfasi forti per slide. Il sottotitolo non deve competere con il titolo.</indicazione>
+      <indicazione>Sottotitoli tendenzialmente una sola riga e una sola idea. Se un testo non entra, accorciarlo semanticamente senza ridurre il font fino all’illeggibilità.</indicazione>
+      <indicazione>Riquadri con raggio coerente, fondo quasi bianco, bordo sottile e ombra molto discreta (mai effetto floating-card pesante).</indicazione>
+      <indicazione>Usare spazi, allineamento e peso tipografico prima di introdurre nuovi colori; preferire 1–2 accenti per slide più colori semantici dove richiesti.</indicazione>
+      <indicazione>Nelle slide con code block e tabelle verificare che il contrasto non venga abbassato dal nuovo sfondo.</indicazione>
+      <indicazione>Nel deck SVG le proprietà fill/stroke possono essere inline; adottare una strategia coerente che non rompa classi CSS o script di colorazione delle animazioni.</indicazione>
+      <indicazione>Non aggiungere bordi intorno all’intera pagina a tutte le slide: rischia l’effetto template e riduce lo spazio utile.</indicazione>
+    </componenti_e_tipografia>
+    <verifica_accessibilita>Controllare leggibilità del testo piccolo e contrasto sulla versione effettiva proiettata. Le superfici colorate non devono rendere indistinguibili stati attivi/inattivi; una voce NAS/HTTP2/PFCP sbiadita deve essere comunque leggibile.</verifica_accessibilita>
+    <nota_sui_colori>Nessuna tonalità di fondo deve da sola suggerire che un test sia PASS: risultati e stati derivano dalle etichette, icone e colori semantici, non dal colore globale della sezione.</nota_sui_colori>
+    <conservazione_animazioni>NON ridisegnare gli SVG 10–11 originali internamente; cambiare solo fondo, eventuali riquadri esterni e sottotitoli mantenendo esattamente la logica interattiva già accordata in NAV-01.</conservazione_animazioni>
+  </sistema_visivo_globale>
+  <revisione_sottotitoli_globale versione="1.4" priorita="alta" stato="testi_proposti_per_sostituzione">
+    <approccio>Ogni sottotitolo comunica il messaggio chiave della slide in una sola frase breve; niente meta-commenti sulla slide, riassunti in due righe, segnaposto, ripetizione letterale del titolo o obiettivi vaghi («mostra», «permette», «si vede»). Eliminare il sottotitolo dalla slide conclusiva.</approccio>
+    <nota_di_compatibilita>I testi proposti si riferiscono alle NUOVE slide finali 1–19, con riferimento agli ORIGINALI per individuare i gruppi SVG. L’implementatore può adattare di poche parole SOLO per evitare overflow, senza alterare il senso tecnico. Non visualizzare etichette di numerazione dei lavori interni.</nota_di_compatibilita>
+    <slide finale="1" originale="1">
+      <testo_consigliato>Dalle catture di traffico a verifiche motivate dei test SCAS.</testo_consigliato>
+    </slide>
+    <slide finale="2" originale="2">
+      <testo_consigliato>Le interazioni tra Network Functions richiedono verifiche di sicurezza.</testo_consigliato>
+    </slide>
+    <slide finale="3" originale="3">
+      <testo_consigliato>Collegare criteri SCAS, messaggi osservati e verdetto.</testo_consigliato>
+    </slide>
+    <slide finale="4" originale="4+5">
+      <testo_consigliato>Criteri diversi, un unico motore: la DSL separa selezione e verifica dal codice.</testo_consigliato>
+    </slide>
+    <slide finale="5" originale="6">
+      <testo_consigliato>PCAP e DSL alimentano una pipeline comune fino al report motivato.</testo_consigliato>
+    </slide>
+    <slide finale="6" originale="7">
+      <testo_consigliato>Dall’estrazione per protocollo alla selezione delle evidenze del singolo test.</testo_consigliato>
+    </slide>
+    <slide finale="7" originale="8">
+      <testo_consigliato>Il report collega il verdetto ai criteri, ai valori e ai frame osservati.</testo_consigliato>
+    </slide>
+    <slide finale="8" originale="9">
+      <testo_consigliato>La DSL descrive quali eventi individuare e quali proprietà verificare.</testo_consigliato>
+    </slide>
+    <slide finale="9" originale="10">
+      <testo_consigliato>Ogni evento diventa un atom; le transizioni ε compongono l’NFA.</testo_consigliato>
+    </slide>
+    <slide finale="10" originale="11">
+      <testo_consigliato>Il matcher riconosce A(3), B(4), C(6) fra gli eventi osservati.</testo_consigliato>
+    </slide>
+    <slide finale="11" originale="12">
+      <testo_consigliato>Dal Match al BindingContext: gli alias rendono accessibili gli eventi riconosciuti.</testo_consigliato>
+    </slide>
+    <slide finale="12" originale="13">
+      <testo_consigliato>Verifiche statiche e temporali sulle evidenze selezionate.</testo_consigliato>
+    </slide>
+    <slide finale="13" originale="14">
+      <testo_consigliato>AMF: quattro controlli statici e il vincolo T3520 soddisfatti.</testo_consigliato>
+    </slide>
+    <slide finale="14" originale="15">
+      <testo_consigliato>Cinque risposte PFCP, dieci coppie F-TEID, nessun duplicato.</testo_consigliato>
+    </slide>
+    <slide finale="15" originale="16">
+      <testo_consigliato>Una regola DSL per quattro varianti della procedura.</testo_consigliato>
+    </slide>
+    <slide finale="16" originale="17">
+      <testo_consigliato>Dieci verdetti coerenti con gli attesi, incluso un FAIL previsto.</testo_consigliato>
+    </slide>
+    <slide finale="17" originale="18">
+      <testo_consigliato>Stessa DSL e stessa pipeline: vengono modificate soltanto le evidenze.</testo_consigliato>
+    </slide>
+    <slide finale="18" originale="19">
+      <testo_consigliato>15/15 esperimenti coerenti con gli attesi, tra FAIL e INCONCLUSIVE.</testo_consigliato>
+    </slide>
+    <slide finale="19" originale="20">
+      <azione>Rimuovere il sottotitolo tecnico della slide originaria. La nuova frase centrale è il messaggio conclusivo; ringraziamento e Domande? nel footer.</azione>
+    </slide>
+    <eccezioni_editoriali>Se un nuovo titolo definitivo già comunica integralmente il sottotitolo, eliminarlo anziché forzare una ripetizione. I dati reali presenti nelle tabelle/grafici prevalgono su questo testo redazionale; non sono autorizzati cambi ai risultati.</eccezioni_editoriali>
+    <criterio_di_accettazione>Tutti i vecchi gruppi SVG slide-subtitle-* vanno rimappati o aggiornati dopo la rinumerazione; controllare che nessun duplicato della vecchia slide 5 rimanga nascosto o visibile. Verificare tutti i contenuti speaker-note che citano numeri slide.</criterio_di_accettazione>
+  </revisione_sottotitoli_globale>
+</revisione_presentazione_tesi>

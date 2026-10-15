@@ -1,0 +1,176 @@
+{
+    "schema_version": "2.0",
+    "metadata": {
+        "generator": "generic_verification_pipeline",
+        "tshark_version": "TShark (Wireshark) 3.6.2 (Git v3.6.2 packaged as 3.6.2-2)"
+    },
+    "test": {
+        "id": "nrf_disc_auth_slice_status_mutation",
+        "description": "Verification of NF Discovery authorization under slice constraints",
+        "nf": "NRF"
+    },
+    "source": {
+        "pcap": "captures/nrf_disc_auth_slice_status_mutation.pcap",
+        "sha256": "45cc2dfba51f33de2e8e6cf2b199c75866a8b9a7ec548249b11f069c44fbab0a"
+    },
+    "configuration": {
+        "pipeline": "sequence",
+        "case": null,
+        "rules": "dsl/nrf_sequence_test.dsl",
+        "traffic": {
+            "sources": [
+                {
+                    "type": "http2",
+                    "display_filter": "http2",
+                    "decode_as": [
+                        "tcp.port==7777,http2"
+                    ]
+                }
+            ],
+            "correlation_mode": "grouped"
+        },
+        "external_bindings": {}
+    },
+    "criteria": [
+        {
+            "id": "criterion_1",
+            "type": "comparison",
+            "description": "Verify response.status == 403"
+        }
+    ],
+    "verification": {
+        "results": [
+            {
+                "criterion_id": "criterion_1",
+                "engine": "binding_verifier",
+                "verdict": "PASS",
+                "evidence_frames": [
+                    2328,
+                    2329
+                ],
+                "details": {
+                    "field": "response.status",
+                    "operator": "==",
+                    "expected": 403,
+                    "observed": 403
+                }
+            }
+        ],
+        "overall_verdict": "PASS"
+    },
+    "evidence": {
+        "bindings": {
+            "request": {
+                "message_type": "nrf.discovery.request",
+                "frame": 2326,
+                "related_frames": [
+                    2326
+                ],
+                "timestamp": 1788954996.084325,
+                "protocol": "http2",
+                "kind": "request",
+                "src": "127.0.0.1",
+                "dst": "127.0.0.10",
+                "correlation": {
+                    "tcp_stream": 282,
+                    "http2_stream_id": 1
+                },
+                "fields": {
+                    "method": "GET",
+                    "path": "/nnrf-disc/v1/nf-instances",
+                    "raw_path": "/nnrf-disc/v1/nf-instances?target-nf-type=SMF&requester-nf-type=AMF&target-nf-instance-id=fa28c816-5d3d-4e4b-b065-15d03f789d87&requester-nf-instance-id=18085249-5a9c-44c0-bdd5-bd0fa5e80ebe&requester-snssais=%5B%7B%22sd%22%3A%20%22AAAAAA%22%2C%20%22sst%22%3A%20128%7D%5D",
+                    "query": {
+                        "target-nf-type": "SMF",
+                        "requester-nf-type": "AMF",
+                        "target-nf-instance-id": "fa28c816-5d3d-4e4b-b065-15d03f789d87",
+                        "requester-nf-instance-id": "18085249-5a9c-44c0-bdd5-bd0fa5e80ebe",
+                        "requester-snssais": "[{\"sd\": \"AAAAAA\", \"sst\": 128}]"
+                    },
+                    "headers": {
+                        ":method": "GET",
+                        ":authority": "127.0.0.10:7777",
+                        ":scheme": "http",
+                        ":path": "/nnrf-disc/v1/nf-instances?target-nf-type=SMF&requester-nf-type=AMF&target-nf-instance-id=fa28c816-5d3d-4e4b-b065-15d03f789d87&requester-nf-instance-id=18085249-5a9c-44c0-bdd5-bd0fa5e80ebe&requester-snssais=%5B%7B%22sd%22%3A%20%22AAAAAA%22%2C%20%22sst%22%3A%20128%7D%5D",
+                        "accept": "*/*",
+                        "accept-encoding": "gzip, deflate",
+                        "user-agent": "AMF"
+                    }
+                }
+            },
+            "response": {
+                "message_type": "nrf.discovery.response",
+                "frame": 2328,
+                "related_frames": [
+                    2328,
+                    2329
+                ],
+                "timestamp": 1788954996.084599,
+                "protocol": "http2",
+                "kind": "response",
+                "src": "127.0.0.10",
+                "dst": "127.0.0.1",
+                "correlation": {
+                    "tcp_stream": 282,
+                    "http2_stream_id": 1
+                },
+                "fields": {
+                    "status": 403,
+                    "headers": {
+                        ":status": "403",
+                        "server": "Open5GS v2.8.0",
+                        "date": "Wed, 09 Sep 2026 11:56:36 GMT",
+                        "content-length": "339",
+                        "content-type": "application/json",
+                        "cache-control": "max-age=30"
+                    },
+                    "body": {
+                        "validityPeriod": 30,
+                        "nfInstances": [
+                            {
+                                "nfInstanceId": "fa28c816-5d3d-4e4b-b065-15d03f789d87",
+                                "nfType": "SMF",
+                                "nfStatus": "REGISTERED",
+                                "heartBeatTimer": 10,
+                                "plmnList": [
+                                    {
+                                        "mcc": "001",
+                                        "mnc": "01"
+                                    }
+                                ],
+                                "sNssais": [
+                                    {
+                                        "sst": 128,
+                                        "sd": "bbbbbb"
+                                    }
+                                ],
+                                "ipv4Addresses": [
+                                    "127.0.1.1"
+                                ],
+                                "allowedNssais": [
+                                    {
+                                        "sst": 128,
+                                        "sd": "bbbbbb"
+                                    }
+                                ],
+                                "priority": 0,
+                                "capacity": 100,
+                                "load": 0
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "explanation": {
+        "summary": "Verification completed with verdict PASS",
+        "observations": {
+            "reason": null,
+            "message_type": null,
+            "alias": null,
+            "matches_found": 1,
+            "collected_events": null
+        }
+    },
+    "verdict": "PASS"
+}
