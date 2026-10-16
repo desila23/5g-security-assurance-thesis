@@ -1,0 +1,87 @@
+<!-- SLIDE 18: baseline — contenuto e geometria modificabili qui. -->
+  <section class="slide" id="slide-{{N}}" data-title="Risultati dei test baseline" data-seconds="35" aria-label="{{N}} di {{TOTAL}}: Risultati dei test baseline" >
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title-{{N}}">
+  <title id="title-{{N}}">Risultati dei test baseline</title>
+  <defs>
+  <filter id="shadow-{{N}}" x="-20%" y="-40%" width="140%" height="180%">
+  <feDropShadow dx="0" dy="7" stdDeviation="11" flood-color="#203653" flood-opacity=".055"/>
+  </filter>
+  <marker id="arrow-{{N}}-gray" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#99a7bb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-gray"/>
+  </marker>
+  <marker id="arrow-{{N}}-blue" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#4264d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-blue"/>
+  </marker>
+  <marker id="arrow-{{N}}-green" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#278766" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-green"/>
+  </marker>
+  <marker id="arrow-{{N}}-amber" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#B64B56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-amber"/>
+  </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#FFFFFF"/>
+  <text x="112" y="167" xml:space="preserve" font-family="Nimbus Sans" font-size="54" font-weight="700" fill="#1c2a40" text-anchor="start" class="svg-text fill-ink">Risultati dei test baseline</text>
+  <g id="slide-subtitle-{{N}}" >
+  <text x="112" y="222" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627B" text-anchor="start" xml:space="preserve" >Dieci verdetti coerenti con gli attesi, incluso un FAIL previsto.</text>
+  </g>
+  <!-- DIAGRAMMA: Gli esiti baseline attesi e osservati, senza spazio superfluo — modifica il gruppo seguente. -->
+  <g id="baseline-table" data-part="Gli esiti baseline attesi e osservati, senza spazio superfluo">
+  <rect x="112" y="300" width="740" height="506" rx="18" fill="#ffffff" stroke="#d5dff0" stroke-width="1.5"/>
+  <path id="baseline-table-header" d="M130 301 H834 Q851 301 851 318 V346 H113 V318 Q113 301 130 301 Z" fill="#f0f4ff"/>
+  <text x="136" y="331.5" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#1c2a40" text-anchor="start" class="svg-text" xml:space="preserve">Caso di test</text>
+  <text x="582.0" y="331.5" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#1c2a40" text-anchor="middle" class="svg-text" xml:space="preserve">Atteso</text>
+  <text x="762.0" y="331.5" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#1c2a40" text-anchor="middle" class="svg-text" xml:space="preserve">Osservato</text>
+  <path d="M112 346 L852 346" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="136" y="377.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-text" xml:space="preserve">NRF Discovery Authorization</text>
+  <text x="582.0" y="377.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#B64B56" text-anchor="middle" class="svg-text" xml:space="preserve">FAIL</text>
+  <text x="762.0" y="377.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#B64B56" text-anchor="middle" class="svg-text" xml:space="preserve">FAIL</text>
+  <path d="M112 392 L852 392" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="136" y="423.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-text" xml:space="preserve">UDM Resynchronization</text>
+  <text x="582.0" y="423.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="middle" class="svg-text" xml:space="preserve">PASS</text>
+  <text x="762.0" y="423.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="middle" class="svg-text" xml:space="preserve">PASS</text>
+  <path d="M112 438 L852 438" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="136" y="469.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-text" xml:space="preserve">UDM SUCI De-concealment</text>
+  <text x="582.0" y="469.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="middle" class="svg-text" xml:space="preserve">PASS</text>
+  <text x="762.0" y="469.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="middle" class="svg-text" xml:space="preserve">PASS</text>
+  <path d="M112 484 L852 484" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="136" y="515.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-text" xml:space="preserve">AMF Sync Failure — Case A</text>
+  <text x="582.0" y="515.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="middle" class="svg-text" xml:space="preserve">PASS</text>
+  <text x="762.0" y="515.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="middle" class="svg-text" xml:space="preserve">PASS</text>
+  <path d="M112 530 L852 530" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="136" y="561.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-text" xml:space="preserve">AMF Sync Failure — Case B</text>
+  <text x="582.0" y="561.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="middle" class="svg-text" xml:space="preserve">PASS</text>
+  <text x="762.0" y="561.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="middle" class="svg-text" xml:space="preserve">PASS</text>
+  <path d="M112 576 L852 576" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="136" y="607.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-text" xml:space="preserve">UPF TEID Uniqueness</text>
+  <text x="582.0" y="607.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="middle" class="svg-text" xml:space="preserve">PASS</text>
+  <text x="762.0" y="607.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="middle" class="svg-text" xml:space="preserve">PASS</text>
+  <path d="M112 622 L852 622" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="136" y="653.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-text" xml:space="preserve">RES* Verification Failure — A</text>
+  <text x="582.0" y="653.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="middle" class="svg-text" xml:space="preserve">PASS</text>
+  <text x="762.0" y="653.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="middle" class="svg-text" xml:space="preserve">PASS</text>
+  <path d="M112 668 L852 668" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="136" y="699.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-text" xml:space="preserve">RES* Verification Failure — B</text>
+  <text x="582.0" y="699.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="middle" class="svg-text" xml:space="preserve">PASS</text>
+  <text x="762.0" y="699.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="middle" class="svg-text" xml:space="preserve">PASS</text>
+  <path d="M112 714 L852 714" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="136" y="745.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-text" xml:space="preserve">RES* Verification Failure — C</text>
+  <text x="582.0" y="745.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="middle" class="svg-text" xml:space="preserve">PASS</text>
+  <text x="762.0" y="745.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="middle" class="svg-text" xml:space="preserve">PASS</text>
+  <path d="M112 760 L852 760" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="136" y="791.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-text" xml:space="preserve">RES* Verification Failure — D</text>
+  <text x="582.0" y="791.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="middle" class="svg-text" xml:space="preserve">PASS</text>
+  <text x="762.0" y="791.5" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="middle" class="svg-text" xml:space="preserve">PASS</text>
+  <path d="M492 300 L492 806" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M672 300 L672 806" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+  <!-- DIAGRAMMA: Dieci corrispondenze su dieci in evidenza — modifica il gruppo seguente. -->
+  <g id="baseline-summary">
+  <rect x="1062" y="426" width="426" height="254" rx="18" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8" />
+  <text x="1275" y="558" font-family="Nimbus Sans" font-size="96" font-weight="700" fill="#278766" text-anchor="middle" xml:space="preserve" >10 / 10</text><text x="1275" y="633" font-family="Nimbus Sans" font-size="32" font-weight="700" fill="#278766" text-anchor="middle" xml:space="preserve" >corrispondenze</text><text id="baseline-counts" x="1275" y="735" font-family="Nimbus Sans" font-size="30" font-weight="700" text-anchor="middle"><tspan fill="#278766">9 PASS</tspan><tspan dx="36" fill="#b64b56">1 FAIL atteso</tspan></text>
+  </g>
+  <text x="1488" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627B" text-anchor="end" xml:space="preserve" >{{NN}} / {{TOTAL}}</text><text x="112" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627B" text-anchor="start" xml:space="preserve" >TEST E BASELINE</text>
+  </svg>
+  <template class="speaker-note">Questi sono soltanto tre esempi della valutazione effettuata.
+  Complessivamente, sulle dieci catture originali, o _baseline_, tutti i verdetti ottenuti dal sistema sono risultati coerenti con quelli attesi.
+  In particolare, abbiamo ottenuto nove `PASS` e un `FAIL` atteso, relativo al test NRF, nel quale il comportamento osservato non soddisfaceva il criterio richiesto.</template>
+  </section>

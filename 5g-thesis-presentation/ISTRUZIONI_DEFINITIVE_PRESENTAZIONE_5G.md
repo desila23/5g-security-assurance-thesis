@@ -1,4 +1,4 @@
-> Versione corrente: 3. Nei punti modificati, `REVISIONE_UI_14_PUNTI_V3.md` prevale sulle specifiche precedenti. Il totale resta di 20 slide.
+> Versione corrente: 8, 21 slide. Nei punti modificati prevale `REVISIONE_V8.md`. La mappa corrente è in `MODIFICA_SLIDE.md`. Le numerazioni riportate sotto sono storiche.
 
 > Nota di versione: la revisione successiva `REVISIONE_UI_18_PUNTI.md` prevale sui punti modificati. Ha richiesto una nuova slide sulla DSL: la versione corrente contiene 20 slide.
 

@@ -1,0 +1,34 @@
+<!-- SLIDE 21: conclusioni — contenuto e geometria modificabili qui. -->
+  <section class="slide" id="slide-{{N}}" data-title="Non basta un verdetto" data-seconds="80" aria-label="{{N}} di {{TOTAL}}: Non basta un verdetto" >
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title-{{N}}">
+  <title id="title-{{N}}">Non basta un verdetto. Serve poterlo giustificare con le evidenze.</title>
+  <defs>
+  <filter id="shadow-{{N}}" x="-20%" y="-40%" width="140%" height="180%">
+  <feDropShadow dx="0" dy="7" stdDeviation="11" flood-color="#203653" flood-opacity=".055"/>
+  </filter>
+  <marker id="arrow-{{N}}-gray" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#99a7bb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-gray"/>
+  </marker>
+  <marker id="arrow-{{N}}-blue" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#4264d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-blue"/>
+  </marker>
+  <marker id="arrow-{{N}}-green" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#278766" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-green"/>
+  </marker>
+  <marker id="arrow-{{N}}-amber" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#9d7139" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-amber"/>
+  </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#FFFFFF"/>
+  <text x="160" y="368" font-family="Nimbus Sans" font-size="72" font-weight="700" fill="#1C2A40" text-anchor="start" xml:space="preserve" >Non basta un verdetto.</text><text x="160" y="478" font-family="Nimbus Sans" font-size="67" font-weight="700" fill="#4264D0" text-anchor="start" xml:space="preserve" >Serve poterlo giustificare</text><text x="160" y="563" font-family="Nimbus Sans" font-size="67" font-weight="700" fill="#4264D0" text-anchor="start" xml:space="preserve" >con le evidenze.</text>
+  <path d="M164 648 L408 648" fill="none" stroke="#A7B6DB" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="164" cy="648" r="5" fill="#4264D0" opacity=".65"/>
+  <circle cx="286" cy="648" r="5" fill="#4264d0" opacity=".65"/>
+  <circle cx="408" cy="648" r="5" fill="#278766" opacity=".65"/>
+  <text x="160" y="791" font-family="Nimbus Sans" font-size="29" font-weight="400" fill="#52627B" text-anchor="start" xml:space="preserve" >Grazie per l’attenzione</text><text x="1440" y="791" font-family="Nimbus Sans" font-size="29" font-weight="400" fill="#52627B" text-anchor="end" xml:space="preserve" >Domande?</text><text x="160" y="842" font-family="Nimbus Sans" font-size="22" font-weight="400" fill="#52627B" text-anchor="start" xml:space="preserve" >Samuele De Santis</text><text x="1488" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627B" text-anchor="end" xml:space="preserve" >{{NN}} / {{TOTAL}}</text>
+  </svg>
+  <template class="speaker-note">I risultati ottenuti, anche attraverso il mutation testing, mostrano quindi come sia possibile valutare il comportamento osservato durante un test non soltanto in base al suo esito, ma anche alla capacità di individuare le condizioni che lo hanno determinato.
+  È importante però considerare che questa valutazione dipende dalle evidenze effettivamente disponibili e dai criteri che siamo in grado di rappresentare. Il sistema, infatti, è stato sviluppato e sperimentato su un insieme specifico di casi SCAS e non può ancora essere considerato una soluzione generale per qualsiasi procedura di test.
+  Proprio da questi limiti emergono possibili sviluppi futuri, come l&#x27;estensione del linguaggio a nuove tipologie di criteri, il supporto a ulteriori protocolli e una valutazione su un insieme più ampio di casi, anche più complessi.
+  In questa prospettiva, il contributo del lavoro non consiste nel sostituire l&#x27;analisi della sicurezza con un verdetto automatico, ma nel rendere la verifica un processo più sistematico, in cui le conclusioni possano essere ricostruite, motivate e ricondotte alle evidenze da cui derivano.</template>
+  </section>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta name="description" content="Presentazione di {{TOTAL}} slide della tesi di Samuele De Santis: una DSL per la verifica degli esiti dei test SCAS 5G.">
+    <title>Tesi 5G - Samuele De Santis</title>
+    <link rel="stylesheet" href="assets/fonts.css">
+    <link rel="stylesheet" href="css/presentation.css">
+    <link rel="stylesheet" href="css/openapi.css">
+  </head>
+  <body>
+    <!-- FILE GENERATO: modifica slides/*.html e ricomponi con build.py. Vedi MODIFICA_SLIDE.md. -->
+    <main id="viewport" aria-label="Presentazione della tesi 5G">
+      <div id="deck">
+        
+        {{SLIDES}}
+      </div>
+    </main>
+    <nav id="navigation" aria-label="Navigazione delle slide">
+      <button class="nav-button" id="prev" type="button" aria-label="Slide precedente" title="Precedente (←)" disabled>
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M13 4 L7 10 L13 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <span id="counter">01 / {{TOTAL}}</span>
+      <button class="nav-button" id="next" type="button" aria-label="Slide successiva" title="Successiva (→)">
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M7 4 L13 10 L7 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <span id="slide-label">Titolo della tesi</span>
+      <span class="nav-separator" aria-hidden="true"></span>
+      <button class="nav-button utility" id="outline-button" type="button" title="Indice (I)" aria-label="Apri l’indice">Indice</button>
+      <button class="nav-button utility" id="fullscreen" type="button" title="Schermo intero (F)" aria-label="Schermo intero">
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M7 3 H3 V7 M13 3 H17 V7 M3 13 V17 H7 M13 17 H17 V13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        <span class="small-label">Schermo intero</span>
+      </button>
+      <button id="notes-button" class="nav-button utility" type="button" aria-label="Apri le note del relatore" title="Note del relatore (N)">Note</button>
+      <button class="nav-button utility" id="print" type="button" title="Stampa tutte le slide (P)" aria-label="Stampa o salva tutte le slide in PDF">PDF</button>
+    </nav>
+    <dialog id="outline" aria-labelledby="outline-title">
+      <h2 id="outline-title">Indice della presentazione</h2>
+      <ol>{{OUTLINE}}</ol>
+      <button id="close-outline" class="nav-button" type="button">Chiudi</button>
+    </dialog>
+    <dialog id="speaker-notes" aria-labelledby="speaker-notes-title">
+      <div class="notes-heading">
+        <h2 id="speaker-notes-title">Note del relatore</h2>
+        <button id="close-notes" class="nav-button" type="button">Chiudi</button>
+      </div>
+      <p id="notes-duration"></p>
+      <div id="notes-body"></div>
+    </dialog>
+    {{DIALOGS}}
+<p class="sr-only" id="live-status" aria-live="polite"></p>
+    <noscript>Per la navigazione serve JavaScript. Sono disponibili tutte le slide tramite la stampa.</noscript>
+    <script src="js/config.js"></script>
+    <script src="js/deck.js"></script>
+    <script src="js/steps.js"></script>
+    <script src="js/dialogs.js"></script>
+  </body>
+</html>

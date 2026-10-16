@@ -1,9 +1,9 @@
-/* 01. TEMA — modifica qui colori e font comuni alle slide. */
+/* 01. TEMA — un solo punto per le variabili comuni. I colori locali dei diagrammi sono negli HTML. */
 :root {
   --slide-ink: #1c2a40;
-  --slide-muted: #65758b;
+  --slide-muted: #52627b;
   --slide-blue: #4264d0;
-  --slide-line: #d5dff0;
+  --slide-line: #d9e3ef;
   --slide-gray: #99a7bb;
   --slide-green: #278766;
   --slide-mint: #eef8f3;
@@ -14,17 +14,32 @@
   --slide-rose: #fff0f1;
   --slide-purple: #4264d0;
   --slide-white: #ffffff;
-  --slide-violet-soft: #f3eef9;
+  --slide-violet-soft: #f5f7fb;
   --slide-nas-strong: #9cb4ed;
   --slide-http-strong: #e9c68e;
   --font-sans: "Nimbus Sans", Arial, sans-serif;
   --font-mono: "DejaVu Sans Mono", monospace;
+  --bg: #ffffff;
+  --surface: var(--slide-white);
+  --text: var(--slide-ink);
+  --muted: var(--slide-muted);
+  --line: var(--slide-line);
+  --accent: var(--slide-blue);
+  --accent-soft: #edf1ff;
+  --ok: var(--slide-green);
+  --ok-soft: #e9f7f1;
+  --bad: var(--slide-red);
+  --dark: #10203c;
+  --shadow: 0 18px 55px rgba(20,32,51,.12);
+  --slide-scale: .75;
 }
 
 /* 02. ELEMENTI SVG — posizioni e dimensioni restano nel singolo elemento HTML. */
 .svg-text  {
   font-family: var(--font-sans);
 }
+
+.message-event-field {font-family:var(--font-mono);}
 
 .svg-mono  {
   font-family: var(--font-mono);
@@ -167,21 +182,7 @@
 }
 
 /* 03. IMPOSTAZIONI GENERALI */
-:root {
-  --bg:#f7f9fc;
-  --surface:var(--slide-white);
-  --text:var(--slide-ink);
-  --muted:var(--slide-muted);
-  --line:var(--slide-line);
-  --accent:var(--slide-blue);
-  --accent-soft:#edf1ff;
-  --ok:var(--slide-green);
-  --ok-soft:#e9f7f1;
-  --bad:var(--slide-red);
-  --dark:#10203c;
-  --shadow:0 18px 55px rgba(20,32,51,.12);
-  --slide-scale:.75
-}
+
 
 * {
   box-sizing:border-box
@@ -607,16 +608,16 @@ noscript {
   right: 112px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   height: 46px;
 }
 .step-controls button {
   border: 1px solid var(--slide-line);
   border-radius: 12px;
-  padding: 9px 15px;
+  padding: 9px 13px;
   background: white;
   color: var(--slide-blue);
-  font: 18px var(--font-sans);
+  font: 17px var(--font-sans);
   white-space: nowrap;
   cursor: pointer;
 }
@@ -637,8 +638,10 @@ noscript {
 .step-status {
   margin: 0 0 0 8px;
   color: var(--slide-muted);
-  font: 19px var(--font-sans);
+  font: 18px var(--font-sans);
   line-height: 1.2;
+  flex:1;
+  min-width:0;
 }
 [data-current="true"] {
   text-decoration: underline;
@@ -653,10 +656,7 @@ noscript {
 }
 
 /* 11. REVISIONE DEFINITIVA — superfici SVG definite anche nei singoli defs. */
-:root { --slide-muted:#52627b; --slide-line:#d9e3ef; }
-.step-status { font-size:18px; flex:1; min-width:0; }
-.step-controls button { font-size:17px; padding:9px 13px; }
-.step-controls { gap:8px; }
+
 /* Resa deterministica per anteprime, senza sostituire il navigatore. */
 html.render-view,html.render-view body { width:var(--render-width); height:var(--render-height); overflow:hidden; }
 .render-view #viewport { width:var(--render-width); height:var(--render-height); }
@@ -671,22 +671,34 @@ html.render-view,html.render-view body { width:var(--render-width); height:var(-
 }
 
 /* Revisione: fondo bianco anche nel palco e nella stampa. Gli SVG sono bianchi nei sorgenti. */
-:root { --bg:#ffffff; --slide-violet-soft:#f5f7fb; }
+
 html, body, #viewport, .slide { background:#ffffff; }
-#slide-4 .step-controls, #slide-11 .step-controls { top:254px; }
 
 /* Ripristino richiesto della sola rete: control plane verde e user plane violetto. */
-#slide-2 .network-purple { fill:#7861ad; }
-#slide-2 .network-stroke-purple { stroke:#7861ad; }
+[data-slide-key="rete-5g"] .network-purple { fill:#7861ad; }
+[data-slide-key="rete-5g"] .network-stroke-purple { stroke:#7861ad; }
 .rule-action { position:absolute;left:112px;top:829px; }
-.rule-action button { padding:10px 18px;border:1px solid #d9e3ef;border-radius:12px;background:#f0f4ff;color:#4264d0;font:22px var(--font-sans);cursor:pointer; }
+.rule-action button { padding:7px 12px;border:1px solid #d9e3ef;border-radius:9px;background:#f0f4ff;color:#4264d0;font:18px var(--font-sans);cursor:pointer; }
 #resstar-rule-dialog { width:min(1100px,calc(100vw - 48px));max-height:90vh;border:1px solid #d9e3ef;border-radius:18px;padding:26px;color:#182536; }
 #resstar-rule-dialog pre { overflow:auto;font:19px/1.5 var(--font-mono);white-space:pre; }
 #resstar-rule-dialog::backdrop { background:rgba(24,37,54,.3); }
 @media print { .rule-action,#resstar-rule-dialog { display:none!important; } }
 
-.rule-action button {font-size:18px;padding:7px 12px;border-radius:9px;}
 .complete-rule-dialog {width:min(1100px,calc(100vw - 48px));max-height:90vh;border:1px solid #d9e3ef;border-radius:18px;padding:26px;color:#182536;}
 .complete-rule-dialog pre {overflow:auto;font:19px/1.5 var(--font-mono);white-space:pre;}
 .complete-rule-dialog::backdrop {background:rgba(24,37,54,.3);}
 @media print {.complete-rule-dialog {display:none!important;}}
+
+/* Revisione v4: report completo nella slide, navigabile anche offline. */
+.report-action {position:absolute;right:112px;top:254px;}
+.report-action button {border:1px solid #d9e3ef;border-radius:8px;background:white;color:#4264d0;padding:6px 11px;font:18px var(--font-sans);cursor:pointer;}
+.report-action button:hover {background:#f0f4ff;}
+#report-json-dialog {width:min(1250px,calc(100vw - 48px));}
+#report-json-dialog pre {max-height:65vh;font-size:17px;}
+@media print {.report-action {display:none!important;}}
+
+/* Rationale: controls and explanation slightly higher than the other step slides. */
+[data-step-kind="rationale"] .step-controls {top:242px;}
+
+
+

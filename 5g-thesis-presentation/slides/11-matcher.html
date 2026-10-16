@@ -1,0 +1,167 @@
+<!-- SLIDE 11: matcher — contenuto e geometria modificabili qui. -->
+  <section class="slide" id="slide-{{N}}" data-step-kind="matcher" data-initial-mode="steps" data-title="Riconoscimento della sequenza" data-seconds="90" aria-label="{{N}} di {{TOTAL}}: Riconoscimento della sequenza" >
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title-{{N}}">
+  <title id="title-{{N}}">Riconoscimento della sequenza</title>
+  <defs>
+  <filter id="shadow-{{N}}" x="-20%" y="-40%" width="140%" height="180%">
+  <feDropShadow dx="0" dy="7" stdDeviation="11" flood-color="#203653" flood-opacity=".055"/>
+  </filter>
+  <marker id="arrow-{{N}}-gray" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#99a7bb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-gray"/>
+  </marker>
+  <marker id="arrow-{{N}}-blue" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#4264d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-blue"/>
+  </marker>
+  <marker id="arrow-{{N}}-green" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#278766" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-green"/>
+  </marker>
+  <marker id="arrow-{{N}}-amber" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#9d7139" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-amber"/>
+  </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#FFFFFF"/>
+  <text x="112" y="167" xml:space="preserve" font-family="Nimbus Sans" font-size="54" font-weight="700" fill="#1c2a40" text-anchor="start" class="svg-text fill-ink">Riconoscimento della sequenza</text>
+  <text x="112" y="340" xml:space="preserve" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#4264d0" text-anchor="start" class="svg-text fill-blue">SEQUENCE</text>
+  <text x="525" y="340" xml:space="preserve" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#1c2a40" text-anchor="start" class="svg-text fill-ink">Eventi osservati</text>
+  <text x="795" y="340" xml:space="preserve" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="start" class="svg-text fill-green">Binding</text>
+  <text x="1150" y="340" xml:space="preserve" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="start" class="svg-text fill-green">Automa</text>
+  <rect x="112" y="363" width="370" height="236" rx="22" fill="#fff" stroke="#d5dff0" stroke-width="1.5" class="diagram-card fill-white stroke-line"/>
+  <text x="138" y="402" xml:space="preserve" class="code-line svg-mono" font-family="DejaVu Sans Mono" font-size="23"><tspan fill="#1c2a40" font-weight="400" class="fill-ink"/><tspan fill="#4264d0" font-weight="700" class="fill-blue">SEQUENCE</tspan><tspan fill="#1c2a40" font-weight="400" class="fill-ink"> {</tspan></text>
+  <text id="matcher-code-a" x="165.694" y="430" xml:space="preserve" class="code-line svg-mono" font-family="DejaVu Sans Mono" font-size="23"><tspan fill="#1c2a40" font-weight="400" class="fill-ink">event.a </tspan><tspan fill="#4264d0" font-weight="700" class="fill-purple">AS</tspan><tspan fill="#1c2a40" font-weight="400" class="fill-ink"> a</tspan></text>
+  <text x="138" y="458" xml:space="preserve" class="code-line svg-mono" font-family="DejaVu Sans Mono" font-size="23"><tspan fill="#1c2a40" font-weight="400" class="fill-ink">  </tspan><tspan fill="#4264d0" font-weight="700" class="fill-blue">OPTIONAL</tspan><tspan fill="#1c2a40" font-weight="400" class="fill-ink"> {</tspan></text>
+  <text id="matcher-code-b" x="193.389" y="486" xml:space="preserve" class="code-line svg-mono" font-family="DejaVu Sans Mono" font-size="23"><tspan fill="#1c2a40" font-weight="400" class="fill-ink">event.b </tspan><tspan fill="#4264d0" font-weight="700" class="fill-purple">AS</tspan><tspan fill="#1c2a40" font-weight="400" class="fill-ink"> b</tspan></text>
+  <text x="138" y="514" xml:space="preserve" class="code-line svg-mono" font-family="DejaVu Sans Mono" font-size="23"><tspan fill="#1c2a40" font-weight="400" class="fill-ink">  }</tspan></text>
+  <text id="matcher-code-c" x="165.694" y="542" xml:space="preserve" class="code-line svg-mono" font-family="DejaVu Sans Mono" font-size="23"><tspan fill="#1c2a40" font-weight="400" class="fill-ink">event.c </tspan><tspan fill="#4264d0" font-weight="700" class="fill-purple">AS</tspan><tspan fill="#1c2a40" font-weight="400" class="fill-ink"> c</tspan></text>
+  <text x="138" y="570" xml:space="preserve" class="code-line svg-mono" font-family="DejaVu Sans Mono" font-size="23"><tspan fill="#1c2a40" font-weight="400" class="fill-ink">}</tspan></text>
+  <g id="restart-policy" data-part="Regola generale della politica di riavvio">
+  <rect x="112" y="613" width="350" height="203" rx="18" fill="#fff7e9" stroke="#d5dff0" stroke-width="1.5" class="fill-sand stroke-line"/>
+  <text x="138" y="655" font-family="Nimbus Sans" font-size="27" font-weight="700" fill="#9d7139" text-anchor="start" class="svg-text fill-amber" xml:space="preserve">Politica di riavvio</text>
+  <text x="138" y="697" font-family="Nimbus Sans" font-size="19" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-text fill-ink" xml:space="preserve">Un nuovo inizio avvia un candidato.</text>
+  <text x="138" y="729" font-family="Nimbus Sans" font-size="19" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-text fill-ink" xml:space="preserve">Il precedente si interrompe solo se</text>
+  <text x="138" y="761" font-family="Nimbus Sans" font-size="19" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-text fill-ink" xml:space="preserve">non può consumare quell’evento.</text>
+  </g>
+  <text x="541" y="435" xml:space="preserve" font-family="Nimbus Sans" font-size="22" font-weight="400" fill="#65758b" text-anchor="middle" class="svg-text fill-muted">1</text>
+  <g id="matcher-event-0" data-part="Evento A(1)" data-state="discarded" opacity=".28">
+  <rect x="565" y="400" width="74" height="52" rx="12" fill="#f2f5f9" stroke="#d5dff0" stroke-width="1.5" class="event-card diagram-card stroke-line"/>
+  <text x="602" y="437" xml:space="preserve" font-family="Nimbus Sans" font-size="35" font-weight="700" fill="#65758b" text-anchor="middle" class="event-label svg-text fill-muted">A</text>
+  </g>
+  <g id="matcher-binding-0" data-part="Binding a(1)" opacity="0">
+  <path d="M653 426 L779 426" fill="none" stroke="#278766" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-green)" class="connector stroke-green"/>
+  <rect x="795" y="397" width="75" height="58" rx="12" fill="#eef8f3" stroke="#d5dff0" stroke-width="1.5" class="diagram-card fill-mint stroke-line"/>
+  <text x="832.5" y="435" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="27" font-weight="700" fill="#278766" text-anchor="middle" class="svg-mono fill-green">a(1)</text>
+  <text x="887" y="435" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="23" font-weight="400" fill="#65758b" text-anchor="start" class="svg-mono fill-muted">event.a</text>
+  </g>
+  <text x="541" y="500" xml:space="preserve" font-family="Nimbus Sans" font-size="22" font-weight="400" fill="#65758b" text-anchor="middle" class="svg-text fill-muted">2</text>
+  <g id="matcher-event-1" data-part="Evento X(2)" data-state="neutral">
+  <rect x="565" y="465" width="74" height="52" rx="12" fill="#f2f5f9" stroke="#d5dff0" stroke-width="1.5" class="event-card diagram-card stroke-line"/>
+  <text x="602" y="502" xml:space="preserve" font-family="Nimbus Sans" font-size="35" font-weight="700" fill="#65758b" text-anchor="middle" class="event-label svg-text fill-muted">X</text>
+  </g>
+  <text x="541" y="565" xml:space="preserve" font-family="Nimbus Sans" font-size="22" font-weight="400" fill="#65758b" text-anchor="middle" class="svg-text fill-muted">3</text>
+  <g id="matcher-event-2" data-part="Evento A(3)" data-state="selected">
+  <rect x="565" y="530" width="74" height="52" rx="12" fill="#eef8f3" stroke="#d5dff0" stroke-width="1.5" class="event-card diagram-card fill-mint stroke-line"/>
+  <text x="602" y="567" xml:space="preserve" font-family="Nimbus Sans" font-size="35" font-weight="700" fill="#278766" text-anchor="middle" class="event-label svg-text fill-green">A</text>
+  </g>
+  <g id="matcher-binding-2" data-part="Binding a(3)">
+  <path d="M653 556 L779 556" fill="none" stroke="#278766" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-green)" class="connector stroke-green"/>
+  <rect x="795" y="527" width="75" height="58" rx="12" fill="#eef8f3" stroke="#d5dff0" stroke-width="1.5" class="diagram-card fill-mint stroke-line"/>
+  <text x="832.5" y="565" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="27" font-weight="700" fill="#278766" text-anchor="middle" class="svg-mono fill-green">a(3)</text>
+  <text x="887" y="565" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="23" font-weight="400" fill="#65758b" text-anchor="start" class="svg-mono fill-muted">event.a</text>
+  </g>
+  <text x="541" y="630" xml:space="preserve" font-family="Nimbus Sans" font-size="22" font-weight="400" fill="#65758b" text-anchor="middle" class="svg-text fill-muted">4</text>
+  <g id="matcher-event-3" data-part="Evento B(4)" data-state="selected">
+  <rect x="565" y="595" width="74" height="52" rx="12" fill="#eef8f3" stroke="#d5dff0" stroke-width="1.5" class="event-card diagram-card fill-mint stroke-line"/>
+  <text x="602" y="632" xml:space="preserve" font-family="Nimbus Sans" font-size="35" font-weight="700" fill="#278766" text-anchor="middle" class="event-label svg-text fill-green">B</text>
+  </g>
+  <g id="matcher-binding-3" data-part="Binding b(4)">
+  <path d="M653 621 L779 621" fill="none" stroke="#278766" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-green)" class="connector stroke-green"/>
+  <rect x="795" y="592" width="75" height="58" rx="12" fill="#eef8f3" stroke="#d5dff0" stroke-width="1.5" class="diagram-card fill-mint stroke-line"/>
+  <text x="832.5" y="630" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="27" font-weight="700" fill="#278766" text-anchor="middle" class="svg-mono fill-green">b(4)</text>
+  <text x="887" y="630" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="23" font-weight="400" fill="#65758b" text-anchor="start" class="svg-mono fill-muted">event.b</text>
+  </g>
+  <text x="541" y="695" xml:space="preserve" font-family="Nimbus Sans" font-size="22" font-weight="400" fill="#65758b" text-anchor="middle" class="svg-text fill-muted">5</text>
+  <g id="matcher-event-4" data-part="Evento X(5)" data-state="neutral">
+  <rect x="565" y="660" width="74" height="52" rx="12" fill="#f2f5f9" stroke="#d5dff0" stroke-width="1.5" class="event-card diagram-card stroke-line"/>
+  <text x="602" y="697" xml:space="preserve" font-family="Nimbus Sans" font-size="35" font-weight="700" fill="#65758b" text-anchor="middle" class="event-label svg-text fill-muted">X</text>
+  </g>
+  <text x="541" y="760" xml:space="preserve" font-family="Nimbus Sans" font-size="22" font-weight="400" fill="#65758b" text-anchor="middle" class="svg-text fill-muted">6</text>
+  <g id="matcher-event-5" data-part="Evento C(6)" data-state="selected">
+  <rect x="565" y="725" width="74" height="52" rx="12" fill="#eef8f3" stroke="#d5dff0" stroke-width="1.5" class="event-card diagram-card fill-mint stroke-line"/>
+  <text x="602" y="762" xml:space="preserve" font-family="Nimbus Sans" font-size="35" font-weight="700" fill="#278766" text-anchor="middle" class="event-label svg-text fill-green">C</text>
+  </g>
+  <g id="matcher-binding-5" data-part="Binding c(6)">
+  <path d="M653 751 L779 751" fill="none" stroke="#278766" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-green)" class="connector stroke-green"/>
+  <rect x="795" y="722" width="75" height="58" rx="12" fill="#eef8f3" stroke="#d5dff0" stroke-width="1.5" class="diagram-card fill-mint stroke-line"/>
+  <text x="832.5" y="760" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="27" font-weight="700" fill="#278766" text-anchor="middle" class="svg-mono fill-green">c(6)</text>
+  <text x="887" y="760" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="23" font-weight="400" fill="#65758b" text-anchor="start" class="svg-mono fill-muted">event.c</text>
+  </g>
+  <g id="matcher-nfa" data-part="Automa verticale con ramo opzionale ravvicinato">
+  <rect x="1150" y="363" width="338" height="455" rx="22" fill="#fff" stroke="#d5dff0" stroke-width="1.5" filter="url(#shadow-{{N}})" class="diagram-card fill-white stroke-line"/>
+  <g id="matcher-atom-a" data-part="Atom A" data-active="true">
+  <circle cx="1370" cy="407" r="22" fill="#eef8f3" stroke="#278766" stroke-width="1.5" class="fill-mint stroke-green"/>
+  <text x="1370" y="414" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="21" font-weight="400" fill="#278766" text-anchor="middle" class="svg-mono fill-green">q0</text>
+  <circle cx="1370" cy="487" r="22" fill="#eef8f3" stroke="#278766" stroke-width="1.5" class="fill-mint stroke-green"/>
+  <text x="1370" y="494" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="21" font-weight="400" fill="#278766" text-anchor="middle" class="svg-mono fill-green">q1</text>
+  <path d="M1370 434 L1370 460" fill="none" stroke="#278766" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-green)" class="consume-link connector stroke-green"/>
+  <text x="1396" y="453" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="23" font-weight="400" fill="#278766" text-anchor="start" class="svg-mono fill-green">a</text>
+  <text x="1410" y="414" xml:space="preserve" font-family="Nimbus Sans" font-size="16" font-weight="400" fill="#65758b" text-anchor="start" class="svg-text fill-muted">inizio</text>
+  </g>
+  <g id="matcher-atom-b" data-part="Atom B" data-active="true">
+  <circle cx="1260" cy="558.5" r="22" fill="#eef8f3" stroke="#278766" stroke-width="1.5" class="fill-mint stroke-green"/>
+  <text x="1260" y="565.5" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="21" font-weight="400" fill="#278766" text-anchor="middle" class="svg-mono fill-green">q2</text>
+  <circle cx="1260" cy="638.5" r="22" fill="#eef8f3" stroke="#278766" stroke-width="1.5" class="fill-mint stroke-green"/>
+  <text x="1260" y="645.5" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="21" font-weight="400" fill="#278766" text-anchor="middle" class="svg-mono fill-green">q3</text>
+  <path d="M1260 586.5 L1260 610.5" fill="none" stroke="#278766" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-green)" class="consume-link connector stroke-green"/>
+  <text x="1286" y="606" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="23" font-weight="400" fill="#278766" text-anchor="start" class="svg-mono fill-green">b</text>
+  </g>
+  <g id="matcher-atom-c" data-part="Atom C" data-active="true">
+  <circle cx="1370" cy="710" r="22" fill="#eef8f3" stroke="#278766" stroke-width="1.5" class="fill-mint stroke-green"/>
+  <text x="1370" y="717" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="21" font-weight="400" fill="#278766" text-anchor="middle" class="svg-mono fill-green">q4</text>
+  <circle cx="1370" cy="789" r="22" fill="#eef8f3" stroke="#278766" stroke-width="1.5" class="fill-mint stroke-green"/>
+  <circle cx="1370" cy="789" r="16" fill="none" stroke="#278766" stroke-width="1.5" class="stroke-green"/>
+  <text x="1370" y="796" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="21" font-weight="400" fill="#278766" text-anchor="middle" class="svg-mono fill-green">q5</text>
+  <path d="M1370 737 L1370 762" fill="none" stroke="#278766" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-green)" class="consume-link connector stroke-green"/>
+  <text x="1396" y="756" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="23" font-weight="400" fill="#278766" text-anchor="start" class="svg-mono fill-green">c</text>
+  </g>
+  <g id="matcher-eps-ab" data-part="Epsilon da A al ramo B" data-active="true">
+  <path d="M1343 487 C1305 487 1260 494 1260 529.5" fill="none" stroke="#278766" stroke-width="2.4" stroke-dasharray="7 7" marker-end="url(#arrow-{{N}}-green)" class="connector stroke-green"/>
+  <text x="1306" y="477" xml:space="preserve" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#278766" text-anchor="middle" class="svg-text fill-green">ε</text>
+  </g>
+  <g id="matcher-eps-bc" data-part="Epsilon di ritorno, speculare all’ingresso" data-active="true">
+  <path d="M1260 667.5 C1260 703 1305 710 1343 710" fill="none" stroke="#278766" stroke-width="2.4" stroke-dasharray="7 7" marker-end="url(#arrow-{{N}}-green)" class="connector stroke-green"/>
+  <text x="1306" y="735" xml:space="preserve" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#278766" text-anchor="middle" class="svg-text fill-green">ε</text>
+  </g>
+  <g id="matcher-eps-skip" data-part="Salto verticale di B" data-active="false">
+  <path d="M1370 518 L1370 679" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-gray)" stroke-dasharray="7 7" class="connector stroke-gray"/>
+  <text x="1396" y="597" xml:space="preserve" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#99a7bb" text-anchor="start" class="svg-text fill-gray">ε</text>
+  </g>
+  </g>
+  <!-- SOTTOTITOLO SLIDE 10: modifica le scritte nel gruppo seguente. Guida: GUIDA_TESTI.md. -->
+  <g id="slide-subtitle-{{N}}" >
+  <text x="112" y="222" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627B" text-anchor="start" xml:space="preserve" >Il matcher riconosce A(3), B(4) e C(6), ignorando gli eventi estranei.</text>
+  </g>
+  <!-- DIAGRAMMA: Il riavvio non rende il primo A invalido in generale — modifica il gruppo seguente. -->
+  <g id="matcher-candidato-nota" data-part="Il riavvio non rende il primo A invalido in generale">
+  <text x="112" y="860" font-family="Nimbus Sans" font-size="24" font-weight="400" fill="#65758b" text-anchor="start" class="svg-text fill-muted" xml:space="preserve">Esempio del caso in cui il nuovo A non è consumabile dal candidato precedente.</text>
+  </g>
+  <text x="1488" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627B" text-anchor="end" xml:space="preserve" >{{NN}} / {{TOTAL}}</text><text x="112" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627B" text-anchor="start" xml:space="preserve" >DSL · NFA · VERIFICA</text>
+  </svg>
+  <!-- Passaggi manuali della slide 11: ogni avanzamento è esplicito. -->
+  <!-- TESTI PASSI SLIDE 11: interactive-slides.js, matcherSteps, righe 42-49. Modifica label. Vedi GUIDA_TESTI.md. -->
+  <div class="step-controls" aria-label="Passaggi della slide 11">
+  <button type="button" data-step-action="toggle" aria-pressed="false">Spiega per passi</button>
+  <button type="button" data-step-action="previous" hidden>Indietro</button>
+  <button type="button" data-step-action="next" hidden>Avanti</button>
+  <button type="button" data-step-action="reset" hidden>Ricomincia</button>
+  <p class="step-status" aria-live="polite">Vista completa · attiva i passaggi per spiegare la slide.</p>
+  </div>
+  <template class="speaker-note">Una volta costruito l&#x27;automa, il matcher lo utilizza per cercare la sequenza all&#x27;interno degli eventi normalizzati.
+  Nell&#x27;esempio che vediamo, la sequenza richiesta è sempre A, B opzionale e C, mentre gli eventi osservati sono A, X, A, B, X, C.
+  Partendo dal primo evento A, il matcher avvia un possibile riconoscimento della sequenza.
+  Il messaggio successivo, X, non è previsto dalla regola, quindi non contribuisce al riconoscimento.
+  Quando però incontriamo la seconda A, il candidato precedente non può consumare questo nuovo evento, perché sta cercando B oppure C.
+  Interviene quindi la _politica di riavvio_: il candidato precedente viene terminato e ne viene avviato uno nuovo a partire dalla seconda A.
+  A questo punto incontriamo B, che è compatibile con la sequenza, e successivamente un&#x27;altra X, che viene ignorata.
+  Infine, incontriamo C, che completa il riconoscimento.
+  Il risultato è quindi la sequenza formata da A in posizione 3, B in posizione 4 e C in posizione 6.
+  La politica di riavvio consente quindi di considerare nuovi punti di partenza quando vengono incontrati eventi compatibili con l&#x27;inizio della regola, senza dipendere esclusivamente dalla prima occorrenza.</template>
+  </section>

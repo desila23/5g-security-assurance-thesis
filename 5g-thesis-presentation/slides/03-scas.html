@@ -1,0 +1,109 @@
+<!-- SLIDE 3: scas — contenuto e geometria modificabili qui. -->
+  <section class="slide" id="slide-{{N}}" data-title="Le SCAS descrivono come verificare la sicurezza" data-seconds="60" aria-label="{{N}} di {{TOTAL}}: Le SCAS descrivono come verificare la sicurezza" >
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title-{{N}}">
+  <title id="title-{{N}}">Le SCAS descrivono come verificare la sicurezza</title>
+  <defs>
+  <marker id="new-arrow-{{N}}" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#4264d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  </defs>
+  <rect x="0" y="0" width="1600" height="900" rx="0" fill="#FFFFFF" stroke="none" stroke-width="1.8"/>
+  <text x="112" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627b" text-anchor="start" xml:space="preserve">INTRODUZIONE</text><text x="1488" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627b" text-anchor="end" xml:space="preserve">{{NN}} / {{TOTAL}}</text><text x="112" y="167" font-family="Nimbus Sans" font-size="54" font-weight="700" fill="#182536" text-anchor="start" xml:space="preserve">Le SCAS descrivono come verificare la sicurezza</text><text x="112" y="222" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627b" text-anchor="start" xml:space="preserve">Il test produce messaggi e un esito: quali evidenze giustificano il verdetto?</text>
+  <rect x="112" y="300" width="287" height="94" rx="15" fill="white" stroke="#d9e3ef" stroke-width="1.8"/>
+  <text x="255.5" y="357" font-family="Nimbus Sans" font-size="31" font-weight="700" fill="#4264d0" text-anchor="middle" xml:space="preserve">Specifica SCAS</text>
+  <path d="M417 347 H457" fill="none" stroke="#4264d0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#new-arrow-{{N}})"/>
+  <rect x="475" y="300" width="287" height="94" rx="15" fill="white" stroke="#d9e3ef" stroke-width="1.8"/>
+  <text x="618.5" y="357" font-family="Nimbus Sans" font-size="31" font-weight="700" fill="#182536" text-anchor="middle" xml:space="preserve">Test</text>
+  <path d="M780 347 H820" fill="none" stroke="#4264d0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#new-arrow-{{N}})"/>
+  <rect x="838" y="300" width="287" height="94" rx="15" fill="white" stroke="#d9e3ef" stroke-width="1.8"/>
+  <text x="981.5" y="357" font-family="Nimbus Sans" font-size="31" font-weight="700" fill="#4264d0" text-anchor="middle" xml:space="preserve">File PCAP</text>
+  <path d="M1143 347 H1183" fill="none" stroke="#4264d0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#new-arrow-{{N}})"/>
+  <rect x="1201" y="300" width="287" height="94" rx="15" fill="#eef8f3" stroke="#c4dfd3" stroke-width="1.8"/>
+  <text x="1344.5" y="357" font-family="Nimbus Sans" font-size="31" font-weight="700" fill="#278766" text-anchor="middle" xml:space="preserve">Verdetto</text>
+  <path d="M255 410 V434" fill="none" stroke="#d9e3ef" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M981 410 V434" fill="none" stroke="#d9e3ef" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <g id="scas-document-detail">
+  <rect x="112" y="450" width="287" height="330" rx="3" fill="white" stroke="#d9e3ef" stroke-width="1.8"/>
+  <text x="136" y="490" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#182536" text-anchor="start" xml:space="preserve">Precondizioni</text><text x="136" y="522" font-family="Nimbus Sans" font-size="20" font-weight="400" fill="#52627b" text-anchor="start" xml:space="preserve">Stato iniziale</text>
+  <path d="M136 537 H375" fill="none" stroke="#d9e3ef" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="136" y="593" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#182536" text-anchor="start" xml:space="preserve">Azioni</text><text x="136" y="625" font-family="Nimbus Sans" font-size="20" font-weight="400" fill="#52627b" text-anchor="start" xml:space="preserve">Operazioni previste</text>
+  <path d="M136 640 H375" fill="none" stroke="#d9e3ef" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="136" y="696" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#182536" text-anchor="start" xml:space="preserve">Risultato atteso</text><text x="136" y="728" font-family="Nimbus Sans" font-size="20" font-weight="400" fill="#52627b" text-anchor="start" xml:space="preserve">Comportamento richiesto</text>
+  <path d="M136 743 H375" fill="none" stroke="#d9e3ef" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="618" y="535" font-family="Nimbus Sans" font-size="26" font-weight="400" fill="#52627b" text-anchor="middle" xml:space="preserve">Procedura</text><text x="618" y="574" font-family="Nimbus Sans" font-size="24" font-weight="400" fill="#52627b" text-anchor="middle" xml:space="preserve">eseguita sulla rete</text>
+  <g id="pcap-document-detail">
+  <path d="M838 450 H1099 L1125 476 V746 H838 Z" fill="white" stroke="#d9e3ef" stroke-width="1.8"/>
+  <path d="M1099 450 V476 H1125" fill="none" stroke="#d9e3ef" stroke-width="1.8"/>
+  <text x="860" y="495" font-family="Nimbus Sans" font-size="24" font-weight="700" fill="#182536" text-anchor="start" xml:space="preserve">Messaggi della prova</text>
+  <rect x="862" y="522.0" width="15" height="18" rx="3" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="885" y="522.0" width="15" height="18" rx="3" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="908" y="522.0" width="15" height="18" rx="3" fill="#e9edf2" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="931" y="522.0" width="15" height="18" rx="3" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="954" y="522.0" width="15" height="18" rx="3" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="977" y="522.0" width="15" height="18" rx="3" fill="#e9edf2" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1000" y="522.0" width="15" height="18" rx="3" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1023" y="522.0" width="15" height="18" rx="3" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1046" y="522.0" width="15" height="18" rx="3" fill="#e9edf2" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1069" y="522.0" width="15" height="18" rx="3" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="862" y="548.1" width="15" height="18" rx="3" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="885" y="548.1" width="15" height="18" rx="3" fill="#e9edf2" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="908" y="548.1" width="15" height="18" rx="3" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="931" y="548.1" width="15" height="18" rx="3" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="954" y="548.1" width="15" height="18" rx="3" fill="#e9edf2" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="977" y="548.1" width="15" height="18" rx="3" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1000" y="548.1" width="15" height="18" rx="3" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1023" y="548.1" width="15" height="18" rx="3" fill="#e9edf2" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1046" y="548.1" width="15" height="18" rx="3" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1069" y="548.1" width="15" height="18" rx="3" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="862" y="574.2" width="15" height="18" rx="3" fill="#e9edf2" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="885" y="574.2" width="15" height="18" rx="3" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="908" y="574.2" width="15" height="18" rx="3" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="931" y="574.2" width="15" height="18" rx="3" fill="#e9edf2" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="954" y="574.2" width="15" height="18" rx="3" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="977" y="574.2" width="15" height="18" rx="3" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1000" y="574.2" width="15" height="18" rx="3" fill="#e9edf2" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1023" y="574.2" width="15" height="18" rx="3" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1046" y="574.2" width="15" height="18" rx="3" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1069" y="574.2" width="15" height="18" rx="3" fill="#e9edf2" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="862" y="600.3" width="15" height="18" rx="3" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="885" y="600.3" width="15" height="18" rx="3" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="908" y="600.3" width="15" height="18" rx="3" fill="#e9edf2" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="931" y="600.3" width="15" height="18" rx="3" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="954" y="600.3" width="15" height="18" rx="3" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="977" y="600.3" width="15" height="18" rx="3" fill="#e9edf2" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1000" y="600.3" width="15" height="18" rx="3" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1023" y="600.3" width="15" height="18" rx="3" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1046" y="600.3" width="15" height="18" rx="3" fill="#e9edf2" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1069" y="600.3" width="15" height="18" rx="3" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="862" y="626.4" width="15" height="18" rx="3" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="885" y="626.4" width="15" height="18" rx="3" fill="#e9edf2" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="908" y="626.4" width="15" height="18" rx="3" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="931" y="626.4" width="15" height="18" rx="3" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="954" y="626.4" width="15" height="18" rx="3" fill="#e9edf2" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="977" y="626.4" width="15" height="18" rx="3" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1000" y="626.4" width="15" height="18" rx="3" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1023" y="626.4" width="15" height="18" rx="3" fill="#e9edf2" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1046" y="626.4" width="15" height="18" rx="3" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1069" y="626.4" width="15" height="18" rx="3" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="862" y="652.5" width="15" height="18" rx="3" fill="#e9edf2" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="885" y="652.5" width="15" height="18" rx="3" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="908" y="652.5" width="15" height="18" rx="3" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="931" y="652.5" width="15" height="18" rx="3" fill="#e9edf2" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="954" y="652.5" width="15" height="18" rx="3" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="977" y="652.5" width="15" height="18" rx="3" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1000" y="652.5" width="15" height="18" rx="3" fill="#e9edf2" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1023" y="652.5" width="15" height="18" rx="3" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1046" y="652.5" width="15" height="18" rx="3" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
+  <rect x="1069" y="652.5" width="15" height="18" rx="3" fill="#e9edf2" stroke="#d9e3ef" stroke-width="1.8"/>
+  <text x="981.5" y="718" font-family="Nimbus Sans" font-size="21" font-weight="400" fill="#52627b" text-anchor="middle" xml:space="preserve">Molti messaggi osservati</text>
+  </g>
+  <path d="M1344 410 V456" fill="none" stroke="#4264d0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#new-arrow-{{N}})"/>
+  <text x="1344" y="518" font-family="Nimbus Sans" font-size="30" font-weight="700" fill="#182536" text-anchor="middle" xml:space="preserve">Quali evidenze</text><text x="1344" y="565" font-family="Nimbus Sans" font-size="30" font-weight="700" fill="#182536" text-anchor="middle" xml:space="preserve">giustificano</text><text x="1344" y="612" font-family="Nimbus Sans" font-size="30" font-weight="700" fill="#182536" text-anchor="middle" xml:space="preserve">questo esito?</text><text x="112" y="842" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627b" text-anchor="start" xml:space="preserve">Per automatizzare la verifica, i criteri SCAS vanno formalizzati in codice.</text>
+  <path d="M409 610 H440 V423 H618 V408" fill="none" stroke="#4264d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#new-arrow-{{N}})" id="scas-actions-to-test"/></svg>
+  <template class="speaker-note">Una volta eseguita una di queste prove è quindi necessario valutare se il comportamento osservato sia conforme a quanto previsto dalla specifica.
+  Tra le evidenze disponibili possiamo avere una cattura del traffico di rete, in formato PCAP, insieme al verdetto ottenuto dal test. Il problema, però, è che la disponibilità di queste informazioni non rende necessariamente evidenti le motivazioni che hanno portato a quel risultato.
+  Infatti, all&#x27;interno della cattura sono presenti numerosi messaggi, tra cui anche quelli rilevanti per il test in esame, ma la cattura, da sola, non indica quali di questi messaggi siano stati utilizzati per la verifica, né quali condizioni siano state effettivamente soddisfatte o violate.
+  L&#x27;esigenza da cui nasce questo lavoro è quindi quella di rendere più esplicito e ricostruibile il legame tra il verdetto e le evidenze che lo giustificano.
+  L&#x27;idea è ottenere un risultato di verifica accompagnato da un report strutturato, che documenti i criteri valutati, le informazioni osservate e gli elementi della cattura che hanno contribuito a determinare quel risultato.</template>
+  </section>

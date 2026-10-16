@@ -1,0 +1,57 @@
+<!-- SLIDE 5: analogia OpenAPI (altro dominio) e contributo DSL SCAS. -->
+<section class="slide" id="slide-{{N}}" data-title="Una DSL per i test SCAS" data-seconds="40" aria-label="{{N}} di {{TOTAL}}: Una DSL per i test SCAS">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title-{{N}}">
+<title id="title-{{N}}">Una DSL per i test SCAS</title>
+<defs>
+  <marker id="analogy-arrow-{{N}}" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto"><path d="M3 2 L11 7 L3 12" fill="none" stroke="#8b9cb2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="dsl-arrow-{{N}}" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto"><path d="M3 2 L11 7 L3 12" fill="none" stroke="#4264d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+<rect x="0" y="0" width="1600" height="900" fill="#FFFFFF"/>
+<text x="112" y="92" font-family="Nimbus Sans" font-size="18" fill="#52627b">INTRODUZIONE</text>
+<text x="1488" y="92" font-family="Nimbus Sans" font-size="18" fill="#52627b" text-anchor="end">{{NN}} / {{TOTAL}}</text>
+<text x="112" y="167" font-family="Nimbus Sans" font-size="54" font-weight="700" fill="#182536">Una DSL per i test SCAS</text>
+<text x="112" y="222" font-family="Nimbus Sans" font-size="27" fill="#52627b">OpenAPI è un esempio esterno: mostra il valore di una specifica formale.</text>
+<!-- PANNELLO SINISTRO: soltanto un'analogia esterna. Il codice deriva dal file YAML dedicato. -->
+<g id="openapi-example-panel">
+  <rect x="112" y="296" width="470" height="493" rx="13" fill="#fbfcfe" stroke="#d9e3ef" stroke-width="1.8"/>
+  <text x="142" y="336" font-family="Nimbus Sans" font-size="18" font-weight="700" letter-spacing="1.1" fill="#52627b">ESEMPIO ESTERNO · ALTRO DOMINIO</text>
+  <text x="142" y="389" font-family="Nimbus Sans" font-size="36" font-weight="700" fill="#52627b">OpenAPI</text>
+  <text x="142" y="425" font-family="Nimbus Sans" font-size="23" fill="#52627b">Descrive interfacce HTTP in YAML</text>
+  <rect x="136" y="448" width="421" height="281" rx="9" fill="#f2f5f9"/>
+  <foreignObject x="155" y="464" width="385" height="250">
+    <div xmlns="http://www.w3.org/1999/xhtml"><pre id="openapi-example" class="openapi-example">{{OPENAPI_EXAMPLE}}</pre></div>
+  </foreignObject>
+  <text x="142" y="758" font-family="Nimbus Sans" font-size="20" fill="#52627b">Non è la DSL della tesi.</text>
+</g>
+<!-- PONTE CONCETTUALE: un'analogia, non una trasformazione OpenAPI->DSL. -->
+<g id="analogy-bridge">
+  <text x="667" y="460" font-family="Nimbus Sans" font-size="19" font-weight="700" text-anchor="middle" fill="#52627b">IDEA COMUNE</text>
+  <text x="667" y="494" font-family="Nimbus Sans" font-size="19" text-anchor="middle" fill="#52627b">descrizione</text>
+  <text x="667" y="521" font-family="Nimbus Sans" font-size="19" text-anchor="middle" fill="#52627b">formale</text>
+  <path d="M604 548 H721" fill="none" stroke="#8b9cb2" stroke-width="2.3" stroke-linecap="round" marker-end="url(#analogy-arrow-{{N}})"/>
+  <text x="667" y="588" font-family="Nimbus Sans" font-size="17" text-anchor="middle" fill="#52627b">Scopi diversi</text>
+</g>
+<!-- PANNELLO PRINCIPALE: il contributo di questa tesi è la DSL SCAS. -->
+<g id="designed-language-panel">
+  <rect x="752" y="296" width="736" height="493" rx="13" fill="#FFFFFF" stroke="#aac8bd" stroke-width="2.2"/>
+  <text x="786" y="341" font-family="Nimbus Sans" font-size="20" font-weight="700" letter-spacing="1" fill="#278766">IL CONTRIBUTO DELLA TESI</text>
+  <text x="786" y="391" font-family="Nimbus Sans" font-size="36" font-weight="700" fill="#182536">DSL per verificare i test SCAS</text>
+  <text x="786" y="430" font-family="Nimbus Sans" font-size="23" fill="#52627b">Formalizza evidenze e criteri da controllare.</text>
+  <rect x="785" y="462" width="670" height="129" rx="10" fill="#f4f7ff" stroke="#d9e3ef" stroke-width="1.4"/>
+  <text x="808" y="501" font-family="Nimbus Sans" font-size="27" font-weight="700" fill="#4264d0">1 · SELEZIONE DELLE EVIDENZE</text>
+  <text x="808" y="534" font-family="Nimbus Sans" font-size="22" fill="#52627b">Quali messaggi cercare, in che ordine o gruppo</text>
+  <text x="852" y="573" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#4264d0">A</text>
+  <path d="M880 564 H925" stroke="#4264d0" stroke-width="2.2" fill="none" marker-end="url(#dsl-arrow-{{N}})"/>
+  <text x="952" y="573" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#4264d0">B</text>
+  <path d="M980 564 H1025" stroke="#4264d0" stroke-width="2.2" fill="none" marker-end="url(#dsl-arrow-{{N}})"/>
+  <text x="1052" y="573" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#4264d0">C</text>
+  <rect x="785" y="613" width="670" height="131" rx="10" fill="#f0f8f4" stroke="#cae3d7" stroke-width="1.4"/>
+  <text x="808" y="653" font-family="Nimbus Sans" font-size="27" font-weight="700" fill="#278766">2 · VERIFICA DEI CRITERI</text>
+  <text x="808" y="686" font-family="Nimbus Sans" font-size="22" fill="#52627b">Valori, unicità, condizioni e vincoli temporali</text>
+  <text x="808" y="720" font-family="DejaVu Sans Mono" font-size="20" fill="#278766">REQUIRE</text>
+  <text x="1045" y="720" font-family="DejaVu Sans Mono" font-size="20" fill="#278766">MFOTL / MonPoly</text>
+</g>
+<text x="112" y="852" font-family="Nimbus Sans" font-size="23" fill="#52627b">I criteri SCAS sono formalizzati dal progettista; il motore li verifica sulle evidenze.</text>
+</svg>
+<template class="speaker-note">Come possiamo rendere espliciti i criteri di un test SCAS, invece di riscrivere la logica per ogni verifica? Per introdurre l&#x27;idea guardiamo prima un esempio che appartiene a un altro dominio: OpenAPI. La sua specifica YAML permette di descrivere in forma strutturata le interfacce di un&#x27;API, per esempio percorso, metodo e risposta. OpenAPI non è il linguaggio sviluppato in questa tesi e il frammento non descrive un test di sicurezza: serve solo a mostrare il vantaggio di una descrizione formale interpretabile da strumenti software. Nel nostro dominio proponiamo una DSL che formalizza due aspetti: quali eventi del traffico sono evidenze pertinenti al test e quali criteri verificarvi, inclusi valori e proprietà temporali. La traduzione dei criteri SCAS in DSL è manuale, affidata al progettista; una volta scritta la regola, la pipeline la esegue e produce un risultato motivato.</template>
+</section>

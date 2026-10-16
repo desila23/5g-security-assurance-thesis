@@ -53,7 +53,9 @@
   // Un solo percorso coordina passi, tastiera, pulsanti e swipe.
   function navigate(direction){
     if(window.ThesisSteps && window.ThesisSteps.navigate(direction,slides[current]))return;
-    show(current+direction);
+    const target=Math.min(slides.length-1,Math.max(0,current+direction));
+    if(target===current)return;
+    show(target);
   }
   window.ThesisDeck={show,next:()=>navigate(1),previous:()=>navigate(-1),get current(){return current;}};
   // Modalità di resa: stessa pagina e stessi SVG a dimensione esatta.
@@ -91,7 +93,7 @@
     if(event.defaultPrevented)return;
     if(event.repeat && ['ArrowRight','ArrowLeft','PageDown','PageUp',' '].includes(event.key)){event.preventDefault();return;}
     if(event.altKey||event.ctrlKey||event.metaKey||event.target.closest('input,textarea,select,[contenteditable="true"]'))return;
-    if(outline.open||document.getElementById('speaker-notes').open||document.getElementById('resstar-rule-dialog').open||document.getElementById('amf-rule-dialog').open)return;
+    if(document.querySelector('dialog[open]'))return;
     if(['ArrowRight','PageDown',' '].includes(event.key)){event.preventDefault();navigate(1);}
     else if(['ArrowLeft','PageUp'].includes(event.key)){event.preventDefault();navigate(-1);}
     else if(event.key==='Home'){event.preventDefault();show(0);}
@@ -130,13 +132,3 @@
   document.getElementById('close-notes').addEventListener('click',()=>{notesDialog.close();document.getElementById('notes-button').focus();});
   fit();show(hashIndex(),false);
 })();
-
-(() => {
- const dialog=document.getElementById('resstar-rule-dialog');
- const open=document.getElementById('open-resstar-rule');
- const close=document.getElementById('close-resstar-rule');
- open.addEventListener('click',()=>dialog.showModal());
- close.addEventListener('click',()=>{dialog.close();open.focus();});
-})();
-
-(() => {const d=document.getElementById('amf-rule-dialog'),o=document.getElementById('open-amf-rule');o.addEventListener('click',()=>d.showModal());document.getElementById('close-amf-rule').addEventListener('click',()=>{d.close();o.focus();});})();

@@ -1,0 +1,57 @@
+<!-- SLIDE 1: titolo — contenuto e geometria modificabili qui. -->
+  <section class="slide" id="slide-{{N}}" data-title="Titolo della tesi" data-seconds="20" aria-label="{{N}} di {{TOTAL}}: Titolo della tesi">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title-{{N}}">
+  <title id="title-{{N}}">Titolo della tesi</title>
+  <defs>
+  <filter id="shadow-{{N}}" x="-20%" y="-40%" width="140%" height="180%">
+  <feDropShadow dx="0" dy="7" stdDeviation="11" flood-color="#203653" flood-opacity=".055"/>
+  </filter>
+  <marker id="arrow-{{N}}-gray" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#99a7bb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-gray"/>
+  </marker>
+  <marker id="arrow-{{N}}-blue" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#4264d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-blue"/>
+  </marker>
+  <marker id="arrow-{{N}}-green" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#278766" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-green"/>
+  </marker>
+  <marker id="arrow-{{N}}-amber" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#9d7139" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-amber"/>
+  </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#FFFFFF"/>
+  <image href="assets/logo.png" x="112" y="65" width="420" height="100" preserveAspectRatio="xMidYMid meet"/>
+  <text x="112" y="210" xml:space="preserve" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#4264d0" text-anchor="start" class="svg-text fill-blue">Corso di laurea in Informatica</text>
+  <text x="112" y="316" xml:space="preserve" font-family="Nimbus Sans" font-size="53" font-weight="700" fill="#1c2a40" text-anchor="start" class="svg-text fill-ink">A Domain-Specific Language</text>
+  <text x="112" y="377" xml:space="preserve" font-family="Nimbus Sans" font-size="53" font-weight="700" fill="#1c2a40" text-anchor="start" class="svg-text fill-ink">for Security Assurance</text>
+  <text x="112" y="438" xml:space="preserve" font-family="Nimbus Sans" font-size="53" font-weight="700" fill="#1c2a40" text-anchor="start" class="svg-text fill-ink">of 5G SCAS Tests</text>
+  <text x="112" y="499" xml:space="preserve" font-family="Nimbus Sans" font-size="53" font-weight="700" fill="#1c2a40" text-anchor="start" class="svg-text fill-ink">from Network Traffic Captures</text>
+  <text x="112" y="657" xml:space="preserve" font-family="Nimbus Sans" font-size="22" font-weight="400" fill="#65758b" text-anchor="start" class="svg-text fill-muted">Laureando</text>
+  <text x="112" y="698" xml:space="preserve" font-family="Nimbus Sans" font-size="30" font-weight="700" fill="#1c2a40" text-anchor="start" class="svg-text fill-ink">Samuele De Santis</text>
+  <text x="112" y="758" xml:space="preserve" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-text fill-ink">Relatrice: Prof.ssa Paola Vocca</text>
+  <text x="112" y="798" xml:space="preserve" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-text fill-ink">Correlatore: Dott. Francesco Mancini</text>
+  <text x="112" y="847" xml:space="preserve" font-family="Nimbus Sans" font-size="24" font-weight="400" fill="#65758b" text-anchor="start" class="svg-text fill-muted">Anno accademico 2025/2026</text>
+  <rect x="1280" y="307" width="196" height="94" rx="22" fill="#fff" stroke="#d5dff0" stroke-width="1.5" filter="url(#shadow-{{N}})" id="node-1-cover-pcap" class="diagram-card fill-white stroke-line"/>
+  <text x="1378.0" y="349.0" xml:space="preserve" font-family="Nimbus Sans" font-size="31" font-weight="700" fill="#1c2a40" text-anchor="middle" class="svg-text fill-ink">PCAP</text>
+  <text x="1378.0" y="384.0" xml:space="preserve" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#65758b" text-anchor="middle" class="svg-text fill-muted">cattura di rete</text>
+  <rect x="1044" y="307" width="196" height="94" rx="22" fill="#f0f4ff" stroke="#d5dff0" stroke-width="1.5" filter="url(#shadow-{{N}})" id="node-1-cover-dsl" class="diagram-card fill-pale stroke-line"/>
+  <text x="1142.0" y="349.0" xml:space="preserve" font-family="Nimbus Sans" font-size="31" font-weight="700" fill="#4264d0" text-anchor="middle" class="svg-text fill-blue">DSL</text>
+  <text x="1142.0" y="384.0" xml:space="preserve" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#65758b" text-anchor="middle" class="svg-text fill-muted">regole del test</text>
+  <path d="M1142 417 L1142 443 L1378 443 L1378 417" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" class="stroke-gray"/>
+  <path d="M1260 443 L1260 477" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-gray)" class="connector stroke-gray"/>
+  <rect x="1056" y="490" width="408" height="100" rx="22" fill="#fff7e9" stroke="#d5dff0" stroke-width="1.5" filter="url(#shadow-{{N}})" id="node-1-cover-verdict" class="diagram-card fill-sand stroke-line"/>
+  <text x="1260.0" y="535.0" xml:space="preserve" font-family="Nimbus Sans" font-size="30" font-weight="700" fill="#9d7139" text-anchor="middle" class="svg-text fill-amber">VERDETTO</text>
+  <text x="1260.0" y="570.0" xml:space="preserve" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#65758b" text-anchor="middle" class="svg-text fill-muted">PASS · FAIL · INCONCLUSIVE</text>
+  <path d="M1260 606 L1260 647" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-gray)" class="connector stroke-gray"/>
+  <rect x="1080" y="662" width="360" height="92" rx="22" fill="#eef8f3" stroke="#d5dff0" stroke-width="1.5" filter="url(#shadow-{{N}})" id="node-1-cover-report" class="diagram-card fill-mint stroke-line"/>
+  <text x="1260.0" y="703.0" xml:space="preserve" font-family="Nimbus Sans" font-size="31" font-weight="700" fill="#278766" text-anchor="middle" class="svg-text fill-green">REPORT</text>
+  <text x="1260.0" y="738.0" xml:space="preserve" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#65758b" text-anchor="middle" class="svg-text fill-muted">criteri ed evidenze</text>
+  <!-- SOTTOTITOLO SLIDE 01: modifica le scritte nel gruppo seguente. Guida: GUIDA_TESTI.md. -->
+  <g id="slide-subtitle-{{N}}">
+  <foreignObject x="112" y="528" width="880" height="78">
+  <div xmlns="http://www.w3.org/1999/xhtml" style="font-family:Nimbus Sans,Arial,sans-serif;font-size:20px;line-height:1.25;color:#52627b;white-space:normal;margin:0">Un linguaggio per descrivere i criteri SCAS e verificarli sui messaggi osservati nelle catture di rete.</div>
+  </foreignObject>
+  </g>
+  </svg>
+  <template class="speaker-note">Buongiorno, oggi vi presenterò il lavoro svolto per la mia tesi, che riguarda la progettazione di un linguaggio per verificare gli esiti dei test di sicurezza SCAS del 5G, utilizzando come evidenze le catture di traffico di rete.</template>
+  </section>

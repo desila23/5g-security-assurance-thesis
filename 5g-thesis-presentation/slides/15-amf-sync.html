@@ -1,0 +1,54 @@
+<!-- SLIDE 15: amf-sync — contenuto e geometria modificabili qui. -->
+  <section class="slide" id="slide-{{N}}" data-title="AMF Synchronization Failure, Case B" data-seconds="55" aria-label="{{N}} di {{TOTAL}}: AMF Synchronization Failure, Case B" >
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title-{{N}}">
+  <title id="title-{{N}}">AMF Synchronization Failure, Case B</title>
+  <defs>
+  <filter id="shadow-{{N}}" x="-20%" y="-40%" width="140%" height="180%">
+  <feDropShadow dx="0" dy="7" stdDeviation="11" flood-color="#203653" flood-opacity=".055"/>
+  </filter>
+  <marker id="arrow-{{N}}-gray" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#99a7bb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-gray"/>
+  </marker>
+  <marker id="arrow-{{N}}-blue" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#4264d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-blue"/>
+  </marker>
+  <marker id="arrow-{{N}}-green" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#278766" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-green"/>
+  </marker>
+  <marker id="arrow-{{N}}-amber" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#9d7139" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-amber"/>
+  </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#FFFFFF"/>
+  <text x="112" y="167" font-family="Nimbus Sans" font-size="54" font-weight="700" fill="#1C2A40" text-anchor="start" xml:space="preserve" >AMF Synchronization Failure, Case B</text>
+  <rect x="112" y="303" width="455" height="522" rx="20" fill="#FFFFFF" stroke="#D9E3EF" stroke-width="1.5" />
+  <text x="138" y="340" font-family="Nimbus Sans" font-size="22" font-weight="400" fill="#52627B" text-anchor="start" xml:space="preserve" >Estratto DSL · parti omesse</text><text x="138" y="383" font-family="DejaVu Sans Mono" class="svg-mono code-line" font-size="20" xml:space="preserve"><tspan fill="#1C2A40" font-weight="400"></tspan><tspan fill="#4264d0" font-weight="700">SEQUENCE</tspan><tspan fill="#1C2A40" font-weight="400"> {</tspan></text><text x="138" y="415" font-family="DejaVu Sans Mono" class="svg-mono code-line" font-size="20" xml:space="preserve"><tspan fill="#1C2A40" font-weight="400">  …</tspan></text><text x="138" y="447" font-family="DejaVu Sans Mono" class="svg-mono code-line" font-size="20" xml:space="preserve"><tspan fill="#1C2A40" font-weight="400">  nas.authentication_failure</tspan></text><text x="138" y="479" font-family="DejaVu Sans Mono" class="svg-mono code-line" font-size="20" xml:space="preserve"><tspan fill="#1C2A40" font-weight="400">    </tspan><tspan fill="#4264d0" font-weight="400">AS</tspan><tspan fill="#1C2A40" font-weight="400"> sync_failure</tspan></text><text x="138" y="511" font-family="DejaVu Sans Mono" class="svg-mono code-line" font-size="20" xml:space="preserve"><tspan fill="#1C2A40" font-weight="400">  …</tspan></text><text x="138" y="543" font-family="DejaVu Sans Mono" class="svg-mono code-line" font-size="20" xml:space="preserve"><tspan fill="#1C2A40" font-weight="400">}</tspan></text><text x="138" y="575" font-family="DejaVu Sans Mono" class="svg-mono code-line" font-size="20" xml:space="preserve"><tspan fill="#1C2A40" font-weight="400"></tspan><tspan fill="#278766" font-weight="700">REQUIRE</tspan><tspan fill="#1C2A40" font-weight="400"> sync_failure.cause == 21</tspan></text><text x="138" y="607" font-family="DejaVu Sans Mono" class="svg-mono code-line" font-size="20" xml:space="preserve"><tspan fill="#1C2A40" font-weight="400">…</tspan></text><text x="138" y="639" font-family="DejaVu Sans Mono" class="svg-mono code-line" font-size="20" xml:space="preserve"><tspan fill="#1C2A40" font-weight="400"></tspan><tspan fill="#278766" font-weight="700">MFOTL</tspan><tspan fill="#1C2A40" font-weight="400"> </tspan><tspan fill="#278766" font-weight="400">CASE</tspan><tspan fill="#1C2A40" font-weight="400"> B &quot;&quot;&quot;</tspan></text><text x="138" y="671" font-family="DejaVu Sans Mono" class="svg-mono code-line" font-size="20" xml:space="preserve"><tspan fill="#1C2A40" font-weight="400">  SyncFailure() </tspan><tspan fill="#278766" font-weight="400">IMPLIES</tspan><tspan fill="#1C2A40" font-weight="400"></tspan></text><text x="138" y="703" font-family="DejaVu Sans Mono" class="svg-mono code-line" font-size="20" xml:space="preserve"><tspan fill="#1C2A40" font-weight="400">  </tspan><tspan fill="#278766" font-weight="400">NOT</tspan><tspan fill="#1C2A40" font-weight="400"> </tspan><tspan fill="#278766" font-weight="400">EVENTUALLY</tspan><tspan fill="#1C2A40" font-weight="400">[0,{TIMER_MS}]</tspan></text><text x="138" y="735" font-family="DejaVu Sans Mono" class="svg-mono code-line" font-size="20" xml:space="preserve"><tspan fill="#1C2A40" font-weight="400">    AuthenticationRequest()</tspan></text><text x="138" y="767" font-family="DejaVu Sans Mono" class="svg-mono code-line" font-size="20" xml:space="preserve"><tspan fill="#1C2A40" font-weight="400">&quot;&quot;&quot;</tspan></text>
+  <rect x="630" y="303" width="858" height="162" rx="20" fill="#eef8f3" stroke="#D9E3EF" stroke-width="1.5" />
+  <text x="665" y="345" font-family="Nimbus Sans" font-size="29" font-weight="700" fill="#1C2A40" text-anchor="start" xml:space="preserve" >Verdetto complessivo</text><text x="665" y="390" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="start" xml:space="preserve" >4 controlli statici: PASS</text><text x="665" y="429" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="start" xml:space="preserve" >1 controllo temporale: PASS</text><text x="1448" y="417" font-family="Nimbus Sans" font-size="78" font-weight="700" fill="#278766" text-anchor="end" xml:space="preserve" >PASS</text>
+  <rect x="630" y="494" width="858" height="331" rx="12" fill="white" stroke="#d9e3ef" stroke-width="1.8" />
+  <text x="659" y="542" font-family="Nimbus Sans" font-size="33" font-weight="700" fill="#4264d0" text-anchor="start" xml:space="preserve" >T3520 = 15 s</text><text x="659" y="582" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve" >Nessuna nuova Authentication Request nei primi 15 s.</text>
+  <rect x="690" y="617" width="399" height="65" rx="6" fill="#f5f7fb" stroke="none" stroke-width="1.8" />
+  <text x="889" y="649" font-family="Nimbus Sans" font-size="22" font-weight="400" fill="#4264d0" text-anchor="middle" xml:space="preserve" >Finestra senza nuove richieste</text>
+  <path d="M690 680 H1417" fill="none" stroke="#52627b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M1090 612 V698" fill="none" stroke="#4264d0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 7"/>
+  <circle cx="690" cy="680" r="7" fill="#4264d0"/>
+  <circle cx="1356" cy="680" r="7" fill="#278766"/>
+  <text x="690" y="723" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#4264d0" text-anchor="middle" xml:space="preserve" >0 s</text><text x="1090" y="723" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#4264d0" text-anchor="middle" xml:space="preserve" >15 s</text><text x="1356" y="723" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="middle" xml:space="preserve" >25,018 s</text><text x="659" y="764" font-family="Nimbus Sans" font-size="23" font-weight="700" fill="#182536" text-anchor="start" xml:space="preserve" >Frame 358</text><text x="659" y="796" font-family="Nimbus Sans" font-size="21" font-weight="400" fill="#52627b" text-anchor="start" xml:space="preserve" >Sync Failure</text><text x="1345" y="764" font-family="Nimbus Sans" font-size="23" font-weight="700" fill="#182536" text-anchor="middle" xml:space="preserve" >Frame 606</text><text x="1345" y="796" font-family="Nimbus Sans" font-size="21" font-weight="400" fill="#52627b" text-anchor="middle" xml:space="preserve" >Authentication Request</text><text x="1059" y="864" font-family="Nimbus Sans" font-size="29" font-weight="700" fill="#278766" text-anchor="middle" xml:space="preserve" >Intervallo osservato: 25,018 s (&gt;15 s)</text>
+  <g id="slide-subtitle-{{N}}" >
+  <text x="112" y="222" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627B" text-anchor="start" xml:space="preserve" >AMF: quattro controlli statici e il vincolo T3520 soddisfatti.</text>
+  </g>
+  <text x="1488" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627B" text-anchor="end" xml:space="preserve" >{{NN}} / {{TOTAL}}</text><text x="112" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627B" text-anchor="start" xml:space="preserve" >TEST E BASELINE</text>
+  </svg>
+  <div class="rule-action amf-rule-action">
+  <button type="button" id="open-amf-rule">Regola DSL completa</button>
+  </div>
+  <template class="speaker-note">Per valutare il sistema sono stati considerati diversi casi di test SCAS.
+  Tra questi, vorrei soffermarmi su tre esempi particolarmente rappresentativi, perché permettono di mostrare come i diversi costrutti della DSL vengono utilizzati in situazioni concrete.
+  Il primo esempio riguarda il test _AMF Synchronization Failure, Case B_.
+  Durante la procedura di autenticazione, può verificarsi un errore di sincronizzazione tra il dispositivo e la rete. In questa situazione, l&#x27;AMF deve gestire il fallimento rispettando le condizioni previste dalla specifica, tra cui alcuni vincoli temporali.
+  Attraverso `SEQUENCE` vengono individuati i messaggi della procedura di risincronizzazione, mentre le condizioni `REQUIRE` permettono di controllare la coerenza dei parametri scambiati.
+  In questo caso, però, non basta verificare i valori, perché è necessario rispettare anche un vincolo temporale.
+  La proprietà MFOTL richiede che, dopo il messaggio di _Synchronization Failure_, non venga osservata una nuova _Authentication Request_ nei primi 15 secondi.
+  Nella cattura analizzata, tra il messaggio al frame 358 e la nuova richiesta al frame 606 trascorrono circa 25 secondi, quindi il vincolo risulta soddisfatto.
+  Anche i quattro controlli statici hanno restituito esito positivo, producendo quindi un verdetto complessivo `PASS`.</template>
+  </section>

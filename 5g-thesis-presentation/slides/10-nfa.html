@@ -1,0 +1,162 @@
+<!-- SLIDE 10: nfa — contenuto e geometria modificabili qui. -->
+  <section class="slide" id="slide-{{N}}" data-step-kind="construction" data-title="Dalla regola all’automa" data-seconds="90" aria-label="{{N}} di {{TOTAL}}: Dalla regola all’automa" >
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title-{{N}}">
+  <title id="title-{{N}}">Dalla regola all’automa</title>
+  <defs>
+  <filter id="shadow-{{N}}" x="-20%" y="-40%" width="140%" height="180%">
+  <feDropShadow dx="0" dy="7" stdDeviation="11" flood-color="#203653" flood-opacity=".055"/>
+  </filter>
+  <marker id="arrow-{{N}}-gray" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#99a7bb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-gray"/>
+  </marker>
+  <marker id="arrow-{{N}}-blue" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#4264d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-blue"/>
+  </marker>
+  <marker id="arrow-{{N}}-green" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#278766" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-green"/>
+  </marker>
+  <marker id="arrow-{{N}}-amber" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#9d7139" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-amber"/>
+  </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#FFFFFF"/>
+  <text x="112" y="167" xml:space="preserve" font-family="Nimbus Sans" font-size="54" font-weight="700" fill="#1c2a40" text-anchor="start" class="svg-text fill-ink">Dalla regola all’automa</text>
+  <text x="112" y="344" xml:space="preserve" font-family="Nimbus Sans" font-size="24" font-weight="700" fill="#4264d0" text-anchor="start" class="svg-text fill-blue">REGOLA</text>
+  <text x="505" y="344" xml:space="preserve" font-family="Nimbus Sans" font-size="24" font-weight="700" fill="#4264d0" text-anchor="start" class="svg-text fill-purple">FRAMMENTI ELEMENTARI</text>
+  <text x="996" y="344" xml:space="preserve" font-family="Nimbus Sans" font-size="24" font-weight="700" fill="#278766" text-anchor="start" class="svg-text fill-green">AUTOMA COMPLETO</text>
+  <g id="construction-rule" data-part="Regola allineata agli Atom, versione attiva">
+  <rect x="112" y="373" width="313" height="397" rx="22" fill="#fff" stroke="#d5dff0" stroke-width="1.5" class="diagram-card fill-white stroke-line"/>
+  <text x="136" y="410" xml:space="preserve" class="code-line svg-mono" font-family="DejaVu Sans Mono" font-size="24"><tspan fill="#1c2a40" font-weight="400" class="fill-ink"/><tspan fill="#4264d0" font-weight="700" class="fill-blue">SEQUENCE</tspan><tspan fill="#1c2a40" font-weight="400" class="fill-ink"> {</tspan></text>
+  <text id="construction-code-a" x="164.898" y="444" xml:space="preserve" class="code-line svg-mono" font-family="DejaVu Sans Mono" font-size="24"><tspan fill="#1c2a40" font-weight="400" class="fill-ink">event.a </tspan><tspan fill="#4264d0" font-weight="700" class="fill-purple">AS</tspan><tspan fill="#1c2a40" font-weight="400" class="fill-ink"> a</tspan></text>
+  <text x="136" y="542" xml:space="preserve" class="code-line svg-mono" font-family="DejaVu Sans Mono" font-size="24"><tspan fill="#1c2a40" font-weight="400" class="fill-ink">  </tspan><tspan fill="#4264d0" font-weight="700" class="fill-blue">OPTIONAL</tspan><tspan fill="#1c2a40" font-weight="400" class="fill-ink"> {</tspan></text>
+  <text id="construction-code-b" x="193.797" y="578" xml:space="preserve" class="code-line svg-mono" font-family="DejaVu Sans Mono" font-size="24"><tspan fill="#1c2a40" font-weight="400" class="fill-ink">event.b </tspan><tspan fill="#4264d0" font-weight="700" class="fill-purple">AS</tspan><tspan fill="#1c2a40" font-weight="400" class="fill-ink"> b</tspan></text>
+  <text x="136" y="612" xml:space="preserve" class="code-line svg-mono" font-family="DejaVu Sans Mono" font-size="24"><tspan fill="#1c2a40" font-weight="400" class="fill-ink">  }</tspan></text>
+  <text id="construction-code-c" x="164.898" y="712" xml:space="preserve" class="code-line svg-mono" font-family="DejaVu Sans Mono" font-size="24"><tspan fill="#1c2a40" font-weight="400" class="fill-ink">event.c </tspan><tspan fill="#4264d0" font-weight="700" class="fill-purple">AS</tspan><tspan fill="#1c2a40" font-weight="400" class="fill-ink"> c</tspan></text>
+  <text x="136" y="744" xml:space="preserve" class="code-line svg-mono" font-family="DejaVu Sans Mono" font-size="24"><tspan fill="#1c2a40" font-weight="400" class="fill-ink">}</tspan></text>
+  <path id="construction-link-a" d="M442 443 L488 443" fill="none" stroke="#4264d0" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-blue)" class="connector stroke-blue"/>
+  <path id="construction-link-b" d="M442 577 L488 577" fill="none" stroke="#4264d0" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-blue)" class="connector stroke-blue"/>
+  <path id="construction-link-c" d="M442 711 L488 711" fill="none" stroke="#4264d0" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-blue)" class="connector stroke-blue"/>
+  </g>
+  <!-- ALTERNATIVA REGOLA COMPATTA V6: commenta construction-rule attivo e rimuovi questo commento per ripristinare regola e frecce precedenti. -->
+  <!--
+  <g>
+  <g id="construction-rule" data-part="Regola compatta alternativa">
+  <rect x="112" y="373" width="313" height="279" rx="22" fill="#fff" stroke="#d5dff0" stroke-width="1.5"/>
+  <text x="136" y="410" xml:space="preserve" class="code-line" font-family="DejaVu Sans Mono" font-size="24"><tspan fill="#1c2a40" font-weight="400"/><tspan fill="#4264d0" font-weight="700">SEQUENCE</tspan><tspan fill="#1c2a40" font-weight="400"> {</tspan></text>
+  <text id="construction-code-a" x="164.898" y="444" xml:space="preserve" class="code-line" font-family="DejaVu Sans Mono" font-size="24"><tspan fill="#1c2a40" font-weight="400">event.a </tspan><tspan fill="#4264d0" font-weight="700">AS</tspan><tspan fill="#1c2a40" font-weight="400"> a</tspan></text>
+  <text x="136" y="478" xml:space="preserve" class="code-line" font-family="DejaVu Sans Mono" font-size="24"><tspan fill="#1c2a40" font-weight="400">  </tspan><tspan fill="#4264d0" font-weight="700">OPTIONAL</tspan><tspan fill="#1c2a40" font-weight="400"> {</tspan></text>
+  <text id="construction-code-b" x="193.797" y="512" xml:space="preserve" class="code-line" font-family="DejaVu Sans Mono" font-size="24"><tspan fill="#1c2a40" font-weight="400">event.b </tspan><tspan fill="#4264d0" font-weight="700">AS</tspan><tspan fill="#1c2a40" font-weight="400"> b</tspan></text>
+  <text x="136" y="546" xml:space="preserve" class="code-line" font-family="DejaVu Sans Mono" font-size="24"><tspan fill="#1c2a40" font-weight="400">  }</tspan></text>
+  <text id="construction-code-c" x="164.898" y="580" xml:space="preserve" class="code-line" font-family="DejaVu Sans Mono" font-size="24"><tspan fill="#1c2a40" font-weight="400">event.c </tspan><tspan fill="#4264d0" font-weight="700">AS</tspan><tspan fill="#1c2a40" font-weight="400"> c</tspan></text>
+  <text x="136" y="614" xml:space="preserve" class="code-line" font-family="DejaVu Sans Mono" font-size="24"><tspan fill="#1c2a40" font-weight="400">}</tspan></text>
+  <path id="construction-link-a" d="M442 444 L476 444 L488 444" fill="none" stroke="#4264d0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-{{N}}-blue)"/>
+  <path id="construction-link-b" d="M442 512 L465 512 L465 577 L488 577" fill="none" stroke="#4264d0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-{{N}}-blue)"/>
+  <path id="construction-link-c" d="M442 580 L454 580 L454 711 L488 711" fill="none" stroke="#4264d0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-{{N}}-blue)"/>
+  </g>
+  </g>
+  -->
+  <g id="construction-atom-a" data-part="Atom event.a">
+  <rect x="505" y="374" width="419" height="108" rx="22" fill="#f0f4ff" stroke="#d5dff0" stroke-width="1.5" filter="url(#shadow-{{N}})" class="diagram-card fill-pale stroke-line"/>
+  <text x="529" y="403" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="22" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-mono fill-ink">Atom(event.a)</text>
+  <circle cx="585" cy="443" r="22" fill="#f0f4ff" stroke="#4264d0" stroke-width="1.5" class="fill-pale stroke-blue"/>
+  <text x="585" y="450" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="21" font-weight="400" fill="#4264d0" text-anchor="middle" class="svg-mono fill-blue">q0</text>
+  <circle cx="837" cy="443" r="22" fill="#f0f4ff" stroke="#4264d0" stroke-width="1.5" class="fill-pale stroke-blue"/>
+  <text x="837" y="450" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="21" font-weight="400" fill="#4264d0" text-anchor="middle" class="svg-mono fill-blue">q1</text>
+  <path d="M617 443 L805 443" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-gray)" class="connector stroke-gray"/>
+  <text x="752" y="428" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="23" font-weight="400" fill="#1c2a40" text-anchor="middle" class="svg-mono fill-ink">a</text>
+  </g>
+  <g id="construction-atom-b" data-part="Atom event.b">
+  <rect x="505" y="508" width="419" height="108" rx="22" fill="#f0f4ff" stroke="#d5dff0" stroke-width="1.5" filter="url(#shadow-{{N}})" class="diagram-card fill-pale stroke-line"/>
+  <text x="529" y="537" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="22" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-mono fill-ink">Atom(event.b)</text>
+  <circle cx="585" cy="577" r="22" fill="#f0f4ff" stroke="#4264d0" stroke-width="1.5" class="fill-pale stroke-blue"/>
+  <text x="585" y="584" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="21" font-weight="400" fill="#4264d0" text-anchor="middle" class="svg-mono fill-blue">q2</text>
+  <circle cx="837" cy="577" r="22" fill="#f0f4ff" stroke="#4264d0" stroke-width="1.5" class="fill-pale stroke-blue"/>
+  <text x="837" y="584" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="21" font-weight="400" fill="#4264d0" text-anchor="middle" class="svg-mono fill-blue">q3</text>
+  <path d="M617 577 L805 577" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-gray)" class="connector stroke-gray"/>
+  <text x="752" y="562" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="23" font-weight="400" fill="#1c2a40" text-anchor="middle" class="svg-mono fill-ink">b</text>
+  </g>
+  <g id="construction-atom-c" data-part="Atom event.c">
+  <rect x="505" y="642" width="419" height="108" rx="22" fill="#f0f4ff" stroke="#d5dff0" stroke-width="1.5" filter="url(#shadow-{{N}})" class="diagram-card fill-pale stroke-line"/>
+  <text x="529" y="671" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="22" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-mono fill-ink">Atom(event.c)</text>
+  <circle cx="585" cy="711" r="22" fill="#f0f4ff" stroke="#4264d0" stroke-width="1.5" class="fill-pale stroke-blue"/>
+  <text x="585" y="718" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="21" font-weight="400" fill="#4264d0" text-anchor="middle" class="svg-mono fill-blue">q4</text>
+  <circle cx="837" cy="711" r="22" fill="#f0f4ff" stroke="#4264d0" stroke-width="1.5" class="fill-pale stroke-blue"/>
+  <text x="837" y="718" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="21" font-weight="400" fill="#4264d0" text-anchor="middle" class="svg-mono fill-blue">q5</text>
+  <path d="M617 711 L805 711" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-gray)" class="connector stroke-gray"/>
+  <text x="752" y="696" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="23" font-weight="400" fill="#1c2a40" text-anchor="middle" class="svg-mono fill-ink">c</text>
+  </g>
+  <g id="construction-nfa" data-part="Atomi disposti nell’automa, centrati nel riquadro">
+  <rect x="948" y="377" width="540" height="296" rx="22" fill="#eef8f3" stroke="#d5dff0" stroke-width="1.5" filter="url(#shadow-{{N}})" class="diagram-card fill-mint stroke-line"/>
+  <circle cx="998" cy="540" r="22" fill="#f0f4ff" stroke="#4264d0" stroke-width="1.5" class="fill-pale stroke-blue"/>
+  <text x="998" y="547" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="21" font-weight="400" fill="#4264d0" text-anchor="middle" class="svg-mono fill-blue">q0</text>
+  <circle cx="1108" cy="540" r="22" fill="#f0f4ff" stroke="#4264d0" stroke-width="1.5" class="fill-pale stroke-blue"/>
+  <text x="1108" y="547" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="21" font-weight="400" fill="#4264d0" text-anchor="middle" class="svg-mono fill-blue">q1</text>
+  <circle cx="1163" cy="456" r="22" fill="#f0f4ff" stroke="#4264d0" stroke-width="1.5" class="fill-pale stroke-blue"/>
+  <text x="1163" y="463" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="21" font-weight="400" fill="#4264d0" text-anchor="middle" class="svg-mono fill-blue">q2</text>
+  <circle cx="1273" cy="456" r="22" fill="#f0f4ff" stroke="#4264d0" stroke-width="1.5" class="fill-pale stroke-blue"/>
+  <text x="1273" y="463" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="21" font-weight="400" fill="#4264d0" text-anchor="middle" class="svg-mono fill-blue">q3</text>
+  <circle cx="1328" cy="540" r="22" fill="#f0f4ff" stroke="#4264d0" stroke-width="1.5" class="fill-pale stroke-blue"/>
+  <text x="1328" y="547" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="21" font-weight="400" fill="#4264d0" text-anchor="middle" class="svg-mono fill-blue">q4</text>
+  <circle cx="1438" cy="540" r="22" fill="#f0f4ff" stroke="#4264d0" stroke-width="1.5" class="fill-pale stroke-blue"/>
+  <circle cx="1438" cy="540" r="16" fill="none" stroke="#4264d0" stroke-width="1.5" class="stroke-blue"/>
+  <text x="1438" y="547" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="21" font-weight="400" fill="#4264d0" text-anchor="middle" class="svg-mono fill-blue">q5</text>
+  <text x="998" y="583" xml:space="preserve" font-family="Nimbus Sans" font-size="17" font-weight="400" fill="#65758b" text-anchor="middle" class="svg-text fill-muted">inizio</text>
+  <path d="M1028 540 L1078 540" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-gray)" class="connector stroke-gray"/>
+  <text x="1053" y="520" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="23" font-weight="400" fill="#1c2a40" text-anchor="middle" class="svg-mono fill-ink">a</text>
+  <path d="M1193 456 L1243 456" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-gray)" class="connector stroke-gray"/>
+  <text x="1218" y="435" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="23" font-weight="400" fill="#1c2a40" text-anchor="middle" class="svg-mono fill-ink">b</text>
+  <path d="M1358 540 L1408 540" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-gray)" class="connector stroke-gray"/>
+  <text x="1383" y="520" xml:space="preserve" font-family="DejaVu Sans Mono" font-size="23" font-weight="400" fill="#1c2a40" text-anchor="middle" class="svg-mono fill-ink">c</text>
+  </g>
+  <g id="construction-eps-links" data-part="Collegamenti epsilon simmetrici tra gli atomi">
+  <path d="M1108 511 L1108 482 Q1108 456 1134 456" fill="none" stroke="#4264d0" stroke-width="2.4" stroke-dasharray="7 7" marker-end="url(#arrow-{{N}}-blue)" class="connector stroke-blue"/>
+  <text x="1088" y="480" xml:space="preserve" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#4264d0" text-anchor="middle" class="svg-text fill-blue">ε</text>
+  <path d="M1302 456 Q1328 456 1328 482 L1328 511" fill="none" stroke="#4264d0" stroke-width="2.4" stroke-dasharray="7 7" marker-end="url(#arrow-{{N}}-blue)" class="connector stroke-blue"/>
+  <text x="1348" y="480" xml:space="preserve" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#4264d0" text-anchor="middle" class="svg-text fill-blue">ε</text>
+  </g>
+  <g id="construction-eps-skip" data-part="Curva epsilon simmetrica che salta B">
+  <path d="M1128 560 C1171 603 1265 603 1308 560" fill="none" stroke="#4264d0" stroke-width="2.4" stroke-dasharray="7 7" marker-end="url(#arrow-{{N}}-blue)" class="connector stroke-blue"/>
+  <text x="1218" y="620" xml:space="preserve" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#4264d0" text-anchor="middle" class="svg-text fill-blue">ε</text>
+  </g>
+  <g id="construction-paths" data-part="Percorsi accettati, disposti in verticale">
+  <text x="1242" y="709" xml:space="preserve" font-family="Nimbus Sans" font-size="26" font-weight="700" fill="#278766" text-anchor="middle" class="svg-text fill-green">Percorsi accettati</text>
+  <rect x="1135" y="731" width="53" height="44" rx="12" fill="#eef8f3" stroke="#d5dff0" stroke-width="1.5" class="diagram-card fill-mint stroke-line"/>
+  <text x="1161.5" y="761.5" xml:space="preserve" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="middle" class="svg-text fill-green">A</text>
+  <path d="M1195 753 L1224 753" fill="none" stroke="#278766" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-green)" class="connector stroke-green"/>
+  <rect x="1231" y="731" width="53" height="44" rx="12" fill="#eef8f3" stroke="#d5dff0" stroke-width="1.5" class="diagram-card fill-mint stroke-line"/>
+  <text x="1257.5" y="761.5" xml:space="preserve" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="middle" class="svg-text fill-green">B</text>
+  <path d="M1291 753 L1320 753" fill="none" stroke="#278766" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-green)" class="connector stroke-green"/>
+  <rect x="1327" y="731" width="53" height="44" rx="12" fill="#eef8f3" stroke="#d5dff0" stroke-width="1.5" class="diagram-card fill-mint stroke-line"/>
+  <text x="1353.5" y="761.5" xml:space="preserve" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="middle" class="svg-text fill-green">C</text>
+  <rect x="1135" y="794" width="53" height="44" rx="12" fill="#eef8f3" stroke="#d5dff0" stroke-width="1.5" class="diagram-card fill-mint stroke-line"/>
+  <text x="1161.5" y="824.5" xml:space="preserve" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="middle" class="svg-text fill-green">A</text>
+  <path d="M1195 816 L1224 816" fill="none" stroke="#278766" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-{{N}}-green)" class="connector stroke-green"/>
+  <rect x="1231" y="794" width="53" height="44" rx="12" fill="#eef8f3" stroke="#d5dff0" stroke-width="1.5" class="diagram-card fill-mint stroke-line"/>
+  <text x="1257.5" y="824.5" xml:space="preserve" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="middle" class="svg-text fill-green">C</text>
+  </g>
+  <!-- SOTTOTITOLO SLIDE 09: modifica le scritte nel gruppo seguente. Guida: GUIDA_TESTI.md. -->
+  <g id="slide-subtitle-{{N}}" >
+  <text x="112" y="222" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627B" text-anchor="start" xml:space="preserve" >Da SEQUENCE a NFA: atomi, transizioni ε e percorso opzionale.</text>
+  </g>
+  <text x="1488" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627B" text-anchor="end" xml:space="preserve" >{{NN}} / {{TOTAL}}</text><text x="112" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627B" text-anchor="start" xml:space="preserve" >DSL · NFA · VERIFICA</text>
+  </svg>
+  <!-- Passaggi manuali della slide 10: ogni avanzamento è esplicito. -->
+  <!-- TESTI PASSI SLIDE 10: interactive-slides.js, constructionSteps, righe 31-38. Modifica label. Vedi GUIDA_TESTI.md. -->
+  <div class="step-controls" aria-label="Passaggi della slide 10">
+  <button type="button" data-step-action="toggle" aria-pressed="false">Spiega per passi</button>
+  <button type="button" data-step-action="previous" hidden>Indietro</button>
+  <button type="button" data-step-action="next" hidden>Avanti</button>
+  <button type="button" data-step-action="reset" hidden>Ricomincia</button>
+  <p class="step-status" aria-live="polite">Vista completa · attiva i passaggi per spiegare la slide.</p>
+  </div>
+  <template class="speaker-note">Uno degli aspetti principali dell&#x27;implementazione riguarda il riconoscimento delle sequenze descritte attraverso `SEQUENCE`.
+  Per questo è stato realizzato un _matcher_ basato su un automa a stati finiti non deterministico, o NFA, costruito secondo il metodo di Thompson.
+  L&#x27;idea è partire dagli eventi descritti nella regola e associare a ciascuno di essi un frammento elementare dell&#x27;automa, chiamato _atom_.
+  Ogni atom è composto da uno stato iniziale, uno stato finale e una transizione che permette di avanzare quando viene riconosciuto l&#x27;evento corrispondente.
+  Una volta costruiti questi frammenti, vengono collegati tra loro per formare un unico automa, che rappresenta la struttura della sequenza da riconoscere.
+  Per collegarli vengono utilizzate anche le _transizioni epsilon_, che consentono di passare da uno stato all&#x27;altro senza consumare alcun evento.
+  Queste transizioni sono particolarmente importanti per gestire i blocchi opzionali.
+  Nell&#x27;esempio mostrato abbiamo una sequenza composta dagli eventi A, B e C, dove B è opzionale.
+  L&#x27;automa presenta quindi un percorso che attraversa tutti e tre gli eventi, ma anche un percorso alternativo che permette di saltare B.
+  In questo modo possiamo riconoscere sia la sequenza A, B, C sia la sequenza A, C, attraverso un automa costruito direttamente a partire dalla regola DSL.</template>
+  </section>

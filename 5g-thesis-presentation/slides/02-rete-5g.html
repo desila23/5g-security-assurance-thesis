@@ -1,0 +1,80 @@
+<!-- SLIDE 2: rete-5g — contenuto e geometria modificabili qui. -->
+  <section class="slide" id="slide-{{N}}" data-title="5G Core: Network Functions e interazioni" data-seconds="60" aria-label="{{N}} di {{TOTAL}}: 5G Core: Network Functions e interazioni" >
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title-{{N}}">
+  <title id="title-{{N}}">5G Core: Network Functions e interazioni</title>
+  <defs>
+  <marker id="new-arrow-{{N}}" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
+  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#4264d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  </defs>
+  <rect x="0" y="0" width="1600" height="900" rx="0" fill="#FFFFFF" stroke="none" stroke-width="1.8" />
+  <text x="112" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627b" text-anchor="start" xml:space="preserve" >INTRODUZIONE</text><text x="1488" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627b" text-anchor="end" xml:space="preserve" >{{NN}} / {{TOTAL}}</text><text x="112" y="167" font-family="Nimbus Sans" font-size="54" font-weight="700" fill="#182536" text-anchor="start" xml:space="preserve" >5G Core: Network Functions e interazioni</text>
+  <g id="slide-subtitle-{{N}}">
+  <text x="112" y="222" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627b" text-anchor="start" xml:space="preserve" >Le NF cooperano tramite protocolli e procedure standardizzati.</text>
+  </g>
+  <g id="rete-5g" data-part="RAN, Core e interfacce" transform="translate(71 -124) scale(1.18)">
+  <rect x="112" y="325" width="270" height="470" rx="24" fill="#f0f4ff" stroke="#d5dff0" stroke-width="1.5" class="diagram-card fill-pale stroke-line"/>
+  <text x="247" y="368" xml:space="preserve" font-family="Nimbus Sans" font-size="28" font-weight="700" fill="#4264d0" text-anchor="middle" class="svg-text fill-blue">5G RAN</text>
+  <rect x="419" y="325" width="600" height="470" rx="24" fill="#fff" stroke="#d5dff0" stroke-width="1.5" class="diagram-card fill-white stroke-line"/>
+  <text x="719" y="368" xml:space="preserve" font-family="Nimbus Sans" font-size="28" font-weight="700" fill="#278766" text-anchor="middle" class="svg-text fill-ink">5G CORE</text>
+  <rect x="440" y="390" width="556" height="170" rx="18" fill="#eef8f3" stroke="#d5dff0" stroke-width="1.5" class="diagram-card fill-mint stroke-line"/>
+  <text x="462" y="421" xml:space="preserve" font-family="Nimbus Sans" font-size="21" font-weight="700" fill="#278766" text-anchor="start" class="svg-text fill-green">CONTROL PLANE</text>
+  <rect x="440" y="592" width="330" height="186" rx="18" fill="#f3eef9" stroke="#d5dff0" stroke-width="1.5" class="diagram-card fill-violet-soft stroke-line"/>
+  <text x="462" y="752" xml:space="preserve" font-family="Nimbus Sans" font-size="21" font-weight="700" fill="#7861ad" text-anchor="start" class="svg-text network-purple">USER PLANE</text>
+  <rect x="454" y="447" width="113" height="63" rx="22" fill="#fff" stroke="#d5dff0" stroke-width="1.5" filter="url(#shadow-{{N}})" id="node-2-AMF" class="diagram-card fill-white stroke-line"/>
+  <text x="510.5" y="487.68" xml:space="preserve" font-family="Nimbus Sans" font-size="27" font-weight="700" fill="#278766" text-anchor="middle" class="svg-text fill-green">AMF</text>
+  <rect x="590" y="447" width="113" height="63" rx="22" fill="#fff" stroke="#d5dff0" stroke-width="1.5" filter="url(#shadow-{{N}})" id="node-2-SMF" class="diagram-card fill-white stroke-line"/>
+  <text x="646.5" y="487.68" xml:space="preserve" font-family="Nimbus Sans" font-size="27" font-weight="700" fill="#278766" text-anchor="middle" class="svg-text fill-green">SMF</text>
+  <rect x="726" y="447" width="113" height="63" rx="22" fill="#fff" stroke="#d5dff0" stroke-width="1.5" filter="url(#shadow-{{N}})" id="node-2-AUSF" class="diagram-card fill-white stroke-line"/>
+  <text x="782.5" y="487.68" xml:space="preserve" font-family="Nimbus Sans" font-size="27" font-weight="700" fill="#278766" text-anchor="middle" class="svg-text fill-green">AUSF</text>
+  <rect x="862" y="447" width="113" height="63" rx="22" fill="#fff" stroke="#d5dff0" stroke-width="1.5" filter="url(#shadow-{{N}})" id="node-2-UDM" class="diagram-card fill-white stroke-line"/>
+  <text x="918.5" y="487.68" xml:space="preserve" font-family="Nimbus Sans" font-size="27" font-weight="700" fill="#278766" text-anchor="middle" class="svg-text fill-green">UDM</text>
+  <rect x="590" y="637" width="113" height="63" rx="22" fill="#fff" stroke="#d5dff0" stroke-width="1.5" filter="url(#shadow-{{N}})" id="node-2-UPF" class="diagram-card fill-white stroke-line"/>
+  <text x="646.5" y="678.02" xml:space="preserve" font-family="Nimbus Sans" font-size="28" font-weight="700" fill="#7861ad" text-anchor="middle" class="svg-text network-purple">UPF</text>
+  <path d="M510 447 L510 435 L918 435 L918 447" fill="none" stroke="#278766" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" class="stroke-green"/>
+  <path d="M646 435 L646 447" fill="none" stroke="#278766" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" class="stroke-green"/>
+  <path d="M782 435 L782 447" fill="none" stroke="#278766" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" class="stroke-green"/>
+  <text x="954" y="419" xml:space="preserve" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#278766" text-anchor="start" class="svg-text fill-green">SBI</text>
+  <path d="M646 510 L646 637" fill="none" stroke="#278766" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7" class="stroke-green"/>
+  <text x="664" y="584" xml:space="preserve" font-family="Nimbus Sans" font-size="21" font-weight="700" fill="#278766" text-anchor="start" class="svg-text fill-green">N4</text>
+  <rect x="146" y="625" width="40" height="75" rx="8" fill="#fff" stroke="#4264d0" stroke-width="1.5" class="diagram-card fill-white stroke-blue"/>
+  <path d="M157 636 H175 M157 685 H175" fill="none" stroke="#4264d0" stroke-width="2" class="stroke-blue"/>
+  <text x="166" y="749" xml:space="preserve" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#1c2a40" text-anchor="middle" class="svg-text fill-ink">UE</text>
+  <path d="M282 705 L305 634 L328 705 Z M289 686 H321 M295 666 H315 M282 705 L315 666 M328 705 L295 666" fill="none" stroke="#65758b" stroke-width="3" stroke-linejoin="round" class="stroke-muted"/>
+  <path d="M289 633 Q277 621 289 609" fill="none" stroke="#65758b" stroke-width="2.4" class="stroke-muted"/>
+  <path d="M279 643 Q256 621 279 599" fill="none" stroke="#65758b" stroke-width="2.4" class="stroke-muted"/>
+  <path d="M321 633 Q333 621 321 609" fill="none" stroke="#65758b" stroke-width="2.4" class="stroke-muted"/>
+  <path d="M331 643 Q354 621 331 599" fill="none" stroke="#65758b" stroke-width="2.4" class="stroke-muted"/>
+  <text x="305" y="749" xml:space="preserve" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#1c2a40" text-anchor="middle" class="svg-text fill-ink">gNB</text>
+  <path d="M186 668 L275 668" fill="none" stroke="#4264d0" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" class="stroke-blue"/>
+  <path d="M305 620 L305 574 L510 574 L510 510" fill="none" stroke="#278766" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 7" class="stroke-green"/>
+  <text x="405" y="558" xml:space="preserve" font-family="Nimbus Sans" font-size="21" font-weight="700" fill="#278766" text-anchor="middle" class="svg-text fill-green">N2</text>
+  <path d="M338 668 L590 668" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" class="stroke-gray"/>
+  <text x="492" y="655" xml:space="preserve" font-family="Nimbus Sans" font-size="21" font-weight="700" fill="#7861ad" text-anchor="start" class="svg-text network-purple">N3</text>
+  <path d="M703 668 L1043 668" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" class="stroke-gray"/>
+  <text x="878" y="655" xml:space="preserve" font-family="Nimbus Sans" font-size="21" font-weight="700" fill="#7861ad" text-anchor="start" class="svg-text network-purple">N6</text>
+  </g>
+  <g id="internet-globo" data-part="Internet: globo con continenti vettoriali" transform="translate(71 -124) scale(1.18)">
+  <defs>
+  <clipPath id="internet-clip-2">
+  <circle cx="1085" cy="668" r="38"/>
+  </clipPath>
+  <linearGradient id="internet-ocean-2" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#f0f4ff"/>
+  <stop offset="1" stop-color="#cddcf6"/>
+  </linearGradient>
+  </defs>
+  <circle cx="1085" cy="668" r="38" fill="url(#internet-ocean-2)" stroke="#9cb4ed" stroke-width="1.6" class="stroke-nas-strong"/>
+  <g clip-path="url(#internet-clip-2)" fill="#80b5a4" stroke="#eef8f3" stroke-width="1.1" stroke-linejoin="round" class="stroke-mint">
+  <path d="M1048 650 C1055 639 1064 633 1073 635 L1080 641 L1075 647 L1077 655 L1070 660 L1069 670 L1061 665 L1054 658 Z"/>
+  <path d="M1068 673 C1075 672 1080 676 1083 681 L1080 689 L1076 695 L1073 704 L1069 698 L1068 687 Z"/>
+  <path d="M1088 638 C1100 634 1111 640 1122 651 L1117 661 L1109 658 L1104 664 L1098 660 L1094 651 L1087 651 Z"/>
+  <path d="M1089 658 L1100 658 L1107 667 L1103 680 L1097 691 L1091 686 L1088 676 L1084 668 Z"/>
+  <path d="M1110 683 L1120 682 L1123 691 L1116 697 L1106 692 Z"/>
+  </g>
+  <text x="1085" y="749" xml:space="preserve" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#1c2a40" text-anchor="middle" class="svg-text fill-ink">Internet</text>
+  </g>
+  <text x="800" y="875" font-family="Nimbus Sans" font-size="29" font-weight="700" fill="#182536" text-anchor="middle" xml:space="preserve" >Funzioni e interazioni devono rispettare requisiti di sicurezza</text>
+  </svg>
+  <template class="speaker-note">Il 5G Core comprende diverse Network Functions che cooperano tra loro. Le comunicazioni seguono protocolli e procedure standardizzati. Funzioni e interazioni devono soddisfare requisiti di sicurezza. Lo schema riutilizza la topologia semplificata: control plane, user plane e interfacce principali.</template>
+  </section>
