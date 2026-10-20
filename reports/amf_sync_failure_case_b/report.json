@@ -135,6 +135,7 @@
                 "verdict": "PASS",
                 "evidence_frames": [
                     358,
+                    604,
                     606
                 ],
                 "details": {

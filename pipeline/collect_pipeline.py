@@ -8,6 +8,7 @@ from matcher.models import BindingContext
 from traffic.models import MessageEvent
 
 from verifier.binding_verifier import verify_bindings
+from verifier.dsl_alias_validator import validate_rule_aliases
 
 
 @dataclass
@@ -35,6 +36,13 @@ def run_collect_verification(events: list[MessageEvent], rule_file: str) -> Coll
 
     collect = get_collect(rule_file)
     rules = parse_rule(rule_file)
+
+    # L'alias dichiarato da COLLECT è disponibile
+    # come riferimento valido nei criteri DSL.
+    declared_aliases = {collect["alias"]}
+
+    # Controllo strutturale prima della raccolta degli eventi.
+    validate_rule_aliases(rules, declared_aliases)
 
     context = collect_events(
         events,

@@ -11,7 +11,7 @@
     },
     "source": {
         "pcap": "captures/resstar_case_a_mutation.pcap",
-        "sha256": "616507186a094c4722ed4d204d2e62f29af78fcc29042ba421369956b1409f75"
+        "sha256": "0a71f259a711e36f5303be398207c8d7a32a768c56900b200b41d24bfb1ea9dc"
     },
     "configuration": {
         "pipeline": "sequence",
@@ -40,12 +40,12 @@
         {
             "id": "criterion_1",
             "type": "comparison",
-            "description": "Verify authentication_vector.rand == a338451a4114cad21aef8ce83b1352be"
+            "description": "Verify authentication_vector.rand == cee57f281b93f6578fe1e5d5c7da09a0"
         },
         {
             "id": "criterion_2",
             "type": "comparison",
-            "description": "Verify authentication_vector.autn == de19b3c0939a8000bf0384756ed998c8"
+            "description": "Verify authentication_vector.autn == 97213a2d875580002fbae0c94c860333"
         },
         {
             "id": "criterion_3",
@@ -75,7 +75,7 @@
         {
             "id": "criterion_8",
             "type": "comparison",
-            "description": "Verify hres_star.value != 9fd25214deffdf8793be6081bef12ca8"
+            "description": "Verify hres_star.value != 61476fbb065e6cf7eb997e913f63141e"
         },
         {
             "id": "criterion_9",
@@ -90,14 +90,14 @@
                 "engine": "binding_verifier",
                 "verdict": "PASS",
                 "evidence_frames": [
-                    331,
-                    333
+                    294,
+                    296
                 ],
                 "details": {
                     "field": "authentication_vector.rand",
                     "operator": "==",
-                    "expected": "a338451a4114cad21aef8ce83b1352be",
-                    "observed": "a338451a4114cad21aef8ce83b1352be",
+                    "expected": "cee57f281b93f6578fe1e5d5c7da09a0",
+                    "observed": "cee57f281b93f6578fe1e5d5c7da09a0",
                     "expected_field": "authentication_request.rand"
                 }
             },
@@ -106,14 +106,14 @@
                 "engine": "binding_verifier",
                 "verdict": "PASS",
                 "evidence_frames": [
-                    331,
-                    333
+                    294,
+                    296
                 ],
                 "details": {
                     "field": "authentication_vector.autn",
                     "operator": "==",
-                    "expected": "de19b3c0939a8000bf0384756ed998c8",
-                    "observed": "de19b3c0939a8000bf0384756ed998c8",
+                    "expected": "97213a2d875580002fbae0c94c860333",
+                    "observed": "97213a2d875580002fbae0c94c860333",
                     "expected_field": "authentication_request.autn"
                 }
             },
@@ -122,7 +122,7 @@
                 "engine": "binding_verifier",
                 "verdict": "PASS",
                 "evidence_frames": [
-                    335
+                    298
                 ],
                 "details": {
                     "field": "authentication_reject.present",
@@ -148,7 +148,7 @@
                 "engine": "binding_verifier",
                 "verdict": "PASS",
                 "evidence_frames": [
-                    282
+                    283
                 ],
                 "details": {
                     "field": "registration_request.identity_type",
@@ -186,13 +186,13 @@
                 "engine": "binding_verifier",
                 "verdict": "FAIL",
                 "evidence_frames": [
-                    331
+                    294
                 ],
                 "details": {
                     "field": "hres_star.value",
                     "operator": "!=",
-                    "expected": "9fd25214deffdf8793be6081bef12ca8",
-                    "observed": "9fd25214deffdf8793be6081bef12ca8",
+                    "expected": "61476fbb065e6cf7eb997e913f63141e",
+                    "observed": "61476fbb065e6cf7eb997e913f63141e",
                     "expected_field": "authentication_vector.hxres_star"
                 }
             },
@@ -215,9 +215,9 @@
         "bindings": {
             "registration_request": {
                 "message_type": "nas.registration_request",
-                "frame": 282,
+                "frame": 283,
                 "related_frames": [],
-                "timestamp": 1790061683.483775,
+                "timestamp": 1792478680.91331,
                 "protocol": "nas_5gs",
                 "kind": "message",
                 "src": "10.100.50.251",
@@ -229,78 +229,77 @@
             },
             "authentication_vector": {
                 "message_type": "ausf.authentication.response",
-                "frame": 331,
+                "frame": 294,
                 "related_frames": [
-                    331
+                    294
                 ],
-                "timestamp": 1790061683.546546,
+                "timestamp": 1792478680.944975,
                 "protocol": "http2",
                 "kind": "data",
-                "src": "10.233.49.217",
-                "dst": "10.233.75.24",
+                "src": "10.233.14.30",
+                "dst": "10.233.71.38",
                 "correlation": {
-                    "tcp_stream": 9,
-                    "http2_stream_id": 13
+                    "tcp_stream": 3,
+                    "http2_stream_id": 279
                 },
                 "fields": {
                     "headers": {
-                        "location": "http://free5gc-free5gc-ausf-service.default:80/nausf-auth/v1/ue-authentications/suci-0-208-93-0000-0-0-0000000003",
-                        "date": "Tue, 22 Sep 2026 07:21:23 GMT",
-                        "content-length": "388"
+                        "date": "Tue, 20 Oct 2026 06:44:40 GMT",
+                        "content-length": "285",
+                        "location": "http://open5gs-ausf-sbi.default/nausf-auth/v1/ue-authentications/1"
                     },
                     "body": {
                         "authType": "5G_AKA",
                         "5gAuthData": {
-                            "rand": "a338451a4114cad21aef8ce83b1352be",
-                            "hxresStar": "9fd25214deffdf8793be6081bef12ca8",
-                            "autn": "de19b3c0939a8000bf0384756ed998c8"
+                            "rand": "cee57f281b93f6578fe1e5d5c7da09a0",
+                            "hxresStar": "61476fbb065e6cf7eb997e913f63141e",
+                            "autn": "97213a2d875580002fbae0c94c860333"
                         },
                         "_links": {
                             "5g-aka": {
-                                "href": "http://free5gc-free5gc-ausf-service.default:80/nausf-auth/v1/ue-authentications/suci-0-208-93-0000-0-0-0000000003/5g-aka-confirmation"
+                                "href": "http://open5gs-ausf-sbi.default/nausf-auth/v1/ue-authentications/1/5g-aka-confirmation"
                             }
-                        },
-                        "servingNetworkName": "5G:mnc093.mcc208.3gppnetwork.org"
+                        }
                     },
-                    "rand": "a338451a4114cad21aef8ce83b1352be",
-                    "autn": "de19b3c0939a8000bf0384756ed998c8",
-                    "hxres_star": "9fd25214deffdf8793be6081bef12ca8"
+                    "rand": "cee57f281b93f6578fe1e5d5c7da09a0",
+                    "autn": "97213a2d875580002fbae0c94c860333",
+                    "hxres_star": "61476fbb065e6cf7eb997e913f63141e"
                 }
             },
             "authentication_request": {
                 "message_type": "nas.authentication_request",
-                "frame": 333,
+                "frame": 296,
                 "related_frames": [],
-                "timestamp": 1790061683.547212,
+                "timestamp": 1792478680.945194,
                 "protocol": "nas_5gs",
                 "kind": "message",
                 "src": "10.100.50.249",
                 "dst": "10.100.50.251",
                 "correlation": {},
                 "fields": {
-                    "rand": "a338451a4114cad21aef8ce83b1352be",
-                    "autn": "de19b3c0939a8000bf0384756ed998c8"
+                    "rand": "cee57f281b93f6578fe1e5d5c7da09a0",
+                    "autn": "97213a2d875580002fbae0c94c860333"
                 }
             },
             "authentication_response": {
                 "message_type": "nas.authentication_response",
-                "frame": 334,
+                "frame": 297,
                 "related_frames": [],
-                "timestamp": 1790061683.552571,
+                "timestamp": 1792478680.950205,
                 "protocol": "nas_5gs",
                 "kind": "message",
                 "src": "10.100.50.251",
                 "dst": "10.100.50.249",
                 "correlation": {},
                 "fields": {
-                    "res_star": "f3e9ad94f60c271297f2c5177b7b0da2"
+                    "res_star": "f990e6624fb1ece52a44bc0e3a3c24fa"
                 }
             },
             "authentication_reject": {
                 "message_type": "nas.authentication_reject",
-                "frame": 335,
+                "frame": 298,
                 "related_frames": [],
-                "timestamp": 1790061683.553333,
+                "timestamp": 1792478680.950378,
                 "protocol": "nas_5gs",
                 "kind": "message",
                 "src": "10.100.50.249",
@@ -321,7 +320,7 @@
             "hres_star": {
                 "source_type": "derived",
                 "fields": {
-                    "value": "9fd25214deffdf8793be6081bef12ca8"
+                    "value": "61476fbb065e6cf7eb997e913f63141e"
                 }
             }
         }

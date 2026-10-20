@@ -3,6 +3,7 @@ from dataclasses import dataclass, field
 from dsl.parse_rule import get_sequence, parse_rule
 
 from matcher.ast import build_sequence_ast
+from verifier.dsl_alias_validator import collect_sequence_aliases, validate_rule_aliases
 from matcher.models import BindingContext, Match
 from matcher.thompson import ThompsonCompiler
 from matcher.matcher import match_sequences
@@ -89,6 +90,20 @@ def run_sequence_verification(
     sequence = get_sequence(rule_file)
     rules = parse_rule(rule_file)
 
+    # Alias dichiarati nella SEQUENCE, inclusi gli OPTIONAL
+    declared_aliases = collect_sequence_aliases(sequence)
+
+    # Alias forniti dall'esterno o dalla configurazione
+    declared_aliases.update((external_bindings or {}).keys())
+    declared_aliases.update((config_bindings or {}).keys())
+
+    # Alias derivati dichiarati nella configurazione
+    declared_aliases.update((derived_bindings or {}).keys())
+
+    # Validazione strutturale della DSL
+    # Da eseguire prima del matching, anche quando non ci sono match
+    validate_rule_aliases(rules, declared_aliases)
+
     ast = build_sequence_ast(sequence)
 
     nfa = ThompsonCompiler().compile(ast)
@@ -146,6 +161,7 @@ def run_sequence_verification(
     match = matches[0]
 
     context = match.to_binding_context()
+    
 
     if external_bindings:
         context.bindings.update(external_bindings)

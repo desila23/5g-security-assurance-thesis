@@ -1,0 +1,322 @@
+{
+    "schema_version": "2.0",
+    "metadata": {
+        "generator": "generic_verification_pipeline",
+        "tshark_version": "TShark (Wireshark) 3.6.2 (Git v3.6.2 packaged as 3.6.2-2)"
+    },
+    "test": {
+        "id": "amf_sync_failure_case_a",
+        "description": "Verification of AMF synchronization failure handling - Case A",
+        "nf": "AMF"
+    },
+    "source": {
+        "pcap": "captures/open5gs-amf-TC_SYNC_FAIL_SEAF_AMF_A.pcap",
+        "sha256": "894a17d9ce1d2554c17e231e87858ffce150c1b63f4fc292c085862cb5ddc42b"
+    },
+    "configuration": {
+        "pipeline": "sequence",
+        "case": "A",
+        "rules": "dsl/amf_sync_failure_case_a_sequence.dsl",
+        "traffic": {
+            "sources": [
+                {
+                    "type": "nas",
+                    "display_filter": "nas_5gs.mm.message_type"
+                },
+                {
+                    "type": "http2",
+                    "display_filter": "http2",
+                    "decode_as": [
+                        "tcp.port==15001,http2",
+                        "tcp.port==80,http2"
+                    ]
+                }
+            ],
+            "correlation_mode": "global"
+        },
+        "external_bindings": {}
+    },
+    "criteria": [
+        {
+            "id": "criterion_1",
+            "type": "comparison",
+            "description": "Verify initial_auth.rand == 4cc1aedba6de8a696850a82e9b7bd498"
+        },
+        {
+            "id": "criterion_2",
+            "type": "comparison",
+            "description": "Verify sync_failure.cause == 21"
+        },
+        {
+            "id": "criterion_3",
+            "type": "comparison",
+            "description": "Verify resync.auts == ab0b5b8defc6543891d5e5d6de40"
+        },
+        {
+            "id": "criterion_4",
+            "type": "comparison",
+            "description": "Verify resync.rand == 4cc1aedba6de8a696850a82e9b7bd498"
+        },
+        {
+            "id": "temporal_1",
+            "type": "temporal",
+            "description": "Verify temporal MFOTL criterion with MonPoly"
+        }
+    ],
+    "verification": {
+        "results": [
+            {
+                "criterion_id": "criterion_1",
+                "engine": "binding_verifier",
+                "verdict": "PASS",
+                "evidence_frames": [
+                    370,
+                    372
+                ],
+                "details": {
+                    "field": "initial_auth.rand",
+                    "operator": "==",
+                    "expected": "4cc1aedba6de8a696850a82e9b7bd498",
+                    "observed": "4cc1aedba6de8a696850a82e9b7bd498",
+                    "expected_field": "initial_vector.rand"
+                }
+            },
+            {
+                "criterion_id": "criterion_2",
+                "engine": "binding_verifier",
+                "verdict": "PASS",
+                "evidence_frames": [
+                    373
+                ],
+                "details": {
+                    "field": "sync_failure.cause",
+                    "operator": "==",
+                    "expected": 21,
+                    "observed": 21
+                }
+            },
+            {
+                "criterion_id": "criterion_3",
+                "engine": "binding_verifier",
+                "verdict": "PASS",
+                "evidence_frames": [
+                    373,
+                    374,
+                    375
+                ],
+                "details": {
+                    "field": "resync.auts",
+                    "operator": "==",
+                    "expected": "ab0b5b8defc6543891d5e5d6de40",
+                    "observed": "ab0b5b8defc6543891d5e5d6de40",
+                    "expected_field": "sync_failure.auts"
+                }
+            },
+            {
+                "criterion_id": "criterion_4",
+                "engine": "binding_verifier",
+                "verdict": "PASS",
+                "evidence_frames": [
+                    372,
+                    374,
+                    375
+                ],
+                "details": {
+                    "field": "resync.rand",
+                    "operator": "==",
+                    "expected": "4cc1aedba6de8a696850a82e9b7bd498",
+                    "observed": "4cc1aedba6de8a696850a82e9b7bd498",
+                    "expected_field": "initial_auth.rand"
+                }
+            },
+            {
+                "criterion_id": "temporal_1",
+                "engine": "Monpoly",
+                "verdict": "PASS",
+                "evidence_frames": [
+                    374,
+                    375,
+                    379
+                ],
+                "details": {
+                    "verification_mode": "negated_policy",
+                    "violation_found": false,
+                    "monpoly_output": ""
+                }
+            }
+        ],
+        "overall_verdict": "PASS"
+    },
+    "evidence": {
+        "bindings": {
+            "initial_vector": {
+                "message_type": "ausf.authentication.response",
+                "frame": 370,
+                "related_frames": [
+                    370
+                ],
+                "timestamp": 1792479214.962173,
+                "protocol": "http2",
+                "kind": "data",
+                "src": "10.233.14.30",
+                "dst": "10.233.71.38",
+                "correlation": {
+                    "tcp_stream": 3,
+                    "http2_stream_id": 477
+                },
+                "fields": {
+                    "headers": {
+                        ":status": "201",
+                        "date": "Tue, 20 Oct 2026 06:53:34 GMT",
+                        "content-length": "285",
+                        "location": "http://open5gs-ausf-sbi.default/nausf-auth/v1/ue-authentications/3"
+                    },
+                    "body": {
+                        "authType": "5G_AKA",
+                        "5gAuthData": {
+                            "rand": "4cc1aedba6de8a696850a82e9b7bd498",
+                            "hxresStar": "05da7cd4241b3bc003824765f0f3a387",
+                            "autn": "24f1227383be8000ebbcc94860085d18"
+                        },
+                        "_links": {
+                            "5g-aka": {
+                                "href": "http://open5gs-ausf-sbi.default/nausf-auth/v1/ue-authentications/3/5g-aka-confirmation"
+                            }
+                        }
+                    },
+                    "rand": "4cc1aedba6de8a696850a82e9b7bd498",
+                    "autn": "24f1227383be8000ebbcc94860085d18",
+                    "hxres_star": "05da7cd4241b3bc003824765f0f3a387"
+                }
+            },
+            "initial_auth": {
+                "message_type": "nas.authentication_request",
+                "frame": 372,
+                "related_frames": [],
+                "timestamp": 1792479214.962387,
+                "protocol": "nas_5gs",
+                "kind": "message",
+                "src": "10.100.50.249",
+                "dst": "10.100.50.251",
+                "correlation": {},
+                "fields": {
+                    "rand": "4cc1aedba6de8a696850a82e9b7bd498",
+                    "autn": "24f1227383be8000ebbcc94860085d18"
+                }
+            },
+            "sync_failure": {
+                "message_type": "nas.authentication_failure",
+                "frame": 373,
+                "related_frames": [],
+                "timestamp": 1792479214.966832,
+                "protocol": "nas_5gs",
+                "kind": "message",
+                "src": "10.100.50.251",
+                "dst": "10.100.50.249",
+                "correlation": {},
+                "fields": {
+                    "cause": 21,
+                    "auts": "ab0b5b8defc6543891d5e5d6de40"
+                }
+            },
+            "resync": {
+                "message_type": "ausf.resynchronization.request",
+                "frame": 374,
+                "related_frames": [
+                    374,
+                    375
+                ],
+                "timestamp": 1792479214.96707,
+                "protocol": "http2",
+                "kind": "request",
+                "src": "10.233.71.38",
+                "dst": "127.0.0.1",
+                "correlation": {
+                    "tcp_stream": 2,
+                    "http2_stream_id": 479
+                },
+                "fields": {
+                    "method": "POST",
+                    "path": "/nausf-auth/v1/ue-authentications",
+                    "raw_path": "/nausf-auth/v1/ue-authentications",
+                    "query": {},
+                    "headers": {
+                        ":method": "POST",
+                        ":path": "/nausf-auth/v1/ue-authentications",
+                        ":scheme": "http",
+                        ":authority": "open5gs-scp-sbi.default",
+                        "3gpp-sbi-max-rsp-time": "10000",
+                        "content-length": "212"
+                    },
+                    "body": {
+                        "supiOrSuci": "suci-0-208-93-0000-0-0-0000000003",
+                        "servingNetworkName": "5G:mnc093.mcc208.3gppnetwork.org",
+                        "resynchronizationInfo": {
+                            "rand": "4cc1aedba6de8a696850a82e9b7bd498",
+                            "auts": "ab0b5b8defc6543891d5e5d6de40"
+                        }
+                    },
+                    "rand": "4cc1aedba6de8a696850a82e9b7bd498",
+                    "auts": "ab0b5b8defc6543891d5e5d6de40"
+                }
+            },
+            "new_vector": {
+                "message_type": "ausf.authentication.response",
+                "frame": 379,
+                "related_frames": [
+                    379
+                ],
+                "timestamp": 1792479214.981379,
+                "protocol": "http2",
+                "kind": "data",
+                "src": "10.233.14.30",
+                "dst": "10.233.71.38",
+                "correlation": {
+                    "tcp_stream": 3,
+                    "http2_stream_id": 479
+                },
+                "fields": {
+                    "headers": {
+                        ":status": "201",
+                        "date": "Tue, 20 Oct 2026 06:53:34 GMT",
+                        "content-length": "285",
+                        "location": "http://open5gs-ausf-sbi.default/nausf-auth/v1/ue-authentications/3"
+                    },
+                    "body": {
+                        "authType": "5G_AKA",
+                        "5gAuthData": {
+                            "rand": "1dccccf05e06f4a01f45dd7237911e0e",
+                            "hxresStar": "ed9d6b453f1ea1a5eccd3d572fe590e2",
+                            "autn": "0a23e46f1668800061a31b0b2cc671fc"
+                        },
+                        "_links": {
+                            "5g-aka": {
+                                "href": "http://open5gs-ausf-sbi.default/nausf-auth/v1/ue-authentications/3/5g-aka-confirmation"
+                            }
+                        }
+                    },
+                    "rand": "1dccccf05e06f4a01f45dd7237911e0e",
+                    "autn": "0a23e46f1668800061a31b0b2cc671fc",
+                    "hxres_star": "ed9d6b453f1ea1a5eccd3d572fe590e2"
+                }
+            },
+            "case": {
+                "source_type": "configuration",
+                "fields": {
+                    "id": "A"
+                }
+            }
+        }
+    },
+    "explanation": {
+        "summary": "Verification completed with verdict PASS",
+        "observations": {
+            "reason": null,
+            "message_type": null,
+            "alias": null,
+            "matches_found": 1,
+            "collected_events": null
+        }
+    },
+    "verdict": "PASS"
+}

@@ -1,0 +1,339 @@
+{
+    "schema_version": "2.0",
+    "metadata": {
+        "generator": "generic_verification_pipeline",
+        "tshark_version": "TShark (Wireshark) 3.6.2 (Git v3.6.2 packaged as 3.6.2-2)"
+    },
+    "test": {
+        "id": "resstar_verification_failure",
+        "description": "Verification of AMF RES* verification failure handling",
+        "nf": "AMF"
+    },
+    "source": {
+        "pcap": "captures/open5gs-amf-TC_RESSTAR_VERIFICATION_FAILURE1.pcap",
+        "sha256": "c2de96d354f4153c8249328c2ffd7963ed48d13add00da5820e3baae1e612e47"
+    },
+    "configuration": {
+        "pipeline": "sequence",
+        "case": "A",
+        "rules": "dsl/resstar_verification_failure.dsl",
+        "traffic": {
+            "sources": [
+                {
+                    "type": "nas",
+                    "display_filter": "nas_5gs.mm.message_type"
+                },
+                {
+                    "type": "http2",
+                    "display_filter": "http2",
+                    "decode_as": [
+                        "tcp.port==15001,http2",
+                        "tcp.port==80,http2"
+                    ]
+                }
+            ],
+            "correlation_mode": "global"
+        },
+        "external_bindings": {}
+    },
+    "criteria": [
+        {
+            "id": "criterion_1",
+            "type": "comparison",
+            "description": "Verify authentication_vector.rand == cee57f281b93f6578fe1e5d5c7da09a0"
+        },
+        {
+            "id": "criterion_2",
+            "type": "comparison",
+            "description": "Verify authentication_vector.autn == 97213a2d875580002fbae0c94c860333"
+        },
+        {
+            "id": "criterion_3",
+            "type": "comparison",
+            "description": "Verify authentication_reject.present == True"
+        },
+        {
+            "id": "criterion_4",
+            "type": "comparison",
+            "description": "Verify case.identity_path IF direct_suci"
+        },
+        {
+            "id": "criterion_5",
+            "type": "comparison",
+            "description": "Verify registration_request.identity_type == SUCI"
+        },
+        {
+            "id": "criterion_6",
+            "type": "comparison",
+            "description": "Verify case.identity_path IF guti_then_suci"
+        },
+        {
+            "id": "criterion_7",
+            "type": "comparison",
+            "description": "Verify case.failure_source IF local"
+        },
+        {
+            "id": "criterion_8",
+            "type": "comparison",
+            "description": "Verify hres_star.value != 5400791e29a8048792936cfd53c6f55e"
+        },
+        {
+            "id": "criterion_9",
+            "type": "comparison",
+            "description": "Verify case.failure_source IF ausf"
+        }
+    ],
+    "verification": {
+        "results": [
+            {
+                "criterion_id": "criterion_1",
+                "engine": "binding_verifier",
+                "verdict": "PASS",
+                "evidence_frames": [
+                    294,
+                    296
+                ],
+                "details": {
+                    "field": "authentication_vector.rand",
+                    "operator": "==",
+                    "expected": "cee57f281b93f6578fe1e5d5c7da09a0",
+                    "observed": "cee57f281b93f6578fe1e5d5c7da09a0",
+                    "expected_field": "authentication_request.rand"
+                }
+            },
+            {
+                "criterion_id": "criterion_2",
+                "engine": "binding_verifier",
+                "verdict": "PASS",
+                "evidence_frames": [
+                    294,
+                    296
+                ],
+                "details": {
+                    "field": "authentication_vector.autn",
+                    "operator": "==",
+                    "expected": "97213a2d875580002fbae0c94c860333",
+                    "observed": "97213a2d875580002fbae0c94c860333",
+                    "expected_field": "authentication_request.autn"
+                }
+            },
+            {
+                "criterion_id": "criterion_3",
+                "engine": "binding_verifier",
+                "verdict": "PASS",
+                "evidence_frames": [
+                    298
+                ],
+                "details": {
+                    "field": "authentication_reject.present",
+                    "operator": "==",
+                    "expected": true,
+                    "observed": true
+                }
+            },
+            {
+                "criterion_id": "criterion_4",
+                "engine": "binding_verifier",
+                "verdict": "PASS",
+                "evidence_frames": [],
+                "details": {
+                    "field": "case.identity_path",
+                    "operator": "IF",
+                    "expected": "direct_suci",
+                    "observed": "direct_suci"
+                }
+            },
+            {
+                "criterion_id": "criterion_5",
+                "engine": "binding_verifier",
+                "verdict": "PASS",
+                "evidence_frames": [
+                    283
+                ],
+                "details": {
+                    "field": "registration_request.identity_type",
+                    "operator": "==",
+                    "expected": "SUCI",
+                    "observed": "SUCI"
+                }
+            },
+            {
+                "criterion_id": "criterion_6",
+                "engine": "binding_verifier",
+                "verdict": "SKIPPED",
+                "evidence_frames": [],
+                "details": {
+                    "field": "case.identity_path",
+                    "operator": "IF",
+                    "expected": "guti_then_suci",
+                    "observed": "direct_suci"
+                }
+            },
+            {
+                "criterion_id": "criterion_7",
+                "engine": "binding_verifier",
+                "verdict": "PASS",
+                "evidence_frames": [],
+                "details": {
+                    "field": "case.failure_source",
+                    "operator": "IF",
+                    "expected": "local",
+                    "observed": "local"
+                }
+            },
+            {
+                "criterion_id": "criterion_8",
+                "engine": "binding_verifier",
+                "verdict": "PASS",
+                "evidence_frames": [
+                    294
+                ],
+                "details": {
+                    "field": "hres_star.value",
+                    "operator": "!=",
+                    "expected": "5400791e29a8048792936cfd53c6f55e",
+                    "observed": "61476fbb065e6cf7eb997e913f63141e",
+                    "expected_field": "authentication_vector.hxres_star"
+                }
+            },
+            {
+                "criterion_id": "criterion_9",
+                "engine": "binding_verifier",
+                "verdict": "SKIPPED",
+                "evidence_frames": [],
+                "details": {
+                    "field": "case.failure_source",
+                    "operator": "IF",
+                    "expected": "ausf",
+                    "observed": "local"
+                }
+            }
+        ],
+        "overall_verdict": "PASS"
+    },
+    "evidence": {
+        "bindings": {
+            "registration_request": {
+                "message_type": "nas.registration_request",
+                "frame": 283,
+                "related_frames": [],
+                "timestamp": 1792478680.91331,
+                "protocol": "nas_5gs",
+                "kind": "message",
+                "src": "10.100.50.251",
+                "dst": "10.100.50.249",
+                "correlation": {},
+                "fields": {
+                    "identity_type": "SUCI"
+                }
+            },
+            "authentication_vector": {
+                "message_type": "ausf.authentication.response",
+                "frame": 294,
+                "related_frames": [
+                    294
+                ],
+                "timestamp": 1792478680.944975,
+                "protocol": "http2",
+                "kind": "data",
+                "src": "10.233.14.30",
+                "dst": "10.233.71.38",
+                "correlation": {
+                    "tcp_stream": 3,
+                    "http2_stream_id": 279
+                },
+                "fields": {
+                    "headers": {
+                        "date": "Tue, 20 Oct 2026 06:44:40 GMT",
+                        "content-length": "285",
+                        "location": "http://open5gs-ausf-sbi.default/nausf-auth/v1/ue-authentications/1"
+                    },
+                    "body": {
+                        "authType": "5G_AKA",
+                        "5gAuthData": {
+                            "rand": "cee57f281b93f6578fe1e5d5c7da09a0",
+                            "hxresStar": "5400791e29a8048792936cfd53c6f55e",
+                            "autn": "97213a2d875580002fbae0c94c860333"
+                        },
+                        "_links": {
+                            "5g-aka": {
+                                "href": "http://open5gs-ausf-sbi.default/nausf-auth/v1/ue-authentications/1/5g-aka-confirmation"
+                            }
+                        }
+                    },
+                    "rand": "cee57f281b93f6578fe1e5d5c7da09a0",
+                    "autn": "97213a2d875580002fbae0c94c860333",
+                    "hxres_star": "5400791e29a8048792936cfd53c6f55e"
+                }
+            },
+            "authentication_request": {
+                "message_type": "nas.authentication_request",
+                "frame": 296,
+                "related_frames": [],
+                "timestamp": 1792478680.945194,
+                "protocol": "nas_5gs",
+                "kind": "message",
+                "src": "10.100.50.249",
+                "dst": "10.100.50.251",
+                "correlation": {},
+                "fields": {
+                    "rand": "cee57f281b93f6578fe1e5d5c7da09a0",
+                    "autn": "97213a2d875580002fbae0c94c860333"
+                }
+            },
+            "authentication_response": {
+                "message_type": "nas.authentication_response",
+                "frame": 297,
+                "related_frames": [],
+                "timestamp": 1792478680.950205,
+                "protocol": "nas_5gs",
+                "kind": "message",
+                "src": "10.100.50.251",
+                "dst": "10.100.50.249",
+                "correlation": {},
+                "fields": {
+                    "res_star": "f990e6624fb1ece52a44bc0e3a3c24fa"
+                }
+            },
+            "authentication_reject": {
+                "message_type": "nas.authentication_reject",
+                "frame": 298,
+                "related_frames": [],
+                "timestamp": 1792478680.950378,
+                "protocol": "nas_5gs",
+                "kind": "message",
+                "src": "10.100.50.249",
+                "dst": "10.100.50.251",
+                "correlation": {},
+                "fields": {
+                    "present": true
+                }
+            },
+            "case": {
+                "source_type": "configuration",
+                "fields": {
+                    "id": "A",
+                    "identity_path": "direct_suci",
+                    "failure_source": "local"
+                }
+            },
+            "hres_star": {
+                "source_type": "derived",
+                "fields": {
+                    "value": "61476fbb065e6cf7eb997e913f63141e"
+                }
+            }
+        }
+    },
+    "explanation": {
+        "summary": "Verification completed with verdict PASS",
+        "observations": {
+            "reason": null,
+            "message_type": null,
+            "alias": null,
+            "matches_found": 1,
+            "collected_events": null
+        }
+    },
+    "verdict": "PASS"
+}

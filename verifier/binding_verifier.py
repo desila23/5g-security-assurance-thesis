@@ -4,6 +4,17 @@ from matcher.models import BindingContext, Match
 from traffic.models import MessageEvent
 
 
+
+class MissingEvidenceError(Exception):
+    def __init__(self, field_path: str, alias: str):
+        self.field_path = field_path
+        self.alias = alias
+        super().__init__(
+            f"Required binding '{alias}' not available"
+        )
+
+
+
 def get_nested_value(data: dict, field_path: str) -> Any:
     """
     Recupera un valore annidato da un dizionario.
@@ -73,8 +84,9 @@ def get_binding_value(context: BindingContext, field_path: str) -> Any:
     nested_path = ".".join(parts[1:])
 
     if alias not in context.bindings:
-        raise RuntimeError(
-            f"Binding '{alias}' not found"
+        raise MissingEvidenceError(
+            field_path=field_path,
+            alias=alias,
         )
 
     binding = context.bindings[alias]
@@ -229,6 +241,23 @@ def verify_unique_rule(context: BindingContext, rule:dict) -> tuple[bool, dict]:
 
 
 
+def aggregate_verdicts(verdicts: list[str]) -> str:
+    """
+    Aggregazione congiuntiva dei criteri applicabili.
+
+    FAIL > INCONCLUSIVE > PASS.
+    SKIPPED è neutro.
+    """
+
+    if "FAIL" in verdicts:
+        return "FAIL"
+
+    if "INCONCLUSIVE" in verdicts:
+        return "INCONCLUSIVE"
+
+    return "PASS"
+
+
 def verify_if_rule(context: BindingContext, rule: dict) -> tuple[bool, dict]:
     actual_value = get_binding_value(context, rule["field"])
     expected_value = resolve_operand(context, rule["expected"])
@@ -244,7 +273,7 @@ def verify_if_rule(context: BindingContext, rule: dict) -> tuple[bool, dict]:
 
     # Se la condizione NON riguarda il caso attuale, viene "skippata"
     if not condition_met:
-        return True, {
+        return "SKIPPED", {
             "field": rule["field"],
             "operator": "IF",
             "condition_operator": condition_operator,
@@ -256,26 +285,23 @@ def verify_if_rule(context: BindingContext, rule: dict) -> tuple[bool, dict]:
 
 
     nested_results = []
-    nested_verdict = True
+    nested_verdictS = []
 
     for nested_rule in rule["rules"]:
         verdict, result = verify_rule(context, nested_rule)
 
         nested_results.append(result)
+        nested_verdictS.append(verdict)
 
-        if not verdict:
-            nested_verdict = False
+    overall = aggregate_verdicts(nested_verdictS)
 
-    return nested_verdict, {
+    return overall, {
         "field": rule["field"],
         "operator": "IF",
         "condition_operator": condition_operator,
         "expected": expected_value,
         "observed": actual_value,
-        "verdict": (
-            "PASS" if nested_verdict
-            else "FAIL"
-        ),
+        "verdict": overall,
         "rules": nested_results
     }
 
@@ -284,46 +310,75 @@ def verify_if_rule(context: BindingContext, rule: dict) -> tuple[bool, dict]:
 def verify_rule(context: BindingContext, rule: dict) -> tuple[bool, dict]:
     operator = rule["operator"]
 
-    if operator == "IF":
-        return verify_if_rule(context, rule)
+    try:
+        if operator == "IF":
+            return verify_if_rule(context, rule)
 
-    if operator in {"==", "!="}:
-        return verify_comparison_rule(context, rule)
+        if operator in {"==", "!="}:
+            passed, result = verify_comparison_rule(context, rule)
+            return ("PASS" if passed else "FAIL"), result
 
-    if operator == "UNIQUE":
-        return verify_unique_rule(context, rule)
+        if operator == "UNIQUE":
+            passed, result = verify_unique_rule(context, rule)
+            return ("PASS" if passed else "FAIL"), result
 
-    raise ValueError(
-        f"Unsupported operator in binding verifier: '{operator}'"
-    )
-            
+        raise ValueError(
+            f"Unsupported operator in binding verifier: '{operator}'"
+        )
 
+    except MissingEvidenceError as exc:
+        expected_operand = rule.get("expected", {})
+
+        expected = None
+        expected_field = None
+
+        if isinstance(expected_operand, dict):
+            if expected_operand.get("type") == "literal":
+                expected = expected_operand.get("value")
+            elif expected_operand.get("type") == "field":
+                expected_field = expected_operand.get("value")
+
+        result = {
+            "field": rule["field"],
+            "operator": operator,
+            "expected": expected,
+            "observed": None,
+            "verdict": "INCONCLUSIVE",
+            "reason": "required_binding_missing",
+            "missing_binding": exc.alias,
+            "missing_field_path": exc.field_path,
+        }
+
+        if expected_field is not None:
+            result["expected_field"] = expected_field
+
+        if operator == "IF":
+            result["condition_operator"] = rule["condition_operator"]
+            result["rules"] = []
+
+        return "INCONCLUSIVE", result
+    
 
 
 def verify_bindings(context: BindingContext, rules: list[dict]) -> dict:
     """
-    Verifica regole DSL su un BindingContext.
+    Verifica le regole DSL utilizzando una semantica a tre verdetti: PASS, FAIL, INCONCLUSIVE.
 
-    Questa è la funzione generica usata dal nuovo sistema di binding.
+    I criteri non applicabili (SKIPPED) sono neutri.
     """
 
     results = []
-    overall_verdict = True
+    verdicts = []
 
     for rule in rules:
         verdict, result = verify_rule(context, rule)
 
         results.append(result)
-
-        if not verdict:
-            overall_verdict = False
+        verdicts.append(verdict)
 
     return {
         "rules": results,
-        "overall_verdict": (
-            "PASS" if overall_verdict
-            else "FAIL"
-        ),
+        "overall_verdict": aggregate_verdicts(verdicts)
     }
 
 

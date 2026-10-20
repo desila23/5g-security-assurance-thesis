@@ -287,6 +287,7 @@
 
                         "event_mapping": {
                             "sync_failure": "SyncFailure()",
+                            "new_vector": "AusfAuthenticationResponse()",
                             "subsequent_auth_request": "AuthenticationRequest()"
                         }
                     }

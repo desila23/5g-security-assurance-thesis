@@ -1,0 +1,58 @@
+{
+    "schema_version": "2.0",
+    "metadata": {
+        "generator": "generic_verification_pipeline",
+        "tshark_version": "TShark (Wireshark) 3.6.2 (Git v3.6.2 packaged as 3.6.2-2)"
+    },
+    "test": {
+        "id": "resstar_verification_failure",
+        "description": "Verification of AMF RES* verification failure handling",
+        "nf": "AMF"
+    },
+    "source": {
+        "pcap": "captures/open5gs-amf-TC_RESSTAR_VERIFICATION_FAILURE4.pcap",
+        "sha256": "56d79fd155892467002561a36b7a860121c7e9b84f148ded2209fca8c8c0d106"
+    },
+    "configuration": {
+        "pipeline": "sequence",
+        "case": "D",
+        "rules": "dsl/resstar_verification_failure.dsl",
+        "traffic": {
+            "sources": [
+                {
+                    "type": "nas",
+                    "display_filter": "nas_5gs.mm.message_type"
+                },
+                {
+                    "type": "http2",
+                    "display_filter": "http2",
+                    "decode_as": [
+                        "tcp.port==15001,http2",
+                        "tcp.port==80,http2"
+                    ]
+                }
+            ],
+            "correlation_mode": "global"
+        },
+        "external_bindings": {}
+    },
+    "criteria": [],
+    "verification": {
+        "results": [],
+        "overall_verdict": "INCONCLUSIVE"
+    },
+    "evidence": {
+        "bindings": {}
+    },
+    "explanation": {
+        "summary": "No complete sequence match found",
+        "observations": {
+            "reason": "No complete sequence match found",
+            "message_type": null,
+            "alias": null,
+            "matches_found": null,
+            "collected_events": null
+        }
+    },
+    "verdict": "INCONCLUSIVE"
+}

@@ -111,7 +111,8 @@
         "pipeline": "sequence",
         "case": "A",
 
-        "pcap": "captures/free5gc-amf-TC-SYNC-FAIL-SEAF-AMF-Case_A.pcap",
+        "pcap_original": "captures/free5gc-amf-TC-SYNC-FAIL-SEAF-AMF-Case_A.pcap",
+        "pcap": "captures/open5gs-amf-TC_SYNC_FAIL_SEAF_AMF_A.pcap",
 
         "rules": "dsl/amf_sync_failure_case_a_sequence.dsl",
         "temporal_rules": "dsl/amf_sync_failure.dsl",
@@ -154,14 +155,17 @@
             }
         },
 
-        "report": "reports/amf_sync_failure_case_a/report.json"
+        "report_original": "reports/amf_sync_failure_case_a/report.json",
+        "report": "reports/NEW_amf_sync_failure_case_a/report.json"
     },
 
     "amf_sync_failure_case_b": {
         "pipeline": "sequence",
         "case": "B",
 
-        "pcap": "captures/free5gc-amf-TC-SYNC-FAIL-SEAF-AMF-Case B.pcap",
+        "pcap_original": "captures/free5gc-amf-TC-SYNC-FAIL-SEAF-AMF-Case B.pcap",
+        "pcap": "captures/open5gs-amf-TC_SYNC_FAIL_SEAF_AMF_B.pcap",
+
 
         "rules": "dsl/amf_sync_failure_case_b_sequence.dsl",
         "temporal_rules": "dsl/amf_sync_failure.dsl",
@@ -199,11 +203,13 @@
 
             "event_mapping": {
                 "sync_failure": "SyncFailure()",
+                "new_vector": "AusfAuthenticationResponse()",
                 "subsequent_auth_request": "AuthenticationRequest()"
             }
         },
 
-        "report": "reports/amf_sync_failure_case_b/report.json"
+        "report_original": "reports/amf_sync_failure_case_b/report.json",
+        "report": "reports/NEW_amf_sync_failure_case_b/report.json"
     },
          
     "upf_teid_uniqueness": {
@@ -266,36 +272,44 @@
                 "identity_path": "direct_suci",
                 "failure_source": "local",
 
-                "pcap": "captures/free5gc-amf-TC_RESSTAR_VERIFICATION_FAILURE_1.pcap",
+                "pcap_original": "captures/free5gc-amf-TC_RESSTAR_VERIFICATION_FAILURE_1.pcap",
+                "pcap": "captures/open5gs-amf-TC_RESSTAR_VERIFICATION_FAILURE1.pcap",
 
-                "report": "reports/resstar_verification_failure/case_a/report.json"
+                "report_original": "reports/resstar_verification_failure/case_a/report.json",
+                "report": "reports/NEW_resstar_verification_failure/case_a/report.json"
             },
 
             "B": {
                 "identity_path": "guti_then_suci",
                 "failure_source": "local",
 
-                "pcap": "captures/free5gc-amf-TC_RESSTAR_VERIFICATION_FAILURE_2.pcap",
+                "pcap_original": "captures/free5gc-amf-TC_RESSTAR_VERIFICATION_FAILURE_2.pcap",
+                "pcap": "captures/open5gs-amf-TC_RESSTAR_VERIFICATION_FAILURE2.pcap",
 
-                "report": "reports/resstar_verification_failure/case_b/report.json"
+                "report_original": "reports/resstar_verification_failure/case_b/report.json",
+                "report": "reports/NEW_resstar_verification_failure/case_b/report.json"
             },
 
             "C": {
                 "identity_path": "direct_suci",
                 "failure_source": "ausf",
 
-                "pcap": "captures/free5gc-amf-TC_RESSTAR_VERIFICATION_FAILURE_3.pcap",
+                "pcap_original": "captures/free5gc-amf-TC_RESSTAR_VERIFICATION_FAILURE_3.pcap",
+                "pcap": "captures/open5gs-amf-TC_RESSTAR_VERIFICATION_FAILURE3.pcap",
 
-                "report": "reports/resstar_verification_failure/case_c/report.json"
+                "report_original": "reports/resstar_verification_failure/case_c/report.json",
+                "report": "reports/NEW_resstar_verification_failure/case_c/report.json"
             },
 
             "D": {
                 "identity_path": "guti_then_suci",
                 "failure_source": "ausf",
 
-                "pcap": "captures/free5gc-amf-TC_RESSTAR_VERIFICATION_FAILURE_4.pcap",
+                "pcap_original": "captures/free5gc-amf-TC_RESSTAR_VERIFICATION_FAILURE_4.pcap",
+                "pcap": "captures/open5gs-amf-TC_RESSTAR_VERIFICATION_FAILURE4.pcap",
 
-                "report": "reports/resstar_verification_failure/case_d/report.json"
+                "report_original": "reports/resstar_verification_failure/case_d/report.json",
+                "report": "reports/NEW_resstar_verification_failure/case_d/report.json"
             }
         }
     }

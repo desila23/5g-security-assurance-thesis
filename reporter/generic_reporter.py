@@ -212,6 +212,11 @@ def _build_verification_results(result, test_config):
         if "duplicates" in rule:
             verification_result["duplicates"] = rule["duplicates"]
 
+        # Conserva le informazioni diagnostiche per i criteri che non possono essere verificati
+        for key in ("reason", "missing_binding", "missing_field_path"):
+            if key in rule:
+                verification_result[key] = rule[key]
+        
         verification_results.append(verification_result)
 
 
