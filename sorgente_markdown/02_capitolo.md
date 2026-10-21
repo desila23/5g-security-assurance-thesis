@@ -1,0 +1,51 @@
+# Background
+
+## Architettura 5G e implicazioni per la Security Assurance
+L’architettura della 5G Core Network adotta un modello fortemente modulare, nel quale le principali funzionalità della rete sono distribuite tra componenti distinti, denominati **Network Functions (NF)**. \cite{3gpp_ts23501_2023} Ciascuna funzione svolge compiti specifici, come l’autenticazione degli utenti, la gestione della mobilità, la registrazione dei servizi o la gestione delle sessioni.
+
+Le Network Functions del piano di controllo cooperano secondo il paradigma della **Service-Based Architecture (SBA)**, attraverso il quale espongono e utilizzano servizi mediante interfacce standardizzate. Tra le principali funzioni coinvolte nei casi di test considerati rientrano l'**AMF** (_Access and Mobility Management Function_), responsabile della registrazione e della mobilità degli utenti; l'**AUSF** (_Authentication Server Function_), coinvolta nell'autenticazione; l'**UDM** (_Unified Data Management_), che gestisce i dati degli abbonati; e l'**NRF** (_Network Repository Function_), che supporta la registrazione e la scoperta delle Network Functions. Sul piano utente opera invece l'**UPF** (_User Plane Function_), responsabile dell'instradamento e dell'elaborazione del traffico dati degli utenti. \cite{3gpp_ts23501_2023,3gpp_ts33501_2021}
+
+La presenza di funzioni distinte e di numerose interazioni tra esse rende necessario valutare la sicurezza sia dei singoli componenti, sia dei comportamenti osservabili nelle comunicazioni. In questo contesto si inserisce il modello di **Security Assurance** sviluppato da GSMA e 3GPP, che comprende il **Network Equipment Security Assurance Scheme (NESAS)** e le **Security Assurance Specifications (SCAS)**.
+
+Il NESAS definisce uno schema di valutazione della sicurezza delle apparecchiature di rete, comprendendo la valutazione dei processi di sviluppo e gestione del prodotto adottati dai fornitori. Le specifiche SCAS, sviluppate dal 3GPP, definiscono invece requisiti di sicurezza e relativi casi di test tecnici per valutare le diverse funzioni di rete, costituendo il riferimento normativo per le verifiche affrontate nel presente lavoro. \cite{gsma_fs13_2025,gsma_fs63_2025}
+
+
+## Test SCAS ed evidenze di verifica
+Le specifiche SCAS organizzano i requisiti di sicurezza attraverso casi di test tecnici, progettati per verificare il comportamento delle Network Functions rispetto alle proprietà definite dal 3GPP. Ciascun test descrive una procedura di verifica e i risultati attesi, fornendo un riferimento per la sua esecuzione e documentazione. \cite{3gpp_ts33117_2019,3gpp_tr33916_2024}
+
+La descrizione di un test case comprende generalmente i seguenti elementi:
+- **Test Name:** identificatore e denominazione del caso di test;
+- **Purpose:** obiettivo della verifica e proprietà di sicurezza considerata;
+- **Pre-Conditions:** condizioni iniziali necessarie all'esecuzione;
+- **Execution Steps:** operazioni da eseguire durante il test;
+- **Expected Results:** comportamento atteso per il soddisfacimento del requisito;
+- **Expected Format of Evidence:** indicazioni sulle evidenze da raccogliere a supporto della valutazione.
+
+A titolo esemplificativo, si consideri il test `TC_DISC_AUTHORIZATION_SLICE_NRF`, relativo all'autorizzazione delle richieste di discovery presso l'NRF. Una rappresentazione semplificata della specifica è riportata di seguito \cite{3gpp_ts33518_2024}. 
+```
+Test Case Name: TC_DISC_AUTHORIZATION_SLICE_NRF
+
+Purpose:
+	Verify that the NRF rejects a slice-specific NF discovery request 
+	when the requested NF instance does not allow discovery from the requester's network slice.
+
+Pre-Conditions:
+	- NF1 and NF2 are authenticated with the NRF.
+	- NF1 belongs to slice B.
+	- NF2 allows discovery only from slice A.
+
+Execution Steps
+	1. NF2 registers its slice information with the NRF.
+	2. NF1 sends an NF discovery request targeting NF2.
+	3. The NRF evaluates the slice-specific authorization conditions.
+
+Expected Results:
+	The NRF returns a 403 Forbidden response.
+	
+Expected Format of Evidence:
+	Evidence suitable for the interface
+```
+
+Come illustrato nell'esempio, oltre alla procedura e al risultato atteso, la descrizione del test può specificare anche le evidenze da raccogliere, tra cui catture di traffico di rete (PCAP), log applicativi e di sistema e documentazione dei risultati. Le catture PCAP consentono, in particolare, di osservare i messaggi scambiati tra i componenti della rete, i valori dei campi protocollari e le informazioni temporali associate alle comunicazioni.
+
+La disponibilità di tali evidenze permette di documentare il comportamento osservato durante il test, ma non implica che tutte le proprietà di sicurezza siano direttamente osservabili nel traffico acquisito. Le informazioni necessarie alla valutazione dipendono infatti dalla natura del requisito e dalle modalità con cui il test viene eseguito.

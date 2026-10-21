@@ -1,0 +1,162 @@
+% !TeX program = lualatex
+% !TeX root = main.tex
+\documentclass[12pt,a4paper,oneside,openany]{report}
+% ---------------------------------------------------------
+% TESI TRIENNALE - TOR VERGATA
+% Modifica il frontespizio e l'impaginazione in questo file.
+% ---------------------------------------------------------
+\usepackage[italian]{babel}
+\usepackage{fontspec}
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+% Font monospaziato discreto per gli identificatori nel testo.
+\setmonofont{Latin Modern Mono}[Scale=0.95]
+% Nei listati manteniamo il font DejaVu, leggibile e compatibile con l'albero AST.
+\newfontfamily\codeblockfont{DejaVu Sans Mono}[Scale=0.95]
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage[a4paper,top=2.8cm,bottom=2.8cm,left=3.15cm,right=2.65cm,headheight=16pt]{geometry}
+\usepackage{microtype}
+\usepackage{newunicodechar}
+\usepackage{multirow}
+% Unicode symbols present in the supplied Markdown text.
+\newunicodechar{ε}{\ensuremath{\varepsilon}}
+\newunicodechar{↳}{\ensuremath{\hookrightarrow}}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{longtable,booktabs,array,calc}
+\usepackage{etoolbox}
+\AtBeginEnvironment{longtable}{\footnotesize}
+\usepackage{fancyvrb}
+\usepackage{fvextra}
+\usepackage[table]{xcolor}
+\usepackage{enumitem}
+\usepackage{csquotes}
+\usepackage{xurl}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage[backend=biber,style=numeric,sorting=none,giveninits=true,doi=true,url=true,isbn=false]{biblatex}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{needspace}
+
+\lstdefinestyle{tesicode}{
+    basicstyle=\codeblockfont\fontsize{9.3}{11.1}\selectfont,
+    backgroundcolor=\color{blue!3},
+    frame=single,
+    rulecolor=\color{blue!25!gray},
+    framesep=4pt,
+    xleftmargin=4pt,
+    xrightmargin=4pt,
+    breaklines=true,
+    breakatwhitespace=false,
+    columns=fullflexible,
+    keepspaces=true,
+    showstringspaces=false,
+    upquote=true,
+    aboveskip=6pt,
+    belowskip=6pt,
+    postbreak={},
+    prebreak={},
+}
+
+\lstset{style=tesicode}
+
+\captionsetup[table]{
+    font=small,
+    labelfont=normalfont,
+    justification=centering,
+    singlelinecheck=true,
+    skip=5pt
+}
+
+\addbibresource{bibliografia_tesi.bib}
+\definecolor{tesiblu}{RGB}{34,75,117}
+\hypersetup{colorlinks=true,linkcolor=tesiblu,citecolor=tesiblu,urlcolor=tesiblu,
+  pdftitle={A Domain-Specific Language for Security Assurance of 5G SCAS Tests from Network Traffic Captures},
+  pdfauthor={Samuele De Santis}}
+\graphicspath{{figure/}}
+% Stile dei listati DSL, Python, Lark e MFOTL
+\RecustomVerbatimEnvironment{verbatim}{Verbatim}{
+    formatcom=\codeblockfont,
+    fontsize=\small,
+    breaklines=true,
+    breakanywhere=true,
+    tabsize=4,
+    frame=single,
+    framerule=0.4pt,
+    framesep=7pt,
+    rulecolor=\color{blue!25!gray},
+    fillcolor=\color{blue!3},
+    xleftmargin=4pt,
+    xrightmargin=4pt,
+    breaksymbolleft={},
+    breaksymbolright={}
+}
+\setlength{\parindent}{1.05em}
+\setlength{\parskip}{0.25em}
+\setlist{nosep,topsep=0.3em}
+\renewcommand{\arraystretch}{1.15}
+\emergencystretch=2em
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+\sloppy
+% Pandoc helpers:
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\real}[1]{#1}
+% References, tables and illustrations indexed automatically.
+\begin{document}
+\newgeometry{top=1.1cm,bottom=1.8cm,left=2.65cm,right=2.65cm}
+\begin{titlepage}
+\centering
+\resizebox{\textwidth}{!}{\bfseries UNIVERSITÀ DEGLI STUDI DI ROMA TOR VERGATA}\par
+\vspace{0.55cm}
+{\normalsize MACROAREA DI SCIENZE MATEMATICHE, FISICHE E NATURALI\par}
+\vspace{1.35cm}
+\includegraphics[width=10.8cm]{figure/logo_tor_vergata.pdf}\par
+\vspace{1.65cm}
+{\Large\bfseries CORSO DI STUDIO IN\par}
+\vspace{0.3cm}
+{\large Informatica\par}
+\vspace{1.15cm}
+{\Large\bfseries TESI DI LAUREA\par}
+\vspace{0.65cm}
+{\Large\bfseries A Domain-Specific Language for Security Assurance\\
+of 5G SCAS Tests from Network Traffic Captures\par}
+\vspace{3.25cm}
+\noindent\begin{minipage}[t]{0.49\textwidth}
+\raggedright
+\textbf{Relatrice:}\\[0.2cm]
+Prof.ssa Paola Vocca\\[0.8cm]
+\textbf{Correlatore:}\\[0.2cm]
+Dott. Francesco Mancini
+\end{minipage}\hfill
+\begin{minipage}[t]{0.47\textwidth}
+\raggedleft
+\textbf{Laureando:}\\[0.2cm]
+Samuele De Santis\\[0.15cm]
+Matricola 0348324
+\end{minipage}
+\vfill
+{\large\bfseries Anno Accademico 2025/2026\par}
+\vspace*{1.1cm}
+\end{titlepage}
+\restoregeometry
+\pagenumbering{roman}
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+\include{capitoli/01_capitolo}
+\include{capitoli/02_capitolo}
+\include{capitoli/03_capitolo}
+\include{capitoli/04_capitolo}
+\include{capitoli/05_capitolo}
+\include{capitoli/06_capitolo}
+\include{capitoli/07_capitolo}
+\clearpage
+\printbibliography[heading=bibintoc,title={Bibliografia}]
+\clearpage
+\input{capitoli/glossario}
+\end{document}

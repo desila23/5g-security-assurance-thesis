@@ -1,0 +1,18 @@
+% Capitolo 7 generato dalla bozza Markdown verificata.
+\chapter{Discussione, conclusioni e sviluppi futuri}\label{discussione-conclusioni-e-sviluppi-futuri}
+
+I risultati ottenuti sui casi di test esaminati permettono di rispondere positivamente alla domanda posta all'inizio del lavoro: è possibile rappresentare in forma interpretabile i criteri necessari a verificare l'esito di un test SCAS a partire dal traffico osservato. La sperimentazione ha mostrato che tale approccio può essere applicato a requisiti differenti senza dover sviluppare una logica di verifica dedicata per ogni caso, pur richiedendo una fase di interpretazione della specifica per individuare le proprietà effettivamente verificabili.
+
+L'applicazione delle medesime specifiche DSL a catture provenienti da Open5GS e free5GC ha inoltre permesso di valutare la riusabilità della pipeline su implementazioni differenti della 5G Core Network.
+
+Un aspetto emerso dal lavoro è che la definizione di un criterio e la possibilità di valutarlo sono due questioni distinte. Anche quando una proprietà può essere espressa nella DSL, la sua verifica dipende dalla disponibilità di evidenze sufficienti nella cattura e dalla possibilità di ricavarne le informazioni necessarie.
+
+Queste considerazioni definiscono anche i limiti dei risultati raggiunti. La DSL supporta attualmente un insieme circoscritto di proprietà e la validazione riguarda un numero selezionato di casi SCAS e di mutazioni controllate. Non è pertanto possibile concludere che qualsiasi requisito di sicurezza possa essere verificato attraverso il solo traffico di rete, né che i risultati ottenuti siano generalizzabili a ogni possibile scenario.
+
+Un limite dell'attuale implementazione riguarda la dipendenza della verifica temporale dalla selezione delle evidenze. Poiché il log fornito a MonPoly viene costruito a partire dagli eventi riconosciuti dal matcher, una violazione dell'ordinamento richiesto dalla SEQUENCE può impedire l'esecuzione della verifica temporale che dovrebbe rilevarla. Una possibile direzione di sviluppo consiste quindi nel rendere tale verifica meno dipendente dal completamento del riconoscimento sequenziale.
+
+Il limite della verifica temporale appena descritto mostra come l'analisi dei risultati sperimentali possa individuare aspetti dell'implementazione che richiedono ulteriori sviluppi. Seguendo questo approccio, l'estensione del sistema potrebbe essere guidata dall'esame di nuovi requisiti SCAS, individuando le proprietà non ancora rappresentabili attraverso il DSL e le informazioni che gli attuali normalizzatori non consentono di ricavare. Le eventuali estensioni del linguaggio e dei meccanismi di estrazione potrebbero così rispondere a esigenze di verifica concrete, mantenendo la riusabilità dei componenti comuni.
+
+Lo stesso approccio potrebbe contribuire anche all'evoluzione del \emph{mutation testing}, attualmente basato su procedure di alterazione predisposte per i singoli scenari sperimentali. L'utilizzo delle specifiche DSL per individuare gli eventi e i campi interessati dalle mutazioni permetterebbe di riutilizzare parte della logica di selezione delle evidenze, riducendo la necessità di sviluppare procedure interamente dedicate a ciascun caso di test. Le operazioni di modifica rimarrebbero comunque specifiche rispetto ai protocolli e alle proprietà da verificare.
+
+Il lavoro costituisce quindi un primo passo verso una verifica degli esiti SCAS maggiormente sistematica e riutilizzabile, il cui ambito di applicazione rimane strettamente legato alle proprietà esprimibili e all'evidenza effettivamente osservabile.

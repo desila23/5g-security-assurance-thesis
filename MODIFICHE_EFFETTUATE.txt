@@ -1,0 +1,36 @@
+REVISIONE LATEX COMPLETA — 11 ottobre 2026
+
+COMPILAZIONE
+- Verificata compilazione con LuaLaTeX e bibliografia con Biber.
+- PDF finale: 39 pagine, bibliografia inclusa e correttamente intestata/indicizzata.
+
+TABELLE
+- Uniformate tutte e 7 le tabelle: fondo azzurro tenue nelle intestazioni, bordi sottili, colonne proporzionate, didascalie SEMPRE sotto.
+- Tabella 3.1 e 3.2 come blocchi non flottanti per mantenerle nelle sezioni corrette e con didascalia unita.
+- Tabella 6.1: distribuzione colonne ottimizzata; nomi AMF Sync Failure -- Case A/B.
+- Tabelle RES*: celle centrate e allineate verticalmente.
+- Tabella 6.4: celle raggruppate AMF A/B e UPF; baseline univoca; INCONCLUSIVE senza a capo; terminologia delle mutazioni RES* precisata.
+- Tabella 6.5 formattata con lo stesso stile delle altre.
+
+LISTATI
+- Listati convertiti a listings (eccetto il listato AST Unicode, conservato in verbatim), con carattere compatto e senza frecce di a capo.
+- Ogni listato e' tenuto unito con un contenitore non divisibile fra pagine.
+- Listato AMF RES* separato in due blocchi: selezione SEQUENCE e regole REQUIRE/IF.
+- Blocco JSON del reporting compattato senza togliere campi, per correggere un salto di pagina superfluo.
+
+IMPAGINAZIONE E TESTO
+- Eliminati i salti che lasciavano una sola riga nelle pagine finali dei Capitoli 2 e 7.
+- Corretto il refuso "sulla rappresentazioni" nel Capitolo 5.
+- Mantenuti i dati dei test, gli esiti e le figure originali.
+
+NOTA
+- La figura dell'architettura NON e' stata ridisegnata: l'eventuale sostituzione con una figura piu' professionale resta a scelta dell'autore.
+- Il nome del relatore/frontespizio e' stato conservato come nel file originale: verificare che coincida con i dati accademici ufficiali.
+- Per riprodurre il PDF su un altro computer usare LuaLaTeX + Biber e assicurarsi che siano installati i font Latin Modern e DejaVu Sans Mono (non inclusi nello ZIP).
+
+RITOCCO TIPOGRAFICO FINALE (11/10/2026)
+- Ridotto l'impatto visivo degli identificatori inseriti nel testo tramite \\texttt: Latin Modern Mono a scala 0.90, mentre i listati conservano DejaVu Sans Mono e le dimensioni già approvate.
+- Tabella 6.4: corretto il centraggio verticale di AMF Sync Failure Case A/B, UPF TEID Uniqueness e rispettivi PASS baseline.
+- Tabella 6.4: rese più uniformi le altezze delle tre righe di mutazione statica, temporale e combinata, mantenendo i FAIL allineati.
+- Contenuti, risultati, formule e altre tabelle invariati.
+- Ricompilato il PDF con LuaLaTeX e Biber, totale 39 pagine.

@@ -1,0 +1,134 @@
+\chapter*{Glossario e acronimi}
+\phantomsection
+\addcontentsline{toc}{chapter}{Glossario e acronimi}
+
+Il glossario raccoglie le principali sigle e i termini delle reti 5G utilizzati nel testo, con particolare riferimento all'architettura di rete e alle procedure di autenticazione.
+
+\begingroup
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.28}
+\setlength{\extrarowheight}{2pt}
+\setlength{\LTpre}{0.7\baselineskip}
+\setlength{\LTpost}{0pt}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{0.29\textwidth}|>{\raggedright\arraybackslash}p{\dimexpr0.71\textwidth-4\tabcolsep-3\arrayrulewidth\relax}|}
+\hline
+\textbf{Termine} & \textbf{Definizione} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Termine} & \textbf{Definizione} \\
+\hline
+\endhead
+\endfoot
+\endlastfoot
+
+\mbox{\textbf{3GPP}} & 3rd Generation Partnership Project: organizzazione di collaborazione internazionale che produce specifiche tecniche per le reti mobili, incluso il sistema 5G. \\
+\hline
+
+\mbox{\textbf{5G AKA}} & 5G Authentication and Key Agreement: procedura di autenticazione primaria e accordo delle chiavi nel sistema 5G. \\
+\hline
+
+\mbox{\textbf{5GC}} & 5G Core Network: insieme delle funzioni di rete che costituiscono la rete centrale del sistema 5G. \\
+\hline
+
+\mbox{\textbf{5G-GUTI (GUTI)}} & 5G Globally Unique Temporary UE Identity: identificativo temporaneo assegnato dalla rete all'UE, utilizzabile nelle procedure di segnalazione senza esporre sistematicamente l'identità permanente. \\
+\hline
+
+\mbox{\textbf{5GMM cause \#21}} & Synch failure: codice di causa incluso in un messaggio Authentication Failure quando l'UE rileva un problema di sincronizzazione nella verifica della sfida di autenticazione. \\
+\hline
+
+\mbox{\textbf{AMF}} & Access and Mobility Management Function: funzione della 5G Core Network che gestisce registrazione, accesso e mobilità dell'UE e coordina alcune procedure di autenticazione. \\
+\hline
+
+\mbox{\textbf{AUSF}} & Authentication Server Function: funzione della 5G Core Network coinvolta nell'esecuzione dell'autenticazione primaria dell'utente. \\
+\hline
+
+\mbox{\textbf{Authentication Failure}} & Messaggio NAS con cui l'UE segnala alla rete il fallimento di una procedura di autenticazione, indicandone la causa e, quando previsto, ulteriori parametri. \\
+\hline
+
+\mbox{\textbf{Authentication Reject}} & Messaggio NAS con cui la rete comunica all'UE il rifiuto dell'autenticazione. \\
+\hline
+
+\mbox{\textbf{Authentication Request}} & Messaggio NAS con cui la rete richiede all'UE di eseguire l'autenticazione, trasmettendo i parametri della sfida previsti dalla procedura. \\
+\hline
+
+\mbox{\textbf{AUTN}} & Authentication Token: parametro della sfida 5G AKA che consente all'UE di effettuare i controlli di autenticità e freschezza previsti dalla procedura. \\
+\hline
+
+\mbox{\textbf{AUTS}} & Parametro di risincronizzazione trasmesso dall'UE quando viene rilevato un problema di sincronizzazione durante l'autenticazione 5G AKA. \\
+\hline
+
+\mbox{\textbf{F-TEID}} & Fully Qualified Tunnel Endpoint Identifier: identificazione di un endpoint di tunnel GTP, composta dal TEID e dalle relative informazioni di indirizzamento IP. \\
+\hline
+
+\mbox{\textbf{GTP-U}} & GPRS Tunnelling Protocol -- User Plane: protocollo utilizzato per trasportare il traffico dati degli utenti attraverso tunnel nel piano utente. \\
+\hline
+
+\mbox{\textbf{HTTP/2}} & Protocollo applicativo impiegato nelle comunicazioni basate su servizi fra le funzioni del piano di controllo della 5G Core Network. \\
+\hline
+
+\mbox{\textbf{HXRES*}} & Valore ottenuto a partire dalla risposta di autenticazione attesa, utilizzato dall'AMF per il controllo locale della risposta dell'UE nella procedura 5G AKA. \\
+\hline
+
+\mbox{\textbf{NAS}} & Non-Access Stratum: insieme di protocolli di segnalazione tra l'UE e la rete centrale 5G, in particolare l'AMF, per procedure quali registrazione e autenticazione. \\
+\hline
+
+\mbox{\textbf{Network slice}} & Rete logica definita sul sistema 5G, con funzionalità e risorse configurate per determinate esigenze di servizio. \\
+\hline
+
+\mbox{\textbf{NF}} & Network Function: funzione di rete che svolge un compito specifico all'interno dell'architettura 5G. \\
+\hline
+
+\mbox{\textbf{NF Discovery}} & Procedura con cui una funzione di rete individua, tramite NRF, altre funzioni e i servizi disponibili necessari a una comunicazione. \\
+\hline
+
+\mbox{\textbf{NRF}} & Network Repository Function: funzione che supporta la registrazione, l'aggiornamento e la scoperta delle funzioni di rete e dei loro servizi. \\
+\hline
+
+\mbox{\textbf{PCAP}} & Packet Capture: file utilizzato per conservare i pacchetti acquisiti durante una cattura di traffico di rete. \\
+\hline
+
+\mbox{\textbf{PFCP}} & Packet Forwarding Control Protocol: protocollo utilizzato per controllare le sessioni e le regole di inoltro del piano utente, nelle comunicazioni con l'UPF. \\
+\hline
+
+\mbox{\textbf{Piano di controllo}} & Parte dell'architettura di rete dedicata alla segnalazione e alla gestione delle procedure, delle connessioni e delle risorse. \\
+\hline
+
+\mbox{\textbf{Piano utente}} & Parte dell'architettura di rete dedicata al trattamento e al trasporto del traffico dati degli utenti. \\
+\hline
+
+\mbox{\textbf{RAND}} & Valore casuale incluso nella sfida di autenticazione, utilizzato come input nei calcoli della procedura 5G AKA. \\
+\hline
+
+\mbox{\textbf{RES*}} & Risposta di autenticazione calcolata dall'UE nella procedura 5G AKA e utilizzata nel controllo della risposta ricevuta. \\
+\hline
+
+\mbox{\textbf{SBA}} & Service-Based Architecture: modello nel quale le funzioni del piano di controllo espongono e utilizzano servizi mediante interfacce standardizzate. \\
+\hline
+
+\mbox{\textbf{SCAS}} & Security Assurance Specification: specifica 3GPP che definisce requisiti di sicurezza e casi di test per una determinata classe di prodotti o funzioni di rete. \\
+\hline
+
+\mbox{\textbf{SUCI}} & Subscription Concealed Identifier: rappresentazione protetta dell'identificativo permanente dell'abbonato, utilizzata per limitarne l'esposizione durante le procedure di rete. \\
+\hline
+
+\mbox{\textbf{SUPI}} & Subscription Permanent Identifier: identificativo permanente dell'abbonato nel sistema 5G. \\
+\hline
+
+\mbox{\textbf{T3520}} & Timer NAS avviato dall'UE in particolari condizioni di fallimento dell'autenticazione, tra cui la causa di sincronizzazione. Il valore ordinario è di 15 secondi; la specifica 3GPP prevede valori differenti per alcune modalità di accesso. \\
+\hline
+
+\mbox{\textbf{TEID}} & Tunnel Endpoint Identifier: identificativo utilizzato per distinguere un endpoint di tunnel nelle comunicazioni GTP. \\
+\hline
+
+\mbox{\textbf{UDM}} & Unified Data Management: funzione della 5G Core Network che gestisce dati degli abbonati e informazioni utilizzate nelle procedure di autenticazione e servizio. \\
+\hline
+
+\mbox{\textbf{UE}} & User Equipment: dispositivo dell'utente che accede alla rete mobile, ad esempio uno smartphone o un terminale con connettività cellulare. \\
+\hline
+
+\mbox{\textbf{UPF}} & User Plane Function: funzione della 5G Core Network che tratta e inoltra il traffico dati sul piano utente. \\
+\hline
+
+\end{longtable}
+\endgroup

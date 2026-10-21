@@ -1,0 +1,744 @@
+{
+  "project": "C:\\Users\\samu1\\Downloads\\Tesi_5G_LaTeX_REV022\\Tesi_5G_LaTeX",
+  "kind": "latex",
+  "main": "main.tex",
+  "items": [
+    {
+      "action": "replace",
+      "note": "L'evoluzione delle reti mobili verso la quinta generazione ha introdotto un'architettura più articolata, composta da diverse funzioni di rete che cooperano per fornire i servizi del sistema. In questo contesto, la verifica della sicurezza assume un ruolo importante ed è supportata dalle \\emph{Security Assurance Specifications} (SCAS), che definiscono requisiti e procedure di test per valutare specifiche proprietà di sicurezza \\cite{3gpp_ts33117_2019,gsma_fs13_2025}. Tuttavia, determinare l'esito di una prova a partire dalle catture di traffico non è sempre immediato: i criteri di verifica sono descritti in linguaggio naturale, mentre le evidenze necessarie possono essere distribuite tra messaggi e protocolli differenti.\n\nIl presente lavoro affronta questo problema proponendo una \\emph{Domain-Specific Language} (DSL) che permette di esprimere i criteri di verifica in forma dichiarativa, separandoli dalla logica del software che li valuta. Il sistema sviluppato seleziona gli eventi rilevanti dalle catture di traffico, applica le regole specificate e produce un report contenente il verdetto e le evidenze che lo giustificano. La soluzione è stata valutata su diversi casi SCAS e attraverso esperimenti di \\emph{mutation testing}, nei quali vengono introdotte alterazioni controllate nelle catture per verificare la capacità del sistema di rilevare le modifiche apportate.",
+      "priority": "normale",
+      "scope": "here",
+      "mode": "apply",
+      "page": 4,
+      "pdf_text": "L’evoluzione delle reti mobili verso la quinta generazione ha introdotto un’architettura di rete più articolata rispetto alle precedenti. Un elemento centrale di questa architettura è il 5G Core, organizzato in diversi componenti, denominati Network Functions (NF), che cooperano per fornire i servizi della rete. Questa organizzazione offre maggiore flessibilità, ma rende anche più complessa la valutazione della sicurezza, poiché è necessario considerare sia il comportamento delle singole funzioni sia le loro interazioni. Per supportare tale valutazione, il 3GPP ha definito le Security Assurance Specifications (SCAS) [1, 2], documenti tecnici che raccolgono requisiti di sicurezza e procedure di test specifiche per le diverse funzioni della rete. Queste specifiche costituiscono un riferimento per verificare la conformità dei comportamenti osservati rispetto a quanto previsto dagli standard. La disponibilità di una procedura ben definita, tuttavia, non rende necessariamente immediata la valutazione del suo esito. La difficoltà deriva dal fatto che i criteri sono formulati prevalentemente in linguaggio naturale, mentre le catture di traffico contengono informazioni che devono essere interpretate e correlate. Per rendere automatizzabile questa valutazione, occorre rappresentare i criteri in una forma strutturata, interpretabile da un sistema software. Il presente lavoro affronta questa difficoltà proponendo un Domain-Specific Language (DSL), pensato per esprimere in forma dichiarativa i criteri necessari a verificare gli esiti delle prove SCAS. Il contributo principale non consiste nell’automatizzazione di una singola procedura di test, ma nella separazione tra la descrizione dei criteri di verifica e il codice che li valuta. Anziché incorporare le condizioni di ciascun test in una logica applicativa dedicata, la soluzione proposta permette di specificarle attraverso regole DSL interpretate da un motore comune, riutilizzabile tra casi di test differenti. A partire dalle catture di traffico prodotte durante prove già eseguite, il sistema sviluppato utilizza le regole definite nella DSL per individuare le evidenze rilevanti e stabilire se i criteri previsti siano soddisfatti, determinando così un verdetto e documentando in un report gli elementi su cui tale verdetto si basa. La soluzione è stata infine valutata su diversi test case SCAS, anche attraverso esperimenti di mutation testing, nei quali vengono introdotte alterazioni controllate nelle catture originali per esaminare la capacità del sistema di rilevarne gli effetti sui risultati",
+      "area": false,
+      "rects": [
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.3246536316478132,
+          "w": 0.7307093436249098,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.34304618554022326,
+          "w": 0.7274476671697618,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.3418583717671514,
+          "w": 0.7274476671697618,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.36024164586445934,
+          "w": 0.13991536928276133,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.3590538320913874,
+          "w": 0.13991536928276133,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.28929719797887,
+          "y": 0.36024164586445934,
+          "w": 0.00559091803924142,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.28929719797887,
+          "y": 0.3590538320913874,
+          "w": 0.00559091803924142,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.29671238270227707,
+          "y": 0.36024164586445934,
+          "w": 0.07503214408753855,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.29671238270227707,
+          "y": 0.3590538320913874,
+          "w": 0.07503214408753855,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.37173042850580745,
+          "y": 0.36024164586445934,
+          "w": 0.42250209167268193,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.37173042850580745,
+          "y": 0.3590538320913874,
+          "w": 0.42250209167268193,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.7941990944287682,
+          "y": 0.36024164586445934,
+          "w": 0.00559091803924142,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.7941990944287682,
+          "y": 0.3590538320913874,
+          "w": 0.00559091803924142,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.8016930244766717,
+          "y": 0.36024164586445934,
+          "w": 0.07204233381455476,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.8016930244766717,
+          "y": 0.3590538320913874,
+          "w": 0.07204233381455476,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.14894678128486122,
+          "y": 0.3773443082376741,
+          "w": 0.08302904964236499,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.14894678128486122,
+          "y": 0.3761564944646022,
+          "w": 0.08302904964236499,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.23198372596627076,
+          "y": 0.3773443082376741,
+          "w": 0.00559091803924142,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.23198372596627076,
+          "y": 0.3761564944646022,
+          "w": 0.00559091803924142,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.2391889231576875,
+          "y": 0.3773443082376741,
+          "w": 0.6362558648861474,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.2391889231576875,
+          "y": 0.3761564944646022,
+          "w": 0.6362558648861474,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.39454904835701227,
+          "w": 0.7311027626484677,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.3933612345839404,
+          "w": 0.7311027626484677,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.41165171073022705,
+          "w": 0.7278514420237548,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.4104638969571552,
+          "w": 0.7278514420237548,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.42885645084956525,
+          "w": 0.09566741789159394,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.42766863707649333,
+          "w": 0.09566741789159394,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.17115296279283418,
+          "y": 0.4495596737224042,
+          "w": 0.4594264715532515,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.17115296279283418,
+          "y": 0.4483718599493323,
+          "w": 0.4594264715532515,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.6283351925979395,
+          "y": 0.4495596737224042,
+          "w": 0.00559091803924142,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.6283351925979395,
+          "y": 0.4483718599493323,
+          "w": 0.00559091803924142,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.6343329614804121,
+          "y": 0.4495596737224042,
+          "w": 0.24095228525493798,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.6343329614804121,
+          "y": 0.4483718599493323,
+          "w": 0.24095228525493798,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.14855305466237942,
+          "y": 0.4667644138417424,
+          "w": 0.04086087710807796,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.14855305466237942,
+          "y": 0.46557660006867047,
+          "w": 0.04086087710807796,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.18936938119299165,
+          "y": 0.4667644138417424,
+          "w": 0.00559091803924142,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.18936938119299165,
+          "y": 0.46557660006867047,
+          "w": 0.00559091803924142,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.19577400091869546,
+          "y": 0.4667644138417424,
+          "w": 0.6790285205722161,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.19577400091869546,
+          "y": 0.46557660006867047,
+          "w": 0.6790285205722161,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.48386707621495717,
+          "w": 0.7259977483758777,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.4826792624418853,
+          "w": 0.7259977483758777,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.5010625365391932,
+          "w": 0.7247748375877682,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.4998747227661213,
+          "w": 0.7247748375877682,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.518165198912408,
+          "w": 0.2047472254577072,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.5169773851393361,
+          "w": 0.2047472254577072,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.17115296279283418,
+          "y": 0.538868421785247,
+          "w": 0.703665451309141,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.17115296279283418,
+          "y": 0.5376806080121751,
+          "w": 0.703665451309141,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.5560731619045851,
+          "w": 0.34981974703064506,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.5548853481315132,
+          "w": 0.34981974703064506,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.49788043834897305,
+          "y": 0.5560731619045851,
+          "w": 0.00559091803924142,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.49788043834897305,
+          "y": 0.5548853481315132,
+          "w": 0.00559091803924142,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.5111883981888575,
+          "y": 0.5560731619045851,
+          "w": 0.36435359111490256,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.5111883981888575,
+          "y": 0.5548853481315132,
+          "w": 0.36435359111490256,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.5732779020239233,
+          "w": 0.7273818410000656,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.5720900882508514,
+          "w": 0.7273818410000656,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.5903805643971382,
+          "w": 0.6050144776560141,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.5891927506240662,
+          "w": 0.6050144776560141,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.7543802086751099,
+          "y": 0.5903805643971382,
+          "w": 0.00559091803924142,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.7543802086751099,
+          "y": 0.5891927506240662,
+          "w": 0.00559091803924142,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.7705886213006102,
+          "y": 0.5903805643971382,
+          "w": 0.10352405833716123,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.7705886213006102,
+          "y": 0.5891927506240662,
+          "w": 0.10352405833716123,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.6075760247213742,
+          "w": 0.7254638591771113,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.6063882109483023,
+          "w": 0.7254638591771113,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.624678687094589,
+          "w": 0.43177117510991536,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.6234908733215171,
+          "w": 0.43177117510991536,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.17115296279283418,
+          "y": 0.645381909967428,
+          "w": 0.48268228312225214,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.17115296279283418,
+          "y": 0.6441940961943561,
+          "w": 0.48268228312225214,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.6501345232626813,
+          "y": 0.645381909967428,
+          "w": 0.00559091803924142,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.6501345232626813,
+          "y": 0.6441940961943561,
+          "w": 0.00559091803924142,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.6549379880569591,
+          "y": 0.645381909967428,
+          "w": 0.21921221864951768,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.6549379880569591,
+          "y": 0.6441940961943561,
+          "w": 0.21921221864951768,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.14775247719666645,
+          "y": 0.6625866500867661,
+          "w": 0.7270564013386706,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.14775247719666645,
+          "y": 0.6613988363136942,
+          "w": 0.7270564013386706,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.6797913902061042,
+          "w": 0.730045647680294,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.6786035764330324,
+          "w": 0.730045647680294,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.696894052579319,
+          "w": 0.7267370111227771,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.6957062388062472,
+          "w": 0.7267370111227771,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.7140987926986572,
+          "w": 0.31559731609685676,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.7129109789255853,
+          "w": 0.31559731609685676,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.4635737253100597,
+          "y": 0.7140987926986572,
+          "w": 0.00559091803924142,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.4635737253100597,
+          "y": 0.7129109789255853,
+          "w": 0.00559091803924142,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.4787715729378568,
+          "y": 0.7140987926986572,
+          "w": 0.3960831378371284,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.4787715729378568,
+          "y": 0.7129109789255853,
+          "w": 0.3960831378371284,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.7312014550718721,
+          "w": 0.7273092476540456,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.7300136412988001,
+          "w": 0.7273092476540456,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.7483969153961081,
+          "w": 0.7258444615788437,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.7472091016230361,
+          "w": 0.7258444615788437,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.7656016555154462,
+          "w": 0.7238581927948028,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.7644138417423744,
+          "w": 0.7238581927948028,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.782704317888661,
+          "w": 0.7279742765273312,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.7815165041155892,
+          "w": 0.7279742765273312,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.7999090580079992,
+          "w": 0.7253967000787453,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.7987212442349273,
+          "w": 0.7253967000787453,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.817011720381214,
+          "w": 0.7267144538683641,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.8158239066081421,
+          "w": 0.7267144538683641,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.83420718070545,
+          "w": 0.7247803743683969,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.8330193669323781,
+          "w": 0.7247803743683969,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.1487499179736203,
+          "y": 0.8514119208247882,
+          "w": 0.14389518669204016,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.1487499179736203,
+          "y": 0.8502241070517162,
+          "w": 0.14389518669204016,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.29260450160771706,
+          "y": 0.8514119208247882,
+          "w": 0.5855559748014961,
+          "h": 0.014207366301352066
+        },
+        {
+          "page": 4,
+          "x": 0.29260450160771706,
+          "y": 0.8502241070517162,
+          "w": 0.5855559748014961,
+          "h": 0.01603548593647052
+        },
+        {
+          "page": 4,
+          "x": 0.15004921582781022,
+          "y": 0.8673267694249311,
+          "w": 0.6935209413347333,
+          "h": 0.01603548593647052
+        }
+      ],
+      "file": "capitoli/01_capitolo.tex",
+      "line": 4,
+      "line_end": 23,
+      "source_match": "L'evoluzione delle reti mobili verso la quinta generazione ha introdotto un'architettura di rete più articolata rispetto alle precedenti. Un elemento centrale di questa architettura è il \\emph{5G Core}, organizzato in diversi componenti, denominati \\emph{Network Functions} (NF), che cooperano per fornire i servizi della rete. Questa organizzazione offre maggiore flessibilità, ma rende anche più complessa la valutazione della sicurezza, poiché è necessario considerare sia il comportamento delle singole funzioni sia le loro interazioni.\n\nPer supportare tale valutazione, il 3GPP ha definito le \\emph{Security Assurance Specifications} (SCAS) \\cite{3gpp_ts33117_2019,gsma_fs13_2025}, documenti tecnici che raccolgono requisiti di sicurezza e procedure di test specifiche per le diverse funzioni della rete. Queste specifiche costituiscono un riferimento per verificare la conformità dei comportamenti osservati rispetto a quanto previsto dagli standard.\n\nLa disponibilità di una procedura ben definita, tuttavia, non rende necessariamente immediata la valutazione del suo esito. La difficoltà deriva dal fatto che i criteri sono formulati prevalentemente in linguaggio naturale, mentre le catture di traffico contengono informazioni che devono essere interpretate e correlate. Per rendere automatizzabile questa valutazione, occorre rappresentare i criteri in una forma strutturata, interpretabile da un sistema software.\n\n\nIl presente lavoro affronta questa difficoltà proponendo\nun \\emph{Domain-Specific Language} (DSL), pensato per\nesprimere in forma dichiarativa i criteri necessari a\nverificare gli esiti delle prove SCAS. Il contributo\nprincipale non consiste nell'automatizzazione di una\nsingola procedura di test, ma nella separazione tra\nla descrizione dei criteri di verifica e il codice\nche li valuta. Anziché incorporare le condizioni\ndi ciascun test in una logica applicativa dedicata,\nla soluzione proposta permette di specificarle\nattraverso regole DSL interpretate da un motore\ncomune, riutilizzabile tra casi di test differenti.\nA partire dalle catture di traffico prodotte durante prove già eseguite, il sistema sviluppato utilizza le regole definite nella DSL per individuare le evidenze rilevanti e stabilire se i criteri previsti siano soddisfatti, determinando così un verdetto e documentando in un report gli elementi su cui tale verdetto si basa. La soluzione è stata infine valutata su diversi test case SCAS, anche attraverso esperimenti di \\emph{mutation testing}, nei quali vengono introdotte alterazioni controllate nelle catture originali per esaminare la capacità del sistema di rilevarne gli effetti sui risultati.",
+      "source_context": "L'evoluzione delle reti mobili verso la quinta generazione ha introdotto un'architettura di rete più articolata rispetto alle precedenti. Un elemento centrale di questa architettura è il \\emph{5G Core}, organizzato in diversi componenti, denominati \\emph{Network Functions} (NF), che cooperano per fornire i servizi della rete. Questa organizzazione offre maggiore flessibilità, ma rende anche più complessa la valutazione della sicurezza, poiché è necessario considerare sia il comportamento delle singole funzioni sia le loro interazioni.\n\nPer supportare tale valutazione, il 3GPP ha definito le \\emph{Security Assurance Specifications} (SCAS) \\cite{3gpp_ts33117_2019,gsma_fs13_2025}, documenti tecnici che raccolgono requisiti di sicurezza e procedure di test specifiche per le diverse funzioni della rete. Queste specifiche costituiscono un riferimento per verificare la conformità dei comportamenti osservati rispetto a quanto previsto dagli standard.\n\nLa disponibilità di una procedura ben definita, tuttavia, non rende necessariamente immediata la valutazione del suo esito. La difficoltà deriva dal fatto che i criteri sono formulati prevalentemente in linguaggio naturale, mentre le catture di traffico contengono informazioni che devono essere interpretate e correlate. Per rendere automatizzabile questa valutazione, occorre rappresentare i criteri in una forma strutturata, interpretabile da un sistema software.\n\n\nIl presente lavoro affronta questa difficoltà proponendo\nun \\emph{Domain-Specific Language} (DSL), pensato per\nesprimere in forma dichiarativa i criteri necessari a\nverificare gli esiti delle prove SCAS. Il contributo\nprincipale non consiste nell'automatizzazione di una\nsingola procedura di test, ma nella separazione tra\nla descrizione dei criteri di verifica e il codice\nche li valuta. Anziché incorporare le condizioni\ndi ciascun test in una logica applicativa dedicata,\nla soluzione proposta permette di specificarle\nattraverso regole DSL interpretate da un motore\ncomune, riutilizzabile tra casi di test differenti.\nA partire dalle catture di traffico prodotte durante prove già eseguite, il sistema sviluppato utilizza le regole definite nella DSL per individuare le evidenze rilevanti e stabilire se i criteri previsti siano soddisfatti, determinando così un verdetto e documentando in un report gli elementi su cui tale verdetto si basa. La soluzione è stata infine valutata su diversi test case SCAS, anche attraverso esperimenti di \\emph{mutation testing}, nei quali vengono introdotte alterazioni controllate nelle catture originali per esaminare la capacità del sistema di rilevarne gli effetti sui risultati.",
+      "confidence": 0.99,
+      "synctex": "capitoli/01_capitolo.tex:4",
+      "col": 1,
+      "id": "R001",
+      "status": "open",
+      "created": "2026-10-21T11:28:49"
+    }
+  ]
+}

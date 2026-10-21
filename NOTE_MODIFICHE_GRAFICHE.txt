@@ -1,0 +1,14 @@
+Modifiche tipografiche (2026-10-11)
+
+Nessun paragrafo o dato tecnico riscritto. Nessuna modifica a immagini, tabelle o listati.
+
+Interventi:
+- 02_capitolo.tex: 10 sostituzioni tipografiche.
+- 03_capitolo.tex: 5 sostituzioni tipografiche.
+- 04_capitolo.tex: 7 sostituzioni tipografiche.
+- 05_capitolo.tex: 21 sostituzioni tipografiche.
+- 06_capitolo.tex: 6 sostituzioni tipografiche.
+- main.tex: 1 sostituzioni tipografiche.
+
+Nel Capitolo 6 sono stati conservati i nomi in grassetto nella tabella delle mutazioni: la tabella sara rivista separatamente.
+Le sezioni .tex del file caricato sono la base: le modifiche ai capitoli precedentemente approvate sono conservate.

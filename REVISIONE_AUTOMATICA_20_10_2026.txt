@@ -1,0 +1,31 @@
+REVISIONE AUTOMATICA DEL 20/10/2026
+File di origine: Tesi_5G_LaTeX (2)(1).zip
+
+INTERVENTI APPLICATI:
+- capitoli/06_capitolo.tex: REV-020, riferimento alle due tabelle automatico
+- capitoli/06_capitolo.tex: REV-020, riferimento alla sezione ambito e assunzioni automatico
+- capitoli/05_capitolo.tex: REV-026, refuso statito
+- capitoli/05_capitolo.tex: REV-026, refuso stringe
+- capitoli/05_capitolo.tex: REV-026, punto conclusivo mancante
+- capitoli/05_capitolo.tex: REV-026, doppio punto dopo riferimento
+- capitoli/05_capitolo.tex: REV-026, sintassi LaTeX per i verdetti
+- bibliografia_tesi.bib: REV-021, clausola NRF autorizzazione discovery slice
+
+REV-020: la citazione ai documenti Open5GS e free5GC era gia corretta con \cite{} nello ZIP; non e stata cambiata.
+REV-001: bibliografia gia configurata in main.tex e presente nel file ZIP (main.bbl).
+            Controllo finale tramite sequenza LuaLaTeX/Biber/LuaLaTeX/LuaLaTeX.
+NON MODIFICATI: implementazione DSL, test, verdetti, numerazione e contenuto delle tabelle.
+
+I file AUX/LOG/BCF/PDF sono prodotti dalla compilazione e possono essere rigenerati.
+
+ESITO COMPILAZIONE: OK (LuaLaTeX + Biber + LuaLaTeX + LuaLaTeX).
+PDF: 42 pagine, bibliografia visibile, nessuna citazione o label irrisolta.
+WARNINGS RESIDUI NON BLOCCANTI: caption/hypcap, font mono bold non disponibile,
+  due underfull box. La precedente overfull box nella tabella delle mutazioni
+  e stata risolta aumentando la larghezza della colonna Mutato senza cambiare i dati.
+Le ulteriori revisioni strutturali/scientifiche restano fuori da questo intervento.
+
+AGGIORNAMENTO REV-022 — 20/10/2026:
+- capitoli/05_capitolo.tex, sezione 5.8: accorpate le spiegazioni ripetute di INCONCLUSIVE.
+- Distinte esplicitamente le cause in fase di selezione (zero o piu match, COLLECT vuota) e un alias non associato dopo un match completo.
+- Nessuna modifica a formule, tabelle, esperimenti o implementazione.

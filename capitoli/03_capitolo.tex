@@ -1,0 +1,197 @@
+% Capitolo 3 generato dalla bozza Markdown verificata.
+\chapter{Definizione del problema e requisiti}\label{definizione-del-problema-e-requisiti}
+
+\section{Formulazione del problema}\label{formulazione-del-problema}
+
+I casi di test SCAS sono espressi attraverso specifiche \emph{human-readable}, destinate quindi alla lettura e all'interpretazione umana. Sebbene questa rappresentazione sia adatta alla documentazione delle procedure e dei comportamenti attesi, i criteri di verifica espressi in linguaggio naturale richiedono una traduzione in una forma strutturata per poter essere elaborati da un motore automatico.
+
+Il problema può quindi essere ricondotto alla seguente domanda: \emph{è possibile esprimere in forma machine-readable la logica necessaria a verificare l'esito di un test SCAS, utilizzando come evidenza il traffico di rete acquisito durante la sua esecuzione?}
+
+\section{Dalla specifica SCAS alla rappresentazione dichiarativa}\label{dalla-specifica-scas-alla-rappresentazione-dichiarativa}
+
+Per tradurre i criteri SCAS in regole verificabili, occorre innanzitutto individuare quali aspetti delle procedure di test debbano essere rappresentati e quali informazioni siano necessarie per valutarli.
+
+Quando i criteri di verifica vengono definiti direttamente nel codice applicativo, l'introduzione di un nuovo caso di test può richiedere interventi specifici sulla logica del sistema, anziché limitarsi alla definizione delle condizioni da verificare.
+
+Per separare le caratteristiche proprie del singolo test dalla logica generale del motore di verifica, viene quindi introdotto un \emph{Domain-Specific Language} (DSL), che permette di rappresentare in forma dichiarativa gli eventi da individuare nel traffico osservato e le proprietà che devono essere soddisfatte per determinare l'esito del test.
+
+L'obiettivo non è riprodurre integralmente nella DSL la procedura descritta dalla specifica SCAS, ma esprimere soltanto i criteri necessari alla verifica dell'esito sulla base dell'evidenza disponibile. La variabilità tra test differenti può così essere trasferita, per quanto possibile, dal codice applicativo a regole interpretabili da un motore comune.
+
+
+\section{Capacità espressive richieste dalla DSL}\label{capacituxe0-espressive-richieste-dalla-dsl}
+
+Per definire le capacità espressive della DSL sono state analizzate le esigenze di verifica dei casi di test SCAS considerati, individuando gli elementi che devono poter essere rappresentati attraverso il linguaggio. Da questa analisi emergono due esigenze principali:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \emph{Selezione dell'evidenza rilevante}. A seconda della natura del test, può essere necessario individuare una sequenza ordinata di eventi oppure raccogliere tutte le occorrenze di una determinata tipologia. Nel primo caso assumono rilevanza l'ordine degli eventi e l'eventuale presenza di sottoflussi opzionali; nel secondo, l'obiettivo è costruire una collezione di evidenze sulla quale valutare proprietà che coinvolgono più occorrenze.
+\item
+  \emph{Verifica delle proprietà sull'evidenza selezionata}. Una volta individuata l'evidenza, il linguaggio deve consentire di esprimere i criteri necessari a determinarne l'esito. Tali criteri possono riguardare relazioni tra valori osservati in eventi differenti, confronti con valori attesi e, nei casi in cui il tempo costituisca parte del requisito, vincoli temporali tra eventi osservati.
+\end{enumerate}
+
+La Tabella~\ref{tab:capacita-dsl} mette in relazione
+ciascuna capacità espressiva con il costrutto introdotto
+nella DSL e con un caso di test in cui tale capacità
+viene utilizzata.
+
+
+\begin{center}
+\begin{minipage}{\textwidth}
+\centering
+\begingroup
+\small
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.25}
+
+\begin{tabularx}{\textwidth}{|
+    >{\raggedright\arraybackslash}p{0.30\textwidth}|
+    >{\raggedright\arraybackslash}p{0.20\textwidth}|
+    >{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{blue!7}
+\textbf{Capacità} &
+\textbf{Costrutto DSL} &
+\textbf{Test SCAS in cui viene utilizzato} \\
+\hline
+
+Riconoscere successioni ordinate di messaggi &
+\texttt{SEQUENCE} &
+NRF Discovery Authorization;
+UDM Resynchronization;
+UDM SUCI De-concealment;
+AMF Synchronization Failure;
+AMF RES* Verification Failure \\
+\hline
+
+Gestire eventi o sottoflussi opzionali &
+\texttt{OPTIONAL} &
+AMF RES* Verification Failure \\
+\hline
+
+Raccogliere occorrenze dello stesso tipo &
+\texttt{COLLECT} &
+UPF TEID Uniqueness \\
+\hline
+
+Confrontare valori osservati e attesi &
+\texttt{REQUIRE ==}, \texttt{!=} &
+NRF Discovery Authorization;
+UDM Resynchronization;
+AMF Synchronization Failure;
+AMF RES* Verification Failure;
+UDM SUCI De-concealment \\
+\hline
+
+Verificare l'unicità di valori &
+\texttt{REQUIRE UNIQUE} &
+UPF TEID Uniqueness \\
+\hline
+
+Applicare criteri in base a condizioni &
+\texttt{IF} &
+AMF RES* Verification Failure \\
+\hline
+
+Verificare vincoli temporali &
+\texttt{MFOTL CASE} &
+AMF Synchronization Failure \\
+\hline
+\end{tabularx}
+\endgroup
+\captionof{table}{Capacità espressive della DSL e relativi casi di test SCAS}
+\label{tab:capacita-dsl}
+\end{minipage}
+\end{center}
+
+
+La tabella mostra come alcune capacità, quali il riconoscimento di sequenze e il confronto tra valori, siano utilizzate in più casi di test, mentre altre rispondano a esigenze più specifiche.
+
+\section{Obiettivi e requisiti di sistema}\label{obiettivi-e-requisiti-di-sistema}
+
+L'obiettivo del sistema è automatizzare la verifica dell'esito dei test SCAS a partire dalle evidenze ricavate dalle catture di traffico, applicando i criteri definiti attraverso il DSL e producendo un verdetto motivato. La separazione tra le regole specifiche dei singoli test e la logica generale di verifica mira inoltre a consentire l'introduzione di nuovi casi attraverso la definizione di nuove specifiche DSL, senza dover sviluppare una procedura di verifica dedicata per ciascuno di essi. L'intento è quindi ridurre per quanto possibile gli interventi sulla logica interna del sistema, con l'obiettivo di rendere sufficiente, per i casi supportati, la sola definizione di una nuova specifica DSL.
+
+I principali requisiti individuati sono riportati nella Tabella~\ref{tab:requisiti-sistema}.
+
+\begin{center}
+\begin{minipage}{\textwidth}
+\centering
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+
+\begin{tabularx}{\textwidth}{|
+    >{\centering\arraybackslash}p{0.07\textwidth}|
+    >{\raggedright\arraybackslash}p{0.25\textwidth}|
+    >{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{blue!7}
+\textbf{ID} &
+\textbf{Requisito} &
+\textbf{Descrizione} \\
+\hline
+
+R1 & Genericità &
+Il motore di verifica non deve dipendere da uno specifico caso di test SCAS. \\
+\hline
+
+R2 & Riusabilità &
+I componenti comuni devono poter essere riutilizzati tra test differenti. \\
+\hline
+
+R3 & Separazione delle responsabilità &
+La logica relativa all'interpretazione dei protocolli deve essere separata dalla logica specifica del test. \\
+\hline
+
+R4 & Selezione dell'evidenza &
+Il sistema deve consentire l'identificazione di eventi, sequenze e collezioni rilevanti ai fini della verifica. \\
+\hline
+
+R5 & Verifica statica &
+Il sistema deve poter verificare confronti, condizioni e proprietà definite sui valori osservati. \\
+\hline
+
+R6 & Verifica temporale &
+Il sistema deve consentire l'espressione e la valutazione di proprietà temporali. \\
+\hline
+
+R7 & Gestione dell'evidenza non conclusiva &
+Il sistema deve distinguere una violazione verificata dall'insufficienza delle evidenze, sia nella selezione sia nella valutazione dei criteri statici. \\
+\hline
+
+R8 & Tracciabilità &
+Il verdetto deve essere riconducibile all'evidenza osservata e ai relativi frame della cattura originale. \\
+\hline
+
+R9 & Riproducibilità &
+Il sistema deve conservare informazioni sufficienti a ripetere l'analisi nelle medesime condizioni. \\
+\hline
+
+R10 & Reporting uniforme &
+Test differenti devono produrre risultati strutturati secondo uno schema comune. \\
+\hline
+
+R11 & Sensibilità alle variazioni &
+Il sistema deve essere sensibile ad alterazioni controllate dell'evidenza che modificano il soddisfacimento dei criteri di verifica. \\
+\hline
+
+\end{tabularx}
+\endgroup
+\captionof{table}{Requisiti del sistema di verifica proposto}
+\label{tab:requisiti-sistema}
+\end{minipage}
+\end{center}
+
+
+Questi requisiti costituiscono il riferimento per le scelte architetturali descritte nel Capitolo \(4\).
+
+
+\section{Scope e assunzioni}\label{scope-e-assunzioni}
+
+Il lavoro considera come sorgente primaria di evidenza le catture di traffico generate durante l'esecuzione dei test; pertanto la possibilità di effettuare una verifica dipende dalla disponibilità e dalla completezza delle informazioni osservabili nel file PCAP.
+
+L'analisi sperimentale è focalizzata sulla \emph{5G Core Network} e sui protocolli coinvolti nei casi di test considerati, e si assume che tali protocolli possano essere correttamente decodificati e trasformati in una rappresentazione strutturata utilizzabile dai componenti successivi della pipeline.
+
+Queste assunzioni definiscono quindi il perimetro entro cui viene valutato il sistema proposto.
