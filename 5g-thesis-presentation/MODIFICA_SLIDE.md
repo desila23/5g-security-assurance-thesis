@@ -45,7 +45,7 @@ Poi riapri o aggiorna `index.html`. Il file fornito è già pronto e per visuali
 | 14 | Testing e Mutation testing | `slides/14-testing.html` |
 | 15 | AMF Synchronization Failure, Case B | `slides/15-amf-sync.html` |
 | 16 | UPF TEID Uniqueness | `slides/16-upf.html` |
-| 17 | AMF RES*: quattro casi, una regola DSL | `slides/17-resstar.html` |
+| 17 | AMF RES*: quattro varianti, un'unica specifica DSL | `slides/17-resstar.html` |
 | 18 | Risultati dei test baseline | `slides/18-baseline.html` |
 | 19 | Mutation testing: il processo | `slides/19-mutazioni.html` |
 | 20 | Risultati del mutation testing | `slides/20-risultati-mutazioni.html` |

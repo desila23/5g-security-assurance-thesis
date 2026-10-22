@@ -460,35 +460,36 @@ File: `slides/15-amf-sync.html`
 
 - AMF Synchronization Failure, Case B
 - Estratto DSL · parti omesse
-- SEQUENCE {
--   …
--   nas.authentication_failure
--     AS sync_failure
--   …
-- }
+- SEQUENCE { … }
 - REQUIRE sync_failure.cause == 21
-- …
 - MFOTL CASE B """
--   SyncFailure() IMPLIES
--   NOT EVENTUALLY[0,{TIMER_MS}]
--     AuthenticationRequest()
+-   SyncFailure()
+-   IMPLIES
+-   NOT (
+-       (NOT AusfAuthenticationResponse())
+-       UNTIL[0,{TIMER_MS}]
+-       AuthenticationRequest()
+-   )
 - """
 - Verdetto complessivo
 - 4 controlli statici: PASS
 - 1 controllo temporale: PASS
 - PASS
-- T3520 = 15 s
-- Nessuna nuova Authentication Request nei primi 15 s.
-- Finestra senza nuove richieste
-- 0 s
-- 15 s
-- 25,018 s
+- T3520 = 15 s · parametro configurato
+- La risposta AUSF precede
+- la nuova Authentication Request.
+- free5GC · ordine degli eventi (scala non proporzionale)
 - Frame 358
-- Sync Failure
+- Sync
+- Failure
+- Frame 604
+- Risposta
+- AUSF
 - Frame 606
-- Authentication Request
-- Intervallo osservato: 25,018 s (>15 s)
-- AMF: quattro controlli statici e il vincolo T3520 soddisfatti.
+- Authentication
+- Request
+- PASS su free5GC e Open5GS
+- La risposta AUSF precede la nuova richiesta nell’intervallo configurato.
 - TEST E BASELINE
 
 ## 16 — UPF TEID Uniqueness
@@ -526,13 +527,13 @@ File: `slides/16-upf.html`
 - Cinque risposte PFCP, dieci coppie F-TEID, nessun duplicato.
 - TEST E BASELINE
 
-## 17 — AMF RES*: quattro casi, una regola DSL
+## 17 — AMF RES*: quattro varianti, un'unica specifica DSL
 
 File: `slides/17-resstar.html`
 
 - TEST E BASELINE
-- AMF RES*: quattro casi, una regola DSL
-- Una sola regola descrive quattro combinazioni di identità e origine del fallimento.
+- AMF RES*: quattro varianti, un'unica specifica DSL
+- Un’unica specifica DSL combina percorsi di identificazione e origini del fallimento.
 - Estratto DSL · parti omesse
 - SEQUENCE {
 -   nas.registration_request
@@ -545,12 +546,14 @@ File: `slides/17-resstar.html`
 -   nas.authentication_reject
 -     AS authentication_reject
 - }
+- 
 - REQUIRE
 -   authentication_reject.present == true
 - IF case.identity_path
 -    == guti_then_suci { ... }
 - IF case.failure_source
 -    == ausf { ... }
+- Risultati su free5GC
 - ORIGINE DEL FALLIMENTO
 - AMF locale
 - AUSF
@@ -590,43 +593,34 @@ File: `slides/17-resstar.html`
 File: `slides/18-baseline.html`
 
 - Risultati dei test baseline
-- Dieci verdetti coerenti con gli attesi, incluso un FAIL previsto.
-- Caso di test
-- Atteso
-- Osservato
-- NRF Discovery Authorization
+- 16 catture: 12 PASS, 1 FAIL e 3 INCONCLUSIVE.
+- Implementazione
+- PASS
 - FAIL
+- INCONCLUSIVE
+- Totale
+- Open5GS
+- 6
+- 1
+- 3
+- 10
+- free5GC
+- 6
+- 0
+- 0
+- 6
+- Totale
+- 12
+- 1
+- 3
+- 16
+- 16
+- catture
+- analizzate
 - FAIL
-- UDM Resynchronization
-- PASS
-- PASS
-- UDM SUCI De-concealment
-- PASS
-- PASS
-- AMF Sync Failure — Case A
-- PASS
-- PASS
-- AMF Sync Failure — Case B
-- PASS
-- PASS
-- UPF TEID Uniqueness
-- PASS
-- PASS
-- RES* Verification Failure — A
-- PASS
-- PASS
-- RES* Verification Failure — B
-- PASS
-- PASS
-- RES* Verification Failure — C
-- PASS
-- PASS
-- RES* Verification Failure — D
-- PASS
-- PASS
-- 10 / 10
-- corrispondenze
-- 9 PASS1 FAIL atteso
+- NRF Discovery Authorization · Open5GS · HTTP 200 osservato, 403 richiesto
+- INCONCLUSIVE
+- AMF RES* B/C/D · Open5GS · evidenze insufficienti per i criteri applicati
 - TEST E BASELINE
 
 ## 19 — Mutation testing: il processo
@@ -657,7 +651,7 @@ File: `slides/20-risultati-mutazioni.html`
 
 - MUTATION TESTING
 - Risultati del mutation testing
-- 15 mutazioni su 15: il verdetto osservato coincide con quello atteso.
+- 13 scenari su 13: il verdetto osservato coincide con quello atteso.
 - Famiglia
 - Esperimenti
 - Transizione attesa
@@ -667,8 +661,8 @@ File: `slides/20-risultati-mutazioni.html`
 - UDM
 - 2
 - PASS → FAIL
-- AMF
-- 6
+- AMF Sync · 3 Case A + 1 Case B
+- 4
 - PASS → FAIL
 - UPF
 - 2
@@ -676,10 +670,10 @@ File: `slides/20-risultati-mutazioni.html`
 - AMF RES*
 - 4
 - PASS → FAIL
-- 15 / 15
+- 13 / 13
 - corrispondenze
 - Due esempi utili
-- AMF
+- AMF Case A · Open5GS
 - UPF
 - Mutazione
 - Statica

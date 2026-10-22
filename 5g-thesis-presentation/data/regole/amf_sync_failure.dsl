@@ -12,7 +12,11 @@ EVENTUALLY[0,{TIMER_MS}] AusfAuthenticationResponse()
 """
 
 MFOTL CASE B """
-SyncFailure()
-IMPLIES
-NOT EVENTUALLY[0,{TIMER_MS}] AuthenticationRequest()
+  SyncFailure()
+  IMPLIES
+  NOT (
+      (NOT AusfAuthenticationResponse())
+      UNTIL[0,{TIMER_MS}]
+      AuthenticationRequest()
+  )
 """

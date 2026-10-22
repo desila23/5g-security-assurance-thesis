@@ -19,7 +19,7 @@
   --slide-http-strong: #e9c68e;
   --font-sans: "Nimbus Sans", Arial, sans-serif;
   --font-mono: "DejaVu Sans Mono", monospace;
-  --bg: #ffffff;
+  --bg: #f3f6f9;
   --surface: var(--slide-white);
   --text: var(--slide-ink);
   --muted: var(--slide-muted);
@@ -670,9 +670,9 @@ html.render-view,html.render-view body { width:var(--render-width); height:var(-
   .slide:last-of-type { break-after:auto;page-break-after:auto; }
 }
 
-/* Revisione: fondo bianco anche nel palco e nella stampa. Gli SVG sono bianchi nei sorgenti. */
+/* Revisione: fondo azzurro-grigio chiaro anche nel palco e nella stampa. I fondali SVG usano la stessa tinta nei sorgenti. */
 
-html, body, #viewport, .slide { background:#ffffff; }
+html, body, #viewport, .slide { background:var(--bg); }
 
 /* Ripristino richiesto della sola rete: control plane verde e user plane violetto. */
 [data-slide-key="rete-5g"] .network-purple { fill:#7861ad; }
