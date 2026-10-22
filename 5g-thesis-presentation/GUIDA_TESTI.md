@@ -460,15 +460,20 @@ File: `slides/15-amf-sync.html`
 
 - AMF Synchronization Failure, Case B
 - Estratto DSL · parti omesse
-- SEQUENCE { … }
+- SEQUENCE { …
+-   nas.authentication_failure
+-     AS sync_failure
+-   …
+-   ausf.authentication.response
+-     AS new_vector
+-   … }
 - REQUIRE sync_failure.cause == 21
 - MFOTL CASE B """
 -   SyncFailure()
 -   IMPLIES
--   NOT (
--       (NOT AusfAuthenticationResponse())
--       UNTIL[0,{TIMER_MS}]
--       AuthenticationRequest()
+-   NOT ((NOT AusfAuthenticationResponse())
+-        UNTIL[0,{TIMER_MS}]
+-        AuthenticationRequest()
 -   )
 - """
 - Verdetto complessivo
@@ -594,6 +599,7 @@ File: `slides/18-baseline.html`
 
 - Risultati dei test baseline
 - 16 catture: 12 PASS, 1 FAIL e 3 INCONCLUSIVE.
+- Esiti per implementazione
 - Implementazione
 - PASS
 - FAIL
@@ -614,13 +620,16 @@ File: `slides/18-baseline.html`
 - 1
 - 3
 - 16
+- CAMPIONE BASELINE
 - 16
 - catture
 - analizzate
 - FAIL
-- NRF Discovery Authorization · Open5GS · HTTP 200 osservato, 403 richiesto
+- NRF Discovery Authorization · Open5GS
+- HTTP 200 osservato · 403 richiesto
 - INCONCLUSIVE
-- AMF RES* B/C/D · Open5GS · evidenze insufficienti per i criteri applicati
+- AMF RES* B/C/D · Open5GS
+- Evidenze insufficienti per i criteri applicati
 - TEST E BASELINE
 
 ## 19 — Mutation testing: il processo
@@ -707,6 +716,8 @@ File: `slides/20-risultati-mutazioni.html`
 
 File: `slides/21-conclusioni.html`
 
+- TRACCIA DI RETE
+- EVIDENZE
 - Non basta un verdetto.
 - Serve poterlo giustificare
 - con le evidenze.

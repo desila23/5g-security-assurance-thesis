@@ -20,21 +20,27 @@
   </marker>
   </defs>
   <rect width="1600" height="900" fill="#f3f6f9"/>
+  <rect id="section-band-{{N}}" data-macro-section="testing" x="0" y="0" width="8" height="900" fill="#cfbfaa" aria-hidden="true" pointer-events="none"/>
   <text x="112" y="167" font-family="Nimbus Sans" font-size="54" font-weight="700" fill="#1C2A40" text-anchor="start" xml:space="preserve" >AMF Synchronization Failure, Case B</text>
-<rect x="112" y="303" width="550" height="522" rx="20" fill="white" stroke="#d9e3ef" stroke-width="1.8"/>
+<rect x="112" y="303" width="568" height="522" rx="20" fill="white" stroke="#d9e3ef" stroke-width="1.8"/>
 <text x="138" y="340" font-family="Nimbus Sans" font-size="22" font-weight="400" fill="#52627b" text-anchor="start" xml:space="preserve">Estratto DSL · parti omesse</text>
-<text x="138" y="383" font-family="DejaVu Sans Mono" font-size="20" font-weight="400" fill="#4264d0" text-anchor="start" xml:space="preserve">SEQUENCE { … }</text>
-<text x="138" y="415" font-family="DejaVu Sans Mono" font-size="20" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve">REQUIRE sync_failure.cause == 21</text>
-<path d="M138 440 H636" stroke="#d9e3ef" stroke-width="1.5"/>
-<text x="138" y="482" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#278766" text-anchor="start" xml:space="preserve">MFOTL CASE B """</text>
-<text x="138" y="514" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve">  SyncFailure()</text>
-<text x="138" y="546" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#278766" text-anchor="start" xml:space="preserve">  IMPLIES</text>
-<text x="138" y="578" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#278766" text-anchor="start" xml:space="preserve">  NOT (</text>
-<text x="138" y="610" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve">      (NOT AusfAuthenticationResponse())</text>
-<text x="138" y="642" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#278766" text-anchor="start" xml:space="preserve">      UNTIL[0,{TIMER_MS}]</text>
-<text x="138" y="674" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve">      AuthenticationRequest()</text>
-<text x="138" y="706" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve">  )</text>
-<text x="138" y="738" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve">"""</text>
+<text x="138" y="370" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="700" fill="#4264d0" text-anchor="start" xml:space="preserve">SEQUENCE { …</text>
+<text x="138" y="395" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve">  nas.authentication_failure</text>
+<text x="138" y="420" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve">    AS sync_failure</text>
+<text x="138" y="445" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve">  …</text>
+<text x="138" y="470" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve">  ausf.authentication.response</text>
+<text x="138" y="495" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve">    AS new_vector</text>
+<text x="138" y="520" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve">  … }</text>
+<text x="138" y="557" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#278766" text-anchor="start" xml:space="preserve">REQUIRE sync_failure.cause == 21</text>
+<path d="M138 580 H654" stroke="#d9e3ef" stroke-width="1.5"/>
+<text x="138" y="607" font-family="DejaVu Sans Mono" font-size="20.5" fill="#278766" xml:space="preserve"><tspan font-family="Nimbus Sans" font-size="22" font-weight="700">MFOTL</tspan><tspan> CASE B """</tspan></text>
+<text x="138" y="635" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve">  SyncFailure()</text>
+<text x="138" y="663" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#278766" text-anchor="start" xml:space="preserve">  IMPLIES</text>
+<text x="138" y="691" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#278766" text-anchor="start" xml:space="preserve">  NOT ((NOT AusfAuthenticationResponse())</text>
+<text x="138" y="719" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#278766" text-anchor="start" xml:space="preserve">       UNTIL[0,{TIMER_MS}]</text>
+<text x="138" y="747" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve">       AuthenticationRequest()</text>
+<text x="138" y="775" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve">  )</text>
+<text x="138" y="803" font-family="DejaVu Sans Mono" font-size="20.5" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve">"""</text>
 <rect x="714" y="303" width="774" height="162" rx="20" fill="#eef8f3" stroke="#d9e3ef" stroke-width="1.8"/>
 <text x="748" y="345" font-family="Nimbus Sans" font-size="29" font-weight="700" fill="#182536" text-anchor="start" xml:space="preserve">Verdetto complessivo</text>
 <text x="748" y="390" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="start" xml:space="preserve">4 controlli statici: PASS</text>
