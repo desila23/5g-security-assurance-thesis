@@ -170,7 +170,7 @@ Chiudiamo con i limiti emersi e le direzioni di sviluppo.
 
 ## 26. Futuri sviluppi
 
-Il capitolo conclusivo propone di estendere il sistema a partire da nuovi requisiti SCAS. A sinistra: aggiungere normalizzatori per altri protocolli ed estrarre le evidenze necessarie per ampliare i casi verificabili, mantenendo i componenti comuni. A destra: automatizzare maggiormente il mutation testing, oggi basato su procedure predisposte per i singoli scenari. La DSL può guidare la selezione di eventi e campi da alterare, riducendo la logica dedicata a ogni caso. Le operazioni concrete di modifica rimangono specifiche dei protocolli e delle proprietà. Gli schemi mostrano obiettivi futuri, non nuove funzionalità già implementate.
+Il capitolo conclusivo propone di estendere il sistema a partire da nuovi requisiti SCAS. A sinistra: aggiungere normalizzatori per altri protocolli ed estrarre le evidenze necessarie per ampliare i casi verificabili, mantenendo i componenti comuni. A destra: automatizzare maggiormente il mutation testing, oggi basato su procedure predisposte per i singoli scenari. La DSL può guidare la selezione di eventi e campi da alterare, riducendo la logica dedicata a ogni caso. Le operazioni concrete di modifica rimangono specifiche dei protocolli e delle proprietà. Si tratta di sviluppi futuri, non di funzionalità già implementate.
 
 ## 27. Grazie per l’attenzione. Domande?
 
