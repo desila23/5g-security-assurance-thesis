@@ -16,7 +16,7 @@
     { label: 'A diventa un frammento elementare dell’automa.', visible: ['atom-a'], current: 'a' },
     { label: 'Anche B viene rappresentato da un frammento elementare.', visible: ['atom-a', 'atom-b'], current: 'b' },
     { label: 'C completa i tre frammenti di partenza.', visible: ['atom-a', 'atom-b', 'atom-c'], current: 'c' },
-    { label: 'Dispongo gli atomi nell’NFA, con q5 come stato finale.', visible: ['atom-a', 'atom-b', 'atom-c', 'nfa'] },
+    { label: 'Collego i frammenti nell’NFA, con q5 come stato finale.', visible: ['atom-a', 'atom-b', 'atom-c', 'nfa'] },
     { label: 'Le transizioni ε uniscono i frammenti senza consumare eventi.', visible: ['atom-a', 'atom-b', 'atom-c', 'nfa', 'eps-links'] },
     { label: 'Una transizione ε permette di saltare B (OPTIONAL).', visible: ['atom-a', 'atom-b', 'atom-c', 'nfa', 'eps-links', 'eps-skip'] },
     { label: 'L’NFA accetta A → B → C oppure A → C.', visible: ['atom-a', 'atom-b', 'atom-c', 'nfa', 'eps-links', 'eps-skip', 'paths'] }

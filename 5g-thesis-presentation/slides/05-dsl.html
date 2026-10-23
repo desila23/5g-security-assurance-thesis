@@ -1,44 +1,33 @@
-<!-- SLIDE 5: analogia OpenAPI (altro dominio) e contributo DSL SCAS. -->
-<section class="slide" id="slide-{{N}}" data-title="La proposta: una DSL per i test SCAS" data-seconds="40" aria-label="{{N}} di {{TOTAL}}: La proposta: una DSL per i test SCAS">
+<section class="slide" id="slide-{{N}}" data-title="La proposta: una DSL per i test SCAS" data-seconds="50" aria-label="{{N}} di {{TOTAL}}: La proposta: una DSL per i test SCAS">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title-{{N}}">
 <title id="title-{{N}}">La proposta: una DSL per i test SCAS</title>
-<defs>
-  
-  <marker id="dsl-arrow-{{N}}" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto"><path d="M3 2 L11 7 L3 12" fill="none" stroke="#4264d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker>
-</defs>
-<rect x="0" y="0" width="1600" height="900" fill="#f3f6f9"/>
-<text x="112" y="92" font-family="Nimbus Sans" font-size="18" fill="#52627b">INTRODUZIONE</text>
-<text x="1488" y="92" font-family="Nimbus Sans" font-size="18" fill="#52627b" text-anchor="end">{{NN}} / {{TOTAL}}</text>
-<text x="112" y="167" font-family="Nimbus Sans" font-size="54" font-weight="700" fill="#182536">La proposta: una DSL per i test SCAS</text>
-<text x="112" y="222" font-family="Nimbus Sans" font-size="27" fill="#52627b">La specifica descrive quali evidenze selezionare e quali criteri verificare.</text>
-<g id="designed-language-panel">
-  <rect x="112" y="296" width="884" height="493" rx="13" fill="#FFFFFF" stroke="#aac8bd" stroke-width="2.2"/>
-  <text x="146" y="341" font-family="Nimbus Sans" font-size="20" font-weight="700" letter-spacing="1" fill="#278766">IL CONTRIBUTO DELLA TESI</text>
-  <text x="146" y="391" font-family="Nimbus Sans" font-size="36" font-weight="700" fill="#182536">DSL per verificare i test SCAS</text>
-  <text x="146" y="430" font-family="Nimbus Sans" font-size="23" fill="#52627b">Formalizza evidenze e criteri da controllare.</text>
-  <rect x="145" y="462" width="818" height="129" rx="10" fill="#f4f7ff" stroke="#d9e3ef" stroke-width="1.4"/>
-  <text x="168" y="501" font-family="Nimbus Sans" font-size="27" font-weight="700" fill="#4264d0">1 · SELEZIONE DELLE EVIDENZE</text>
-  <text x="168" y="534" font-family="Nimbus Sans" font-size="22" fill="#52627b">Quali messaggi cercare, in che ordine o gruppo</text>
-  <text x="212" y="573" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#4264d0">A</text>
-  <path d="M240 564 H285" stroke="#4264d0" stroke-width="2.2" fill="none" marker-end="url(#dsl-arrow-{{N}})"/>
-  <text x="312" y="573" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#4264d0">B</text>
-  <path d="M340 564 H385" stroke="#4264d0" stroke-width="2.2" fill="none" marker-end="url(#dsl-arrow-{{N}})"/>
-  <text x="412" y="573" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#4264d0">C</text>
-  <rect x="145" y="613" width="818" height="131" rx="10" fill="#f0f8f4" stroke="#cae3d7" stroke-width="1.4"/>
-  <text x="168" y="653" font-family="Nimbus Sans" font-size="27" font-weight="700" fill="#278766">2 · VERIFICA DEI CRITERI</text>
-  <text x="168" y="686" font-family="Nimbus Sans" font-size="22" fill="#52627b">Valori, unicità, condizioni e vincoli temporali</text>
-  <text x="168" y="720" font-family="DejaVu Sans Mono" font-size="20" fill="#278766">REQUIRE</text>
-  <text x="405" y="720" font-family="Nimbus Sans" font-size="22" fill="#278766">MFOTL / MonPoly</text>
-</g>
-<g id="openapi-example-panel"><rect x="1028" y="296" width="460" height="493" rx="13" fill="#fbfcfe" stroke="#d9e3ef" stroke-width="1.8"/>
-<text x="1058" y="338" font-family="Nimbus Sans" font-size="18" font-weight="700" fill="#52627b" text-anchor="start" >ANALOGIA · ALTRO DOMINIO</text>
-<text x="1058" y="390" font-family="Nimbus Sans" font-size="36" font-weight="700" fill="#52627b" text-anchor="start" >OpenAPI</text>
-<text x="1058" y="430" font-family="Nimbus Sans" font-size="22" font-weight="400" fill="#52627b" text-anchor="start" >Descrive interfacce HTTP in YAML.</text>
-<rect x="1052" y="454" width="412" height="240" rx="13" fill="#f2f5f9" stroke="#d9e3ef" stroke-width="1.8"/>
-<foreignObject x="1070" y="474" width="378" height="210"><div xmlns="http://www.w3.org/1999/xhtml"><pre id="openapi-example" class="openapi-example">{{OPENAPI_EXAMPLE}}</pre></div></foreignObject><text x="1058" y="741" font-family="Nimbus Sans" font-size="21" font-weight="400" fill="#52627b" text-anchor="start" >Un esempio di descrizione formale.</text>
-</g>
-<text x="112" y="852" font-family="Nimbus Sans" font-size="23" fill="#52627b">I criteri SCAS sono formalizzati dal progettista; il motore li verifica sulle evidenze.</text>
+<defs><marker id="intro-arrow-{{N}}" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto"><path d="M3 2 L11 7 L3 12" fill="none" stroke="#4264d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<rect width="1600" height="900" fill="#f3f6f9"/>
+<text x="112" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627b" text-anchor="start">INTRODUZIONE</text>
+<text x="1488" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627b" text-anchor="end">{{NN}} / {{TOTAL}}</text>
+<text x="112" y="167" font-family="Nimbus Sans" font-size="54" font-weight="700" fill="#182536" text-anchor="start">La proposta: una DSL per i test SCAS</text>
+<text x="112" y="222" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627b" text-anchor="start">La specifica descrive quali evidenze selezionare e quali criteri verificare.</text>
+<rect x="112" y="296" width="1376" height="493" rx="13" fill="#ffffff" stroke="#aac8bd" stroke-width="1.8"/>
+<text x="146" y="343" font-family="Nimbus Sans" font-size="20" font-weight="700" fill="#278766" text-anchor="start">IL CONTRIBUTO DELLA TESI</text>
+<text x="146" y="393" font-family="Nimbus Sans" font-size="36" font-weight="700" fill="#182536" text-anchor="start">Una DSL, due compiti</text>
+<rect x="146" y="430" width="630" height="278" rx="13" fill="#f4f7ff" stroke="#d9e3ef" stroke-width="1.8"/>
+<text x="178" y="480" font-family="Nimbus Sans" font-size="27" font-weight="700" fill="#4264d0" text-anchor="start">1 · SELEZIONE DELLE EVIDENZE</text>
+<text x="178" y="526" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627b" text-anchor="start">Quali eventi cercare nella cattura,</text>
+<text x="178" y="565" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627b" text-anchor="start">in sequenza o in una collezione.</text>
+<text x="228" y="641" font-family="Nimbus Sans" font-size="31" font-weight="700" fill="#4264d0" text-anchor="start">A</text>
+<path d="M268 631 L332 631" fill="none" stroke="#4264d0" stroke-width="2.4" marker-end="url(#intro-arrow-{{N}})"/>
+<text x="362" y="641" font-family="Nimbus Sans" font-size="31" font-weight="700" fill="#4264d0" text-anchor="start">B</text>
+<path d="M402 631 L466 631" fill="none" stroke="#4264d0" stroke-width="2.4" marker-end="url(#intro-arrow-{{N}})"/>
+<text x="496" y="641" font-family="Nimbus Sans" font-size="31" font-weight="700" fill="#4264d0" text-anchor="start">C</text>
+<rect x="808" y="430" width="646" height="278" rx="13" fill="#f0f8f4" stroke="#cae3d7" stroke-width="1.8"/>
+<text x="840" y="480" font-family="Nimbus Sans" font-size="27" font-weight="700" fill="#278766" text-anchor="start">2 · VERIFICA DEI CRITERI</text>
+<text x="840" y="526" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627b" text-anchor="start">Condizioni sui valori, unicità</text>
+<text x="840" y="565" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627b" text-anchor="start">e vincoli temporali.</text>
+<text x="840" y="642" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="start">Valori</text>
+<text x="1032" y="642" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="start">Unicità</text>
+<text x="1220" y="642" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="start">Tempo</text>
+<text x="800" y="757" font-family="Nimbus Sans" font-size="29" font-weight="700" fill="#182536" text-anchor="middle">Un’unica DSL, utilizzata da una pipeline comune.</text>
+<text x="112" y="852" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#52627b" text-anchor="start">Il progettista formalizza i criteri SCAS. Il motore interpreta e applica le regole.</text>
 </svg>
-<template class="speaker-note">Il contributo della tesi è una DSL minimale per formalizzare due responsabilità: selezionare nel traffico le evidenze pertinenti e verificare i criteri SCAS, inclusi valori, unicità, condizioni e vincoli temporali. La traduzione dai testi SCAS alla DSL resta manuale; un motore comune esegue le regole sulle evidenze. OpenAPI, nel riquadro secondario a destra, è solo un’analogia da un altro dominio: mostra il valore di una descrizione formale delle interfacce HTTP. La DSL non deriva da OpenAPI.</template>
+<template class="speaker-note">Per esprimere le regole ho progettato una Domain-Specific Language. I due compiti sono selezionare le evidenze pertinenti nella cattura e definire le condizioni da verificare: valori, unicità e vincoli temporali. Il progettista interpreta i criteri SCAS e li formalizza nella DSL; il sistema applica automaticamente le regole alle evidenze. Il contributo comprende il linguaggio e una pipeline comune che analizza il traffico, verifica le condizioni e produce un report con verdetto ed evidenze. La grammatica sarà approfondita nella sezione dedicata.</template>
 </section>
-

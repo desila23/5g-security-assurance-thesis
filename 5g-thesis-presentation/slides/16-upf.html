@@ -65,7 +65,7 @@
   <template class="speaker-note">Il secondo esempio riguarda il test _UPF TEID Uniqueness_.
   L&#x27;UPF gestisce il traffico dati degli utenti attraverso dei tunnel, identificati anche tramite valori denominati TEID. Il test serve a verificare che gli identificativi degli endpoint dei tunnel non presentino duplicati nelle risposte analizzate.
   In questo caso, attraverso `COLLECT` vengono raccolte cinque risposte PFCP di instaurazione della sessione, dalle quali vengono estratte dieci coppie formate da TEID e indirizzo IPv4.
-  Successivamente, `REQUIRE UNIQUE` verifica che queste coppie siano tutte distinte.
+  Successivamente, `REQUIRE UNIQUE` verifica che nessuna coppia (TEID, IPv4) venga riutilizzata tra risposte differenti.
   Nella cattura analizzata non sono stati rilevati duplicati e il sistema ha quindi restituito `PASS`.</template>
   </section>
 

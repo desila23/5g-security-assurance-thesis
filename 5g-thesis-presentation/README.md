@@ -1,6 +1,6 @@
 # Presentazione tesi 5G — revisione finale
 
-27 slide. Budget indicativo: **19:28**, da confermare con una prova orale.
+28 slide. Budget indicativo: **20:33**, da confermare con una prova orale. L’introduzione è stata ridistribuita sul discorso aggiornato; il totale non è una durata misurata.
 
 Estrai tutta la cartella e apri `index.html`. La presentazione funziona offline. Non serve Python per visualizzarla.
 
@@ -20,6 +20,6 @@ La versione precedente della slide baseline è conservata in `slides/archive/18-
 
 La tabella completa riunisce i dati delle tabelle `tab:open5gs_results` e `tab:free5gc_results` del capitolo 6 della tesi. I dati e la provenienza sono in `data/baseline-casi-completi.json`. Gli sviluppi futuri riprendono il capitolo 7.
 
-Riferimento di partenza: repository `desila23/5g-security-assurance-thesis`, branch `gh-pages`, commit `031b5823e9e51e115772bf8a2654538d185b231b`. Revisione preparata e verificata prima della pubblicazione su `gh-pages`.
+Riferimento di partenza: repository `desila23/5g-security-assurance-thesis`, branch `gh-pages`, commit `8f841edcc696cab944fd2cae7abb64ea800c0551`. Revisione preparata e verificata prima della pubblicazione su `gh-pages`.
 
 Le guide e le revisioni precedenti conservate nella cartella sono documenti storici. Per la versione corrente usare questo README, `mappa-slide.md`, `note-relatore.md` e `tempi-slide.md`.
