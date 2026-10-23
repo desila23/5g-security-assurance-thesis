@@ -350,7 +350,10 @@ SEQUENCE {
 I criteri di verifica comprendono tre regole comuni, dedicate alla coerenza dei parametri \texttt{RAND} e \texttt{AUTN} e alla presenza dell'\texttt{Authentication\ Reject} finale. A queste si aggiungono le verifiche specifiche del percorso di identificazione dell'UE e dell'origine del fallimento, applicate in funzione della variante considerata.
 
 \par\noindent\begin{minipage}{\linewidth}
-\begin{lstlisting}
+\begin{lstlisting}[
+    postbreak=\mbox{\textcolor{gray}{$\hookrightarrow$}\space},
+    breakindent=1em
+]
 REQUIRE authentication_vector.rand == authentication_request.rand
 REQUIRE authentication_vector.autn == authentication_request.autn
 REQUIRE authentication_reject.present == true
