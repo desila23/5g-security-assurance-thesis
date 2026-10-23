@@ -8,7 +8,6 @@
   </marker>
   </defs>
   <rect x="0" y="0" width="1600" height="900" rx="0" fill="#f3f6f9" stroke="none" stroke-width="1.8" />
-  <rect id="section-band-{{N}}" data-macro-section="dsl-verifica" x="0" y="0" width="8" height="900" fill="#bdb5d3" aria-hidden="true" pointer-events="none"/>
   <text x="112" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627b" text-anchor="start" xml:space="preserve" >DSL · NFA · VERIFICA</text><text x="1488" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627b" text-anchor="end" xml:space="preserve" >{{NN}} / {{TOTAL}}</text><text x="112" y="167" font-family="Nimbus Sans" font-size="54" font-weight="700" fill="#182536" text-anchor="start" xml:space="preserve" >Dal Match al BindingContext</text>
   <g id="slide-subtitle-{{N}}">
   <text x="112" y="222" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627b" text-anchor="start" xml:space="preserve" >Gli alias del Match diventano riferimenti ai MessageEvent nel BindingContext.</text>
@@ -52,12 +51,13 @@
   </g>
   </svg>
   <div class="step-controls" role="group" aria-label="Passaggi della spiegazione">
-  <button type="button" data-step-action="toggle" aria-pressed="false">Spiega per passi</button>
-  <button type="button" data-step-action="previous" hidden>Indietro</button>
-  <button type="button" data-step-action="next" hidden>Avanti</button>
-  <button type="button" data-step-action="reset" hidden>Ricomincia</button>
+  
+  
+  
+  
   <p class="step-status" aria-live="polite">
   </p>
   </div>
   <template class="speaker-note">Il matcher riceve NFA ed eventi normalizzati e produce il Match. Nell’esempio della slide precedente riconosce A(3), B(4), C(6). Nel codice Match contiene start_index, end_index e bindings: una mappa dagli alias agli oggetti MessageEvent. Per la traccia illustrata, gli indici Python sono 2 e 5, corrispondenti alle posizioni 3 e 6 della numerazione da 1 usata nel disegno. I binding sono a → evento A in posizione 3, b → evento B in posizione 4, c → evento C in posizione 6. to_binding_context() crea un nuovo dizionario con le stesse associazioni e gli stessi oggetti evento; non ne trasforma i campi e non porta gli indici nel BindingContext. I numeri indicano posizioni nell’esempio, non frame reali. event.a, event.b ed event.c sono tipi didattici. Nel close-up vediamo gli oggetti MessageEvent riferiti dai tre alias.</template>
   </section>
+

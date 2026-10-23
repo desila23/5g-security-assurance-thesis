@@ -150,6 +150,7 @@
         rect.style.stroke = status === 'selected' ? '#278766' : status === 'restart' ? '#9d7139' : '#d5dff0';
         text.style.fill = status === 'selected' ? '#278766' : status === 'restart' ? '#9d7139' : '#65758b';
       });
+      show(get('matcher-restart-label'), current.full || current.restart || current.restarted);
       [0, 2, 3, 5].forEach(i => show(get('matcher-binding-' + i), current.bindings.includes(i)));
       ['a', 'b', 'c'].forEach(letter => colourAtom(get('matcher-atom-' + letter), current.atoms.includes(letter), slideNumber));
       colourAtom(get('matcher-eps-ab'), current.atoms.includes('b'), slideNumber);
@@ -193,15 +194,7 @@
       function paint() {
         const current = view(state, printing);
         paintSVG(section, current);
-        button('toggle').textContent = state.manual ? uiText.full : uiText.start;
-        ['previous', 'next', 'reset'].forEach(action => { button(action).textContent = uiText[action]; });
-        button('next').textContent=uiText.next;
-        button('previous').textContent=uiText.previous;
-        button('toggle').setAttribute('aria-pressed', String(state.manual));
-        ['previous', 'next', 'reset'].forEach(action => { button(action).hidden = !state.manual; });
-        button('previous').disabled = state.index === 0 && section.id==='slide-1';
-        button('next').disabled = false;
-        status.textContent = state.manual ? (state.index + 1) + '/' + current.total + ' · ' + current.label : uiText.fullStatus;
+        status.textContent = state.manual ? current.label : '';
       }
       function dispatch(action) { state = transition(state, action); paint(); }
       const controller={section,dispatch,isManual:()=>state.manual,
@@ -228,6 +221,13 @@
       paint();
     });
     mountedControllers=controllers;
+    doc.addEventListener('keydown', event => {
+      if(event.defaultPrevented || event.ctrlKey || event.altKey || event.metaKey || doc.querySelector('dialog[open]') || event.target.closest('input,textarea,select,[contenteditable="true"]'))return;
+      const controller=controllers.find(c=>c.section.classList.contains('active'));
+      if(controller && ['v','r'].includes(event.key.toLowerCase())){
+        event.preventDefault();controller.dispatch(event.key.toLowerCase()==='v'?'toggle':'reset');
+      }
+    });
     // La tastiera è gestita una sola volta da deck.js tramite navigate().
     win.addEventListener('beforeprint', () => controllers.forEach(controller => controller.setPrinting(true)));
     win.addEventListener('afterprint', () => controllers.forEach(controller => controller.setPrinting(false)));
@@ -240,3 +240,4 @@
   return { initialState, transition, view, mount, paintSVG, navigate,
     inspect:()=>mountedControllers.map(c=>({slide:c.section.id,...c.getState()})) };
 });
+

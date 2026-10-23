@@ -702,3 +702,9 @@ html, body, #viewport, .slide { background:var(--bg); }
 
 
 
+
+
+/* Revisione finale: spiegazione centrata, senza pulsanti generici. */
+.step-controls { justify-content:center; }
+.step-status { margin:0;text-align:center;flex:initial; }
+[data-step-kind="rationale"] .step-controls { display:none; }

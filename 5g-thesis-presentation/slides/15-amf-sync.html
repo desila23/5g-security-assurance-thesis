@@ -20,7 +20,6 @@
   </marker>
   </defs>
   <rect width="1600" height="900" fill="#f3f6f9"/>
-  <rect id="section-band-{{N}}" data-macro-section="testing" x="0" y="0" width="8" height="900" fill="#cfbfaa" aria-hidden="true" pointer-events="none"/>
   <text x="112" y="167" font-family="Nimbus Sans" font-size="54" font-weight="700" fill="#1C2A40" text-anchor="start" xml:space="preserve" >AMF Synchronization Failure, Case B</text>
 <rect x="112" y="303" width="568" height="522" rx="20" fill="white" stroke="#d9e3ef" stroke-width="1.8"/>
 <text x="138" y="340" font-family="Nimbus Sans" font-size="22" font-weight="400" fill="#52627b" text-anchor="start" xml:space="preserve">Estratto DSL · parti omesse</text>
@@ -46,6 +45,7 @@
 <text x="748" y="390" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="start" xml:space="preserve">4 controlli statici: PASS</text>
 <text x="748" y="429" font-family="Nimbus Sans" font-size="25" font-weight="400" fill="#278766" text-anchor="start" xml:space="preserve">1 controllo temporale: PASS</text>
 <text x="1448" y="417" font-family="Nimbus Sans" font-size="78" font-weight="700" fill="#278766" text-anchor="end" xml:space="preserve">PASS</text>
+<text x="1448" y="449" font-family="Nimbus Sans" font-size="21" font-weight="400" fill="#278766" text-anchor="end" >su free5GC e Open5GS</text>
 <rect x="714" y="494" width="774" height="331" rx="12" fill="white" stroke="#d9e3ef" stroke-width="1.8"/>
 <text x="744" y="540" font-family="Nimbus Sans" font-size="29" font-weight="700" fill="#4264d0" text-anchor="start" xml:space="preserve">T3520 = 15 s · parametro configurato</text>
 <text x="744" y="581" font-family="Nimbus Sans" font-size="27" font-weight="700" fill="#182536" text-anchor="start" xml:space="preserve">La risposta AUSF precede</text>
@@ -64,7 +64,7 @@
 <text x="1370" y="731" font-family="Nimbus Sans" font-size="22" font-weight="700" fill="#278766" text-anchor="middle" xml:space="preserve">Frame 606</text>
 <text x="1370" y="766" font-family="Nimbus Sans" font-size="22" font-weight="400" fill="#182536" text-anchor="middle" xml:space="preserve">Authentication</text>
 <text x="1370" y="795" font-family="Nimbus Sans" font-size="22" font-weight="400" fill="#182536" text-anchor="middle" xml:space="preserve">Request</text>
-<text x="1101" y="864" font-family="Nimbus Sans" font-size="26" font-weight="700" fill="#278766" text-anchor="middle" xml:space="preserve">PASS su free5GC e Open5GS</text>
+
   <g id="slide-subtitle-{{N}}" >
   <text x="112" y="222" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627B" text-anchor="start" xml:space="preserve" >La risposta AUSF precede la nuova richiesta nell’intervallo configurato.</text>
   </g>
@@ -83,3 +83,4 @@
   Su free5GC si osservano il failure al frame 358, la risposta AUSF al frame 604 e la nuova richiesta al frame 606, a circa 25 secondi dal failure. Su Open5GS i frame sono 276, 432 e 434, a circa 11 secondi: anche qui la risposta AUSF precede la richiesta e la proprietà è PASS.
   Su entrambe le catture, i quattro controlli statici e quello temporale sono `PASS`, producendo un verdetto complessivo `PASS` per i criteri applicati. Questo risultato non dimostra da solo il rispetto di tutte le precondizioni SCAS: in particolare, gli 11 secondi di Open5GS non attestano un eventuale ritardo oltre T3520.</template>
   </section>
+

@@ -1,0 +1,77 @@
+{
+  "source_branch": "TESI-LATEX",
+  "source_file": "capitoli/06_capitolo.tex",
+  "source_blob_sha": "1f40301458016ea0d0b8202eb73d2feb9716da69",
+  "tables": [
+    "tab:open5gs_results",
+    "tab:free5gc_results"
+  ],
+  "columns": [
+    "Caso di test",
+    "Criterio di verifica",
+    "Open5GS",
+    "free5GC"
+  ],
+  "rows": [
+    [
+      "NRF Discovery Authorization",
+      "Risposta HTTP 403",
+      "FAIL",
+      "—"
+    ],
+    [
+      "UDM Resynchronization",
+      "Coerenza dei parametri di autenticazione",
+      "PASS",
+      "—"
+    ],
+    [
+      "UDM SUCI De-concealment",
+      "SUPI restituito uguale al valore atteso",
+      "PASS",
+      "—"
+    ],
+    [
+      "AMF Sync Failure · Case A",
+      "Coerenza dei messaggi e vincolo T3520",
+      "PASS",
+      "PASS"
+    ],
+    [
+      "AMF Sync Failure · Case B",
+      "Coerenza dei messaggi e vincolo T3520",
+      "PASS",
+      "PASS"
+    ],
+    [
+      "UPF TEID Uniqueness",
+      "Assenza di F-TEID duplicati",
+      "PASS",
+      "—"
+    ],
+    [
+      "AMF RES* · Case A",
+      "Gestione del fallimento di autenticazione",
+      "PASS",
+      "PASS"
+    ],
+    [
+      "AMF RES* · Case B",
+      "Gestione del fallimento di autenticazione",
+      "INCONCLUSIVE",
+      "PASS"
+    ],
+    [
+      "AMF RES* · Case C",
+      "Gestione del fallimento di autenticazione",
+      "INCONCLUSIVE",
+      "PASS"
+    ],
+    [
+      "AMF RES* · Case D",
+      "Gestione del fallimento di autenticazione",
+      "INCONCLUSIVE",
+      "PASS"
+    ]
+  ]
+}

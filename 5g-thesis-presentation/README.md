@@ -1,13 +1,25 @@
-# Presentazione tesi 5G — versione 9, 21 slide
+# Presentazione tesi 5G — revisione finale
 
-Estrai tutto lo ZIP e apri `index.html`. La presentazione funziona offline e per visualizzarla non serve Python.
+27 slide. Budget indicativo: **19:28**, da confermare con una prova orale.
 
-Frecce, spazio e PageUp/PageDown: navigazione. I: indice; N: note; F: schermo intero; P: stampa/PDF. Le slide 4, 10, 11 e 12 hanno passi interni e «Vista completa».
+Estrai tutta la cartella e apri `index.html`. La presentazione funziona offline. Non serve Python per visualizzarla.
 
-Le slide 7 e 8 sono di nuovo separate. Il close-up interno della slide 12 resta disponibile, con durata 850 ms. Il cambio dalla 12 alla 13 è immediato. Nella 13 i due verificatori condividono un’area; una sola uscita si ramifica verso i tre verdetti. «Risultati delle verifiche» rimane eliminato.
+- Frecce, spazio e PageUp/PageDown: passi interni e navigazione.
+- V: alterna spiegazione per passi e vista completa sulla slide animata attiva.
+- R: ricomincia i passi della slide attiva.
+- I: indice. N: note del relatore. F: schermo intero. P: stampa/PDF.
+- Home/End: prima/ultima slide.
 
-Nella slide 5 OpenAPI è a sinistra, in un pannello secondario etichettato «Esempio esterno»; la DSL progettata è a destra, evidenziata come contributo della tesi. Sono ambiti diversi, accomunati dal ricorso a specifiche formali. YAML: `esempi/openapi-esempio.yaml`; HTML: `slides/05-dsl.html`; stile: `css/openapi.css`.
+I pulsanti generici dei passi sono stati rimossi; restano i comandi da tastiera e la navigazione inferiore. Le spiegazioni dei passi sono centrate; sulla slide del motore comune rimane soltanto il titolo interno. I comandi per aprire regole e report completi restano disponibili.
 
-Sorgenti separati in `slides/`, `css/` e `js/`. La mappa completa è in `MODIFICA_SLIDE.md`. Dopo modifiche a HTML o YAML avvia `RICOMPILA.bat`, `RICOMPILA.command` o `python3 build.py`. Per questa operazione serve Python 3, senza pacchetti aggiuntivi. Dopo modifiche a CSS o JavaScript basta ricaricare il browser.
+L'ordine è definito da `slides.json`. I nomi dei file originali mantengono i vecchi prefissi. La [mappa generata](mappa-slide.md) contiene i numeri correnti e i collegamenti locali.
 
-Il riepilogo delle modifiche correnti è `REVISIONE_V9.md`. Le richieste precedenti rimangono come riferimenti storici. Tutti i file scientifici in `data/` sono invariati.
+Modifica i sorgenti in `slides/`, `css/`, `js/` e `esempi/`. Poi esegui `python3 build.py`, `RICOMPILA.bat` o `RICOMPILA.command`. Il build rigenera anche note, tempi e mappa. `python3 build.py --check` controlla la coerenza dei quattro file generati.
+
+La versione precedente della slide baseline è conservata in `slides/archive/18-baseline-v9.html`, esclusa da `slides.json`. Per ripristinarla, cambia solo il campo `file` dell'elemento con chiave `baseline` nel manifest, poi ricompila.
+
+La tabella completa riunisce i dati delle tabelle `tab:open5gs_results` e `tab:free5gc_results` del capitolo 6 della tesi. I dati e la provenienza sono in `data/baseline-casi-completi.json`. Gli sviluppi futuri riprendono il capitolo 7.
+
+Riferimento di partenza: repository `desila23/5g-security-assurance-thesis`, branch `gh-pages`, commit `031b5823e9e51e115772bf8a2654538d185b231b`. Revisione preparata e verificata prima della pubblicazione su `gh-pages`.
+
+Le guide e le revisioni precedenti conservate nella cartella sono documenti storici. Per la versione corrente usare questo README, `mappa-slide.md`, `note-relatore.md` e `tempi-slide.md`.

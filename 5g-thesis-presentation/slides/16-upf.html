@@ -20,7 +20,6 @@
   </marker>
   </defs>
   <rect width="1600" height="900" fill="#f3f6f9"/>
-  <rect id="section-band-{{N}}" data-macro-section="testing" x="0" y="0" width="8" height="900" fill="#cfbfaa" aria-hidden="true" pointer-events="none"/>
   <text x="112" y="167" xml:space="preserve" font-family="Nimbus Sans" font-size="54" font-weight="700" fill="#1c2a40" text-anchor="start" class="svg-text fill-ink">UPF TEID Uniqueness</text>
   <rect x="112" y="282" width="1376" height="100" rx="22" fill="#fff" stroke="#d5dff0" stroke-width="1.5" class="diagram-card fill-white stroke-line"/>
   <text x="138" y="321" xml:space="preserve" class="code-line svg-mono" font-family="DejaVu Sans Mono" font-size="24"><tspan fill="#1c2a40" font-weight="400" class="fill-ink"/><tspan fill="#4264d0" font-weight="700" class="fill-blue">COLLECT</tspan><tspan fill="#1c2a40" font-weight="400" class="fill-ink"> pfcp.session_establishment_response </tspan><tspan fill="#4264d0" font-weight="700" class="fill-purple">AS</tspan><tspan fill="#1c2a40" font-weight="400" class="fill-ink"> responses</tspan></text>
@@ -61,6 +60,7 @@
   <text x="112" y="222" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627B" text-anchor="start" xml:space="preserve" >Cinque risposte PFCP, dieci coppie F-TEID, nessun duplicato.</text>
   </g>
   <text x="1488" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627B" text-anchor="end" xml:space="preserve" >{{NN}} / {{TOTAL}}</text><text x="112" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627B" text-anchor="start" xml:space="preserve" >TEST E BASELINE</text>
+<path d="M773 624 H915" fill="none" stroke="#278766" stroke-width="2.4" stroke-linecap="round" marker-end="url(#arrow-{{N}}-green)"/>
   </svg>
   <template class="speaker-note">Il secondo esempio riguarda il test _UPF TEID Uniqueness_.
   L&#x27;UPF gestisce il traffico dati degli utenti attraverso dei tunnel, identificati anche tramite valori denominati TEID. Il test serve a verificare che gli identificativi degli endpoint dei tunnel non presentino duplicati nelle risposte analizzate.
@@ -68,3 +68,4 @@
   Successivamente, `REQUIRE UNIQUE` verifica che queste coppie siano tutte distinte.
   Nella cattura analizzata non sono stati rilevati duplicati e il sistema ha quindi restituito `PASS`.</template>
   </section>
+

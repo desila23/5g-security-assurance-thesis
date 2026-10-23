@@ -54,20 +54,43 @@ def render():
     return page, total
 
 
+def metadata():
+    """Mantieni note, budget e riferimenti coerenti con l'ordine del manifest."""
+    rows = []
+    for number, item in enumerate(json.loads(read('slides.json')), 1):
+        fragment = read(item['file'])
+        title = html.unescape(re.search(r'data-title="([^"]+)"', fragment).group(1))
+        seconds = int(re.search(r'data-seconds="(\d+)"', fragment).group(1))
+        note = html.unescape(re.search(r'<template class="speaker-note">(.*?)</template>', fragment, re.S).group(1)).strip()
+        rows.append((number, item, title, seconds, note))
+    budget = sum(row[3] for row in rows)
+    timing = '# Tempi indicativi — revisione finale\n\nAvanzamento manuale. Ogni divisoria ha un budget di 3 secondi. I tempi includono i passi interni.\n\n| Slide | Titolo | Tempo |\n|---:|---|---:|\n'
+    timing += ''.join(f'| {n} | {title} | {sec//60}:{sec%60:02} |\n' for n, item, title, sec, note in rows)
+    timing += f'\nTotale indicativo: **{budget//60}:{budget%60:02}**. Da verificare con una prova orale.\n'
+    notes = '# Note del relatore — revisione finale\n\nGenerate dai sorgenti canonici. I nomi dei file storici mantengono la vecchia numerazione; l’ordine effettivo è in slides.json.\n\n'
+    notes += ''.join(f'## {n}. {title}\n\n{note}\n\n' for n, item, title, sec, note in rows)
+    mapping = '# Mappa delle slide\n\nGenerata da slides.json. I prefissi dei file originali restano invariati.\n\n| Slide | Chiave | Sorgente | Collegamento locale |\n|---:|---|---|---|\n'
+    mapping += ''.join(f'| {n} | {item["key"]} | {item["file"]} | [Apri](index.html#slide-{n}) |\n' for n, item, title, sec, note in rows)
+    return {'tempi-slide.md': timing, 'note-relatore.md': notes, 'mappa-slide.md': mapping}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="Controlla se index.html corrisponde ai sorgenti, senza riscriverlo")
     args = parser.parse_args()
     page, total = render()
-    output = ROOT / "index.html"
+    outputs = {'index.html': page, **metadata()}
     if args.check:
-        if not output.exists() or output.read_text(encoding="utf-8") != page:
-            parser.exit(1, "index.html va ricomposto: esegui python build.py\n")
-        print(f"index.html aggiornato: {total} slide.")
+        stale = [name for name, content in outputs.items() if not (ROOT / name).exists() or read(name) != content]
+        if stale:
+            parser.exit(1, ', '.join(stale) + ': esegui python build.py\n')
+        print(f"HTML, note, tempi e mappa aggiornati: {total} slide.")
     else:
-        output.write_text(page, encoding="utf-8")
-        print(f"Creato index.html: {total} slide. Ora riaprilo o aggiorna il browser.")
+        for name, content in outputs.items():
+            (ROOT / name).write_text(content, encoding="utf-8")
+        print(f"Creati HTML, note, tempi e mappa: {total} slide. Ora riaprilo o aggiorna il browser.")
 
 
 if __name__ == "__main__":
     main()
+

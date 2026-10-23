@@ -4,6 +4,10 @@
     "key": "titolo"
   },
   {
+    "key": "sezione-introduzione",
+    "file": "slides/sezione-introduzione.html"
+  },
+  {
     "file": "slides/02-rete-5g.html",
     "key": "rete-5g"
   },
@@ -20,6 +24,10 @@
     "key": "dsl"
   },
   {
+    "key": "sezione-architettura",
+    "file": "slides/sezione-architettura.html"
+  },
+  {
     "file": "slides/06-architettura.html",
     "key": "architettura"
   },
@@ -30,6 +38,10 @@
   {
     "file": "slides/08-report.html",
     "key": "report"
+  },
+  {
+    "key": "sezione-dsl",
+    "file": "slides/sezione-dsl.html"
   },
   {
     "file": "slides/09-sintassi-dsl.html",
@@ -72,12 +84,24 @@
     "key": "baseline"
   },
   {
+    "key": "sezione-mutazioni",
+    "file": "slides/sezione-mutazioni.html"
+  },
+  {
     "file": "slides/19-mutazioni.html",
     "key": "mutazioni"
   },
   {
     "file": "slides/20-risultati-mutazioni.html",
     "key": "risultati-mutazioni"
+  },
+  {
+    "key": "sezione-conclusioni",
+    "file": "slides/sezione-conclusioni.html"
+  },
+  {
+    "key": "futuri-sviluppi",
+    "file": "slides/futuri-sviluppi.html"
   },
   {
     "file": "slides/21-conclusioni.html",

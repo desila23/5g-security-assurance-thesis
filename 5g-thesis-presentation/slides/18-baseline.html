@@ -1,74 +1,67 @@
-<!-- SLIDE 18: baseline — contenuto e geometria modificabili qui. -->
-  <section class="slide" id="slide-{{N}}" data-title="Risultati dei test baseline" data-seconds="35" aria-label="{{N}} di {{TOTAL}}: Risultati dei test baseline" >
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title-{{N}}">
-  <title id="title-{{N}}">Risultati dei test baseline</title>
-  <defs>
-  <filter id="shadow-{{N}}" x="-20%" y="-40%" width="140%" height="180%">
-  <feDropShadow dx="0" dy="7" stdDeviation="11" flood-color="#203653" flood-opacity=".055"/>
-  </filter>
-  <marker id="arrow-{{N}}-gray" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
-  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#99a7bb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-gray"/>
-  </marker>
-  <marker id="arrow-{{N}}-blue" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
-  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#4264d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-blue"/>
-  </marker>
-  <marker id="arrow-{{N}}-green" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
-  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#278766" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-green"/>
-  </marker>
-  <marker id="arrow-{{N}}-amber" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="14" markerHeight="14" orient="auto">
-  <path d="M3 2 L11 7 L3 12" fill="none" stroke="#B64B56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-amber"/>
-  </marker>
-  </defs>
-  <rect width="1600" height="900" fill="#f3f6f9"/>
-  <rect id="section-band-{{N}}" data-macro-section="testing" x="0" y="0" width="8" height="900" fill="#cfbfaa" aria-hidden="true" pointer-events="none"/>
-  <text x="112" y="167" xml:space="preserve" font-family="Nimbus Sans" font-size="54" font-weight="700" fill="#1c2a40" text-anchor="start" class="svg-text fill-ink">Risultati dei test baseline</text>
-<g id="slide-subtitle-{{N}}"><text x="112" y="222" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627b" text-anchor="start" xml:space="preserve">16 catture: 12 PASS, 1 FAIL e 3 INCONCLUSIVE.</text>
-</g>
-<text x="112" y="284" font-family="Nimbus Sans" font-size="22" font-weight="700" fill="#52627b" text-anchor="start" xml:space="preserve">Esiti per implementazione</text>
-<rect x="112" y="310" width="1010" height="310" rx="12" fill="white" stroke="#d9e3ef" stroke-width="1.8"/>
-<rect x="113" y="311" width="1008" height="62" rx="10" fill="#f0f4ff" stroke="none" stroke-width="1.8"/>
-<rect x="113" y="538" width="1008" height="81" rx="10" fill="#f0f4ff" stroke="none" stroke-width="1.8"/>
-<path d="M112 373 H1122" stroke="#d9e3ef" stroke-width="1.8"/>
-<path d="M112 455 H1122" stroke="#d9e3ef" stroke-width="1.8"/>
-<path d="M112 537 H1122" stroke="#c3cfe9" stroke-width="2.2"/>
-<text x="138" y="350" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#182536" text-anchor="start" xml:space="preserve">Implementazione</text>
-<text x="542" y="350" font-family="Nimbus Sans" font-size="23" font-weight="700" fill="#278766" text-anchor="middle" xml:space="preserve">PASS</text>
-<text x="687" y="350" font-family="Nimbus Sans" font-size="23" font-weight="700" fill="#b64b56" text-anchor="middle" xml:space="preserve">FAIL</text>
-<text x="870" y="350" font-family="Nimbus Sans" font-size="23" font-weight="700" fill="#9d7139" text-anchor="middle" xml:space="preserve">INCONCLUSIVE</text>
-<text x="1052" y="350" font-family="Nimbus Sans" font-size="23" font-weight="700" fill="#182536" text-anchor="middle" xml:space="preserve">Totale</text>
-<text x="138" y="425" font-family="Nimbus Sans" font-size="31" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve">Open5GS</text>
-<text x="542" y="425" font-family="Nimbus Sans" font-size="36" font-weight="700" fill="#278766" text-anchor="middle" xml:space="preserve">6</text>
-<text x="687" y="425" font-family="Nimbus Sans" font-size="36" font-weight="700" fill="#b64b56" text-anchor="middle" xml:space="preserve">1</text>
-<text x="870" y="425" font-family="Nimbus Sans" font-size="36" font-weight="700" fill="#9d7139" text-anchor="middle" xml:space="preserve">3</text>
-<text x="1052" y="425" font-family="Nimbus Sans" font-size="36" font-weight="700" fill="#182536" text-anchor="middle" xml:space="preserve">10</text>
-<text x="138" y="507" font-family="Nimbus Sans" font-size="31" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve">free5GC</text>
-<text x="542" y="507" font-family="Nimbus Sans" font-size="36" font-weight="700" fill="#278766" text-anchor="middle" xml:space="preserve">6</text>
-<text x="687" y="507" font-family="Nimbus Sans" font-size="36" font-weight="700" fill="#b64b56" text-anchor="middle" xml:space="preserve">0</text>
-<text x="870" y="507" font-family="Nimbus Sans" font-size="36" font-weight="700" fill="#9d7139" text-anchor="middle" xml:space="preserve">0</text>
-<text x="1052" y="507" font-family="Nimbus Sans" font-size="36" font-weight="700" fill="#182536" text-anchor="middle" xml:space="preserve">6</text>
-<text x="138" y="590" font-family="Nimbus Sans" font-size="31" font-weight="700" fill="#182536" text-anchor="start" xml:space="preserve">Totale</text>
-<text x="542" y="590" font-family="Nimbus Sans" font-size="40" font-weight="700" fill="#278766" text-anchor="middle" xml:space="preserve">12</text>
-<text x="687" y="590" font-family="Nimbus Sans" font-size="40" font-weight="700" fill="#b64b56" text-anchor="middle" xml:space="preserve">1</text>
-<text x="870" y="590" font-family="Nimbus Sans" font-size="40" font-weight="700" fill="#9d7139" text-anchor="middle" xml:space="preserve">3</text>
-<text x="1052" y="590" font-family="Nimbus Sans" font-size="40" font-weight="700" fill="#182536" text-anchor="middle" xml:space="preserve">16</text>
-<rect x="1170" y="310" width="318" height="310" rx="18" fill="#f0f4ff" stroke="#d9e3ef" stroke-width="1.8"/>
-<text x="1329" y="353" font-family="Nimbus Sans" font-size="19" font-weight="700" fill="#52627b" text-anchor="middle" xml:space="preserve">CAMPIONE BASELINE</text>
-<text x="1329" y="472" font-family="Nimbus Sans" font-size="112" font-weight="700" fill="#4264d0" text-anchor="middle" xml:space="preserve">16</text>
-<text x="1329" y="528" font-family="Nimbus Sans" font-size="32" font-weight="700" fill="#4264d0" text-anchor="middle" xml:space="preserve">catture</text>
-<text x="1329" y="568" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627b" text-anchor="middle" xml:space="preserve">analizzate</text>
-<rect x="112" y="675" width="670" height="168" rx="12" fill="white" stroke="#d9e3ef" stroke-width="1.8"/>
-<text x="138" y="714" font-family="Nimbus Sans" font-size="26" font-weight="700" fill="#b64b56" text-anchor="start" xml:space="preserve">FAIL</text>
-<text x="138" y="758" font-family="Nimbus Sans" font-size="26" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve">NRF Discovery Authorization · Open5GS</text>
-<text x="138" y="801" font-family="Nimbus Sans" font-size="24" font-weight="400" fill="#52627b" text-anchor="start" xml:space="preserve">HTTP 200 osservato · 403 richiesto</text>
-<rect x="818" y="675" width="670" height="168" rx="12" fill="white" stroke="#d9e3ef" stroke-width="1.8"/>
-<text x="844" y="714" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#9d7139" text-anchor="start" xml:space="preserve">INCONCLUSIVE</text>
-<text x="844" y="758" font-family="Nimbus Sans" font-size="26" font-weight="400" fill="#182536" text-anchor="start" xml:space="preserve">AMF RES* B/C/D · Open5GS</text>
-<text x="844" y="801" font-family="Nimbus Sans" font-size="24" font-weight="400" fill="#52627b" text-anchor="start" xml:space="preserve">Evidenze insufficienti per i criteri applicati</text>
-  <text x="1488" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627B" text-anchor="end" xml:space="preserve" >{{NN}} / {{TOTAL}}</text><text x="112" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627B" text-anchor="start" xml:space="preserve" >TEST E BASELINE</text>
-  </svg>
-  <template class="speaker-note">Questi sono soltanto tre esempi della valutazione effettuata.
-  Complessivamente sono state analizzate 16 catture baseline: 10 Open5GS e 6 free5GC. I risultati sono 12 `PASS`, 1 `FAIL` e 3 `INCONCLUSIVE`.
-  Open5GS produce 6 `PASS`, 1 `FAIL` e 3 `INCONCLUSIVE`; free5GC produce 6 `PASS`.
-  Il `FAIL` riguarda NRF Discovery Authorization su Open5GS: è osservato HTTP 200, mentre la DSL richiede HTTP 403.
-  I tre `INCONCLUSIVE` riguardano AMF RES* B, C e D su Open5GS: nel Case B esiste un match completo, ma mancano binding di identità richiesti da criteri applicabili; nei Case C e D manca un match completo. Sono casi con evidenze insufficienti, non proprietà dimostrate false.</template>
-  </section>
+<section class="slide" id="slide-{{N}}" data-title="Risultati dei test baseline" data-seconds="35" aria-label="{{N}} di {{TOTAL}}: Risultati dei test baseline">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title-{{N}}"><title id="title-{{N}}">Risultati dei test baseline</title>
+<rect width="1600" height="900" fill="#f3f6f9"/>
+<text x="1488" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627b" text-anchor="end" >{{NN}} / {{TOTAL}}</text>
+<text x="112" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627b" text-anchor="start" >TEST E BASELINE</text>
+<text x="112" y="167" font-family="Nimbus Sans" font-size="54" font-weight="700" fill="#182536" text-anchor="start" >Risultati dei test baseline</text>
+<text x="112" y="222" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627b" text-anchor="start" >Tutti i casi e i criteri delle tabelle sperimentali della tesi.</text>
+<!-- Versione precedente disattivata: slides/archive/18-baseline-v9.html; non inclusa in slides.json. -->
+<rect x="112" y="278" width="1376" height="526" rx="13" fill="white" stroke="#d9e3ef" stroke-width="1.8"/>
+<path d="M125 278 H1475 Q1488 278 1488 291 V328 H112 V291 Q112 278 125 278" fill="#eaf0fa"/>
+<text x="136" y="311" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#182536" text-anchor="start" >Caso di test</text>
+<text x="620" y="311" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#182536" text-anchor="start" >Criterio di verifica</text>
+<text x="1170" y="311" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#182536" text-anchor="middle" >Open5GS</text>
+<text x="1382" y="311" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#182536" text-anchor="middle" >free5GC</text>
+<text x="136" y="359" font-family="Nimbus Sans" font-size="24" font-weight="400" fill="#182536" text-anchor="start" >NRF Discovery Authorization</text>
+<text x="620" y="359" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#52627b" text-anchor="start" >Risposta HTTP 403</text>
+<text x="1170" y="359" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#c94455" text-anchor="middle" >FAIL</text>
+<text x="1382" y="359" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#78869a" text-anchor="middle" >—</text>
+<rect x="113" y="375" width="1374" height="47" fill="#f5f8fc"/>
+<text x="136" y="406" font-family="Nimbus Sans" font-size="24" font-weight="400" fill="#182536" text-anchor="start" >UDM Resynchronization</text>
+<text x="620" y="406" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#52627b" text-anchor="start" >Coerenza dei parametri di autenticazione</text>
+<text x="1170" y="406" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="middle" >PASS</text>
+<text x="1382" y="406" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#78869a" text-anchor="middle" >—</text>
+<text x="136" y="453" font-family="Nimbus Sans" font-size="24" font-weight="400" fill="#182536" text-anchor="start" >UDM SUCI De-concealment</text>
+<text x="620" y="453" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#52627b" text-anchor="start" >SUPI restituito uguale al valore atteso</text>
+<text x="1170" y="453" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="middle" >PASS</text>
+<text x="1382" y="453" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#78869a" text-anchor="middle" >—</text>
+<rect x="113" y="469" width="1374" height="47" fill="#f5f8fc"/>
+<text x="136" y="500" font-family="Nimbus Sans" font-size="24" font-weight="400" fill="#182536" text-anchor="start" >AMF Sync Failure · Case A</text>
+<text x="620" y="500" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#52627b" text-anchor="start" >Coerenza dei messaggi e vincolo T3520</text>
+<text x="1170" y="500" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="middle" >PASS</text>
+<text x="1382" y="500" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="middle" >PASS</text>
+<text x="136" y="547" font-family="Nimbus Sans" font-size="24" font-weight="400" fill="#182536" text-anchor="start" >AMF Sync Failure · Case B</text>
+<text x="620" y="547" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#52627b" text-anchor="start" >Coerenza dei messaggi e vincolo T3520</text>
+<text x="1170" y="547" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="middle" >PASS</text>
+<text x="1382" y="547" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="middle" >PASS</text>
+<rect x="113" y="563" width="1374" height="47" fill="#f5f8fc"/>
+<text x="136" y="594" font-family="Nimbus Sans" font-size="24" font-weight="400" fill="#182536" text-anchor="start" >UPF TEID Uniqueness</text>
+<text x="620" y="594" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#52627b" text-anchor="start" >Assenza di F-TEID duplicati</text>
+<text x="1170" y="594" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="middle" >PASS</text>
+<text x="1382" y="594" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#78869a" text-anchor="middle" >—</text>
+<text x="136" y="641" font-family="Nimbus Sans" font-size="24" font-weight="400" fill="#182536" text-anchor="start" >AMF RES* · Case A</text>
+<text x="620" y="641" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#52627b" text-anchor="start" >Gestione del fallimento di autenticazione</text>
+<text x="1170" y="641" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="middle" >PASS</text>
+<text x="1382" y="641" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="middle" >PASS</text>
+<rect x="113" y="657" width="1374" height="47" fill="#f5f8fc"/>
+<text x="136" y="688" font-family="Nimbus Sans" font-size="24" font-weight="400" fill="#182536" text-anchor="start" >AMF RES* · Case B</text>
+<text x="620" y="688" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#52627b" text-anchor="start" >Gestione del fallimento di autenticazione</text>
+<text x="1170" y="688" font-family="Nimbus Sans" font-size="21" font-weight="700" fill="#9d7139" text-anchor="middle" >INCONCLUSIVE</text>
+<text x="1382" y="688" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="middle" >PASS</text>
+<text x="136" y="735" font-family="Nimbus Sans" font-size="24" font-weight="400" fill="#182536" text-anchor="start" >AMF RES* · Case C</text>
+<text x="620" y="735" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#52627b" text-anchor="start" >Gestione del fallimento di autenticazione</text>
+<text x="1170" y="735" font-family="Nimbus Sans" font-size="21" font-weight="700" fill="#9d7139" text-anchor="middle" >INCONCLUSIVE</text>
+<text x="1382" y="735" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="middle" >PASS</text>
+<rect x="113" y="751" width="1374" height="47" fill="#f5f8fc"/>
+<text x="136" y="782" font-family="Nimbus Sans" font-size="24" font-weight="400" fill="#182536" text-anchor="start" >AMF RES* · Case D</text>
+<text x="620" y="782" font-family="Nimbus Sans" font-size="23" font-weight="400" fill="#52627b" text-anchor="start" >Gestione del fallimento di autenticazione</text>
+<text x="1170" y="782" font-family="Nimbus Sans" font-size="21" font-weight="700" fill="#9d7139" text-anchor="middle" >INCONCLUSIVE</text>
+<text x="1382" y="782" font-family="Nimbus Sans" font-size="25" font-weight="700" fill="#278766" text-anchor="middle" >PASS</text>
+<path d="M600 278 V804" stroke="#d9e3ef" stroke-width="1"/>
+<path d="M1064 278 V804" stroke="#d9e3ef" stroke-width="1"/>
+<path d="M1276 278 V804" stroke="#d9e3ef" stroke-width="1"/>
+<text x="112" y="847" font-family="Nimbus Sans" font-size="24" font-weight="400" fill="#52627b" text-anchor="start" >16 catture: 12 PASS, 1 FAIL, 3 INCONCLUSIVE.</text>
+<text x="1488" y="847" font-family="Nimbus Sans" font-size="21" font-weight="400" fill="#52627b" text-anchor="end" >— = caso non riportato per quel core nella tesi</text>
+</svg>
+<template class="speaker-note">La tabella unisce le tabelle Open5GS e free5GC del capitolo 6 della tesi. Open5GS: 6 PASS, 1 FAIL e 3 INCONCLUSIVE su 10 catture. free5GC: 6 PASS su 6 catture. Il trattino indica un caso non riportato per quella implementazione, non un esito INCONCLUSIVE. NRF restituisce HTTP 200 anziché 403. Per RES* su Open5GS, B ha binding di identità mancanti; C e D non hanno match completi.</template>
+</section>

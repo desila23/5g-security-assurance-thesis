@@ -1,10 +1,7 @@
 openapi: 3.0.3
-info:
-  title: API dimostrativa
-  version: 1.0.0
+info: {title: API, version: '1'}
 paths:
   /nf-instances:
     get:
       responses:
-        "200":
-          description: OK
+        '200': {description: OK}
