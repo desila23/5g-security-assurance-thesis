@@ -150,7 +150,7 @@
         rect.style.stroke = status === 'selected' ? '#278766' : status === 'restart' ? '#9d7139' : '#d5dff0';
         text.style.fill = status === 'selected' ? '#278766' : status === 'restart' ? '#9d7139' : '#65758b';
       });
-      show(get('matcher-restart-label'), current.full || current.restart || current.restarted);
+      show(get('matcher-restart-label'), !current.full && Boolean(current.restart));
       [0, 2, 3, 5].forEach(i => show(get('matcher-binding-' + i), current.bindings.includes(i)));
       ['a', 'b', 'c'].forEach(letter => colourAtom(get('matcher-atom-' + letter), current.atoms.includes(letter), slideNumber));
       colourAtom(get('matcher-eps-ab'), current.atoms.includes('b'), slideNumber);
