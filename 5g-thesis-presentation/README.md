@@ -1,6 +1,6 @@
 # Presentazione tesi 5G — revisione finale
 
-28 slide. Budget indicativo: **20:33**, da confermare con una prova orale. L’introduzione è stata ridistribuita sul discorso aggiornato; il totale non è una durata misurata.
+27 slide. Budget indicativo: **19:33**, da confermare con una prova orale. L’introduzione è stata ridistribuita sul discorso aggiornato; il totale non è una durata misurata.
 
 Estrai tutta la cartella e apri `index.html`. La presentazione funziona offline. Non serve Python per visualizzarla.
 

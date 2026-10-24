@@ -24,13 +24,12 @@ Avanzamento manuale. Ogni divisoria ha un budget di 3 secondi. I tempi includono
 | 18 | Testing | 0:03 |
 | 19 | AMF Synchronization Failure, Case B | 0:55 |
 | 20 | UPF TEID Uniqueness | 0:35 |
-| 21 | AMF RES*: quattro varianti, un'unica specifica DSL | 1:00 |
-| 22 | Risultati dei test baseline | 0:35 |
-| 23 | Mutation testing | 0:03 |
-| 24 | Mutation testing: il processo | 1:15 |
-| 25 | Risultati del mutation testing | 1:00 |
-| 26 | Conclusioni e sviluppi futuri | 0:03 |
-| 27 | Futuri sviluppi | 1:25 |
-| 28 | Grazie per l’attenzione. Domande? | 0:10 |
+| 21 | Risultati dei test baseline | 0:35 |
+| 22 | Mutation testing | 0:03 |
+| 23 | Mutation testing: il processo | 1:15 |
+| 24 | Risultati del mutation testing | 1:00 |
+| 25 | Conclusioni e sviluppi futuri | 0:03 |
+| 26 | Futuri sviluppi | 1:25 |
+| 27 | Grazie per l’attenzione. Domande? | 0:10 |
 
-Totale indicativo: **20:33**. Da verificare con una prova orale.
+Totale indicativo: **19:33**. Da verificare con una prova orale.

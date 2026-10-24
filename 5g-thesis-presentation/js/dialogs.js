@@ -2,8 +2,7 @@
 (() => {
  const dialogs=[
   {dialog:'report-json-dialog',open:'open-report-json',close:'close-report-json'},
-  {dialog:'amf-rule-dialog',open:'open-amf-rule',close:'close-amf-rule'},
-  {dialog:'resstar-rule-dialog',open:'open-resstar-rule',close:'close-resstar-rule'}
+  {dialog:'amf-rule-dialog',open:'open-amf-rule',close:'close-amf-rule'}
  ];
  dialogs.forEach(item=>{
   const dialog=document.getElementById(item.dialog),open=document.getElementById(item.open),close=document.getElementById(item.close);

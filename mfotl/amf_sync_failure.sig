@@ -1,4 +1,0 @@
-SyncFailure()
-ResynchronizationRequest()
-AusfAuthenticationResponse()
-AuthenticationRequest()

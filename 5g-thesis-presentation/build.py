@@ -39,7 +39,6 @@ def render():
         "OPENAPI_EXAMPLE": html.escape(read("esempi/openapi-esempio.yaml").rstrip()),
         "UPF_REPORT": html.escape(read("data/reports/upf_teid_uniqueness/report.json")),
         "AMF_RULE": html.escape(read("data/regole/amf_sync_failure_case_b_sequence.dsl")),
-        "RESSTAR_RULE": html.escape(read("data/regole/resstar_verification_failure.dsl")),
     }
     temporal = re.search(r'MFOTL CASE B\s+""".*?"""', read("data/regole/amf_sync_failure.dsl"), re.S)
     if temporal:

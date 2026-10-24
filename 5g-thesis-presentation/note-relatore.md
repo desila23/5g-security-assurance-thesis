@@ -116,7 +116,7 @@ Passiamo ai test sulle catture originali.
 ## 19. AMF Synchronization Failure, Case B
 
 Per valutare il sistema sono stati considerati diversi casi di test SCAS.
-  Tra questi, vorrei soffermarmi su tre esempi particolarmente rappresentativi, perché permettono di mostrare come i diversi costrutti della DSL vengono utilizzati in situazioni concrete.
+  Tra questi, vorrei soffermarmi su due esempi particolarmente rappresentativi, perché permettono di mostrare come i diversi costrutti della DSL vengono utilizzati in situazioni concrete.
   Il primo esempio riguarda il test _AMF Synchronization Failure, Case B_.
   Durante la procedura di autenticazione, può verificarsi un errore di sincronizzazione tra il dispositivo e la rete. In questa situazione, l'AMF deve gestire il fallimento rispettando le condizioni previste dalla specifica, tra cui alcuni vincoli temporali.
   Attraverso `SEQUENCE` vengono individuati i messaggi della procedura di risincronizzazione, mentre le condizioni `REQUIRE` permettono di controllare la coerenza dei parametri scambiati.
@@ -133,30 +133,19 @@ Il secondo esempio riguarda il test _UPF TEID Uniqueness_.
   Successivamente, `REQUIRE UNIQUE` verifica che nessuna coppia (TEID, IPv4) venga riutilizzata tra risposte differenti.
   Nella cattura analizzata non sono stati rilevati duplicati e il sistema ha quindi restituito `PASS`.
 
-## 21. AMF RES*: quattro varianti, un'unica specifica DSL
-
-I quattro risultati mostrati appartengono alle catture free5GC: A, B, C e D sono tutti `PASS`. Su Open5GS, A è `PASS`, mentre B, C e D sono `INCONCLUSIVE`: B ha un match completo ma mancano binding di identità richiesti da criteri applicabili; C e D non hanno match completi.
-  Il terzo esempio riguarda _AMF RES_ Verification Failure*, una famiglia composta da quattro casi che siamo riusciti a rappresentare attraverso un'unica regola DSL.
-  Questo test riguarda la gestione di un fallimento nella verifica della risposta di autenticazione RES*, cioè quando la risposta fornita dal dispositivo non viene riconosciuta come valida. In questa situazione, il sistema deve gestire correttamente il fallimento, secondo quanto previsto dalla specifica SCAS.
-  I casi differiscono per il percorso di identificazione dell'utente, che può avvenire direttamente tramite SUCI oppure attraverso GUTI e successivamente SUCI, e per l'origine del fallimento, che può essere locale all'AMF oppure provenire dall'AUSF.
-  Per gestire queste differenze, `OPTIONAL` permette di rappresentare parti della procedura non presenti in tutte le varianti, mentre `IF` consente di applicare i criteri pertinenti in base alla configurazione del caso.
-  In ciascuna delle quattro catture il sistema ha individuato un unico match completo e ha restituito `PASS`.
-  Il numero di controlli soddisfatti varia in base al caso, mentre le condizioni non applicabili vengono contrassegnate come `SKIPPED`.
-  Questo esempio mostra quindi come una stessa regola DSL possa gestire varianti differenti senza dover definire ogni volta una logica di verifica separata.
-
-## 22. Risultati dei test baseline
+## 21. Risultati dei test baseline
 
 La tabella unisce le tabelle Open5GS e free5GC del capitolo 6 della tesi. Open5GS: 6 PASS, 1 FAIL e 3 INCONCLUSIVE su 10 catture. free5GC: 6 PASS su 6 catture. Il trattino indica un caso non riportato per quella implementazione, non un esito INCONCLUSIVE. NRF restituisce HTTP 200 anziché 403. Per RES* su Open5GS, B ha binding di identità mancanti; C e D non hanno match completi.
 
-## 23. Mutation testing
+## 22. Mutation testing
 
 Verifichiamo come cambia il verdetto quando alteriamo le evidenze.
 
-## 24. Mutation testing: il processo
+## 23. Mutation testing: il processo
 
 La pipeline analizza prima la PCAP originale e produce il report baseline. Un motore di mutazione esterno e offline riceve la PCAP originale e i riferimenti alle evidenze dal report baseline: non viene chiamato automaticamente dalla pipeline. Modifica valori, tempi o messaggi, producendo una PCAP mutata. Questa rientra nella stessa pipeline con le stesse regole DSL e genera il report mutation. Cambiano soltanto le evidenze; il confronto con il verdetto atteso permette di valutare la risposta del verificatore.
 
-## 25. Risultati del mutation testing
+## 24. Risultati del mutation testing
 
 Complessivamente sono stati realizzati **13 scenari di mutazione**, e in tutti i casi i risultati osservati sono stati coerenti con quelli attesi.
   Tra questi, due esempi sono particolarmente significativi.
@@ -168,15 +157,15 @@ Complessivamente sono stati realizzati **13 scenari di mutazione**, e in tutti i
   Rimuovendo invece gli eventi necessari alla verifica, il sistema non dispone più di evidenze sufficienti e restituisce `INCONCLUSIVE`.
   Quest'ultimo risultato è particolarmente importante, perché mostra che il verificatore distingue **una proprietà effettivamente violata da una proprietà che non può essere valutata con le evidenze disponibili**.
 
-## 26. Conclusioni e sviluppi futuri
+## 25. Conclusioni e sviluppi futuri
 
 Chiudiamo con i limiti emersi e le direzioni di sviluppo.
 
-## 27. Futuri sviluppi
+## 26. Futuri sviluppi
 
 I risultati, anche nel mutation testing, collegano i verdetti alle condizioni osservate e alle evidenze che li giustificano. La valutazione dipende però dalle evidenze disponibili e dai criteri rappresentabili: il sistema è stato sperimentato su un insieme specifico di casi SCAS, non su qualsiasi procedura. Due sviluppi futuri: ampliare i test con normalizzatori per nuovi protocolli e nuove evidenze; automatizzare maggiormente il mutation testing usando la DSL per individuare eventi e campi da alterare, riducendo la logica dedicata. Le operazioni concrete restano specifiche dei protocolli. Il contributo rende la verifica un processo più sistematico, con conclusioni ricostruibili, motivate e riconducibili alle evidenze. Questa è la conclusione del discorso; segue soltanto la schermata dei ringraziamenti.
 
-## 28. Grazie per l’attenzione. Domande?
+## 27. Grazie per l’attenzione. Domande?
 
 Grazie per l’attenzione. Sono a disposizione per le domande.
 
