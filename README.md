@@ -28,6 +28,22 @@ lualatex main.tex
 lualatex main.tex
 ```
 
+### Se il PDF mostra codici della bibliografia o un indice vuoto
+
+I file ausiliari di LaTeX non vanno riutilizzati tra ambienti o versioni diverse.
+Se in prima pagina compaiono testi come `author1hash` o `family`, elimina i file generati della compilazione (in particolare `main.bbl`, `main.bcf`, `main.aux`, `main.toc`) e ricompila **main.tex** con questa sequenza:
+
+```sh
+lualatex main.tex
+biber main
+lualatex main.tex
+lualatex main.tex
+```
+
+Su Overleaf scegli **Recompile from scratch** (cancellazione dei file temporanei) e verifica che il compilatore sia **LuaLaTeX**; poi ricompila fino a ottenere indice, riferimenti e bibliografia completi.
+
+Il file `main.pdf` presente nel repository è solo un'anteprima precedente e non si aggiorna quando scarichi o modifichi i sorgenti: apri il PDF appena generato dal tuo compilatore.
+
 Le nuove sezioni, figure e citazioni vengono numerate automaticamente.
 
 ## Scelte editoriali

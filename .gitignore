@@ -1,0 +1,12 @@
+# File temporanei della compilazione LaTeX (rigenerati localmente)
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.toc
+*.synctex.gz
