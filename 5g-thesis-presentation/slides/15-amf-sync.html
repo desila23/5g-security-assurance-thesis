@@ -74,8 +74,8 @@
   <button type="button" id="open-amf-rule">Regola DSL completa</button>
   </div>
   <template class="speaker-note">Per valutare il sistema sono stati considerati diversi casi di test SCAS.
-  Tra questi, vorrei soffermarmi su due esempi particolarmente rappresentativi, perché permettono di mostrare come i diversi costrutti della DSL vengono utilizzati in situazioni concrete.
-  Il primo esempio riguarda il test _AMF Synchronization Failure, Case B_.
+  Tra questi, vorrei soffermarmi su un esempio rappresentativo dell’uso dei costrutti della DSL in una situazione concreta.
+  L’esempio riguarda il test _AMF Synchronization Failure, Case B_.
   Durante la procedura di autenticazione, può verificarsi un errore di sincronizzazione tra il dispositivo e la rete. In questa situazione, l&#x27;AMF deve gestire il fallimento rispettando le condizioni previste dalla specifica, tra cui alcuni vincoli temporali.
   Attraverso `SEQUENCE` vengono individuati i messaggi della procedura di risincronizzazione, mentre le condizioni `REQUIRE` permettono di controllare la coerenza dei parametri scambiati.
   In questo caso, però, non basta verificare i valori, perché è necessario rispettare anche un vincolo temporale.
