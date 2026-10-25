@@ -51,7 +51,7 @@
   <path d="M800 722 V738" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M800 738 V750" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#new-arrow-{{N}}-gray)"/>
   <rect x="510" y="764" width="580" height="62" rx="12" fill="#f5f7fb" stroke="#d9e3ef" stroke-width="1.8"/>
-  <text x="800" y="804" font-family="Nimbus Sans" font-size="26" font-weight="700" fill="#4264d0" text-anchor="middle" xml:space="preserve">Report · criteri, valori, frame e verdetto</text>
+  <text x="800" y="804" font-family="Nimbus Sans" font-size="26" font-weight="700" fill="#4264d0" text-anchor="middle" xml:space="preserve">Report</text>
   <text x="112" y="92" font-family="Nimbus Sans" font-size="18" fill="#52627b">DSL · NFA · VERIFICA</text>
 <text x="1488" y="92" font-family="Nimbus Sans" font-size="18" fill="#52627b" text-anchor="end">{{NN}} / {{TOTAL}}</text>
 <!-- Uscita unica dall'area di verifica: si divide soltanto dopo il riquadro. -->
@@ -59,11 +59,6 @@
 <path id="verification-exit-left" d="M800 604 H338 V637" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#new-arrow-{{N}}-gray)"/>
 <path id="verification-exit-center" d="M800 604 V637" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linecap="round" marker-end="url(#new-arrow-{{N}}-gray)"/>
 <path id="verification-exit-right" d="M800 604 H1261 V637" fill="none" stroke="#99a7bb" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#new-arrow-{{N}}-gray)"/></svg>
-  <template class="speaker-note">Una volta ottenute le evidenze selezionate e organizzate nel BindingContext, possiamo applicare i criteri definiti nel secondo blocco della DSL.
-  Il sistema prevede due modalità principali di verifica.
-  - La prima è la **verifica statica**, che permette di controllare proprietà sui valori osservati, ad esempio confrontando campi di eventi differenti oppure verificando l&#x27;unicità dei valori raccolti.
-  - La seconda è la **verifica temporale**, utilizzata quando i criteri riguardano anche le relazioni temporali tra gli eventi.
-  In questo caso vengono utilizzate formule MFOTL, mentre la loro valutazione è affidata a _MonPoly_, un motore di verifica temporale esterno integrato nella pipeline.
-  Il sistema prepara quindi gli eventi temporizzati e le formule richieste, esegue le verifiche e ne raccoglie i risultati, che contribuiranno alla determinazione del verdetto e alla produzione del report.</template>
+  <template class="speaker-note">Il verificatore usa gli eventi nel BindingContext per valutare i criteri della DSL. I controlli statici valutano i valori; quelli temporali usano MFOTL e MonPoly. La pipeline prepara formule ed eventi compatibili con MonPoly, che li valuta. I risultati vengono combinati nel verdetto e nel report.</template>
   </section>
 

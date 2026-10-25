@@ -7,10 +7,10 @@ Avanzamento manuale. Ogni divisoria ha un budget di 3 secondi. I tempi includono
 | 1 | Titolo della tesi | 0:20 |
 | 2 | Introduzione | 0:03 |
 | 3 | 5G Core: Network Functions e interazioni | 0:55 |
-| 4 | Le SCAS descrivono come verificare la sicurezza | 1:15 |
+| 4 | Le Security Assurance Specification | 1:15 |
 | 5 | Da human-readable a machine-readable | 0:55 |
-| 6 | Da verificatori dedicati a un motore comune | 0:45 |
-| 7 | La proposta: una DSL per i test SCAS | 0:50 |
+| 6 | Regole differenti, verificatore comune | 0:45 |
+| 7 | Una DSL per selezionare e verificare | 0:50 |
 | 8 | Architettura della pipeline | 0:03 |
 | 9 | Architettura proposta | 0:35 |
 | 10 | Dal traffico alle evidenze del test | 1:20 |

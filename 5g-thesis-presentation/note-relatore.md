@@ -14,7 +14,7 @@ Passiamo al contesto e al problema.
 
 Il 5G Core comprende diverse Network Functions che cooperano tra loro. Le comunicazioni seguono protocolli e procedure standardizzati. Funzioni e interazioni devono soddisfare requisiti di sicurezza. Lo schema riutilizza la topologia semplificata: control plane, user plane e interfacce principali.
 
-## 4. Le SCAS descrivono come verificare la sicurezza
+## 4. Le Security Assurance Specification
 
 Una volta eseguita una di queste prove è quindi necessario valutare se il comportamento osservato sia conforme a quanto previsto dalla specifica.
   Tra le evidenze disponibili possiamo avere una cattura del traffico di rete, in formato PCAP, insieme al verdetto ottenuto dal test. Il problema, però, è che la disponibilità di queste informazioni non rende necessariamente evidenti le motivazioni che hanno portato a quel risultato.
@@ -24,15 +24,15 @@ Una volta eseguita una di queste prove è quindi necessario valutare se il compo
 
 ## 5. Da human-readable a machine-readable
 
-Le Network Functions sono prevalentemente software, mentre le SCAS sono scritte in linguaggio naturale. Come può il programma sapere quali messaggi cercare, quali campi confrontare e quali condizioni verificare? Serve una rappresentazione strutturata. Il progettista interpreta i criteri e li formalizza: la traduzione SCAS → DSL non è automatica. Il breve esempio concettuale richiama il test NRF: selezionare richiesta e risposta, poi controllare lo status 403. OpenAPI è soltanto un’analogia nel dominio delle API, non è il linguaggio del progetto e non esegue test SCAS. La domanda prepara il motore comune e la DSL delle prossime due slide.
+Le NF sono componenti software, mentre le SCAS sono scritte in linguaggio naturale. Come può il sistema sapere quali messaggi cercare, quali informazioni confrontare e quali condizioni verificare? Serve una rappresentazione strutturata dei criteri. La formalizzazione è del progettista; il software applica automaticamente le regole alle evidenze. La traduzione SCAS → DSL non è automatica.
 
-## 6. Da verificatori dedicati a un motore comune
+## 6. Regole differenti, verificatore comune
 
 Un primo approccio consiste nello scrivere un programma specifico per ciascun test: i criteri sono incorporati nel codice e la logica è poco riutilizzabile. L’animazione mostra la separazione dei criteri dalla logica software. Regole differenti alimentano un unico motore, che seleziona le evidenze, applica i criteri e produce verdetto e report. La DSL, introdotta nella slide successiva, esprime queste regole.
 
-## 7. La proposta: una DSL per i test SCAS
+## 7. Una DSL per selezionare e verificare
 
-Per esprimere le regole ho progettato una Domain-Specific Language. I due compiti sono selezionare le evidenze pertinenti nella cattura e definire le condizioni da verificare: valori, unicità e vincoli temporali. Il progettista interpreta i criteri SCAS e li formalizza nella DSL; il sistema applica automaticamente le regole alle evidenze. Il contributo comprende il linguaggio e una pipeline comune che analizza il traffico, verifica le condizioni e produce un report con verdetto ed evidenze. La grammatica sarà approfondita nella sezione dedicata.
+Per esprimere le regole ho progettato una Domain-Specific Language. Ha due compiti: selezionare le evidenze all’interno della cattura e definire le condizioni da verificare su quelle evidenze. Le evidenze selezionate collegano i due passaggi. Il contributo comprende quindi il linguaggio e una pipeline comune che analizza il traffico.
 
 ## 8. Architettura della pipeline
 
@@ -45,7 +45,7 @@ Per realizzare la soluzione appena introdotta, il sistema è stato organizzato i
 
 ## 10. Dal traffico alle evidenze del test
 
-La PCAP contiene molti pacchetti. TShark estrae i dati relativi ai protocolli selezionati; i normalizzatori li organizzano in MessageEvent. I resolver intervengono quando serve ricostruire il significato degli eventi. Il riquadro inferiore mostra la struttura comune: numero di frame e timestamp, protocollo e tipo, estremi della comunicazione, message_type, riferimenti ai frame, correlazioni e campi specifici. La DSL seleziona le evidenze rilevanti. La slide successiva riparte dalle evidenze selezionate e mostra verifica, verdetto e report.
+L’individuazione delle evidenze ha due livelli. Prima TShark estrae le informazioni dei protocolli coinvolti nel test e i normalizzatori le trasformano in MessageEvent. Poi la DSL seleziona gli eventi necessari per quel caso SCAS. Test differenti possono quindi riutilizzare gli stessi normalizzatori.
 
 ## 11. Dalle evidenze al verdetto e al report
 
@@ -62,39 +62,15 @@ Entriamo nella DSL e nel motore comune di verifica.
 
 ## 13. La DSL: selezionare gli eventi e verificarli
 
-Come abbiamo visto, la DSL è organizzata in due blocchi principali: uno dedicato alla selezione delle evidenze e uno alla definizione dei criteri di verifica.
-  Per rappresentare questi due aspetti è stata progettata una sintassi specifica, descritta attraverso una grammatica che stabilisce come devono essere scritte le regole.
-  Partendo dalla selezione, abbiamo tre costrutti principali.
-  - `SEQUENCE` permette di descrivere una successione di eventi da individuare all'interno del traffico normalizzato. A ogni evento possiamo associare un _alias_, che ci permetterà successivamente di richiamarlo durante la verifica.
-  - `OPTIONAL` consente invece di rappresentare parti della sequenza che possono essere presenti oppure assenti, senza impedire il riconoscimento dell'intera sequenza.
-  - Infine, `COLLECT` permette di raccogliere una collezione di eventi dello stesso tipo, quando non siamo interessati a ricostruire una successione di messaggi.
-  Il secondo blocco riguarda la verifica e permette di esprimere sia regole statiche, attraverso `REQUIRE` e `REQUIRE UNIQUE`, che controlla l'assenza di duplicati, sia proprietà temporali, utilizzando formule in _Metric First-Order Temporal Logic_, o MFOTL.
+La DSL ha due blocchi. Selezione: SEQUENCE per successioni ordinate, OPTIONAL per eventi facoltativi e COLLECT per eventi dello stesso tipo. Gli alias permettono di richiamare eventi e collezioni. Verifica: REQUIRE e UNIQUE per controlli statici, MFOTL per proprietà temporali. L’esempio NRF collega richiesta, risposta e status atteso 403.
 
 ## 14. Dalla regola all’automa
 
-Uno degli aspetti principali dell'implementazione riguarda il riconoscimento delle sequenze descritte attraverso `SEQUENCE`.
-  Per questo è stato realizzato un _matcher_ basato su un automa a stati finiti non deterministico, o NFA, costruito secondo il metodo di Thompson.
-  L'idea è partire dagli eventi descritti nella regola e rappresentarli internamente con nodi chiamati Atom. Da ciascun Atom si costruisce un frammento elementare dell'automa.
-  Ogni frammento è composto da uno stato iniziale, uno stato finale e una transizione che permette di avanzare quando viene riconosciuto l'evento corrispondente.
-  Una volta costruiti questi frammenti, vengono collegati tra loro per formare un unico automa, che rappresenta la struttura della sequenza da riconoscere.
-  Per collegarli vengono utilizzate anche le _transizioni epsilon_, che consentono di passare da uno stato all'altro senza consumare alcun evento.
-  Queste transizioni sono particolarmente importanti per gestire i blocchi opzionali.
-  Nell'esempio mostrato abbiamo una sequenza composta dagli eventi A, B e C, dove B è opzionale.
-  L'automa presenta quindi un percorso che attraversa tutti e tre gli eventi, ma anche un percorso alternativo che permette di saltare B.
-  In questo modo possiamo riconoscere sia la sequenza A, B, C sia la sequenza A, C, attraverso un automa costruito direttamente a partire dalla regola DSL.
+Per riconoscere le sequenze DSL il sistema costruisce un NFA con l’algoritmo di Thompson. Da ogni Atom, nodo che rappresenta un evento nella regola, deriva un frammento con stato iniziale, stato finale e transizione. Le transizioni epsilon uniscono i frammenti senza consumare eventi. B è opzionale: l’automa riconosce A-B-C oppure A-C. Seguire i passi mantenendo questa distinzione tra Atom e frammento.
 
 ## 15. Riconoscimento della sequenza
 
-Una volta costruito l'automa, il matcher lo utilizza per cercare la sequenza all'interno degli eventi normalizzati.
-  Nell'esempio che vediamo, la sequenza richiesta è sempre A, B opzionale e C, mentre gli eventi osservati sono A, X, A, B, X, C.
-  Partendo dal primo evento A, il matcher avvia un possibile riconoscimento della sequenza.
-  Il messaggio successivo, X, non è previsto dalla regola, quindi non contribuisce al riconoscimento.
-  Quando però incontriamo la seconda A, il candidato precedente non può consumare questo nuovo evento, perché sta cercando B oppure C.
-  Interviene quindi la _politica di riavvio_: il candidato precedente viene terminato e ne viene avviato uno nuovo a partire dalla seconda A.
-  A questo punto incontriamo B, che è compatibile con la sequenza, e successivamente un'altra X, che viene ignorata.
-  Infine, incontriamo C, che completa il riconoscimento.
-  Il risultato è quindi la sequenza formata da A in posizione 3, B in posizione 4 e C in posizione 6.
-  La politica di riavvio consente quindi di considerare nuovi punti di partenza quando vengono incontrati eventi compatibili con l'inizio della regola, senza dipendere esclusivamente dalla prima occorrenza.
+Il matcher usa l’automa sugli eventi normalizzati. Gli eventi selezionati rispettano l’ordine, ma non devono essere consecutivi: quelli non richiesti sono ignorati. Se arriva un nuovo possibile inizio che il candidato corrente non può consumare, il candidato viene interrotto e il matcher riparte. Nell’esempio A(1) viene scartato a favore di A(3); il risultato è A(3), B(4), C(6).
 
 ## 16. Dal Match al BindingContext
 
@@ -102,40 +78,27 @@ Il matcher riceve NFA ed eventi normalizzati e produce il Match. Nell’esempio 
 
 ## 17. Motore di verifica
 
-Una volta ottenute le evidenze selezionate e organizzate nel BindingContext, possiamo applicare i criteri definiti nel secondo blocco della DSL.
-  Il sistema prevede due modalità principali di verifica.
-  - La prima è la **verifica statica**, che permette di controllare proprietà sui valori osservati, ad esempio confrontando campi di eventi differenti oppure verificando l'unicità dei valori raccolti.
-  - La seconda è la **verifica temporale**, utilizzata quando i criteri riguardano anche le relazioni temporali tra gli eventi.
-  In questo caso vengono utilizzate formule MFOTL, mentre la loro valutazione è affidata a _MonPoly_, un motore di verifica temporale esterno integrato nella pipeline.
-  Il sistema prepara quindi gli eventi temporizzati e le formule richieste, esegue le verifiche e ne raccoglie i risultati, che contribuiranno alla determinazione del verdetto e alla produzione del report.
+Il verificatore usa gli eventi nel BindingContext per valutare i criteri della DSL. I controlli statici valutano i valori; quelli temporali usano MFOTL e MonPoly. La pipeline prepara formule ed eventi compatibili con MonPoly, che li valuta. I risultati vengono combinati nel verdetto e nel report.
 
 ## 18. Testing
 
-Passiamo ai test sulle catture originali.
+Per valutare il sistema sono stati considerati diversi casi SCAS. La valutazione comprende le catture originali e una successiva fase di mutation testing.
 
 ## 19. Risultati dei test baseline
 
-La tabella unisce le tabelle Open5GS e free5GC del capitolo 6 della tesi. Open5GS: 6 PASS, 1 FAIL e 3 INCONCLUSIVE su 10 catture. free5GC: 6 PASS su 6 catture. Il trattino indica un caso non riportato per quella implementazione, non un esito INCONCLUSIVE. NRF restituisce HTTP 200 anziché 403. Per RES* su Open5GS, B ha binding di identità mancanti; C e D non hanno match completi.
+16 catture originali da Open5GS e free5GC: 12 PASS, 1 FAIL e 3 INCONCLUSIVE. NRF richiede HTTP 403, ma nella cattura si osserva 200: il FAIL è quindi il risultato atteso dal verificatore. AMF Synchronization Failure ha controlli statici e temporali soddisfatti su entrambe le implementazioni. I tre INCONCLUSIVE sono le varianti Open5GS AMF RES* B–D con evidenze insufficienti. Il trattino indica un caso non riportato per quell’implementazione. Distinguere criteri soddisfatti, violati e non valutabili.
 
 ## 20. Mutation testing
 
-Verifichiamo come cambia il verdetto quando alteriamo le evidenze.
+I risultati sulle catture originali non bastano da soli a valutare l’affidabilità del verificatore, perché alcuni test ne hanno guidato lo sviluppo. Per osservare la risposta a condizioni differenti si introduce una fase di mutation testing.
 
 ## 21. Mutation testing: il processo
 
-La pipeline analizza prima la PCAP originale e produce il report baseline. Un motore di mutazione esterno e offline riceve la PCAP originale e i riferimenti alle evidenze dal report baseline: non viene chiamato automaticamente dalla pipeline. Modifica valori, tempi o messaggi, producendo una PCAP mutata. Questa rientra nella stessa pipeline con le stesse regole DSL e genera il report mutation. Cambiano soltanto le evidenze; il confronto con il verdetto atteso permette di valutare la risposta del verificatore.
+Si parte dalla PCAP originale e dal report baseline. Un mutatore esterno e offline usa i riferimenti del report per selezionare i frame rilevanti e introdurre modifiche controllate. La nuova cattura viene analizzata con la stessa pipeline e le stesse regole DSL. Si confronta il verdetto osservato con quello atteso per la mutazione.
 
 ## 22. Risultati del mutation testing
 
-Complessivamente sono stati realizzati **13 scenari di mutazione**, e in tutti i casi i risultati osservati sono stati coerenti con quelli attesi.
-  Tra questi, due esempi sono particolarmente significativi.
-  La distribuzione è NRF 1, UDM 2, AMF Synchronization Failure 4 (3 Case A e 1 Case B), UPF 2 e AMF RES* 4. Gli esiti sono quelli attesi nei 13 scenari considerati: non costituiscono una prova di correttezza universale del verificatore.
-  Il primo esempio riguarda _AMF Synchronization Failure, Case A_ su Open5GS, dove abbiamo introdotto mutazioni statiche, temporali e combinate.
-  Come si vede nella tabella, modificando soltanto i valori dei messaggi fallisce la verifica statica, mentre quella temporale continua a essere soddisfatta. Alterando invece gli intervalli di tempo avviene il contrario; modificando entrambi, falliscono entrambe le verifiche.
-  Il secondo esempio riguarda _UPF TEID Uniqueness_, dove abbiamo valutato due situazioni differenti.
-  Introducendo un F-TEID duplicato, il sistema rileva la violazione del criterio di unicità e restituisce `FAIL`.
-  Rimuovendo invece gli eventi necessari alla verifica, il sistema non dispone più di evidenze sufficienti e restituisce `INCONCLUSIVE`.
-  Quest'ultimo risultato è particolarmente importante, perché mostra che il verificatore distingue **una proprietà effettivamente violata da una proprietà che non può essere valutata con le evidenze disponibili**.
+13 scenari di mutazione su 13 hanno dato il verdetto atteso. Nel Case A AMF su Open5GS, le mutazioni statiche fanno fallire soltanto i controlli statici; quelle temporali soltanto i temporali; quelle combinate entrambi. Il secondo esempio riprende NRF dalla baseline: sostituendo nella cattura lo status HTTP 200 con 403, il criterio invariato response.status == 403 passa da FAIL a PASS. I due report NRF confermano valori osservati 200 e 403 e lo stesso criterio atteso 403. La distribuzione complessiva resta NRF 1, UDM 2, AMF Sync 4, UPF 2, AMF RES* 4.
 
 ## 23. Conclusioni e sviluppi futuri
 
@@ -143,7 +106,7 @@ Chiudiamo con i limiti emersi e le direzioni di sviluppo.
 
 ## 24. Futuri sviluppi
 
-I risultati, anche nel mutation testing, collegano i verdetti alle condizioni osservate e alle evidenze che li giustificano. La valutazione dipende però dalle evidenze disponibili e dai criteri rappresentabili: il sistema è stato sperimentato su un insieme specifico di casi SCAS, non su qualsiasi procedura. Due sviluppi futuri: ampliare i test con normalizzatori per nuovi protocolli e nuove evidenze; automatizzare maggiormente il mutation testing usando la DSL per individuare eventi e campi da alterare, riducendo la logica dedicata. Le operazioni concrete restano specifiche dei protocolli. Il contributo rende la verifica un processo più sistematico, con conclusioni ricostruibili, motivate e riconducibili alle evidenze. Questa è la conclusione del discorso; segue soltanto la schermata dei ringraziamenti.
+I risultati mostrano la possibilità di verificare i criteri SCAS sulle evidenze del traffico, producendo verdetti motivati e tracciabili. I limiti sono la disponibilità delle evidenze e l’insieme specifico di test sperimentati. Sviluppi futuri: nuovi protocolli e casi SCAS, maggiore automazione del mutation testing guidata dalla DSL. L’obiettivo è una verifica più sistematica, riproducibile e riconducibile alle evidenze. Questo discorso conclusivo accompagna la slide 24; la 25 è soltanto il ringraziamento.
 
 ## 25. Grazie per l’attenzione. Domande?
 

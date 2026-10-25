@@ -36,9 +36,12 @@
   <g id="restart-policy" data-part="Regola generale della politica di riavvio">
   <rect x="112" y="613" width="350" height="203" rx="18" fill="#fff7e9" stroke="#d5dff0" stroke-width="1.5" class="fill-sand stroke-line"/>
   <text x="138" y="655" font-family="Nimbus Sans" font-size="27" font-weight="700" fill="#9d7139" text-anchor="start" class="svg-text fill-amber" xml:space="preserve">Politica di riavvio</text>
-  <text x="138" y="697" font-family="Nimbus Sans" font-size="19" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-text fill-ink" xml:space="preserve">Un nuovo inizio avvia un candidato.</text>
-  <text x="138" y="729" font-family="Nimbus Sans" font-size="19" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-text fill-ink" xml:space="preserve">Il precedente si interrompe solo se</text>
-  <text x="138" y="761" font-family="Nimbus Sans" font-size="19" font-weight="400" fill="#1c2a40" text-anchor="start" class="svg-text fill-ink" xml:space="preserve">non può consumare quell’evento.</text>
+<text x="138" y="682" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627b" text-anchor="start">Su un nuovo possibile inizio:</text>
+<text x="138" y="709" font-family="Nimbus Sans" font-size="19" font-weight="400" fill="#1c2a40" text-anchor="start">Se il candidato precedente</text>
+<text x="138" y="731" font-family="Nimbus Sans" font-size="19" font-weight="400" fill="#1c2a40" text-anchor="start">non può consumare l’evento,</text>
+<text x="138" y="753" font-family="Nimbus Sans" font-size="19" font-weight="400" fill="#1c2a40" text-anchor="start">viene interrotto e viene avviato</text>
+<text x="138" y="775" font-family="Nimbus Sans" font-size="19" font-weight="400" fill="#1c2a40" text-anchor="start">un nuovo tentativo</text>
+<text x="138" y="797" font-family="Nimbus Sans" font-size="19" font-weight="400" fill="#1c2a40" text-anchor="start">di riconoscimento.</text>
   </g>
   <text x="541" y="435" xml:space="preserve" font-family="Nimbus Sans" font-size="22" font-weight="400" fill="#65758b" text-anchor="middle" class="svg-text fill-muted">1</text>
   <g id="matcher-event-0" data-part="Evento A(1)" data-state="discarded" opacity=".28">
@@ -138,7 +141,7 @@
   </g>
   <!-- SOTTOTITOLO SLIDE 10: modifica le scritte nel gruppo seguente. Guida: GUIDA_TESTI.md. -->
   <g id="slide-subtitle-{{N}}" >
-  <text x="112" y="222" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627B" text-anchor="start" xml:space="preserve" >Il matcher riconosce A(3), B(4) e C(6), ignorando gli eventi estranei.</text>
+  <text x="112" y="222" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627B" text-anchor="start" xml:space="preserve" >Il matcher riconosce A(3), B(4) e C(6), ignorando gli eventi non richiesti.</text>
   </g>
   <!-- DIAGRAMMA: Il riavvio non rende il primo A invalido in generale — modifica il gruppo seguente. -->
   <g id="matcher-candidato-nota" data-part="Il riavvio non rende il primo A invalido in generale">
@@ -155,15 +158,6 @@
   
   <p class="step-status" aria-live="polite">Vista completa · attiva i passaggi per spiegare la slide.</p>
   </div>
-  <template class="speaker-note">Una volta costruito l&#x27;automa, il matcher lo utilizza per cercare la sequenza all&#x27;interno degli eventi normalizzati.
-  Nell&#x27;esempio che vediamo, la sequenza richiesta è sempre A, B opzionale e C, mentre gli eventi osservati sono A, X, A, B, X, C.
-  Partendo dal primo evento A, il matcher avvia un possibile riconoscimento della sequenza.
-  Il messaggio successivo, X, non è previsto dalla regola, quindi non contribuisce al riconoscimento.
-  Quando però incontriamo la seconda A, il candidato precedente non può consumare questo nuovo evento, perché sta cercando B oppure C.
-  Interviene quindi la _politica di riavvio_: il candidato precedente viene terminato e ne viene avviato uno nuovo a partire dalla seconda A.
-  A questo punto incontriamo B, che è compatibile con la sequenza, e successivamente un&#x27;altra X, che viene ignorata.
-  Infine, incontriamo C, che completa il riconoscimento.
-  Il risultato è quindi la sequenza formata da A in posizione 3, B in posizione 4 e C in posizione 6.
-  La politica di riavvio consente quindi di considerare nuovi punti di partenza quando vengono incontrati eventi compatibili con l&#x27;inizio della regola, senza dipendere esclusivamente dalla prima occorrenza.</template>
+  <template class="speaker-note">Il matcher usa l’automa sugli eventi normalizzati. Gli eventi selezionati rispettano l’ordine, ma non devono essere consecutivi: quelli non richiesti sono ignorati. Se arriva un nuovo possibile inizio che il candidato corrente non può consumare, il candidato viene interrotto e il matcher riparte. Nell’esempio A(1) viene scartato a favore di A(3); il risultato è A(3), B(4), C(6).</template>
   </section>
 

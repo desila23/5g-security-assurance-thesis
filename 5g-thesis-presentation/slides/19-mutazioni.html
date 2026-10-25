@@ -8,7 +8,7 @@
   </marker>
   </defs>
   <rect x="0" y="0" width="1600" height="900" rx="0" fill="#f3f6f9" stroke="none" stroke-width="1.8" />
-  <text x="112" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627b" text-anchor="start" xml:space="preserve" >MUTATION TESTING</text><text x="1488" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627b" text-anchor="end" xml:space="preserve" >{{NN}} / {{TOTAL}}</text><text x="112" y="167" font-family="Nimbus Sans" font-size="54" font-weight="700" fill="#182536" text-anchor="start" xml:space="preserve" >Mutation testing: il processo</text><text x="112" y="222" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627b" text-anchor="start" xml:space="preserve" >Si modifica la PCAP, non il verificatore: stessa pipeline e stesse regole DSL.</text>
+  <text x="112" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627b" text-anchor="start" xml:space="preserve" >MUTATION TESTING</text><text x="1488" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627b" text-anchor="end" xml:space="preserve" >{{NN}} / {{TOTAL}}</text><text x="112" y="167" font-family="Nimbus Sans" font-size="54" font-weight="700" fill="#182536" text-anchor="start" xml:space="preserve" >Mutation testing: il processo</text><text x="112" y="222" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627b" text-anchor="start" xml:space="preserve" >Si modifica la PCAP e si verifica con la medesima pipeline e le medesime regole DSL.</text>
   <rect x="640" y="250" width="320" height="67" rx="12" fill="white" stroke="#d9e3ef" stroke-width="1.8" />
   <text x="800" y="293" font-family="Nimbus Sans" font-size="28" font-weight="700" fill="#182536" text-anchor="middle" xml:space="preserve" >PCAP ORIGINALE</text>
   <g id="pipeline-core-{{N}}">
@@ -56,10 +56,10 @@
   <path d="M1354 532 V434" fill="none" stroke="#4264d0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#new-arrow-{{N}})" />
   <path d="M1204 384 H1165 V424 H1090" fill="none" stroke="#4264d0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#new-arrow-{{N}})" />
   <text x="1354" y="702" font-family="Nimbus Sans" font-size="23" fill="#9d7139" text-anchor="middle">Esterno · offline</text>
-  <text x="1192" y="767" font-family="Nimbus Sans" font-size="22" fill="#52627b">Evidenze dal</text>
-  <text x="1192" y="799" font-family="Nimbus Sans" font-size="22" fill="#52627b">report baseline</text>
-  <text x="290" y="685" font-family="Nimbus Sans" font-size="22" fill="#52627b" text-anchor="middle">Stesse regole nei due run</text>
+  <text x="1192" y="767" font-family="Nimbus Sans" font-size="22" fill="#52627b">Selezione dei frame</text>
+  <text x="1192" y="799" font-family="Nimbus Sans" font-size="22" fill="#52627b">rilevanti da modificare</text>
+
   </svg>
-  <template class="speaker-note">La pipeline analizza prima la PCAP originale e produce il report baseline. Un motore di mutazione esterno e offline riceve la PCAP originale e i riferimenti alle evidenze dal report baseline: non viene chiamato automaticamente dalla pipeline. Modifica valori, tempi o messaggi, producendo una PCAP mutata. Questa rientra nella stessa pipeline con le stesse regole DSL e genera il report mutation. Cambiano soltanto le evidenze; il confronto con il verdetto atteso permette di valutare la risposta del verificatore.</template>
+  <template class="speaker-note">Si parte dalla PCAP originale e dal report baseline. Un mutatore esterno e offline usa i riferimenti del report per selezionare i frame rilevanti e introdurre modifiche controllate. La nuova cattura viene analizzata con la stessa pipeline e le stesse regole DSL. Si confronta il verdetto osservato con quello atteso per la mutazione.</template>
   </section>
 

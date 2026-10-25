@@ -26,7 +26,7 @@
     { label: 'La regola attende A come primo evento.', bindings: [], atoms: [], cursor: -1, current: 'a' },
     { label: 'A(1) avvia un candidato ed è associato all’alias a.', bindings: [0], atoms: ['a'], cursor: 0, current: 'a' },
     { label: 'X(2) non soddisfa B: il candidato resta in attesa.', bindings: [0], atoms: ['a'], cursor: 1 },
-    { label: 'A(3) non completa il primo candidato: lo chiudo.', bindings: [], atoms: [], cursor: 2, restart: true, current: 'a' },
+    { label: 'A(3) non può essere consumato: viene chiuso A(1).', bindings: [], atoms: [], cursor: 2, restart: true, current: 'a' },
     { label: 'Riavvio da A(3), associandolo all’alias a.', bindings: [2], atoms: ['a'], cursor: 2, restarted: true, current: 'a' },
     { label: 'B(4) viene riconosciuto e associato all’alias b.', bindings: [2, 3], atoms: ['a', 'b'], cursor: 3, restarted: true, current: 'b' },
     { label: 'X(5) è ignorato; il candidato rimane valido.', bindings: [2, 3], atoms: ['a', 'b'], cursor: 4, restarted: true },

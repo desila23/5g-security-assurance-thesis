@@ -136,7 +136,7 @@
   </g>
   <!-- SOTTOTITOLO SLIDE 09: modifica le scritte nel gruppo seguente. Guida: GUIDA_TESTI.md. -->
   <g id="slide-subtitle-{{N}}" >
-  <text x="112" y="222" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627B" text-anchor="start" xml:space="preserve" >Da ogni Atom a un frammento NFA: transizioni ε e percorso opzionale.</text>
+  <text x="112" y="222" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627B" text-anchor="start" xml:space="preserve" >Un NFA per rappresentare una sequenza di eventi.</text>
   </g>
   <text x="1488" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627B" text-anchor="end" xml:space="preserve" >{{NN}} / {{TOTAL}}</text><text x="112" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627B" text-anchor="start" xml:space="preserve" >DSL · NFA · VERIFICA</text>
   </svg>
@@ -149,15 +149,6 @@
   
   <p class="step-status" aria-live="polite">Vista completa · attiva i passaggi per spiegare la slide.</p>
   </div>
-  <template class="speaker-note">Uno degli aspetti principali dell&#x27;implementazione riguarda il riconoscimento delle sequenze descritte attraverso `SEQUENCE`.
-  Per questo è stato realizzato un _matcher_ basato su un automa a stati finiti non deterministico, o NFA, costruito secondo il metodo di Thompson.
-  L&#x27;idea è partire dagli eventi descritti nella regola e rappresentarli internamente con nodi chiamati Atom. Da ciascun Atom si costruisce un frammento elementare dell&#x27;automa.
-  Ogni frammento è composto da uno stato iniziale, uno stato finale e una transizione che permette di avanzare quando viene riconosciuto l&#x27;evento corrispondente.
-  Una volta costruiti questi frammenti, vengono collegati tra loro per formare un unico automa, che rappresenta la struttura della sequenza da riconoscere.
-  Per collegarli vengono utilizzate anche le _transizioni epsilon_, che consentono di passare da uno stato all&#x27;altro senza consumare alcun evento.
-  Queste transizioni sono particolarmente importanti per gestire i blocchi opzionali.
-  Nell&#x27;esempio mostrato abbiamo una sequenza composta dagli eventi A, B e C, dove B è opzionale.
-  L&#x27;automa presenta quindi un percorso che attraversa tutti e tre gli eventi, ma anche un percorso alternativo che permette di saltare B.
-  In questo modo possiamo riconoscere sia la sequenza A, B, C sia la sequenza A, C, attraverso un automa costruito direttamente a partire dalla regola DSL.</template>
+  <template class="speaker-note">Per riconoscere le sequenze DSL il sistema costruisce un NFA con l’algoritmo di Thompson. Da ogni Atom, nodo che rappresenta un evento nella regola, deriva un frammento con stato iniziale, stato finale e transizione. Le transizioni epsilon uniscono i frammenti senza consumare eventi. B è opzionale: l’automa riconosce A-B-C oppure A-C. Seguire i passi mantenendo questa distinzione tra Atom e frammento.</template>
   </section>
 

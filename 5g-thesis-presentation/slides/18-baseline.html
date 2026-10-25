@@ -2,7 +2,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title-{{N}}"><title id="title-{{N}}">Risultati dei test baseline</title>
 <rect width="1600" height="900" fill="#f3f6f9"/>
 <text x="1488" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627b" text-anchor="end" >{{NN}} / {{TOTAL}}</text>
-<text x="112" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627b" text-anchor="start" >TEST E BASELINE</text>
+<text x="112" y="92" font-family="Nimbus Sans" font-size="18" font-weight="400" fill="#52627b" text-anchor="start" >TESTING</text>
 <text x="112" y="167" font-family="Nimbus Sans" font-size="54" font-weight="700" fill="#182536" text-anchor="start" >Risultati dei test baseline</text>
 <text x="112" y="222" font-family="Nimbus Sans" font-size="27" font-weight="400" fill="#52627b" text-anchor="start" >Tutti i casi e i criteri delle tabelle sperimentali della tesi.</text>
 <!-- Versione precedente disattivata: slides/archive/18-baseline-v9.html; non inclusa in slides.json. -->
@@ -61,7 +61,7 @@
 <path d="M1064 278 V804" stroke="#d9e3ef" stroke-width="1"/>
 <path d="M1276 278 V804" stroke="#d9e3ef" stroke-width="1"/>
 <text x="112" y="847" font-family="Nimbus Sans" font-size="24" font-weight="400" fill="#52627b" text-anchor="start" >16 catture: 12 PASS, 1 FAIL, 3 INCONCLUSIVE.</text>
-<text x="1488" y="847" font-family="Nimbus Sans" font-size="21" font-weight="400" fill="#52627b" text-anchor="end" >— = caso non riportato per quel core nella tesi</text>
+<text x="1488" y="847" font-family="Nimbus Sans" font-size="21" font-weight="400" fill="#52627b" text-anchor="end" >— = caso non riportato per quell’implementazione</text>
 </svg>
-<template class="speaker-note">La tabella unisce le tabelle Open5GS e free5GC del capitolo 6 della tesi. Open5GS: 6 PASS, 1 FAIL e 3 INCONCLUSIVE su 10 catture. free5GC: 6 PASS su 6 catture. Il trattino indica un caso non riportato per quella implementazione, non un esito INCONCLUSIVE. NRF restituisce HTTP 200 anziché 403. Per RES* su Open5GS, B ha binding di identità mancanti; C e D non hanno match completi.</template>
+<template class="speaker-note">16 catture originali da Open5GS e free5GC: 12 PASS, 1 FAIL e 3 INCONCLUSIVE. NRF richiede HTTP 403, ma nella cattura si osserva 200: il FAIL è quindi il risultato atteso dal verificatore. AMF Synchronization Failure ha controlli statici e temporali soddisfatti su entrambe le implementazioni. I tre INCONCLUSIVE sono le varianti Open5GS AMF RES* B–D con evidenze insufficienti. Il trattino indica un caso non riportato per quell’implementazione. Distinguere criteri soddisfatti, violati e non valutabili.</template>
 </section>
