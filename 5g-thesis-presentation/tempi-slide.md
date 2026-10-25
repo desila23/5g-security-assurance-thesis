@@ -22,13 +22,12 @@ Avanzamento manuale. Ogni divisoria ha un budget di 3 secondi. I tempi includono
 | 16 | Dal Match al BindingContext | 0:50 |
 | 17 | Motore di verifica | 0:35 |
 | 18 | Testing | 0:03 |
-| 19 | AMF Synchronization Failure, Case B | 0:55 |
-| 20 | Risultati dei test baseline | 0:35 |
-| 21 | Mutation testing | 0:03 |
-| 22 | Mutation testing: il processo | 1:15 |
-| 23 | Risultati del mutation testing | 1:00 |
-| 24 | Conclusioni e sviluppi futuri | 0:03 |
-| 25 | Futuri sviluppi | 1:25 |
-| 26 | Grazie per l’attenzione. Domande? | 0:10 |
+| 19 | Risultati dei test baseline | 0:35 |
+| 20 | Mutation testing | 0:03 |
+| 21 | Mutation testing: il processo | 1:15 |
+| 22 | Risultati del mutation testing | 1:00 |
+| 23 | Conclusioni e sviluppi futuri | 0:03 |
+| 24 | Futuri sviluppi | 1:25 |
+| 25 | Grazie per l’attenzione. Domande? | 0:10 |
 
-Totale indicativo: **18:58**. Da verificare con una prova orale.
+Totale indicativo: **18:03**. Da verificare con una prova orale.

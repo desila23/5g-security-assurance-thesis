@@ -38,11 +38,7 @@ def render():
         "DIALOGS": read("templates/dialogs.html"),
         "OPENAPI_EXAMPLE": html.escape(read("esempi/openapi-esempio.yaml").rstrip()),
         "UPF_REPORT": html.escape(read("data/reports/upf_teid_uniqueness/report.json")),
-        "AMF_RULE": html.escape(read("data/regole/amf_sync_failure_case_b_sequence.dsl")),
     }
-    temporal = re.search(r'MFOTL CASE B\s+""".*?"""', read("data/regole/amf_sync_failure.dsl"), re.S)
-    if temporal:
-        tokens["AMF_TEMPORAL_RULE"] = html.escape(temporal.group(0) + "\n")
     # Shell tokens can introduce other tokens, so resolve them in two passes.
     for _ in range(2):
         for key, value in tokens.items():

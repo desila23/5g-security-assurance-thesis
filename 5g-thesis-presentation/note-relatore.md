@@ -113,31 +113,19 @@ Una volta ottenute le evidenze selezionate e organizzate nel BindingContext, pos
 
 Passiamo ai test sulle catture originali.
 
-## 19. AMF Synchronization Failure, Case B
-
-Per valutare il sistema sono stati considerati diversi casi di test SCAS.
-  Tra questi, vorrei soffermarmi su un esempio rappresentativo dell’uso dei costrutti della DSL in una situazione concreta.
-  L’esempio riguarda il test _AMF Synchronization Failure, Case B_.
-  Durante la procedura di autenticazione, può verificarsi un errore di sincronizzazione tra il dispositivo e la rete. In questa situazione, l'AMF deve gestire il fallimento rispettando le condizioni previste dalla specifica, tra cui alcuni vincoli temporali.
-  Attraverso `SEQUENCE` vengono individuati i messaggi della procedura di risincronizzazione, mentre le condizioni `REQUIRE` permettono di controllare la coerenza dei parametri scambiati.
-  In questo caso, però, non basta verificare i valori, perché è necessario rispettare anche un vincolo temporale.
-  La proprietà MFOTL richiede che, nell’intervallo configurato dopo il _Synchronization Failure_, non compaia una nuova _Authentication Request_ prima della successiva risposta AUSF. T3520 è configurato a 15 secondi: non impone un’attesa minima di 15 secondi.
-  Su free5GC si osservano il failure al frame 358, la risposta AUSF al frame 604 e la nuova richiesta al frame 606, a circa 25 secondi dal failure. Su Open5GS i frame sono 276, 432 e 434, a circa 11 secondi: anche qui la risposta AUSF precede la richiesta e la proprietà è PASS.
-  Su entrambe le catture, i quattro controlli statici e quello temporale sono `PASS`, producendo un verdetto complessivo `PASS` per i criteri applicati. Questo risultato non dimostra da solo il rispetto di tutte le precondizioni SCAS: in particolare, gli 11 secondi di Open5GS non attestano un eventuale ritardo oltre T3520.
-
-## 20. Risultati dei test baseline
+## 19. Risultati dei test baseline
 
 La tabella unisce le tabelle Open5GS e free5GC del capitolo 6 della tesi. Open5GS: 6 PASS, 1 FAIL e 3 INCONCLUSIVE su 10 catture. free5GC: 6 PASS su 6 catture. Il trattino indica un caso non riportato per quella implementazione, non un esito INCONCLUSIVE. NRF restituisce HTTP 200 anziché 403. Per RES* su Open5GS, B ha binding di identità mancanti; C e D non hanno match completi.
 
-## 21. Mutation testing
+## 20. Mutation testing
 
 Verifichiamo come cambia il verdetto quando alteriamo le evidenze.
 
-## 22. Mutation testing: il processo
+## 21. Mutation testing: il processo
 
 La pipeline analizza prima la PCAP originale e produce il report baseline. Un motore di mutazione esterno e offline riceve la PCAP originale e i riferimenti alle evidenze dal report baseline: non viene chiamato automaticamente dalla pipeline. Modifica valori, tempi o messaggi, producendo una PCAP mutata. Questa rientra nella stessa pipeline con le stesse regole DSL e genera il report mutation. Cambiano soltanto le evidenze; il confronto con il verdetto atteso permette di valutare la risposta del verificatore.
 
-## 23. Risultati del mutation testing
+## 22. Risultati del mutation testing
 
 Complessivamente sono stati realizzati **13 scenari di mutazione**, e in tutti i casi i risultati osservati sono stati coerenti con quelli attesi.
   Tra questi, due esempi sono particolarmente significativi.
@@ -149,15 +137,15 @@ Complessivamente sono stati realizzati **13 scenari di mutazione**, e in tutti i
   Rimuovendo invece gli eventi necessari alla verifica, il sistema non dispone più di evidenze sufficienti e restituisce `INCONCLUSIVE`.
   Quest'ultimo risultato è particolarmente importante, perché mostra che il verificatore distingue **una proprietà effettivamente violata da una proprietà che non può essere valutata con le evidenze disponibili**.
 
-## 24. Conclusioni e sviluppi futuri
+## 23. Conclusioni e sviluppi futuri
 
 Chiudiamo con i limiti emersi e le direzioni di sviluppo.
 
-## 25. Futuri sviluppi
+## 24. Futuri sviluppi
 
 I risultati, anche nel mutation testing, collegano i verdetti alle condizioni osservate e alle evidenze che li giustificano. La valutazione dipende però dalle evidenze disponibili e dai criteri rappresentabili: il sistema è stato sperimentato su un insieme specifico di casi SCAS, non su qualsiasi procedura. Due sviluppi futuri: ampliare i test con normalizzatori per nuovi protocolli e nuove evidenze; automatizzare maggiormente il mutation testing usando la DSL per individuare eventi e campi da alterare, riducendo la logica dedicata. Le operazioni concrete restano specifiche dei protocolli. Il contributo rende la verifica un processo più sistematico, con conclusioni ricostruibili, motivate e riconducibili alle evidenze. Questa è la conclusione del discorso; segue soltanto la schermata dei ringraziamenti.
 
-## 26. Grazie per l’attenzione. Domande?
+## 25. Grazie per l’attenzione. Domande?
 
 Grazie per l’attenzione. Sono a disposizione per le domande.
 

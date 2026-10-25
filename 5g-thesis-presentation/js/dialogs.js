@@ -1,8 +1,7 @@
 /* Apertura e chiusura dei contenuti integrali: tutto funziona anche offline. */
 (() => {
  const dialogs=[
-  {dialog:'report-json-dialog',open:'open-report-json',close:'close-report-json'},
-  {dialog:'amf-rule-dialog',open:'open-amf-rule',close:'close-amf-rule'}
+  {dialog:'report-json-dialog',open:'open-report-json',close:'close-report-json'}
  ];
  dialogs.forEach(item=>{
   const dialog=document.getElementById(item.dialog),open=document.getElementById(item.open),close=document.getElementById(item.close);
