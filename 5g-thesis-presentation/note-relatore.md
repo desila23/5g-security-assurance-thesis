@@ -106,7 +106,7 @@ Chiudiamo con i limiti emersi e le direzioni di sviluppo.
 
 ## 24. Futuri sviluppi
 
-I risultati mostrano la possibilità di verificare i criteri SCAS sulle evidenze del traffico, producendo verdetti motivati e tracciabili. I limiti sono la disponibilità delle evidenze e l’insieme specifico di test sperimentati. Sviluppi futuri: nuovi protocolli e casi SCAS, maggiore automazione del mutation testing guidata dalla DSL. L’obiettivo è una verifica più sistematica, riproducibile e riconducibile alle evidenze. Questo discorso conclusivo accompagna la slide 24; la 25 è soltanto il ringraziamento.
+I risultati mostrano la possibilità di verificare i criteri SCAS sulle evidenze del traffico, producendo verdetti motivati e tracciabili. I limiti sono la disponibilità delle evidenze e l’insieme specifico di test sperimentati. Sviluppi futuri: nuovi protocolli e casi SCAS, un unico motore comune anche per il mutation testing, guidato dalla DSL. L’obiettivo è una verifica più sistematica, riproducibile e riconducibile alle evidenze. Questo discorso conclusivo accompagna la slide 24; la 25 è soltanto il ringraziamento.
 
 ## 25. Grazie per l’attenzione. Domande?
 
