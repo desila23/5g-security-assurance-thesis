@@ -96,9 +96,9 @@ I risultati sulle catture originali non bastano da soli a valutare l’affidabil
 
 Si parte dalla PCAP originale e dal report baseline. Un mutatore esterno e offline usa i riferimenti del report per selezionare i frame rilevanti e introdurre modifiche controllate. La nuova cattura viene analizzata con la stessa pipeline e le stesse regole DSL. Si confronta il verdetto osservato con quello atteso per la mutazione.
 
-## 22. Risultati del mutation testing
+## 22. Tutti i 13 scenari validati hanno prodotto il verdetto atteso.
 
-13 scenari di mutazione su 13 hanno dato il verdetto atteso. Nel Case A AMF su Open5GS, le mutazioni statiche fanno fallire soltanto i controlli statici; quelle temporali soltanto i temporali; quelle combinate entrambi. Il secondo esempio riprende NRF dalla baseline: sostituendo nella cattura lo status HTTP 200 con 403, il criterio invariato response.status == 403 passa da FAIL a PASS. I due report NRF confermano valori osservati 200 e 403 e lo stesso criterio atteso 403. La distribuzione complessiva resta NRF 1, UDM 2, AMF Sync 4, UPF 2, AMF RES* 4.
+Dei 15 scenari previsti, 13 sono stati validati e tutti hanno dato il verdetto atteso; 2 non sono stati completati per limiti del mutatore. Nel Case A AMF su Open5GS, le mutazioni statiche fanno fallire soltanto i controlli statici; quelle temporali soltanto i temporali; quelle combinate entrambi. Il secondo esempio riprende NRF dalla baseline: sostituendo nella cattura lo status HTTP 200 con 403, il criterio invariato response.status == 403 passa da FAIL a PASS. I due report NRF confermano valori osservati 200 e 403 e lo stesso criterio atteso 403. La distribuzione complessiva resta NRF 1, UDM 2, AMF Sync 4, UPF 2, AMF RES* 4.
 
 ## 23. Conclusioni e sviluppi futuri
 

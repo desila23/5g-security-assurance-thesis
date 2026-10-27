@@ -94,7 +94,6 @@
     const engines=[...morph.querySelectorAll('[data-morph-engine]')];
     const labels=[...morph.querySelectorAll('[data-morph-label]')];
     const engineLabels=[...morph.querySelectorAll('[data-morph-engine-label]')];
-    const finalDetails=morph.querySelector('[data-morph-final]');
     const verdicts=[...morph.querySelectorAll('[data-morph-verdict]')];
     const verdictLabels=[...morph.querySelectorAll('[data-morph-verdict-label]')];
     const inputs=[...morph.querySelectorAll('[data-morph-input]')];
@@ -114,10 +113,9 @@
       verdictLabels.forEach((el,i)=>{el.setAttribute('y',mix(466+i*125,572));el.textContent=t<.45?'Verdetto '+String.fromCharCode(65+i):'Verdetto + report';el.style.opacity=t<.45?String(Math.max(0,1-t/.45)):(i===1?String(Math.max(0,(t-.45)/.55)):'0');});
       inputs.forEach((el,i)=>{const from=mix(456+i*125,456+i*106),to=mix(456+i*125,562);el.setAttribute('d','M508 '+from+' H560 V'+to+' H632');});
       outputs.forEach((el,i)=>{const y=mix(456+i*125,562);el.setAttribute('d','M1018 '+y+' H1072');});
-      finalDetails.setAttribute('opacity',String(Math.max(0,(t-.45)/.55)));
       labels.forEach((el,i)=>{el.setAttribute('y',mix(466+i*125,466+i*106));el.setAttribute('font-size',mix(30,29));el.textContent=(t<.5?'TEST ':'REGOLA ')+String.fromCharCode(65+i);});
       engineLabels.forEach((el,i)=>{
-        el.setAttribute('x',825);el.setAttribute('y',mix(466+i*125,548));el.setAttribute('font-size',mix(29,34));el.setAttribute('fill','rgb('+[mix(24,39),mix(37,135),mix(54,102)].map(Math.round).join(',')+')');
+        el.setAttribute('x',825);el.setAttribute('y',mix(466+i*125,573));el.setAttribute('font-size',mix(29,34));el.setAttribute('fill','rgb('+[mix(24,39),mix(37,135),mix(54,102)].map(Math.round).join(',')+')');
         el.style.opacity=t<.45?String(Math.max(0,1-t/.45)):(i===1?String(Math.max(0,(t-.45)/.55)):'0');
         el.textContent=t<.45?'VERIFICATORE '+String.fromCharCode(65+i):'Unico motore';
       });
@@ -142,6 +140,7 @@
       current.events.forEach((status, i) => {
         const event = get('matcher-event-' + i);
         event.dataset.state = status;
+        show(event.querySelector('.matcher-ignored'), !current.full && i === current.cursor);
         event.style.opacity = status === 'discarded' ? '.28' : status === 'pending' ? '.42' : '1';
         event.removeAttribute('opacity');
         const rect = event.querySelector('rect');

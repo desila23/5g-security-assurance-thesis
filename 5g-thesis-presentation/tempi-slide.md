@@ -25,7 +25,7 @@ Avanzamento manuale. Ogni divisoria ha un budget di 3 secondi. I tempi includono
 | 19 | Risultati dei test baseline | 0:35 |
 | 20 | Mutation testing | 0:03 |
 | 21 | Mutation testing: il processo | 1:15 |
-| 22 | Risultati del mutation testing | 1:00 |
+| 22 | Tutti i 13 scenari validati hanno prodotto il verdetto atteso. | 1:00 |
 | 23 | Conclusioni e sviluppi futuri | 0:03 |
 | 24 | Futuri sviluppi | 1:25 |
 | 25 | Grazie per l’attenzione. Domande? | 0:10 |
