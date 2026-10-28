@@ -1,25 +1,25 @@
-TESI 5G - VERSIONE DA 5 MINUTI - 28 OTTOBRE 2026
+TESI 5G - PRESENTAZIONE BREVE - 28 OTTOBRE 2026
 
-6 slide: copertina originale + 5 contenuti.
-La sola slide 3 ha due avanzamenti interni (A, B, C).
-Le altre slide sono statiche. Nessun avanzamento automatico.
+7 slide: copertina, Security Assurance, rete 5G, SCAS/DSL, architettura, baseline, mutation testing.
+I sottotitoli sono presenti, tranne nella slide dell'architettura proposta.
+La slide 4 ha due avanzamenti interni: A (tre SCAS e pseudocodice), B (esempio NRF), C (DSL).
+Le altre slide sono statiche. Nessun autoplay.
 
 HTML OFFLINE
 Aprire index.html con Chrome, Edge o Firefox. Font, logo e ritagli sono incorporati.
 Clic, freccia destra, spazio o Invio: avanti. Freccia sinistra: indietro.
-Page Down / Page Up: cambia slide. 1-6: scegli la slide. Home / End: inizio / fine.
+Page Down / Page Up: cambia slide. 1-7: scegli la slide. Home / End: inizio / fine.
 A: stato finale della slide. F: schermo intero. N: note. T: cronometro. P: stampa.
-La stampa mostra i sei stati finali, incluso il DSL nella slide 3.
+La stampa mostra i sette stati finali, incluso il DSL nella slide 4.
 
 PPTX E PDF
-Sei slide nello stato finale, con tutte le informazioni leggibili senza animazioni.
-Nel PowerPoint i testi, le tabelle e i diagrammi dei contenuti sono modificabili.
-La copertina mantiene la grafica originale, con testi modificabili e sfondo grafico incorporato.
-Sono stati controllati la struttura PPTX, i rendering e la conversione LibreOffice.
-Non è stato possibile provare il file in Microsoft PowerPoint: fare una prova sul computer della discussione.
+Sette slide statiche nello stato finale.
+Testi e tabelle sono modificabili. Gli schemi originali di copertina, rete e architettura
+mantengono la grafica incorporata con i testi nativi e modificabili.
+Controllati struttura PPTX, reimportazione, rendering e conversione con LibreOffice.
+Microsoft PowerPoint non è disponibile qui: fare una prova sul computer della discussione.
+La cartella fonts contiene i caratteri originali e le licenze.
 
 TEMPI INDICATIVI
-10 + 42 + 70 + 53 + 50 + 60 secondi = 4 minuti e 45 secondi.
-La durata richiede una prova orale reale.
-
-La cartella fonts contiene i caratteri originali e le licenze per PowerPoint.
+10 + 35 + 20 + 70 + 50 + 50 + 60 secondi = 4 minuti e 55 secondi.
+La durata deve essere confermata con una prova orale reale.

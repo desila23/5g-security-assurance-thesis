@@ -1,31 +1,25 @@
-# Revisione definitiva della presentazione da cinque minuti
+# Revisione con sottotitoli e annotazioni del report UI
 
 28 ottobre 2026.
 
-## Struttura finale
+## Modifiche
 
-Sei slide, copertina compresa, come richiesto nel report definitivo. La copertina HTML riutilizza l’SVG della prima slide originale, mantenendo logo, testi, layout, colori e grafica. I riferimenti al logo sono incorporati per il funzionamento offline.
+- Aggiunti i sottotitoli alle slide di contenuto, con l’eccezione dell’architettura proposta. La copertina originale conserva il proprio sottotitolo.
+- Inserita dopo la Security Assurance la slide della rete 5G, riprendendo lo schema della presentazione lunga. La presentazione ha ora sette slide in totale.
+- Prima fase SCAS/DSL: aggiunto un terzo ritaglio originale UDM, rimossa la dicitura «a mano» e mantenuta soltanto «PSEUDOCODICE ILLUSTRATIVO» sotto il codice. I ritagli non si sovrappongono al testo.
+- Seconda fase: esempio NRF semplificato del capitolo 2 della tesi, con regioni blu e verdi per messaggi e criteri. Domande sulla destra: «Quali messaggi cercare?» e «Quali criteri verificare?».
+- Terza fase: nello stesso riquadro compare la regola DSL reale; le domande restano fisse e le frecce sono invertite. Rimossa la precedente didascalia di contributo in basso.
+- Architettura: ripresa la slide originale della versione lunga, eliminando le uscite intermedie laterali. Nessun sottotitolo e nessuna etichetta MonPoly: il riferimento resta nelle note orali.
+- Baseline: mantenute le righe raggruppate, aggiunto a lato «16/16 verdetti attesi». Il conteggio comprende 12 PASS, un FAIL e tre INCONCLUSIVE, non 16 PASS.
+- Aggiunto in fondo il riferimento alle catture NRF e UDM ottenute con componenti ScasDK adattati. La tesi documenta questa attribuzione: non viene estesa indistintamente a tutti i PCAP.
+- Mutation testing: schema a sinistra, simile alla versione lunga, con un solo piccolo blocco della pipeline. Tabella a destra, 13/13 in evidenza e nota sui due casi non completati per limiti del mutatore.
 
-1. Copertina originale.
-2. Security Assurance: unico confronto tra requisito e software, con richiamo al 5G. Nessuna PCAP nella slide di contenuto.
-3. Dagli SCAS al DSL: due soli avanzamenti A–B–C. Ritagli ufficiali e pseudocodice dichiaratamente illustrativo; caso NRF con selezione e verifica; confronto finale con SEQUENCE blu e REQUIRE verde nella sintassi reale.
-4. Sistema di verifica: pipeline verticale, DSL collegato separatamente a selezione e verifica, controlli statici/MonPoly e report con evidenze.
-5. Baseline: tabella raggruppata Open5GS/free5GC, 16 catture, 12 PASS, un FAIL e tre INCONCLUSIVE. Provenienza e ScasDK sono nelle note orali, senza riempire la slide.
-6. Mutation testing: percorso baseline, PCAP e report al mutatore separato, nuova cattura, stessa DSL e stesso verificatore. Tre esempi documentati, riepilogo 13/13 e nota sui due scenari non completati.
+## Controlli
 
-Le slide 1, 2, 4, 5 e 6 sono statiche. Solo la slide 3 cambia stato con due clic. Non ci sono autoplay o comparsate per singola riga.
+Controllati visivamente tutti gli stati delle sette slide, compresi A/B/C della slide SCAS/DSL. Testato automaticamente il codice di navigazione avanti/indietro, tastiera 1–7, salti fra slide, stato finale e ripristino URL. Controllati i sottotitoli e la loro assenza nella pipeline, i tre ritagli e le due direzioni delle frecce.
 
-## Controlli effettuati
+PPTX validato, reimportato e convertito con LibreOffice. PDF di sette pagine renderizzato e controllato. Corretta l’intestazione della tabella di mutation testing perché non vada a capo. Il PPTX è statico, con testi e tabelle modificabili. La grafica originale degli schemi riutilizzati è incorporata con testi nativi. Microsoft PowerPoint non è disponibile in questo ambiente.
 
-- Controllati visivamente gli stati iniziale e finale di tutte le slide e i tre stati della slide 3 tramite rendering SVG. Confrontata la copertina con la sorgente originale.
-- Verificati sintassi NRF e ruolo del report baseline nel codice del mutatore NRF. Risultati ed esempi sono tracciati nelle fonti delle note.
-- Controllati i totali: dieci catture Open5GS più sei free5GC; 12 PASS più un FAIL più tre INCONCLUSIVE; 13 scenari di mutazione completati.
-- Testato automaticamente il codice di navigazione: sei slide, due avanzamenti interni, percorso avanti/indietro, tastiera, selezione 1–6, ripristino URL, stato finale e barra di avanzamento. La stampa HTML seleziona gli stati finali.
-- PPTX validato e reimportato, con sei slide e tabelle native nelle slide 5 e 6. I contenuti sono modificabili. La grafica di fondo della copertina è incorporata, con testi nativi.
-- PowerPoint aperto e convertito tramite LibreOffice; controllate visivamente tutte le sei pagine del PDF. Microsoft PowerPoint non è disponibile in questo ambiente.
-- Il PPTX è statico, con sei stati conclusivi. Il PDF contiene le stesse sei slide. Nessuna slide nascosta o aggiuntiva.
-- Tempi indicativi: 10, 42, 70, 53, 50 e 60 secondi, totale 4:45. La prova orale reale resta necessaria.
+Tempi indicativi complessivi: 4:55. Non è una prova orale reale.
 
-## Perimetro
-
-Pubblicazione limitata a `5g-thesis-presentation-5min/` sul branch `gh-pages`. Il confronto degli oggetti Git verifica che ogni percorso esterno, inclusa la presentazione da venti minuti, resti invariato. Non sono modificati tesi, verificatore o mutatori.
+Pubblicazione limitata alla cartella `5g-thesis-presentation-5min/`. Il confronto degli oggetti Git verifica che la versione da venti minuti e ogni altro percorso restino invariati.
