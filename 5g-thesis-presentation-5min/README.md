@@ -1,13 +1,13 @@
 # Presentazione tesi — 5 minuti
 
-Cinque slide con animazioni al clic.
+Revisione del 28 ottobre 2026. Cinque slide complete dall’apertura. Tre evidenziazioni manuali in HTML.
 
-- [Apri la presentazione HTML](./index.html)
-- [PowerPoint con animazioni](./tesi-5min.pptx)
-- [PowerPoint statico](./tesi-5min-statico.pptx)
-- [PDF di sicurezza](./tesi-5min.pdf)
+- [Apri le slide](./index.html)
+- [PowerPoint modificabile e statico](./tesi-5min.pptx)
+- [PDF](./tesi-5min.pdf)
 - [Pacchetto completo offline](./presentazione-tesi-5min.zip)
 - [Discorso e fonti](./note-relatore.md)
-- [Istruzioni e comandi](./LEGGIMI.txt)
+- [Istruzioni](./LEGGIMI.txt)
+- [Report delle modifiche e dei controlli](./report-modifiche.md)
 
-La presentazione originale da 20 minuti è nella cartella `5g-thesis-presentation/` e rimane invariata.
+La presentazione originale è conservata in `5g-thesis-presentation/`.

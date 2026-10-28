@@ -1,40 +1,25 @@
-PRESENTAZIONE TESI - 5 MINUTI
-Samuele De Santis
+PRESENTAZIONE TESI - 5 MINUTI - REVISIONE 28 OTTOBRE 2026
 
-5 slide, senza copertina aggiuntiva.
-
-FILE
-- index.html: versione animata offline. Aprirla con Chrome, Edge o Firefox.
-- tesi-5min.pptx: PowerPoint modificabile, con comparse native al clic.
-- tesi-5min-statico.pptx: copia modificabile senza animazioni.
-- tesi-5min.pdf: copia di sicurezza, 5 pagine complete.
-- note-relatore.md: discorso e riferimenti, presenti anche nelle note del PPTX.
+Cinque slide complete e leggibili fin dall'apertura.
+HTML: tre sole evidenziazioni manuali, nelle slide 2, 3 e 5.
+PPTX: versione statica modificabile, senza animazioni necessarie.
+PDF: cinque pagine statiche di sicurezza.
 
 COMANDI HTML
-Clic / freccia destra / spazio: passaggio successivo.
-Freccia sinistra: passaggio precedente.
-Page Down / Page Up: cambia slide. 1-5: vai alla slide.
-Home / End: inizio e fine. A: mostra tutta la slide.
+Clic / freccia destra / spazio: evidenzia oppure passa alla slide successiva.
+Freccia sinistra: torna indietro. Page Down / Page Up: cambia slide.
+1-5: scegli la slide. Home / End: inizio e fine. A: attiva l'evidenziazione.
 F: schermo intero. N: note. T: cronometro. P: stampa.
 
 POWERPOINT
-Avviare la presentazione con F5. I clic mostrano gruppi di elementi.
-Per conservare i caratteri originali, installare i font della cartella fonts.
-Eseguire una prova in Microsoft PowerPoint sul computer della discussione.
-Le comparse sono native OOXML. Non sono state eseguite in Microsoft PowerPoint.
-I file sono stati controllati strutturalmente e resi anche con LibreOffice.
+Testi e diagrammi sono modificabili. I soli ritagli SCAS sono immagini dai PDF ufficiali.
+Il PowerPoint e il PDF mostrano lo stato completo, con le evidenziazioni già attive.
+I file sono stati controllati con Artifact Tool e LibreOffice.
+Microsoft PowerPoint non è disponibile in questo ambiente: fare una prova sul computer della discussione.
+I font originali e le licenze sono nella cartella fonts.
 
 TEMPI INDICATIVI
-Slide 1: 50 secondi.
-Slide 2: 50 secondi.
-Slide 3: 75 secondi.
-Slide 4: 55 secondi.
-Slide 5: 70 secondi.
-Totale: 5 minuti. La durata va confermata con una prova orale.
+52 + 48 + 74 + 48 + 68 secondi = 4 minuti e 50 secondi.
+La durata è indicativa e va confermata con una prova orale reale.
 
-DATI E FONTI
-DSL reale: dsl/nrf_sequence_test.dsl, branch main.
-Baseline: 16 catture, 12 PASS, 1 FAIL, 3 INCONCLUSIVE.
-Mutation testing: 13 scenari completati con esito atteso su 15 previsti.
-Gli estratti SCAS sono brevi trascrizioni delle specifiche ufficiali ETSI.
-Le fonti sono riportate nelle note delle singole slide.
+Aprire index.html con Chrome, Edge o Firefox. Non serve una connessione Internet.
