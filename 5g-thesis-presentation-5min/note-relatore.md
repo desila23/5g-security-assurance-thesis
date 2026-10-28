@@ -1,83 +1,72 @@
-# Discorso per le cinque slide
+# Discorso e riferimenti — versione da 5 minuti
 
-## Slide 1 - Il problema della Security Assurance
+Copertina più cinque slide di contenuto. Tempi indicativi: 4:45 complessivi.
 
-Tempo indicativo: 52 secondi.
+## 1. Titolo della tesi
 
-La Security Assurance è il processo attraverso cui si verifica che un sistema rispetti determinati requisiti di sicurezza.
-La definizione di un requisito, però, non garantisce che questo venga effettivamente rispettato dal software. È quindi necessario verificarne il comportamento.
-Nel contesto 5G, le funzionalità di rete sono realizzate da componenti software chiamate Network Functions.
-Per verificarne la sicurezza, il 3GPP ha definito le Security Assurance Specifications, o SCAS, che descrivono requisiti e procedure di test.
-I test interagiscono con queste componenti dall’esterno, inviando richieste e osservando le risposte. Le comunicazioni generate possono essere registrate in catture di rete, che costituiscono le evidenze su cui effettuare la verifica.
+Tempo indicativo: 10 secondi.
+
+Buongiorno. Il lavoro riguarda un linguaggio per descrivere i criteri di verifica dei test SCAS e un sistema che li applica alle catture di rete.
 
 Fonti:
 
-- https://www.etsi.org/deliver/etsi_ts/133500_133599/133518/18.00.00_60/ts_133518v180000p.pdf (ambito e procedure di test)
+- https://github.com/desila23/5g-security-assurance-thesis/blob/gh-pages/5g-thesis-presentation/slides/01-titolo.html
+
+## 2. Security Assurance
+
+Tempo indicativo: 42 secondi.
+
+La Security Assurance serve a verificare che un sistema rispetti effettivamente i requisiti di sicurezza. Definire un requisito non significa che il software lo implementi correttamente. Bisogna quindi confrontare il comportamento previsto con quello reale. Nel 5G le funzionalità sono realizzate da componenti software chiamate Network Functions. Il 3GPP ha definito le Security Assurance Specifications, o SCAS, che descrivono i requisiti e le procedure per verificarne la sicurezza.
+
+Fonti:
+
+- https://www.etsi.org/deliver/etsi_ts/133500_133599/133518/18.00.00_60/ts_133518v180000p.pdf
 - https://github.com/desila23/5g-security-assurance-thesis/blob/TESI-LATEX/capitoli/02_capitolo.tex
 
-## Slide 2 - Il problema dell’automazione
+## 3. Dagli SCAS al DSL
 
-Tempo indicativo: 48 secondi.
+Tempo indicativo: 70 secondi.
 
-Le specifiche SCAS sono però scritte in linguaggio naturale, quindi sono pensate per essere lette e interpretate da un operatore.
-Per automatizzare i test, queste procedure devono essere implementate in codice. Il frammento mostrato rappresenta soltanto lo schema dell’esecuzione.
-Mentre l’esecuzione può cambiare in base al test e all’implementazione della rete, la verifica presenta caratteristiche comuni.
-Analizzando diversi test SCAS, ho individuato due operazioni ricorrenti: selezionare i messaggi rilevanti e verificare che soddisfino le condizioni previste.
-Da questa osservazione nasce la proposta di utilizzare un linguaggio specifico per descrivere i criteri di verifica.
+Le specifiche SCAS sono scritte in linguaggio naturale, quindi il mio sistema non può interpretarle direttamente. Per automatizzare la verifica del risultato occorre rappresentare i criteri in una forma strutturata. Il Python qui è soltanto un esempio illustrativo di verifica scritta a mano, non codice del progetto. [Primo clic] Dall’analisi di diversi test ho identificato due operazioni comuni: selezionare i messaggi rilevanti e verificare che soddisfino certe condizioni. Nel caso NRF selezioniamo richiesta di discovery e risposta associata, poi controlliamo lo stato HTTP 403. Il requisito è qui sintetizzato, non citato letteralmente. [Secondo clic] Ho quindi progettato un DSL con costrutti riutilizzabili. SEQUENCE descrive la selezione e REQUIRE esprime il criterio. Questa è la sintassi reale del progetto. Le regole vengono scritte usando i costrutti del linguaggio: non ho realizzato una traduzione automatica NLP dalle specifiche.
 
 Fonti:
 
-- https://www.etsi.org/deliver/etsi_ts/133500_133599/133512/17.03.00_60/ts_133512v170300p.pdf (p. 9, ritaglio originale Purpose)
-- https://www.etsi.org/deliver/etsi_ts/133500_133599/133518/18.00.00_60/ts_133518v180000p.pdf (p. 8, ritaglio originale Expected Results)
-
-## Slide 3 - La soluzione proposta
-
-Tempo indicativo: 74 secondi.
-
-Partendo da questa analisi, ho sviluppato due componenti.
-Il primo è un Domain-Specific Language, un linguaggio che permette di rappresentare i criteri di verifica attraverso costrutti riutilizzabili.
-L’esempio è NRF Discovery Authorization: una richiesta di discovery non autorizzata deve ricevere una risposta HTTP 403.
-La SEQUENCE individua richiesta e risposta. Il REQUIRE controlla lo status della risposta. Quella mostrata è la sintassi realmente utilizzata nel progetto. Le regole sono definite esplicitamente, a partire dall’analisi della specifica.
-Il secondo contributo è il sistema che interpreta queste regole ed esegue la verifica.
-Il sistema parte da una cattura PCAP, estrae e normalizza i messaggi, seleziona quelli rilevanti e applica i criteri del DSL.
-La verifica può essere statica oppure temporale, quest’ultima gestita attraverso l’integrazione con MonPoly.
-Infine, produce un report che associa il verdetto alle evidenze utilizzate per determinarlo.
-
-Fonti:
-
+- https://www.etsi.org/deliver/etsi_ts/133500_133599/133512/17.03.00_60/ts_133512v170300p.pdf (p. 9, ritaglio originale)
+- https://www.etsi.org/deliver/etsi_ts/133500_133599/133518/18.00.00_60/ts_133518v180000p.pdf (p. 8, ritaglio originale)
 - https://github.com/desila23/5g-security-assurance-thesis/blob/main/dsl/nrf_sequence_test.dsl
-- https://github.com/desila23/5g-security-assurance-thesis/blob/main/config/tests.json
-- https://www.etsi.org/deliver/etsi_ts/133500_133599/133518/18.00.00_60/ts_133518v180000p.pdf
+
+## 4. Sistema di verifica
+
+Tempo indicativo: 53 secondi.
+
+Il secondo contributo è il sistema che interpreta le regole del DSL ed esegue la verifica. Parte da un file PCAP, cioè una cattura dei messaggi scambiati in rete durante il test, comprese le richieste e le risposte che ci interessano. Il sistema legge queste evidenze, non esegue il test. Estrae e normalizza i messaggi, seleziona quelli richiesti e applica le verifiche statiche o temporali, queste ultime tramite MonPoly. Il DSL guida sia la selezione sia la verifica. Infine genera un report con il verdetto e le evidenze che lo motivano.
+
+Fonti:
+
 - https://github.com/desila23/5g-security-assurance-thesis/blob/TESI-LATEX/capitoli/05_capitolo.tex
+- https://github.com/desila23/5g-security-assurance-thesis/blob/main/dsl/nrf_sequence_test.dsl
 
-## Slide 4 - Testing sulle catture originali
+## 5. Testing sulle catture originali
 
-Tempo indicativo: 48 secondi.
+Tempo indicativo: 50 secondi.
 
-Il sistema è stato valutato su 16 catture di traffico relative a diversi test SCAS.
-Le catture provengono da due implementazioni 5G open source, Open5GS e free5GC. Sono state prodotte separatamente dal verificatore. Per le prove NRF e UDM sono stati adattati alcuni componenti di ScasDK.
-Il mio sistema non genera quindi le evidenze, ma valuta quelle già ottenute.
-Dei 16 casi, 12 hanno prodotto PASS, uno FAIL e tre INCONCLUSIVE.
-Questi risultati sono coerenti con il comportamento osservato nelle singole catture. Nel caso NRF, il FAIL rileva una risposta HTTP 200 dove il criterio richiede 403. Nei tre casi INCONCLUSIVE, le evidenze disponibili non consentono una conclusione.
+Ho valutato il sistema su 16 catture provenienti da test eseguiti su due implementazioni open source 5G, Open5GS e free5GC. Le evidenze sono state prodotte da strumenti di test separati dal verificatore. Per NRF e UDM sono stati adattati componenti di ScasDK, mentre non attribuisco tutte le catture allo stesso strumento. Ho ottenuto 12 PASS, un FAIL e tre INCONCLUSIVE: risultati coerenti con le rispettive evidenze. Il FAIL NRF segnala HTTP 200 dove il criterio richiede 403. Gli INCONCLUSIVE indicano evidenze insufficienti. I raggruppamenti in tabella corrispondono a dieci catture Open5GS e sei free5GC.
 
 Fonti:
 
 - https://github.com/desila23/5g-security-assurance-thesis/blob/TESI-LATEX/capitoli/06_capitolo.tex
 - https://github.com/desila23/5g-security-assurance-thesis/blob/gh-pages/5g-thesis-presentation/slides/18-baseline.html
 
-## Slide 5 - Mutation testing
+## 6. Mutation testing
 
-Tempo indicativo: 68 secondi.
+Tempo indicativo: 60 secondi.
 
-I risultati sulle catture originali non sono sufficienti, da soli, a valutare l’affidabilità del verificatore: alcuni test hanno guidato anche lo sviluppo.
-Per questo ho introdotto una fase di mutation testing. Uno strumento separato modifica in modo controllato le catture, che vengono poi valutate con la stessa DSL e la stessa pipeline.
-Riprendendo il caso NRF, nella cattura originale lo status è HTTP 200 e il risultato è FAIL. Modificando lo status in 403, il risultato diventa PASS, come previsto.
-Complessivamente, tutti i 13 scenari completati hanno prodotto il verdetto atteso. Dei 15 previsti, due scenari temporali e combinati AMF Case B non sono stati completati per limiti del mutatore attuale.
-Il lavoro mostra quindi come un DSL e un sistema comune possano produrre verifiche motivate e riproducibili. Un possibile sviluppo futuro riguarda la generalizzazione del mutatore.
+I risultati baseline da soli non bastano a valutare la sensibilità del sistema, anche perché alcuni casi sono stati usati durante lo sviluppo. Ho quindi applicato modifiche controllate alle catture con un mutatore separato. Il mutatore usa la PCAP originale e i riferimenti alle evidenze contenuti nel report baseline per individuare i dati da alterare. La PCAP mutata viene analizzata dallo stesso sistema, con la stessa DSL. Il confronto dei verdetti deve corrispondere alla modifica introdotta: per esempio, il caso NRF passa da FAIL a PASS sostituendo HTTP 200 con 403. Nei 13 scenari completati ho ottenuto tutti i verdetti attesi. Dei 15 previsti, due scenari AMF Case B temporali e combinati non sono stati completati per limiti del mutatore. Uno sviluppo futuro è renderlo meno dipendente dalla forma specifica della regola DSL.
 
 Fonti:
 
 - https://github.com/desila23/5g-security-assurance-thesis/blob/TESI-LATEX/capitoli/06_capitolo.tex
-- https://github.com/desila23/5g-security-assurance-thesis/blob/gh-pages/5g-thesis-presentation/slides/20-risultati-mutazioni.html
-- https://github.com/desila23/5g-security-assurance-thesis/blob/main/reports/nrf_disc_auth_slice_report.json
-- https://github.com/desila23/5g-security-assurance-thesis/blob/main/reports/nrf_disc_auth_slice_status_mutation/report.json
+- https://github.com/desila23/5g-security-assurance-thesis/blob/main/mutation_testing/mutate_nrf_status.py
+- https://github.com/desila23/5g-security-assurance-thesis/blob/main/mutation_testing/mutate_udm_supi.py
+- https://github.com/desila23/5g-security-assurance-thesis/blob/main/mutation_testing/fail/mutate_pfcp_fteid.py
+- https://github.com/desila23/5g-security-assurance-thesis/blob/gh-pages/5g-thesis-presentation/slides/19-mutazioni.html

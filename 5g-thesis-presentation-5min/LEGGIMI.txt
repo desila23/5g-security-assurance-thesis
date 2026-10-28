@@ -1,25 +1,25 @@
-PRESENTAZIONE TESI - 5 MINUTI - REVISIONE 28 OTTOBRE 2026
+TESI 5G - VERSIONE DA 5 MINUTI - 28 OTTOBRE 2026
 
-Cinque slide complete e leggibili fin dall'apertura.
-HTML: tre sole evidenziazioni manuali, nelle slide 2, 3 e 5.
-PPTX: versione statica modificabile, senza animazioni necessarie.
-PDF: cinque pagine statiche di sicurezza.
+6 slide: copertina originale + 5 contenuti.
+La sola slide 3 ha due avanzamenti interni (A, B, C).
+Le altre slide sono statiche. Nessun avanzamento automatico.
 
-COMANDI HTML
-Clic / freccia destra / spazio: evidenzia oppure passa alla slide successiva.
-Freccia sinistra: torna indietro. Page Down / Page Up: cambia slide.
-1-5: scegli la slide. Home / End: inizio e fine. A: attiva l'evidenziazione.
-F: schermo intero. N: note. T: cronometro. P: stampa.
+HTML OFFLINE
+Aprire index.html con Chrome, Edge o Firefox. Font, logo e ritagli sono incorporati.
+Clic, freccia destra, spazio o Invio: avanti. Freccia sinistra: indietro.
+Page Down / Page Up: cambia slide. 1-6: scegli la slide. Home / End: inizio / fine.
+A: stato finale della slide. F: schermo intero. N: note. T: cronometro. P: stampa.
+La stampa mostra i sei stati finali, incluso il DSL nella slide 3.
 
-POWERPOINT
-Testi e diagrammi sono modificabili. I soli ritagli SCAS sono immagini dai PDF ufficiali.
-Il PowerPoint e il PDF mostrano lo stato completo, con le evidenziazioni già attive.
-I file sono stati controllati con Artifact Tool e LibreOffice.
-Microsoft PowerPoint non è disponibile in questo ambiente: fare una prova sul computer della discussione.
-I font originali e le licenze sono nella cartella fonts.
+PPTX E PDF
+Sei slide nello stato finale, con tutte le informazioni leggibili senza animazioni.
+Nel PowerPoint i testi, le tabelle e i diagrammi dei contenuti sono modificabili.
+La copertina mantiene la grafica originale, con testi modificabili e sfondo grafico incorporato.
+Sono stati controllati la struttura PPTX, i rendering e la conversione LibreOffice.
+Non è stato possibile provare il file in Microsoft PowerPoint: fare una prova sul computer della discussione.
 
 TEMPI INDICATIVI
-52 + 48 + 74 + 48 + 68 secondi = 4 minuti e 50 secondi.
-La durata è indicativa e va confermata con una prova orale reale.
+10 + 42 + 70 + 53 + 50 + 60 secondi = 4 minuti e 45 secondi.
+La durata richiede una prova orale reale.
 
-Aprire index.html con Chrome, Edge o Firefox. Non serve una connessione Internet.
+La cartella fonts contiene i caratteri originali e le licenze per PowerPoint.
