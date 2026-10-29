@@ -1,0 +1,14 @@
+TESI 5G — PRESENTAZIONE 9 SLIDE
+
+Questa versione parte dai sette file originali della cartella, mantenendo gli stati animati A/B/C della slide 4 e della slide 7, e aggiunge:
+8. Futuri sviluppi
+9. Grazie per l'attenzione (senza Domande?).
+
+L'HTML index.html ha 9 slide principali, con tre stati interni nelle slide 4 e 7.
+Il PPTX animato ha 9 slide e mantiene le animazioni native delle slide originali.
+Il PPTX statico completo e il PDF completo hanno 13 pagine, per mostrare tutte le fasi delle slide 4 e 7.
+Sono presenti anche un PPTX statico e un PDF brevi con 9 pagine, che mostrano soltanto lo stato finale delle due slide animate.
+
+I font utilizzati nel PowerPoint sono Arial e Courier New.
+I sette contenuti originali sono invariati, salvo la numerazione aggiornata da 07 a 09.
+Il branch gh-pages originale non è stato modificato.
